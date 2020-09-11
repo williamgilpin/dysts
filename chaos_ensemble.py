@@ -349,6 +349,25 @@ class MultiChua:
         zdot = -self.b*y
         return (xdot, ydot, zdot)
 
+class DoubleGyre:
+    """
+    range [0,2], [0,1]
+    """
+    def __init__(self, a=.1, eps=.1, omega=np.pi/5):
+        self.a = a
+        self.eps = eps
+        self.omega = omega
+        
+    def __call__(self, X, t):
+        x, y, z = X
+        a = self.eps*np.sin(z)
+        b = 1 - 2*self.eps*np.sin(z)
+        f = a*x**2 + b*x
+        dx = -self.a * np.pi*np.sin(np.pi*f)*np.cos(np.pi*y)
+        dy = self.a * np.pi*np.cos(np.pi*f)*np.sin(np.pi*y)*(2*a*x + b)
+        dz = self.omega
+        return np.stack([dx, dy, dz]).T
+
 class Chua:
     """
     Simulate the dynamics of Chua's circuit
@@ -1887,7 +1906,26 @@ class ForcedVanDerPol:
         ydot = self.mu *(1 - x**2)*y - x + self.a*np.sin(z)
         xdot = y
         zdot = self.w
-        return (xdot, ydot, zdot)   
+        return (xdot, ydot, zdot)
+
+class ForcedFitzHugh:
+    """
+    A forced FitzHugh-Nagumo oscillator
+    """
+    def __init__(self, curr=0.5, a=0.7, b=0.8, gamma=0.08, omega=1.1, f=0.25):
+        self.curr, self.a, self.b, self.gamma, self.omega, self.f = curr, a, b, gamma, omega, f
+    def __call__(self, X, t):
+        """
+        The dynamical equation for the system
+        - X : tuple corresponding to the three coordinates
+        - t : float (the current time)
+        """
+        v, w, z = X
+        vdot = v - v**3/3 - w + self.curr + self.f*np.sin(z)
+        wdot = self.gamma*(v + self.a - self.b*w)
+        zdot = self.omega
+        return (vdot, wdot, zdot)      
+
 
 class Colpitts:
     """
@@ -1996,7 +2034,41 @@ class CellularNeuralNetwork:
         ydot = -y - self.b*self.f(x) + self.c*self.f(y) - self.a*self.f(z)
         zdot = -z - self.b*self.f(x) + self.a*self.f(y) + self.f(z)
         return (xdot, ydot, zdot)   
+
+class BeerRNN:
+    """
+    Beer, R. D. (1995).
+     On the dynamics of small continuous-time recurrent neural networks. 
+     Adapt. Behav., 3(4), 469–509. http://doi.org/10.1177/105971239500300405
+    """
+    def __init__(self, 
+        tau=np.array([1.0, 2.5, 1.0]), 
+        theta=np.array([-4.108, -2.787, -1.114]), 
+        w=None
+        ):
+        if not w:
+            self.w = np.array([[5.422,  -0.018,  2.75],
+                               [-0.24, 4.59, 1.21],
+                               [0.535, -2.25, 3.885]
+                              ]
+                             )
+            
+        else:
+            self.w = w
+        self.theta = theta
+        self.tau = tau
     
+    def _sig(self, x):
+        return 1.0/(1. + np.exp(-x))
+    def __call__(self, X, t):
+        """
+        The dynamical equation for the system
+        - X : tuple corresponding to the three coordinates
+        - t : float (the current time)
+        """
+        Xdot = (-X + np.matmul(self.w, self._sig(X + self.theta)))/self.tau
+        return Xdot 
+
 
 # class HodgkinHuxley:
 #     def __init__(self, i=7.92197):
