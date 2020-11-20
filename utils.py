@@ -7,7 +7,13 @@
 #     import numpy as np
 #     has_jax = False
 # from functools import partial
-import numpy as np
+try:
+    import jax.numpy as np
+    has_jax = True
+except ModuleNotFoundError:
+    import numpy as np
+    has_jax = False
+    warnings.warn("JAX not found, falling back to numpy.")
 
 
 import warnings
@@ -127,7 +133,11 @@ def find_characteristic_timescale(y, k=1):
     return np.squeeze(1/(np.median(np.diff(fvals))*max_indices_grouped[:k]))
 
 
-
+def find_initial_condtion():
+    """
+    Simulate a system until it settles onto an attractor
+    """
+    pass
 
 
 

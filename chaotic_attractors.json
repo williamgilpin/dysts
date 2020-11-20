@@ -1,0 +1,75 @@
+{
+    "Lorenz" : {
+        "initial_conditions" : [0.1, 0.1, 0.1],
+        "dt" : 1e-3,
+        "parameters" : {
+            "sigma" : 10,
+            "rho"  : 28,
+            "beta" : 2.667
+        },
+        "citation" : "Lorenz, Edward N. \"Deterministic nonperiodic flow.\" Journal of the atmospheric sciences 20.2 (1963): 130-141."
+    },
+    "LorenzBounded" : {
+        "initial_conditions" : [0.1, 0.1, 0.1],
+        "dt" : 1e-3,
+        "parameters" : {
+            "sigma" : 10,
+            "rho"  : 28,
+            "beta" : 2.667,
+            "r" : 64
+        },
+        "citation" : "Sprott & Xiong, Chaos 2015"
+    },
+    "LorenzCoupled" : {
+        "initial_conditions" : [0.1, 0.1, 0.1],
+        "dt" : 1e-3,
+        "parameters" : {
+            "sigma" : 10,
+            "rho"  : 28,
+            "beta" : 2.667,
+            "rho1" : 35, 
+            "rho2" : 1.15,
+            "eps" : 2.85
+        },
+        "citation" : "Lorenz, Edward N. \"Deterministic nonperiodic flow.\" Journal of the atmospheric sciences 20.2 (1963): 130-141."
+    },
+    "Thomas" : {
+        "initial_conditions" : [0.1, 0.4, 0.1],
+        "dt" : 1e-2,
+        "parameters" : {
+            "a" : 1.85, 
+            "b" : 10
+        },
+        "citation" : "Thomas, René (1999). \"Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, 'labyrinth chaos'\". Int. J. Bifurc. Chaos. 9 (10): 1889–1905."
+    },
+    "Halvorsen" : {
+        "initial_conditions" : [1, 0.2, 1],
+        "dt" : 1e-2,
+        "parameters" : {
+            "a" : 1.4, 
+            "b" : 4
+        },
+        "citation" : "TBD"
+    },
+    "DoublePendulum" : {
+        "initial_conditions" : [1.0, 3.14159, 1.0, 1.0],
+        "dt" : 1e-2,
+        "parameters" : {
+            "m" : 1.0, 
+            "d" : 1.0
+        },
+        "citation" : "None."
+    },
+    "Rossler" : {
+        "initial_conditions" : [0.1, 0.4, 0.1],
+        "dt" : 1e-2,
+        "parameters" : {
+            "a" : 0.2,
+            "b"  : 0.2,
+            "c" : 5.7
+        },
+        "citation" : "Rössler, O. E. (1976), \"An Equation for Continuous Chaos\", Physics Letters, 57A (5): 397–398,"
+    }
+}
+
+        
