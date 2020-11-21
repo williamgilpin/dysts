@@ -7,13 +7,15 @@
 #     import numpy as np
 #     has_jax = False
 # from functools import partial
-try:
-    import jax.numpy as np
-    has_jax = True
-except ModuleNotFoundError:
-    import numpy as np
-    has_jax = False
-    warnings.warn("JAX not found, falling back to numpy.")
+
+# try:
+#     import jax.numpy as np
+#     has_jax = True
+# except ModuleNotFoundError:
+#     import numpy as np
+#     has_jax = False
+#     warnings.warn("JAX not found, falling back to numpy.")
+import numpy as np
 
 
 import warnings
