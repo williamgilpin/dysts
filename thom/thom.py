@@ -16,9 +16,7 @@ https://chaoticatmospheres.com/mathrules-strange-attractors
 https://matousstieber.wordpress.com/2016/01/12/strange-attractors/
 
 DEV: 
-+ Load the attractor information from a database. How to build load a function
-object from a string? exec does not do this
-+ add methods that initialize standard chaotic values
++ Database: How to load a function object from a string? exec does not do this
 + Add a function compute_dt that finds the timestep based on fft
 + Set standard integration timestep based on this value
 + Add a function that rescales outputs to the same interval
@@ -59,12 +57,11 @@ class DynSys:
         dfac = lambda : _load_data(self.name)["parameters"]
         self.params = self._load_data(self.name)["parameters"]
         self.params.update(entries)
-        # Cast all arrays to numpy
+        # Cast all parameter arrays to numpy
         for key in self.params:
             if not np.isscalar(self.params[key]):
                 self.params[key] = np.array(self.params[key])
         self.__dict__.update(self.params)
-#         self.__dict__.update(entries) # can probably be removed
         self.dt = self._load_data(self.name)["dt"]
         self.ic = self._load_data(self.name)["initial_conditions"]
         
@@ -139,6 +136,9 @@ class Thomas(DynSys):
         ydot = -self.a*y + self.b*np.sin(z)
         zdot = -self.a*z + self.b*np.sin(x)
         return (xdot, ydot, zdot)
+    
+class ThomasLabyrinth(Thomas):
+    pass
 
 class DoublePendulum(DynSys):
     def rhs(self, X, t):
@@ -152,6 +152,15 @@ class DoublePendulum(DynSys):
         p1_dot = -0.5*(m*d**2)*(th1_dot*th2_dot*np.sin(th1 - th2) + 3*(g/d)*np.sin(th1))
         p2_dot = -0.5*(m*d**2)*(-th1_dot*th2_dot*np.sin(th1 - th2) + 3*(g/d)*np.sin(th2))
         return (th1_dot, th2_dot, p1_dot, p2_dot)
+
+class HenonHeiles(DynSys):
+    def rhs(self, X, t):
+        x, y, px, py = X
+        xdot = px
+        ydot = py
+        pxdot = -x - 2*self.lam*x*y
+        pydot = -y - self.lam*(x**2 - y**2)
+        return (xdot, ydot, pxdot, pydot)    
 
 class Halvorsen(DynSys):
     def rhs(self, X, t):
@@ -193,46 +202,43 @@ class Duffing(DynSys):
         zdot = self.omega
         return (xdot, ydot, zdot)
 
-    
-    
-
-
-class MackeyGlass(object):
-    """
-    Simulate the dynamics of the Mackey-Glass time delay model
-    Inputs
-    - tau : float, the delay parameter
-    """
-    def __init__(self, tau, beta, gamma, dt, n=10):
-        self.tau = tau
-        self.beta = beta
-        self.gamma = gamma
-        self.n = n
-        self.dt = dt
+## Can this be incorporated in a DynSys object __call___ method?
+# class MackeyGlass(object):
+#     """
+#     Simulate the dynamics of the Mackey-Glass time delay model
+#     Inputs
+#     - tau : float, the delay parameter
+#     """
+#     def __post_init__(self, tau, beta, gamma, dt, n=10):
+#         self.tau = tau
+#         self.beta = beta
+#         self.gamma = gamma
+#         self.n = n
+#         self.dt = dt
         
-        self.mem = int(np.ceil(tau/dt))
-        self.history = deque(1.2 + (np.random.rand(self.mem) - 0.5))
+#         self.mem = int(np.ceil(self.tau/self.dt))
+#         self.history = deque(1.2 + (np.random.rand(self.mem) - 0.5))
 
-    def __call__(self, x, t):
-        xt = self.history.pop()
-        xdot = self.beta*(xt/(1 + xt**self.n)) - self.gamma*x
-        return xdot
+#     def __call__(self, x, t):
+#         xt = self.history.pop()
+#         xdot = self.beta*(xt/(1 + xt**self.n)) - self.gamma*x
+#         return xdot
     
-    def integrate(self, x0, tpts):
-        x_series = np.zeros_like(tpts)
-        x_series[0] = x0
-        self.history.appendleft(x0)
-        for i, t in enumerate(tpts):
-            if i==0:
-                continue
+#     def integrate(self, x0, tpts):
+#         x_series = np.zeros_like(tpts)
+#         x_series[0] = x0
+#         self.history.appendleft(x0)
+#         for i, t in enumerate(tpts):
+#             if i==0:
+#                 continue
             
-            dt = tpts[i] - tpts[i-1]
-            x_nxt = x_series[i-1] + self(x_series[i-1], t)*self.dt
+#             dt = tpts[i] - tpts[i-1]
+#             x_nxt = x_series[i-1] + self(x_series[i-1], t)*self.dt
             
-            x_series[i] = x_nxt 
-            self.history.appendleft(x_nxt)
+#             x_series[i] = x_nxt 
+#             self.history.appendleft(x_nxt)
         
-        return x_series
+#         return x_series
 
 class DoubleGyre(DynSys):
     def rhs(self, X, t):
@@ -245,27 +251,6 @@ class DoubleGyre(DynSys):
         dz = self.omega
         return np.stack([dx, dy, dz]).T
 
-class HindmarshRose:    
-    """
-    Marhl, Perc. Chaos, Solitons, Fractals 2005
-    """
-    def __init__(self, tx=0.03, tz=0.8, a=0.49, b=1.0, d=1.0, s=1.0, c=.0322):
-        self.tx, self.tz, self.a, self.b, self.d, self.s, self.c = tx, tz, a, b, d, s, c
-    
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
-        x, y, z = X
-        tx, tz, a, b, d, s, c = self.tx, self.tz, self.a, self.b, self.d, self.s, self.c
-        xdot = - tx*x + y - a*x**3 + b*x**2 + z
-        ydot = -a*x**3  - (d - b)*x**2 + z
-        zdot = -s*x - z + c
-        return (xdot/tx, ydot, zdot/tz)
-    
-    
 class JerkCircuit(DynSys):
     def rhs(self, X, t):
         x, y, z = X
@@ -274,7 +259,6 @@ class JerkCircuit(DynSys):
         zdot = -z - x  - self.eps*(np.exp(y/self.y0) - 1)
         return (xdot, ydot, zdot)
 
-    
 class ForcedBrusselator(DynSys):
     def rhs(self, X, t):
         x, y, z = X
@@ -282,7 +266,6 @@ class ForcedBrusselator(DynSys):
         ydot = self.b*x - x**2*y
         zdot = self.w
         return (xdot, ydot, zdot)
-
 
 class WindmiReduced(DynSys):
     def rhs(self, X, t):
@@ -316,7 +299,6 @@ class KawczynskiStrizhak(DynSys):
         zdot = self.kappa*(x - z)
         return (xdot, ydot, zdot)
 
-    
 class BelousovZhabotinsky(DynSys):
     def rhs(self, X, t):    
         x, z, v = X
@@ -359,6 +341,20 @@ class SprottTorus(DynSys):
         zdot = x - x**2 - y**2
         return (xdot, ydot, zdot)
     
+class SprottJerk(DynSys):
+    def rhs(self, X, t):
+        x, y, z = X
+        xdot = y
+        ydot = z
+        zdot = -x  + y**2 - self.mu*z
+        return (xdot, ydot, zdot)
+# class JerkCircuit(DynSys):
+#     def rhs(self, X, t):
+#         x, y, z = X
+#         xdot = y
+#         ydot = z
+#         zdot = -z - x  - self.eps*(np.exp(y/self.y0) - 1)
+#         return (xdot, ydot, zdot)
     
 class SprottB(DynSys):
     def rhs(self, X, t):
@@ -529,13 +525,8 @@ class Sakarya(DynSys):
         return (xdot, ydot, zdot)
     
 class LiuChen(Sakarya):
-    """
-    Liu, Chen. Int J Bifurcat Chaos. 2004: 1395-1403.
-    """
-    def __init__(self):
-        super().__init__(a=0.4, h=0.0, b=12.0, p=0.0, q=-1.0, c=-5.0, r=1.0)
+    pass
         
-
 class RayleighBenard(DynSys):
     def rhs(self, X, t):
         x, y, z = X
@@ -577,7 +568,6 @@ class Finance(DynSys):
 # https://www.sciencedirect.com/science/article/pii/S1007570416300016
 # hundreds of equations
 
-
 class Bouali2(DynSys):
     def rhs(self, X, t):
         x, y, z = X
@@ -587,25 +577,7 @@ class Bouali2(DynSys):
         return (xdot, ydot, zdot)
     
 class Bouali(Bouali2):
-    def __init__(self):
-        super().__init__(y0=4, a=1, b=-0.3, g=1, m=1, bb=1.0, c=0.05)
-# class Bouali:
-#     """
-#     Bouali 2012
-#     """
-#     def __init__(self, a=0.3, b=1.0, c=0.05):
-#         self.a, self.b, self.c = a, b, c
-#     def __call__(self, X, t):
-#         """
-#         The dynamical equation for the system
-#         - X : tuple corresponding to the three coordinates
-#         - t : float (the current time)
-#         """
-#         x, y, z = X
-#         xdot = x*(4 - y) + self.a*z
-#         ydot = -y*(1 - x**2)
-#         zdot = -x*(1.5 - self.b*z) - self.c*z
-#         return (xdot, ydot, zdot)
+    pass
 
 class LuChenCheng(DynSys):
     def rhs(self, X, t):
@@ -615,21 +587,8 @@ class LuChenCheng(DynSys):
         zdot = self.b*z + x*y
         return (xdot, ydot, zdot)
 
-class LuChen:
-    """
-    A system that switches shapes between the Lorenz and Chen 
-    attractors as the parameter c is varied from 12.7 to 28.5
-    Also called the Chen Celikovsky attractor
-    Lu, Chen. Int J Bifurcat Chaos. 2002: 659-661
-    """
-    def __init__(self, a=36, b=3, c=18):
-        self.a, self.b, self.c = a, b, c
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+class LuChen(DynSys):
+    def rhs(self, X, t):
         x, y, z = X
         xdot = self.a*(y - x)
         ydot = -x*z + self.c*y
@@ -637,18 +596,8 @@ class LuChen:
         return (xdot, ydot, zdot)
 
 
-class QiChen:
-    """
-    Qiet al. Chaos, Solitons & Fractals 2008 
-    """
-    def __init__(self, a=38, b=2.666, c=80):
-        self.a, self.b, self.c = a, b, c
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+class QiChen(DynSys):
+    def rhs(self, X, t):
         x, y, z = X
         xdot = self.a*(y - x) + y*z
         ydot = self.c*x + y - x*z
@@ -669,56 +618,18 @@ class BurkeShaw(DynSys):
         xdot = -self.n*(x + y)
         ydot = y - self.n*x*z
         zdot = self.n*x*y + self.e
-        return (xdot, ydot, zdot)    
-
-    
-class YuWang:
-    """
-    Yu,  Wang. Eng Techn& Applied Science Research 2012
-    """
-    def __init__(self, a=10, b=30, c=2, d=2.5):
-        self.a, self.b, self.c, self.d = a, b, c, d
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
-        x, y, z = X
-        xdot = self.a*(y - x)
-        ydot = self.b*x - self.c*x*z
-        zdot = np.cosh(x*y) - self.d*z
         return (xdot, ydot, zdot)
     
-class Chen:
-    """
-    Chen, Ueta. Int J Bifurcat Chaos. 2004: 1465-1466
-    Chen. Proc. First Int. Conf. Control of Oscillations and Chaos. 1997: 181–186
-    """
-    def __init__(self, a=35, b=3, c=28):
-        self.a, self.b, self.c = a, b, c
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+class Chen(DynSys):
+    def rhs(self, X, t):
         x, y, z = X
         xdot = self.a*(y - x)
         ydot = (self.c - self.a)*x - x*z + self.c*y
         zdot = x*y - self.b*z
         return (xdot, ydot, zdot)
     
-    
-class ChenLee:
-    def __init__(self, a=5.0, b=-10.0, c=-0.38):
-        self.a, self.b, self.c = a, b, c
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+class ChenLee(DynSys):
+    def rhs(self, X, t):
         x, y, z = X
         xdot = self.a*x - y*z
         ydot = self.b*y + x*z
@@ -726,40 +637,28 @@ class ChenLee:
         return (xdot, ydot, zdot)
     
     
-class WangSun:
-    """
-    
-    """
-    def __init__(self, a=0.2, b=-0.01, d=-0.4, e=-1.0, f=-1.0, q=1.0):
-        self.a, self.b, self.d, self.e, self.f, self.q = a, b, d, e, f, q
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+class WangSun(DynSys):
+    def rhs(self, X, t):
         x, y, z = X
         xdot = self.a*x + self.q*y*z
         ydot = self.b*x + self.d*y - x*z
         zdot = self.e*z + self.f*x*y
         return (xdot, ydot, zdot)
     
-class YuWang:
-    """
-    
-    """
-    def __init__(self, a=10, b=40, c=2, d=2.5):
-        self.a, self.b, self.c, self.d = a, b, c, d
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+class YuWang(DynSys):
+    def rhs(self, X, t):
         x, y, z = X
         xdot = self.a*(y - x)
         ydot = self.b*x - self.c*x*z
         zdot = np.exp(x*y) - self.d*z
+        return (xdot, ydot, zdot)
+
+class YuWang2(DynSys):
+    def rhs(self, X, t):
+        x, y, z = X
+        xdot = self.a*(y - x)
+        ydot = self.b*x - self.c*x*z
+        zdot = np.cosh(x*y) - self.d*z
         return (xdot, ydot, zdot)
 
 class SanUmSrisuchinwong(DynSys):
@@ -770,20 +669,8 @@ class SanUmSrisuchinwong(DynSys):
         zdot = -self.a + x*y + np.abs(y)
         return (xdot, ydot, zdot)
 
-class DequanLi:
-    """
-    Li, Phys Lett A. 2008: 387-393
-    Sometimes called the "Three Scroll" unified attractor TSUCS-2
-    """
-    def __init__(self, a=40, c=1.833, d=0.16, eps=0.65, k=55, f=20):
-        (self.a, self.c, self.d, 
-         self.eps, self.k, self.f) = a ,c, d, eps, k, f
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+class DequanLi(DynSys):
+    def rhs(self, X, t):
         x, y, z = X
         xdot = self.a*(y - x) + self.d*x*z
         ydot = self.k*x + self.f*y - x*z
@@ -791,31 +678,13 @@ class DequanLi:
         return (xdot, ydot, zdot)
 
 class PanXuZhou(DequanLi):
-    """
-    A named attractor related to the DequanLi attractor
-    """
-    def __init__(self):
-        super().__init__(a=10, d=0, k=16, f=0, c=-8/3, eps=0)
+    pass
 
 class Tsucs2(DequanLi):
-    """
-    A named attractor related to the DequanLi attractor
-    """
-    def __init__(self):
-        super().__init__(d=0.5, k=0, c=0.833)
-
+    pass
         
-class NewtonLiepnik:
-    """
-    """
-    def __init__(self, a=0.4, b=0.175):
-        self.a, self.b = a, b
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+class NewtonLiepnik(DynSys):
+    def rhs(self, X, t):
         x, y, z = X
         xdot = -self.a*x + y + 10*y*z
         ydot = -x - 0.4*y + 5*x*z
@@ -861,17 +730,6 @@ class CaTwoPlus(DynSys):
         ydot = V2 - V3 - self.kf*y
         adot = self.beta*self.V4 - V5 - self.eps*a
         return (zdot, ydot, adot)
-
-class CaTwoPlusQuasiperiodic(CaTwoPlus):
-    """
-    Intracellular calcium ion oscillations
-    with quasiperiodic parameter values
-    + paper also includes full parameters for limit cycle
-    Houart, Dupont, Goldbeter. Bull Math Biol 1999
-    """
-    def __init__(self):
-        CaTwoPlus.__init__(self, beta=0.51, K5=0.3, Ka=0.2, Kd=0.5, Ky=0.2, 
-                     Kz=0.5, eps=.1, p=2, Vm3=20, V4=5, Vm5=30)
 
 class CellCycle(DynSys):
     def rhs(self, X, t):
@@ -1117,27 +975,6 @@ class ItikBanksTumor(DynSys):
 #         idot =  b*s*i - (self.mu + self.g)*i
 #         thdot = 2*np.pi
 #         return (sdot, idot, thdot)
-    
-# class DequanLi:
-#     """
-#     Use subclassing
-#     Li, Phys Lett A. 2008: 387-393
-#     Sometimes called the "Three Scroll" unified attractor TCUCS-1
-#     """
-#     def __init__(self, a=40, c=1.833, d=0.16, eps=0.65, k=55, f=20):
-#         (self.a, self.c, self.d, 
-#          self.eps, self.k, self.f) = a ,c, d, eps, k, f
-#     def __call__(self, X, t):
-#         """
-#         The dynamical equation for the system
-#         - X : tuple corresponding to the three coordinates
-#         - t : float (the current time)
-#         """
-#         x, y, z = X
-#         xdot = self.a*(y - x) + self.d*x*z
-#         ydot = self.k*x + self.f*y - x*z
-#         zdot = self.c*z + x*y - self.eps*x**2
-#         return (xdot, ydot, zdot)
 
 class Aizawa(DynSys):
     def rhs(self, X, t):
@@ -1197,60 +1034,34 @@ class Hadley(DynSys):
         return (xdot, ydot, zdot)   
 
 
-class ForcedVanDerPol:
-    """
-    The forced van der pol oscillator
-    """
-    def __init__(self, mu=8.53, a=1.2, w=0.63):
-        self.mu, self.a, self.w = mu, a, w
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+class ForcedVanDerPol(DynSys):
+    def rhs(self, X, t):
         x, y, z = X
         ydot = self.mu *(1 - x**2)*y - x + self.a*np.sin(z)
         xdot = y
         zdot = self.w
         return (xdot, ydot, zdot)
 
-class ForcedFitzHugh:
-    """
-    A forced FitzHugh-Nagumo oscillator
-    """
-    def __init__(self, curr=0.5, a=0.7, b=0.8, gamma=0.08, omega=1.1, f=0.25):
-        self.curr, self.a, self.b, self.gamma, self.omega, self.f = curr, a, b, gamma, omega, f
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+class ForcedFitzHughNagumo(DynSys):
+    def rhs(self, X, t):
         v, w, z = X
         vdot = v - v**3/3 - w + self.curr + self.f*np.sin(z)
         wdot = self.gamma*(v + self.a - self.b*w)
         zdot = self.omega
-        return (vdot, wdot, zdot)      
-
-
-class Colpitts:
-    """
-    An electrical circuit used as a signal generator
-    Kennedy. IEEE Trans Circuits & Systems. 1994: 771-774.
-    Li, Zhou, Yang. Chaos, Solitons, & Fractals. 2007
-    """
-    def __init__(self, a=30, b=0.8, c=20, d=0.08, e=10):
-        self.a, self.b, self.c, self.d, self.e = a, b, c, d, e
-        
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+        return (vdot, wdot, zdot)  
+    
+class HindmarshRose(DynSys):    
+    def rhs(self, X, t):
         x, y, z = X
+        tx, tz, a, b, d, s, c = self.tx, self.tz, self.a, self.b, self.d, self.s, self.c
+        xdot = - tx*x + y - a*x**3 + b*x**2 + z
+        ydot = -a*x**3  - (d - b)*x**2 + z
+        zdot = -s*x - z + c
+        return (xdot/tx, ydot, zdot/tz)
 
+class Colpitts(DynSys):
+    def rhs(self, X, t):
+        x, y, z = X
         u = z - (self.e - 1)
         fz = -u*(1 - np.heaviside(u, 0))
         xdot = y - self.a*fz
@@ -1274,6 +1085,16 @@ class TurchinHanski(DynSys):
         pdot = self.s*(1 - self.e*np.sin(z))*p - self.s*(p**2)/n
         zdot = 2*np.pi
         return (ndot, pdot, zdot) 
+
+class StickSlipOscillator(DynSys):
+    def _t(self, v):
+        return self.t0*np.sign(v) - self.alpha*v + self.beta*v**3
+    def rhs(self, X, t):
+        x, v, th = X
+        xdot = v
+        vdot = self.eps*(self.gamma*np.cos(th) - self._t(v - self.vs) ) + self.a*x - self.b*x**3
+        thdot = self.w
+        return (xdot, vdot, thdot) 
     
 class HastingsPowell(DynSys):
     def f(self, x):
@@ -1286,21 +1107,10 @@ class HastingsPowell(DynSys):
         zdot = z*a2*y/(1 + b2*y) - d2*z
         return (xdot, ydot, zdot)   
     
-class CellularNeuralNetwork:
-    """
-    Arena, Caponetto, Fortuna, and Porto., Int J Bifurcat Chaos. 1998:  1527-1539.
-    """
-    def __init__(self, a=4.4, b=3.21, c=1.1, d=1.24):
-        self.a, self.b, self.c, self.d = a, b, c, d
-    
+class CellularNeuralNetwork(DynSys):
     def f(self, x):
         return 0.5*(np.abs(x + 1) - np.abs(x - 1))
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple corresponding to the three coordinates
-        - t : float (the current time)
-        """
+    def rhs(self, X, t):
         x, y, z = X
         xdot = -x + self.d*self.f(x) - self.b*self.f(y) - self.b*self.f(z)
         ydot = -y - self.b*self.f(x) + self.c*self.f(y) - self.a*self.f(z)
@@ -1338,63 +1148,36 @@ class BeerRNN(DynSys):
     
 ############################## 
 ##
-## Non-chaotic systems
+## Quasiperiodic systems
 ##
 ############################## 
 
-
-
-class Torus2(object):
-    """
-    Simulate a minimal quasiperiodic flow on a torus
-    """
-    def __init__(self, r=1.0, a=0.5, n=15.3):
-        """
-        - r : the toroid radius
-        - a : the (smaller) cross sectional radius
-        - n : the number of turns per turn. Any non-integer
-                value produces a quasiperiodic toroid
-        """
-        self.r = r
-        self.a = a
-        self.n = n
-    
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the system
-        - X : tuple of length 3, corresponding to the three coordinates
-        - t : float (the current time)
-        """
-        
+class Torus(DynSys):
+    def rhs(self, X, t):
         x, y, z = X
-        
         xdot = (-self.a*self.n*np.sin(self.n*t))*np.cos(t) - (self.r + self.a*np.cos(self.n*t))*np.sin(t)
         ydot = (-self.a*self.n*np.sin(self.n*t))*np.sin(t) + (self.r + self.a*np.cos(self.n*t))*np.cos(t)
         zdot = self.a*self.n*np.cos(self.n*t)
         return (xdot, ydot, zdot)
 
-# class Universe:
-#     """
-#     A simplification of the Friedman-Robertson-Walker equations
-#     that admits chaotic solutions
-#     Aydiner, Scientific Reports 2018
-#     """
-#     def __init__(self, a=None):
-#         if a==None:
-#             self.a = np.array([
-#                 [-0.5, -0.1, 0.1],
-#                 [0.5, 0.5, 0.1],
-#                 [1.39, 0.1, 0.1]
-#             ])
-#         else:
-#             pass
-        
-#     def __call__(self, X, t):
-#         """
-#         - X : tuple of length 3, corresponding to the three coordinates
-#         - t : float (the current time)
-#         """
-#         Xdot = X*np.matmul(self.a, 1 - X)
+class CaTwoPlusQuasiperiodic(CaTwoPlus):
+    pass
+    
+class MixMasterUniverse(DynSys):
+    def rhs(self, X, t):
+        a, b, g, adot_, bdot_, gdot_ = X
+        adot = adot_
+        bdot = bdot_
+        gdot = gdot_
+        addot = (np.exp(2*b) - np.exp(2*g))**2 - np.exp(4*a)
+        bddot = (np.exp(2*g) - np.exp(2*a))**2 - np.exp(4*b)
+        gddot = (np.exp(2*a) - np.exp(2*b))**2 - np.exp(4*g)
+        return (adot, bdot, gdot, addot, bddot, gddot)
+    
+# class Universe(DynSys):
+#     def rhs(self, X, t):
+#         #Xdot = X * np.matmul(self.a, 1 - X)
+#         Xdot = self.r * X * (1 - np.matmul(self.a, X))
 #         return Xdot
     
 class Hopfield(DynSys):
@@ -1406,14 +1189,9 @@ class Hopfield(DynSys):
     
 class MacArthur(DynSys):
     def growth_rate(self, rr):
-        """
-        Liebig's law of the maximum
-        r : np.ndarray, a vector of resource abundances
-        """
         u0 = rr/(self.k.T + rr)
         u = self.r * u0.T
         return np.min(u.T, axis=1)
-        
     def rhs(self, X, t):
         nn, rr = X[:5], X[5:]
         mu = self.growth_rate(rr)
@@ -1421,96 +1199,3 @@ class MacArthur(DynSys):
         rrdot = self.d*(self.s - rr) - np.matmul(self.c, (mu*nn))
         return np.hstack([nndot, rrdot])
 
-
-
-### Non autonomous
-
-
-## Maps
-
-class deJong2D(object):
-    """
-    Simulate the dynamics of the 2D de Jong attractor
-    Parameters default to a known chaotic case
-    """
-    def __init__(self, a=1.641, b=1.902, c=0.316, d=1.525):
-        """
-        Inputs
-        - a : float
-        - b : float
-        - c : float
-        - d : float
-        """
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
-
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the Lorenz system
-        - X : tuple of length 2, corresponding to xn, yn
-        - t : float (the current time)
-        """
-        
-        x, y = X
-        x_next = np.sin(self.a*y) - np.cos(self.b*x)
-        y_next = np.sin(self.c*x) - np.cos(self.d*y)
-        return (x_next, y_next)
-
-    def integrate(self, X0, tpts):
-        """
-        X0 : 2-tuple, the initial values of the coordinates
-        tpts : np.array, the time mesh
-        """
-        x0, y0 = X0
-        curr = (x0, y0)
-        all_vals = [curr]
-        for t in tpts:
-            curr = self(curr, t)
-            all_vals.append(curr)
-        sol = np.array(all_vals)
-        return sol.T
-
-
-class Henon(object):
-    """
-    Simulate the dynamics of the Henon attractor
-    Parameters default to a known chaotic case
-    """
-    def __init__(self, a=1.4, b=0.3):
-        """
-        Inputs
-        - a : float
-        - b : float
-        """
-        self.a = a
-        self.b = b
-
-    def __call__(self, X, t):
-        """
-        The dynamical equation for the Lorenz system
-        - X : tuple of length 2, corresponding to xn, yn
-        - t : float (the current time)
-        """
-        
-        x, y = X
-        x_next = 1-self.a*x**2 + y
-        y_next = self.b*x
-        return (x_next, y_next)
-
-    def integrate(self, X0, tpts):
-        """
-        X0 : 2-tuple, the initial values of the coordinates
-        tpts : np.array, the time mesh
-        """
-        x0, y0 = X0
-        curr = (x0, y0)
-        all_vals = [curr]
-        for t in tpts:
-            curr = self(curr, t)
-            all_vals.append(curr)
-        sol = np.array(all_vals)
-        return sol.T
-
-# Ikeda, Pickover, Logistic

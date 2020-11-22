@@ -42,6 +42,24 @@
         },
         "citation" : "Thomas, René (1999). \"Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, 'labyrinth chaos'\". Int. J. Bifurc. Chaos. 9 (10): 1889–1905."
     },
+    "ThomasLabyrinth" : {
+        "initial_conditions" : [0.1, 0.4, 0.1],
+        "dt" : 1e-2,
+        "parameters" : {
+            "a" : 0.5, 
+            "b" : 10
+        },
+        "citation" : "Thomas, René (1999). \"Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, 'labyrinth chaos'\". Int. J. Bifurc. Chaos. 9 (10): 1889–1905.",
+        "description" : "Trajectories seemingly undergo Brownian motion on an infinite lattice, and only remain bounded when a is less than one."
+    },
+    "HenonHeiles" : {
+        "initial_conditions" : [-0.31701741,  0.01992698,  0.39274462,  0.12138312],
+        "dt" : 1e-2,
+        "parameters" : {
+            "lam" : 1
+        },
+        "citation" : "Hénon, M.; Heiles, C. (1964). \"The applicability of the third integral of motion: Some numerical experiments\". The Astronomical Journal. 69: 73–79.."
+    },
     "Chua" : {
         "initial_conditions" : [0.1, 0.1, 0.1],
         "dt" : 1e-3,
@@ -73,6 +91,19 @@
         },
         "citation" : "Sprott IEEE Circ. Sys. 2011."
     },
+    "Colpitts" : {
+        "initial_conditions" : [10.332,  0.94, 10.73],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 30, 
+            "b" : 0.8, 
+            "c" : 20, 
+            "d" : 0.08, 
+            "e" : 10
+        },
+        "citation" : "Kennedy. IEEE Trans Circuits & Systems. 1994: 771-774. Li, Zhou, Yang. Chaos, Solitons, & Fractals. 2007",
+        "description" : "An electrical circuit used as a signal generator."
+    },
     "Duffing" : {
         "initial_conditions" : [0.1, 0.1, 0.1],
         "dt" : 1e-3,
@@ -84,6 +115,17 @@
             "omega" : 1
         },
         "citation" : "Duffing, G. (1918), Erzwungene Schwingungen bei veränderlicher Eigenfrequenz und ihre technische Bedeutung [Forced oscillations with variable natural frequency and their technical relevance] (in German), Heft 41/42, Braunschweig: Vieweg."
+    },
+    "Torus" : {
+        "initial_conditions" : [-0.06891183, -0.05372107,  0.98546319],
+        "dt" : 1e-3,
+        "parameters" : {
+            "r" : 1, 
+            "a" : 0.5, 
+            "n" :15.3
+        },
+        "citation" : "None.",
+        "description" : "A minimal quasiperiodic flow on a torus."
     },
     "Halvorsen" : {
         "initial_conditions" : [1, 0.2, 1],
@@ -141,7 +183,8 @@
             "c" : 1.0, 
             "d" : -1.0
         },
-        "description" : "Aka the ACT attractor"
+        "citation" : "Arneodo, A., Coullet, P. & Tresser, C. Occurence of strange attractors in three-dimensional volterra equations. Physics Letters A 79, 259–263 (1980)",
+        "description" : "also known as the ACT attractor, a modified Lotka-Volterra ecosystem"
     },
     "Rucklidge" : {
         "initial_conditions" : [0.1, 0, 0.1],
@@ -183,6 +226,133 @@
         },
         "citation" : "Lu, Chen, Cheng. Int J Bifurcat Chaos. 2004: 1507–1537."
     },
+    "Chen" : {
+        "initial_conditions" : [-6, -7, 12],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 35, 
+            "b" : 3, 
+            "c" : 28
+        },
+        "citation" : "Chen, Ueta. Int J Bifurcat Chaos. 2004: 1465-1466. Chen. Proc. First Int. Conf. Control of Oscillations and Chaos. 1997: 181–186."
+    },
+    "ChenLee" : {
+        "initial_conditions" : [-6, -7, 12],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 5, 
+            "b" : -10, 
+            "c" : -0.38
+        },
+        "citation" : "Chen, Ueta. Int J Bifurcat Chaos. 2004: 1465-1466. Chen. Proc. First Int. Conf. Control of Oscillations and Chaos. 1997: 181–186."
+    },
+    "LuChen" : {
+        "initial_conditions" : [-6, -7, 12],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 36, 
+            "b" : 3, 
+            "c" : 18
+        },
+        "citation" : "Lu, Chen. Int J Bifurcat Chaos. 2002: 659-661.",
+        "description" : "    A system that switches shapes between the Lorenz and Chen attractors as the parameter c is varied from 12.7 to 28.5. Also called the Chen Celikovsky attractor"
+    },
+    "QiChen" : {
+        "initial_conditions" : [-11.4,  -2.84,  77.3],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 38, 
+            "b" : 2.666, 
+            "c" : 80
+        },
+        "citation" : "Qi et al. Chaos, Solitons & Fractals 2008."
+    },
+    "YuWang" : {
+        "initial_conditions" : [-0.25, -0.21, 14.38],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 10, 
+            "b" : 40, 
+            "c" : 2, 
+            "d" : 2.5
+        },
+        "citation" : "Yu,  Wang. Eng Techn & Applied Science Research 2012."
+    },
+    "YuWang2" : {
+        "initial_conditions" : [-0.85, -1.29, 10.7],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 10, 
+            "b" : 30, 
+            "c" : 2, 
+            "d" : 2.5
+        },
+        "citation" : "Yu,  Wang. Eng Techn & Applied Science Research 2012."
+    },
+    "NewtonLiepnik" : {
+        "initial_conditions" : [-0.0353287,  0.03625146, 0.24724805],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 0.4,
+            "b" : 0.175
+        },
+        "citation" : "Leipnik, R. B., and T. A. Newton. \"Double strange attractors in rigid body motion with linear feedback control.\" Physics Letters A 86.2 (1981): 63-67.."
+    },
+    "DequanLi" : {
+        "initial_conditions" : [-0.25, -0.21, 14.38],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 40, 
+            "c" : 1.833, 
+            "d" : 0.16, 
+            "eps" : 0.65, 
+            "k" : 55, 
+            "f" : 20
+        },
+        "citation" : "Li, Phys Lett A. 2008: 387-393.",
+        "description" : "Sometimes called the \"Three Scroll\" unified attractor TSUCS-2"
+    },
+    "Tsucs2" : {
+        "initial_conditions" : [1.02271236, 0.99617321, 37.35140055],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 40, 
+            "c" : 0.833, 
+            "d" : 0.5, 
+            "eps" : 0.65, 
+            "k" : 0,
+            "f" : 20
+        },
+        "citation" : "TBD.",
+        "description" : "A named attractor related to the DequanLi attractor"
+    },
+    "PanXuZhou" : {
+        "initial_conditions" : [-3.20222227, -1.11351351, 16.3993616],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 10, 
+            "c" : -2.6667, 
+            "d" : 0, 
+            "eps" : 0.0, 
+            "k" : 16,
+            "f" : 0
+        },
+        "citation" : "TBD.",
+        "description" : "A named attractor related to the DequanLi attractor"
+    },
+    "WangSun" : {
+        "initial_conditions" : [0.02, 0.75, 0.32],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 0.2, 
+            "b" : -0.01, 
+            "d" : -0.4, 
+            "e" : -1.0, 
+            "f" : -1.0, 
+            "q" : 1.0
+        },
+        "citation" : "TBD."
+    },
     "Sakarya" : {
         "initial_conditions" : [-2.8, 1.9, 1.8],
         "dt" : 1e-3,
@@ -197,6 +367,22 @@
             "s" : 1.0
         },
         "citation" : "TBD"
+    },
+    "LiuChen" : {
+        "initial_conditions" : [0.1, 0.1, 0.1],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 0.4, 
+            "b" : 12.0, 
+            "c" : -5.0, 
+            "r" : 1.0, 
+            "p" : 0.0, 
+            "q" : -1.0, 
+            "h" : 0.0, 
+            "s" : 1.0
+        },
+        "citation" : "Liu, Chen. Int J Bifurcat Chaos. 2004: 1395-1403.",
+        "description" : "Derived from Sakarya."
     },
     "Aizawa" : {
         "initial_conditions" : [0.1, 0.1, 0.1],
@@ -284,6 +470,15 @@
         "parameters" : {},
         "citation" : "Sprott Physics Letters A 2014",
         "description" : "Depending on the initial conditions, this is a torus or a complex attractor. The IC (0.1, 0.1, 0.1) give the torus."
+    },
+    "SprottJerk" : {
+        "initial_conditions" : [4.00383787, 2.00919462, 0.19757369],
+        "dt" : 1e-3,
+        "parameters" : {
+            "mu" : 2.017
+        },
+        "citation" : "Sprott, J. C. \"Simplest dissipative chaotic flow.\" Physics letters A 228.4-5 (1997): 271-274..",
+        "description" : "Numerical integration of this attractor is extremely sensitive to the initial conditions"
     },
     "SprottB" : {
         "initial_conditions" : [0.1, 0.1, 0.1],
@@ -490,17 +685,6 @@
         },
         "citation" : "TBD"
     },
-    "ForcedBrusselator" : {
-        "initial_conditions" : [0.4, 3, 0.1],
-        "dt" : 1e-2,
-        "parameters" : {
-            "a" : 0.4, 
-            "b" : 1.2, 
-            "f" : 0.05, 
-            "w" : 0.81
-        },
-        "citation" : "I. Prigogine, From Being to Becoming: Time and Complexity in the Physical Sciences, New York: W.H. Freeman and Company, 1980."
-    },
     "BelousovZhabotinsky" : {
         "initial_conditions" : [0.05, 0.9, 0.85],
         "dt" : 1e-4,
@@ -529,6 +713,74 @@
         },
         "citation" : "A three-variable model of deterministic chaos in the Belousov–Zhabotinsky reaction. Györgyi, Field. Nature 1992",
         "description" : "A reduced-order model of the BZ reaction that exhibits period doubling. The bifurcation parameter for controlling the onset of chaos is kf. The system undergoes regular cycling when kf=3e-4, and chaotic oscillations when kf=3.5e-4"
+    },
+    "ForcedBrusselator" : {
+        "initial_conditions" : [0.4, 3, 0.1],
+        "dt" : 1e-2,
+        "parameters" : {
+            "a" : 0.4, 
+            "b" : 1.2, 
+            "f" : 0.05, 
+            "w" : 0.81
+        },
+        "citation" : "I. Prigogine, From Being to Becoming: Time and Complexity in the Physical Sciences, New York: W.H. Freeman and Company, 1980."
+    },
+    "ForcedVanDerPol" : {
+        "initial_conditions" : [1, 0.2, 0],
+        "dt" : 1e-3,
+        "parameters" : {
+            "mu" : 8.53, 
+            "a" : 1.2, 
+            "w" : 0.63
+        },
+        "citation" : "B. van der Pol: \"A theory of the amplitude of free and forced triode vibrations\", Radio Review (later Wireless World) 1 701–710 (1920).",
+        "description" : "Non-autonomous."
+    },
+    "StickSlipOscillator" : {
+        "initial_conditions" : [0.85539847,  -0.39125834,  0],
+        "dt" : 1e-4,
+        "parameters" : {
+            "a" : 1, 
+            "b" : 1, 
+            "alpha" : 0.3,
+            "beta" : 0.3,
+            "t0" : 0.3,
+            "w" : 2,
+            "vs" : 0.4,
+            "gamma" : 1.2,
+            "eps" : 0.01
+        },
+        "citation" : "Awrejcewicz, Jan, and M. M. Holicke. Int J of Bifurcation and Chaos (1999).",
+        "description" : "gamma controls the transition to chaos."
+    },
+    "ForcedFitzHughNagumo" : {
+        "initial_conditions" : [-1.5, 0, 1000],
+        "dt" : 1e-3,
+        "parameters" : {
+            "curr" : 0.5, 
+            "a" : 0.7, 
+            "b" : 0.8, 
+            "gamma" : 0.08, 
+            "omega" : 1.1, 
+            "f" : 0.25
+        },
+        "citation" : "FitzHugh, Richard (July 1961). \"Impulses and Physiological States in Theoretical Models of Nerve Membrane\". Biophysical Journal. 1 (6): 445–466.",
+        "description" : "Non-autonomous."
+    },
+    "HindmarshRose" : {
+        "initial_conditions" : [-0.18, -0.07,  0.05],
+        "dt" : 1e-3,
+        "parameters" : {
+            "tx" : 0.03, 
+            "tz" : 0.8, 
+            "a" : 0.49, 
+            "b" : 1.0, 
+            "d" : 1.0, 
+            "s" : 1.0, 
+            "c" : 0.0322
+        },
+        "citation" : "Marhl, Perc. Chaos, Solitons, Fractals 2005.",
+        "description" : "TBD."
     },
     "CellCycle" : {
         "initial_conditions" : [0.5, 0.1, 0.1, 0.51, 0.5, 0.1],
@@ -599,6 +851,33 @@
         "citation" : "Houart, Dupont, Goldbeter. Bull Math Biol 1999.",
         "description" : "Intracellular calcium ion oscillations."
     },
+    "CaTwoPlusQuasiperiodic" : {
+        "initial_conditions" : [0.23756038, 0.91751337, 0.37277607],
+        "dt" : 1e-3,
+        "parameters" : {
+            "beta" : 0.51, 
+            "K2" : 0.1, 
+            "K5" : 0.3, 
+            "Ka" : 0.2,
+            "Kd" : 0.5,
+            "Ky" : 0.2, 
+            "Kz" : 0.5, 
+            "k" : 10,
+            "kf" : 1,
+            "eps" : 0.1,
+            "n" : 4,
+            "m" : 2,
+            "p" : 2,
+            "V0" : 2, 
+            "V1" : 2,
+            "Vm2" : 6, 
+            "Vm3" : 20, 
+            "V4" : 5, 
+            "Vm5" : 30
+        },
+        "citation" : "Houart, Dupont, Goldbeter. Bull Math Biol 1999.",
+        "description" : "Intracellular calcium ion oscillations with quasiperiodic parameter values. The original paper also includes parameters for a limit cycle"
+    },
     "ItikBanksTumor" : {
         "initial_conditions" : [0.27, 0.91, 0.14],
         "dt" : 1e-3,
@@ -628,6 +907,13 @@
         },
         "citation" : "Smith, Thiffeault, Horton. J Geophys Res. 2000. Horton, Weigel, Sprott. Chaos 2001.",
         "description" : "A simplified form of the Windmi model of the Earth's magnetosphere. The parameter vsw controls the onset of chaos."
+    },
+    "MixMasterUniverse" : {
+        "initial_conditions" : [-25.17254711,   0.41108319,  -2.83552146,   0.73271588,-7.66808841,  14.28088046 ],
+        "dt" : 1e-5,
+        "parameters" : {},
+        "citation" : "Charles W. Misner, \"Mixmaster Universe\", Physical Review Letters, Vol. 22, Issue 20 (May 1969), pp. 1071-1074. Pollicott, Mark, and Howard Weiss. \"Some remarks on the dynamics of the Mixmaster universe.\" Qualitative Theory of Dynamical Systems 4 (2004): 425-438.",
+        "description" : "A simplified model of the early Universe. This parametrization is taken from the second referenced paper"
     },
     "TurchinHanski" : {
         "initial_conditions" : [0.9, 0.03, 9.5],
@@ -729,7 +1015,7 @@
             "m" : 0.25
         },
         "citation" : "MacArthur, R. 1969. Species packing, and what competition minimizes. PNAS 64:1369. Parameter values taken from a model of phytoplankton in Huisman & Weissing. Nature 1999.",
-        "description" : "TBD"
+        "description" : "A model of chaotic oscillations in a plankton community, based on MacArthur's consumer resource model. Growth rates are determined using Liebig's law of the maximum"
     },
     "BeerRNN" : {
         "initial_conditions" : [1.1, 2.42, 0.24],
@@ -742,6 +1028,17 @@
                    [0.535, -2.25, 3.885]]
         },
         "citation" : "Beer, R. D. (1995). On the dynamics of small continuous-time recurrent neural networks. Adapt. Behav., 3(4), 469–509."
+    },
+    "CellularNeuralNetwork" : {
+        "initial_conditions" : [-0.32, -0.36, -0.02],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 4.4, 
+            "b" : 3.21, 
+            "c" : 1.1, 
+            "d" : 1.24
+        },
+        "citation" : "Arena, Caponetto, Fortuna, and Porto., Int J Bifurcat Chaos. 1998:  1527-1539."
     },
     "Hopfield" : {
         "initial_conditions" : [1,0,0,1,0,1],
