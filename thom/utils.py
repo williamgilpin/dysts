@@ -17,7 +17,6 @@
 #     warnings.warn("JAX not found, falling back to numpy.")
 import numpy as np
 
-
 import warnings
 from scipy.integrate import odeint
 from collections import deque

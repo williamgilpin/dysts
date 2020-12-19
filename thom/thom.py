@@ -28,7 +28,8 @@ import warnings
 from numba import jit
 import json
 
-from utils import integrate_dyn
+# from utils import standardize_ts
+# from utils import integrate_dyn
 
 # try:
 #     import jax.numpy as np
@@ -37,8 +38,51 @@ from utils import integrate_dyn
 #     import numpy as np
 #     has_jax = False
 #     warnings.warn("JAX not found, falling back to numpy.")
-    
+
+import os
+import sys
+curr_path = sys.path[0]
+print(curr_path)
+
+import pkg_resources
+data_path = pkg_resources.resource_filename('thom', 'data/chaotic_attractors.json')
+# print(data_path)
+
 import numpy as np
+
+from scipy.integrate import odeint
+from sdeint import itoint
+def integrate_dyn(f, ic, tvals, noise=0, use_compile=True):
+    """
+    Given the RHS of a dynamical system, integrate the system
+    noise > 0 requires the Python library sdeint (assumes Brownian noise)
+
+    f : callable, the right hand side of a system of ODE
+    ic : the initial conditions
+    noise_amp : the amplitude of the Langevin forcing term
+    use_compile : bool, whether to compile the function with numba 
+        before performing integration
+    
+    DEV:
+    scipy.integrate.solve_ivp(eq, (tpts[0], tpts[-1]), np.array(ic), 
+    method='DOP853', dense_output=True)
+    eq takes (t, X) and not vice-versa
+    """
+    fc = f # jit currently doesn't play well with objects
+    if noise > 0:
+
+        def gw(y, t):
+            return noise * np.diag(ic)
+
+        def fw(y, t):
+            return np.array(fc(y, t))
+
+        sol = itoint(fw, gw, np.array(ic), tvals).T
+    else:
+        sol = odeint(fc, np.array(ic), tvals).T
+
+    return sol
+
 
 @dataclass(init=False)
 class DynSys:
@@ -68,7 +112,9 @@ class DynSys:
 
     @staticmethod
     def _load_data(name):
-        with open("chaotic_attractors.json", "r") as read_file:
+        # with open(os.path.join(curr_path, "chaotic_attractors.json"), "r") as read_file:
+        #     data = json.load(read_file)
+        with open(data_path, "r") as read_file:
             data = json.load(read_file)
         try:
             return data[name]
