@@ -42,7 +42,7 @@ import json
 import os
 import sys
 curr_path = sys.path[0]
-print(curr_path)
+# print(curr_path)
 
 import pkg_resources
 data_path = pkg_resources.resource_filename('thom', 'data/chaotic_attractors.json')
