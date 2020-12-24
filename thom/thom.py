@@ -111,6 +111,7 @@ class DynSys:
                 self.params[key] = np.array(self.params[key])
         self.__dict__.update(self.params)
         self.dt = self._load_data()["dt"]
+        self.period = self._load_data()["period"]
         self.ic = self._load_data()["initial_conditions"]
         
     def _load_data(self):
