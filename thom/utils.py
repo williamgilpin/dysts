@@ -16,11 +16,15 @@
 #     has_jax = False
 #     warnings.warn("JAX not found, falling back to numpy.")
 import numpy as np
+from numpy.fft import rfft, irfft
 
 import warnings
 from scipy.integrate import odeint
+from scipy.signal import blackmanharris, fftconvolve
 from collections import deque
 from functools import partial
+
+import json
 
 from sdeint import itoint
 
@@ -40,6 +44,27 @@ from sdeint import itoint
 #         return func
 #     def jitclass(c):
 #         return c
+
+
+import pkg_resources
+
+def get_attractor_list():
+    data_path = pkg_resources.resource_filename('thom', 'data/chaotic_attractors.json')
+    with open(data_path, "r") as file:
+        data = json.load(file)
+    return list(data.keys())
+
+
+def signif(x, figs=6):
+    """
+    Round to a fixed number of significant digits
+    x : float
+    figs : int, the desired number of significant figures
+    """
+    if x == 0 or not np.isfinite(x):
+        return x
+    figs = int(figs - np.ceil(np.log10(abs(x))))
+    return round(x, figs)
 
 def standardize_ts(a, scale=1.0):
     """
@@ -138,17 +163,6 @@ def find_characteristic_timescale(y, k=1):
     return np.squeeze(1/(np.median(np.diff(fvals))*max_indices_grouped[:k]))
 
 
-def find_initial_condtion():
-    """
-    Simulate a system until it settles onto an attractor
-    """
-    pass
-
-
-
-from numpy.fft import rfft, irfft
-from scipy.signal import blackmanharris, fftconvolve
-
 def parabolic(f, x):
     """
     Quadratic interpolation in order to estimate the location of a maximum
@@ -246,6 +260,55 @@ def resample_timepoints(model, ic, tpts, pts_per_period=100):
     new_timepoints = np.linspace(0, num_periods*period, num_periods*pts_per_period)
     #out = integrate_dyn(eq, ic, tt)
     return new_timepoints
+
+def find_significant_frequencies(sig, window=True, thresh=1.0, fs=1, n_samples=100, show=False):
+    """
+    Find power spectral frequencies that are significant, meaning that they are 
+    overrepresented in the signal compared to shuffled copies.
+    
+    Parameters
+    ----------
+    window : bool
+        whether to window the signal before taking the FFT
+    thresh : float
+        the number of standard deviations above mean to be significant
+    fs : int
+        the sampling frequency
+    n_samples : int
+        the number of surrogates to create
+    show : bool
+        show the psd of the signal and the surrogate
+    
+    Returns
+    -------
+    freqs : ndarray
+        The frequencies overrated in the dataset
+
+    """
+    n = len(sig)
+    halflen = n // 2
+    
+    if window:
+        sig = sig * blackmanharris(n)
+    
+    psd_sig = rfft(sig)
+    
+    all_surr_psd = list()
+    for i in range(n_samples):
+        surr = np.copy(sig)
+        np.random.shuffle(surr)
+        if window:
+            surr = surr * blackmanharris(len(surr))
+            psd_surr = rfft(surr)
+        all_surr_psd.append(psd_surr)
+    all_surr_psd = np.array(all_surr_psd)
+
+    surrogate_floor = np.mean(all_surr_psd, axis=0) + thresh * np.std(all_surr_psd, axis=0)  
+    freq_inds = np.arange(len(psd_sig))[psd_sig > surrogate_floor]
+    freqs = fs * freq_inds / len(sig)
+
+    return freqs
+
 
 def generate_ic_ensemble(
     model,

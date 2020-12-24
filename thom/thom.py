@@ -25,7 +25,6 @@ DEV:
 
 from dataclasses import dataclass, field, asdict
 import warnings
-from numba import jit
 import json
 
 # from utils import standardize_ts
@@ -52,6 +51,8 @@ import numpy as np
 
 
 from .utils import integrate_dyn
+
+# from numba import jit
 # from scipy.integrate import odeint
 # from sdeint import itoint
 # def integrate_dyn(f, ic, tvals, noise=0, use_compile=True):
@@ -100,28 +101,27 @@ class DynSys:
     
     def __init__(self, **entries):
         self.name = self.__class__.__name__
-        dfac = lambda : _load_data(self.name)["parameters"]
-        self.params = self._load_data(self.name)["parameters"]
+        self._load_data()
+        dfac = lambda : self._load_data()["parameters"]
+        self.params = self._load_data()["parameters"]
         self.params.update(entries)
         # Cast all parameter arrays to numpy
         for key in self.params:
             if not np.isscalar(self.params[key]):
                 self.params[key] = np.array(self.params[key])
         self.__dict__.update(self.params)
-        self.dt = self._load_data(self.name)["dt"]
-        self.ic = self._load_data(self.name)["initial_conditions"]
+        self.dt = self._load_data()["dt"]
+        self.ic = self._load_data()["initial_conditions"]
         
-
-    @staticmethod
-    def _load_data(name):
+    def _load_data(self):
         # with open(os.path.join(curr_path, "chaotic_attractors.json"), "r") as read_file:
         #     data = json.load(read_file)
         with open(data_path, "r") as read_file:
             data = json.load(read_file)
         try:
-            return data[name]
+            return data[self.name]
         except KeyError:
-            print(f"No metadata available for {name}")
+            print(f"No metadata available for {self.name}")
             return {"parameters" : None}
           
     def rhs(self, X, t):
