@@ -118,11 +118,15 @@ def group_consecutives(vals, step=1):
         expect = v + step
     return result
 
+from scipy.ndimage import gaussian_filter1d
 def find_characteristic_timescale(y, k=1):
     """
     Find the k leading characteristic timescales in a time series
-    using the power spectrum
+    using the power spectrum..
     """
+    y = gaussian_filter1d(y, 3)
+    y = y * blackmanharris(len(y))
+    
     halflen = int(len(y)/2)
     fvals, psd = periodogram(y, fs=1)
     max_indices = np.argsort(psd[:halflen])[::-1]
@@ -148,7 +152,8 @@ from scipy.signal import blackmanharris, fftconvolve
 def parabolic(f, x):
     """
     Quadratic interpolation in order to estimate the location of a maximum
-
+    https://gist.github.com/endolith/255291
+    
     Args:
         f (ndarray): a vector a samples
         x (int): an index on the vector
@@ -164,7 +169,8 @@ def parabolic(f, x):
 def parabolic_polyfit(f, x, n):
     """
     Use the built-in polyfit() function to find the peak of a parabola
-
+    https://gist.github.com/endolith/255291
+    
     Args:
         f (ndarray): a vector a samples
         x (int): an index on the vector
@@ -175,9 +181,13 @@ def parabolic_polyfit(f, x, n):
     yv = a * xv**2 + b * xv + c
     return (xv, yv)
 
-def freq_from_autocorr(sig, fs):
+def freq_from_autocorr(sig, fs=1):
     """
     Estimate frequency using autocorrelation
+    https://gist.github.com/endolith/255291
+    
+    sig : a univariate signal
+    fs : the sampling frequency
     """
     # Calculate autocorrelation and throw away the negative lags
     corr = np.correlate(sig, sig, mode='full')
@@ -196,6 +206,27 @@ def freq_from_autocorr(sig, fs):
 
     return fs / px
 
+from numpy.fft import rfft
+def freq_from_fft(sig, fs=1):
+    """
+    Estimate frequency from peak of FFT
+    https://gist.github.com/endolith/255291
+    
+    sig : a univariate signal
+    fs : the sampling frequency
+    """
+    # Compute Fourier transform of windowed signal
+    windowed = sig * blackmanharris(len(sig))
+    f = rfft(windowed)
+
+    # Find the peak and interpolate to get a more accurate peak
+    i = np.argmax(abs(f))  # Just use this for less-accurate, naive version
+    true_i = parabolic(np.log(abs(f)), i)[0]
+
+    # Convert to equivalent frequency
+    return fs * true_i / len(windowed)
+
+
 def resample_timepoints(model, ic, tpts, pts_per_period=100):
     """
     Given a differential equation, initial condition, and a set of 
@@ -211,7 +242,7 @@ def resample_timepoints(model, ic, tpts, pts_per_period=100):
     dt = (tpts[1] - tpts[0])
     samp = integrate_dyn(model, ic, tpts)[0]
     period = dt*(1/freq_from_autocorr(samp[:10000], 1))
-    num_periods = len(tpts)/pts_per_period
+    num_periods = len(tpts) // pts_per_period
     new_timepoints = np.linspace(0, num_periods*period, num_periods*pts_per_period)
     #out = integrate_dyn(eq, ic, tt)
     return new_timepoints

@@ -29,7 +29,7 @@ from numba import jit
 import json
 
 # from utils import standardize_ts
-# from utils import integrate_dyn
+
 
 # try:
 #     import jax.numpy as np
@@ -50,38 +50,40 @@ data_path = pkg_resources.resource_filename('thom', 'data/chaotic_attractors.jso
 
 import numpy as np
 
-from scipy.integrate import odeint
-from sdeint import itoint
-def integrate_dyn(f, ic, tvals, noise=0, use_compile=True):
-    """
-    Given the RHS of a dynamical system, integrate the system
-    noise > 0 requires the Python library sdeint (assumes Brownian noise)
 
-    f : callable, the right hand side of a system of ODE
-    ic : the initial conditions
-    noise_amp : the amplitude of the Langevin forcing term
-    use_compile : bool, whether to compile the function with numba 
-        before performing integration
+from .utils import integrate_dyn
+# from scipy.integrate import odeint
+# from sdeint import itoint
+# def integrate_dyn(f, ic, tvals, noise=0, use_compile=True):
+#     """
+#     Given the RHS of a dynamical system, integrate the system
+#     noise > 0 requires the Python library sdeint (assumes Brownian noise)
+
+#     f : callable, the right hand side of a system of ODE
+#     ic : the initial conditions
+#     noise_amp : the amplitude of the Langevin forcing term
+#     use_compile : bool, whether to compile the function with numba 
+#         before performing integration
     
-    DEV:
-    scipy.integrate.solve_ivp(eq, (tpts[0], tpts[-1]), np.array(ic), 
-    method='DOP853', dense_output=True)
-    eq takes (t, X) and not vice-versa
-    """
-    fc = f # jit currently doesn't play well with objects
-    if noise > 0:
+#     DEV:
+#     scipy.integrate.solve_ivp(eq, (tpts[0], tpts[-1]), np.array(ic), 
+#     method='DOP853', dense_output=True)
+#     eq takes (t, X) and not vice-versa
+#     """
+#     fc = f # jit currently doesn't play well with objects
+#     if noise > 0:
 
-        def gw(y, t):
-            return noise * np.diag(ic)
+#         def gw(y, t):
+#             return noise * np.diag(ic)
 
-        def fw(y, t):
-            return np.array(fc(y, t))
+#         def fw(y, t):
+#             return np.array(fc(y, t))
 
-        sol = itoint(fw, gw, np.array(ic), tvals).T
-    else:
-        sol = odeint(fc, np.array(ic), tvals).T
+#         sol = itoint(fw, gw, np.array(ic), tvals).T
+#     else:
+#         sol = odeint(fc, np.array(ic), tvals).T
 
-    return sol
+#     return sol
 
 
 @dataclass(init=False)
@@ -296,6 +298,24 @@ class DoubleGyre(DynSys):
         dy = self.a * np.pi*np.cos(np.pi*f)*np.sin(np.pi*y)*(2*a*x + b)
         dz = self.omega
         return np.stack([dx, dy, dz]).T
+
+class BickleyJet(DynSys):
+    def rhs(self, X, t):
+        x, y, z = X
+        sechy = 1/np.cosh(y/self.ell)
+        u = [self.k[i]*(x - t*self.sigma[i]) for i in range(3)]
+        dx = self.u*sechy**2*(-1 - 2*(np.cos(u[0])*self.eps[0] + np.cos(u[1])*self.eps[1] + np.cos(u[2])*self.eps[2])*np.tanh(y/self.ell))
+        dy = self.ell*self.u*sechy**2*(self.eps[0]*self.k[0]*np.sin(u[0]) + self.eps[1]*self.k[1]*np.sin(u[1]) + self.eps[2]*self.k[2]*np.sin(u[2]))
+        dz = self.omega
+        return np.stack([dx, dy, dz]).T
+
+class ArnoldBeltramiChildress(DynSys):
+    def rhs(self, X, t):
+        x, y, z = X
+        dx = self.a*np.sin(z) + self.c*np.cos(y)
+        dy = self.b*np.sin(x) + self.a*np.cos(z)
+        dz = self.c*np.sin(y) + self.b*np.cos(x)
+        return (dx, dy, dz)
 
 class JerkCircuit(DynSys):
     def rhs(self, X, t):

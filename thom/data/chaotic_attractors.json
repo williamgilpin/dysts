@@ -683,7 +683,32 @@
             "eps" : 0.1, 
             "omega" : 0.62832
         },
-        "citation" : "TBD"
+        "citation" : "Allshouse, M. & Peacock, T. 2015 Lagrangian based methods for coherent structure detection. Chaos 25 (097617)."
+    },
+    "BickleyJet" : {
+        "initial_conditions" : [0.3, -0.4, 0],
+        "dt" : 1e2,
+        "parameters" : {
+            "u" : 62.66e-6, 
+            "sigma" : [9.05854e-6, 12.8453e-6, 28.8863e-6],
+            "ell" : 1770e-3,
+            "eps" : [0.0075, 0.15, 0.3],
+            "k" : [0.313922, 0.627845, 0.941767],
+            "omega" : 1
+        },
+        "citation" : "A Spectral Clustering Approach to Lagrangian Vortex Detection. Hadjighasem, Karrasch, Teramoto, Haller. Phys Rev E 2016",
+        "description" : "A zonal jet passing between two counter rotating vortices. A steady Hamiltonian with a time-dependent perturbation"
+    },
+    "ArnoldBeltramiChildress" : {
+        "initial_conditions" : [0.1, 0.1, 0.1],
+        "dt" : 1e-3,
+        "parameters" : {
+            "a" : 1.73205, 
+            "b" : 1.41421, 
+            "c" : 1
+        },
+        "citation" : "V. I. Arnold, Journal of Applied Mathematics and Mechanics 30, 223 (1966).",
+        "description" : "An exact solution of Euler's equation"
     },
     "BelousovZhabotinsky" : {
         "initial_conditions" : [0.05, 0.9, 0.85],
