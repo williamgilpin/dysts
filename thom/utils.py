@@ -143,18 +143,29 @@ def group_consecutives(vals, step=1):
         expect = v + step
     return result
 
+def find_psd(y, window=True):
+    """
+    Find the power spectrum of a signal
+    """
+    if window:
+        y = y * blackmanharris(len(y))
+    halflen = int(len(y)/2)
+    fvals, psd = periodogram(y, fs=1)
+    return fvals[:halflen], psd[:halflen]
+
 from scipy.ndimage import gaussian_filter1d
-def find_characteristic_timescale(y, k=1):
+def find_characteristic_timescale(y, k=1, window=True):
     """
     Find the k leading characteristic timescales in a time series
     using the power spectrum..
     """
     y = gaussian_filter1d(y, 3)
-    y = y * blackmanharris(len(y))
-    
-    halflen = int(len(y)/2)
-    fvals, psd = periodogram(y, fs=1)
-    max_indices = np.argsort(psd[:halflen])[::-1]
+
+    fvals, psd = find_psd(y, window=window)
+    # y = y * blackmanharris(len(y))
+    # halflen = int(len(y)/2)
+    # fvals, psd = periodogram(y, fs=1)
+    max_indices = np.argsort(psd)[::-1]
     
     # Merge adjacent peaks
     grouped_maxima = group_consecutives(max_indices)
