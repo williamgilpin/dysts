@@ -170,6 +170,15 @@ class LorenzCoupled(DynSys):
         z2dot = x2*y2 - self.beta*z2
         return (x1dot, y1dot, z1dot, x2dot, y2dot, z2dot)
 
+class Lorenz96(DynSys):
+    def rhs(self, X, t):
+        Xdot = np.zeros_like(X)
+        Xdot[0] = (X[1] - X[-2]) * X[-1] - X[0] + self.f
+        Xdot[1] = (X[2] - X[-1]) * X[0] - X[1] + self.f
+        Xdot[-1] = (X[0] - X[-3]) * X[-2] - X[-1] + self.f
+        Xdot[2:-1] = (X[3:] - X[:-3])*X[1:-2] - X[2:-1] + self.f
+        return Xdot
+    
 class Rossler(DynSys):
     def rhs(self, X, t):
         x, y, z = X

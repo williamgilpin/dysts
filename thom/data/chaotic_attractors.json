@@ -48,8 +48,22 @@
             "rho2": 1.15,
             "eps": 2.85
         },
-        "citation": "Lorenz, Edward N. \"Deterministic nonperiodic flow.\" Journal of the atmospheric sciences 20.2 (1963): 130-141.",
+        "citation": "Lorenz, Edward N. Deterministic nonperiodic flow. Journal of the atmospheric sciences 20.2 (1963): 130-141.",
         "period": 19815.0
+    },
+    "Lorenz96": {
+        "initial_conditions": [
+            -2.46820633,  
+            0.09570264,  
+            1.59270902, 
+            10.21372147
+        ],
+        "dt": 0.0001428,
+        "parameters": {
+            "f": 20.0
+        },
+        "citation": "Lorenz, Edward (1996). Predictability – A problem partly solved. Seminar on Predictability, Vol. I, ECMWF.",
+        "period": 13756.0
     },
     "Thomas": {
         "initial_conditions": [
@@ -62,7 +76,7 @@
             "a": 1.85,
             "b": 10
         },
-        "citation": "Thomas, Ren\u00e9 (1999). \"Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, 'labyrinth chaos'\". Int. J. Bifurc. Chaos. 9 (10): 1889\u20131905.",
+        "citation": "Thomas, Ren\u00e9 (1999). Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, labyrinth chaos. Int. J. Bifurc. Chaos. 9 (10): 1889.",
         "period": 34864.0
     },
     "ThomasLabyrinth": {
@@ -76,7 +90,7 @@
             "a": 0.5,
             "b": 10
         },
-        "citation": "Thomas, Ren\u00e9 (1999). \"Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, 'labyrinth chaos'\". Int. J. Bifurc. Chaos. 9 (10): 1889\u20131905.",
+        "citation": "Thomas, Rene (1999). \"Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, 'labyrinth chaos'\". Int. J. Bifurc. Chaos. 9 (10): 1889\u20131905.",
         "description": "Trajectories seemingly undergo Brownian motion on an infinite lattice, and only remain bounded when a is less than one.",
         "period": 837090.0
     },
@@ -91,7 +105,7 @@
         "parameters": {
             "lam": 1
         },
-        "citation": "H\u00e9non, M.; Heiles, C. (1964). \"The applicability of the third integral of motion: Some numerical experiments\". The Astronomical Journal. 69: 73\u201379..",
+        "citation": "Henon, M.; Heiles, C. (1964). The applicability of the third integral of motion: Some numerical experiments. The Astronomical Journal. 69: 73.",
         "period": 2503.3
     },
     "Chua": {

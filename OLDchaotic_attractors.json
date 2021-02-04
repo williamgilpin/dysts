@@ -51,6 +51,19 @@
         "citation": "Lorenz, Edward N. \"Deterministic nonperiodic flow.\" Journal of the atmospheric sciences 20.2 (1963): 130-141.",
         "period": 19815.0
     },
+    "Lorenz96": {
+        "initial_conditions": [
+            0.1,
+            0.1,
+            0.1
+        ],
+        "dt": 0.0001801,
+        "parameters": {
+            "f": 8.0
+        },
+        "citation": "Lorenz, Edward (1996). Predictability – A problem partly solved. Seminar on Predictability, Vol. I, ECMWF.",
+        "period": 54705.0
+    },
     "Thomas": {
         "initial_conditions": [
             2.199442,
