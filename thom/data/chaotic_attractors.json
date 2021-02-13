@@ -957,6 +957,22 @@
         "citation": "TBD",
         "period": 828250.0
     },
+    "OPTLaser": {
+        "initial_conditions": [
+            0.1, 0.1, 0.1, 0.1, 0.1, 0.1
+        ],
+        "dt": 0.01,
+        "parameters": {
+            "a": 4.5,
+            "g": 50,
+            "bb" : 0.4,
+            "sigma": 10,
+            "d210" : -1,
+            "d230" : 0
+        },
+        "citation": "TBD",
+        "period": 828250.0
+    },
     "Hadley": {
         "initial_conditions": [
             1.3664423,
@@ -1777,7 +1793,7 @@
             "c": 0.5,
             "d": 0.05
         },
-        "citation": "R\u00f6ssler, 1979",
+        "citation": "Rossler, 1979",
         "period": 830360.0
     },
     "Rossler": {
@@ -1792,7 +1808,7 @@
             "b": 0.2,
             "c": 5.7
         },
-        "citation": "R\u00f6ssler, O. E. (1976), \"An Equation for Continuous Chaos\", Physics Letters, 57A (5): 397\u2013398,",
+        "citation": "Rossler, O. E. (1976), An Equation for Continuous Chaos, Physics Letters, 57A (5): 397\u2013398,",
         "period": 7737.7
     }
 }

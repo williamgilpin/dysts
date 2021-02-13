@@ -1144,6 +1144,18 @@ class Colpitts(DynSys):
         ydot = self.c - x - self.b*y - z
         zdot = y - self.d*z
         return (xdot, ydot, zdot)   
+    
+class Laser(DynSys):
+    def rhs(self, X, t):
+        b, p21, p23, p31, d21, d23 = X
+        bdot = -self.sigma*b + self.g*p23
+        p21dot = -p21 - b*p31 + self.a*d21
+        p23dot = -p23  + b*d23- self.a*p31
+        p31dot = -p31 + b*p21 + self.a*p23
+        d21dot = -self.bb*(d21 - self.d210) - 4*self.a*p21 - 2*b*p23
+        d23dot = -self.bb*(d23 - self.d230) - 2*self.a*p21 - 4*b*p23
+        return (bdot, p21dot, p23dot, p31dot, d21dot, d23dot)   
+
 
 class Blasius(DynSys):
     def rhs(self, X, t):
@@ -1275,3 +1287,29 @@ class MacArthur(DynSys):
         rrdot = self.d*(self.s - rr) - np.matmul(self.c, (mu*nn))
         return np.hstack([nndot, rrdot])
 
+# class SymmetricKuramoto(DynSys):
+#     def coupling(self, x, n=4):
+#         k = 1 + np.arange(n)
+#         return np.sum(self.a[:, None, None] * np.cos(k[:, None, None]*x[None, ...] - self.eta[:, None, None]), axis=0)
+#     def rhs(self, X, t):
+#         phase_diff = X[:, None] - X[None, :]
+#         Xdot = self.w + np.mean(self.coupling(phase_diff), axis=0) ## need to apply coupling element-wise
+#         return Xdot
+
+#     "SymmetricKuramoto": {
+#         "initial_conditions": [
+#             0.1,
+#             0.01,
+#             0.01,
+#             0.01
+#         ],
+#         "dt": 0.01,
+#         "parameters": {
+#             "w" : 0.0,
+#             "a": [-2, -2, -1,  -0.88],
+#             "eta": [0.1104, -0.1104, 0.669, 0.669]
+#         },
+#         "citation": "Bick, Christian, et al. Chaos in symmetric phase oscillator networks. Physical review letters 107.24 (2011): 244101.",
+#         "period": 7737.7
+#     }
+        
