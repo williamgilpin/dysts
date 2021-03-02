@@ -758,6 +758,17 @@ class PanXuZhou(DequanLi):
 
 class Tsucs2(DequanLi):
     pass
+
+class ArnoldWeb(DynSys):
+    def rhs(self, X, t):
+        p1, p2, x1, x2, z = X
+        denom = 4 + np.cos(t) + np.cos(x1) + np.cos(x2)
+        p1dot = -self.mu * np.sin(x1) / denom**2
+        p2dot = -self.mu * np.sin(x2) / denom**2
+        x1dot = p1
+        x2dot = p2
+        zdot = self.w
+        return (p1dot, p2dot, x1dot, x2dot, zdot)
         
 class NewtonLiepnik(DynSys):
     def rhs(self, X, t):
