@@ -90,8 +90,8 @@ from .utils import integrate_dyn
 @dataclass(init=False)
 class DynSys:
     """
-    A dynamical system class, which loads and assigns parameter
-    values
+    A dynamical system base class, which loads and assigns parameter
+    values from a file
     - params : list, parameter values for the differential equations
     
     DEV: A function to look up additional metadata, if requested
@@ -115,6 +115,7 @@ class DynSys:
         self.ic = self._load_data()["initial_conditions"]
         
     def _load_data(self):
+        """Load data from a JSON file"""
         # with open(os.path.join(curr_path, "chaotic_attractors.json"), "r") as read_file:
         #     data = json.load(read_file)
         with open(data_path, "r") as read_file:
@@ -126,9 +127,11 @@ class DynSys:
             return {"parameters" : None}
           
     def rhs(self, X, t):
+        """The right hand side of a dynamical equation"""
         return X
     
     def __call__(self, X, t):
+        """Wrapper around right hand side"""
         return self.rhs(X, t)
     
     def make_trajectory(self, n, **kwargs):
@@ -141,6 +144,13 @@ class DynSys:
         tpts = np.arange(n)*self.dt
         sol = integrate_dyn(self, self.ic, tpts, **kwargs)
         return sol
+
+    @staticmethod
+    def bound_trajectory(traj):
+        """Bound a trajectory to a periodic domain"""
+        return np.mod(traj, 2*np.pi)
+
+
 
 class Lorenz(DynSys):
     def rhs(self, X, t):
@@ -178,6 +188,15 @@ class Lorenz96(DynSys):
         Xdot[-1] = (X[0] - X[-3]) * X[-2] - X[-1] + self.f
         Xdot[2:-1] = (X[3:] - X[:-3])*X[1:-2] - X[2:-1] + self.f
         return Xdot
+    
+class Lorenz84(DynSys):
+    def rhs(self, X, t):
+        Xdot = np.zeros_like(X)
+        x, y, z = X
+        xdot = -self.a * x - y**2 - z**2 + self.a * self.f
+        ydot = -y + x * y - self.b * x * z + self.g
+        zdot = -z + self.b * x * y + x * z
+        return (xdot, ydot, zdot)
     
 class Rossler(DynSys):
     def rhs(self, X, t):
@@ -301,11 +320,21 @@ class Duffing(DynSys):
 class DoubleGyre(DynSys):
     def rhs(self, X, t):
         x, y, z = X
-        a = self.eps*np.sin(z)
-        b = 1 - 2*self.eps*np.sin(z)
-        f = a*x**2 + b*x
-        dx = -self.a * np.pi*np.sin(np.pi*f)*np.cos(np.pi*y)
-        dy = self.a * np.pi*np.cos(np.pi*f)*np.sin(np.pi*y)*(2*a*x + b)
+        a = self.eps * np.sin(z)
+        b = 1 - 2 * self.eps * np.sin(z)
+        f = a * x ** 2 + b * x
+        dx = -self.a * np.pi * np.sin(np.pi * f) * np.cos(np.pi * y)
+        dy = self.a * np.pi * np.cos(np.pi * f) * np.sin(np.pi * y) * (2 * a * x + b)
+        dz = self.omega
+        return np.stack([dx, dy, dz]).T
+    
+class OscillatingFlow(DynSys):
+    def rhs(self, X, t):
+        x, y, z = X
+        #x, y = np.mod(x, 2 * np.pi / self.k), np.mod(y, 2 * np.pi / self.k)
+        f = x + self.b * np.sin(z)
+        dx = self.u * np.cos(self.k * y) * np.sin(self.k * f)
+        dy = -self.u * np.sin(self.k * y) * np.cos(self.k * f)
         dz = self.omega
         return np.stack([dx, dy, dz]).T
 
@@ -384,7 +413,15 @@ class BelousovZhabotinsky(DynSys):
         zdot = (self.c6/self.z0)*rf + self.c7*x*z + self.c8*z*v + self.c9*z - self.kf*z
         vdot = self.c10*x*ybar + self.c11*ybar + self.c12*x**2 + self.c13*z*v - self.kf*v
         return (xdot*self.t0, zdot*self.t0, vdot*self.t0)
-    
+
+class IsothermalChemical(DynSys):
+    def rhs(self, X, t):
+        alpha, beta, gamma = X
+        alphadot = self.mu * (self.kappa + gamma) - alpha * beta**2 - alpha
+        betadot = (alpha * beta**2 + alpha - beta) / self.sigma
+        gammadot = (beta - gamma) / self.delta
+        return alphadot, betadot, gammadot
+
 class RabinovichFabrikant(DynSys):
     def rhs(self, X, t):
         x, y, z = X
@@ -1158,14 +1195,21 @@ class Colpitts(DynSys):
     
 class Laser(DynSys):
     def rhs(self, X, t):
-        b, p21, p23, p31, d21, d23 = X
-        bdot = -self.sigma*b + self.g*p23
-        p21dot = -p21 - b*p31 + self.a*d21
-        p23dot = -p23  + b*d23- self.a*p31
-        p31dot = -p31 + b*p21 + self.a*p23
-        d21dot = -self.bb*(d21 - self.d210) - 4*self.a*p21 - 2*b*p23
-        d23dot = -self.bb*(d23 - self.d230) - 2*self.a*p21 - 4*b*p23
-        return (bdot, p21dot, p23dot, p31dot, d21dot, d23dot)   
+        x, y, z = X
+        xdot = self.a * (y - x) + self.b * y * z**2
+        ydot = self.c * x + self.d * x * z**2
+        zdot = self.h * z + self.k * x**2
+        return (xdot, ydot, zdot)   
+        
+#         b, p21, p23, p31, d21, d23, z = X
+#         bdot = -self.sigma*b + self.g*(1 + self.f * np.sin(z))*p23
+#         p21dot = -p21 - b*p31 + self.a*d21
+#         p23dot = -p23  + b*d23- self.a*p31
+#         p31dot = -p31 + b*p21 + self.a*p23
+#         d21dot = -self.bb*(d21 - self.d210) - 4*self.a*p21 - 2*b*p23
+#         d23dot = -self.bb*(d23 - self.d230) - 2*self.a*p21 - 4*b*p23
+#         zdot = self.omega
+#         return (bdot, p21dot, p23dot, p31dot, d21dot, d23dot, zdot)   
 
 
 class Blasius(DynSys):

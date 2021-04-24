@@ -12,7 +12,7 @@
             "beta": 2.667
         },
         "citation": "Lorenz, Edward N. \"Deterministic nonperiodic flow.\" Journal of the atmospheric sciences 20.2 (1963): 130-141.",
-        "period": 54705.0
+        "period": 21809.0
     },
     "LorenzBounded": {
         "initial_conditions": [
@@ -50,6 +50,22 @@
         },
         "citation": "Lorenz, Edward N. Deterministic nonperiodic flow. Journal of the atmospheric sciences 20.2 (1963): 130-141.",
         "period": 19815.0
+    },
+    "Lorenz84": {
+        "initial_conditions": [
+            1.926479236120359, 
+            -0.13402110197257552, 
+            -1.72146730664761
+        ],
+        "dt": 0.000363,
+        "parameters": {
+            "a": 1.32,
+            "b": 7.91,
+            "f": 4.83,
+            "g": 4.194
+        },
+        "citation": "E. Lorenz, “Irregularity: a fundamental property of the atmosphere,” Tellus A, vol. 36, no. 2, pp. 98–110, 1984.",
+        "period": 9974.2
     },
     "Lorenz96": {
         "initial_conditions": [
@@ -974,22 +990,6 @@
         "citation": "TBD",
         "period": 828250.0
     },
-    "OPTLaser": {
-        "initial_conditions": [
-            0.1, 0.1, 0.1, 0.1, 0.1, 0.1
-        ],
-        "dt": 0.01,
-        "parameters": {
-            "a": 4.5,
-            "g": 50,
-            "bb" : 0.4,
-            "sigma": 10,
-            "d210" : -1,
-            "d230" : 0
-        },
-        "citation": "TBD",
-        "period": 828250.0
-    },
     "Hadley": {
         "initial_conditions": [
             1.3664423,
@@ -1103,6 +1103,26 @@
         "citation": "Allshouse, M. & Peacock, T. 2015 Lagrangian based methods for coherent structure detection. Chaos 25 (097617).",
         "period": 825270.0
     },
+    "OscillatingFlow": {
+        "initial_conditions": [
+            3.14159265, 
+            1.04719755, 
+            0.4 
+        ],
+        "dt": 0.002672,
+        "parameters": {
+            "u": 0.72,
+            "k": 1.0,
+            "b": 0.48,
+            "omega": 0.49
+        },
+        "unbounded_indices": [
+            0, 1
+        ],
+        "citation": "T. H. Solomon and J. P. Gollub, Phys. Rev. A 38, 6280 (1988).",
+        "description": "A model flow with KAM tori. Original parameters have been rescaled by k",
+        "period": 293690.0
+    },
     "BickleyJet": {
         "initial_conditions": [
             0.3,
@@ -1155,7 +1175,7 @@
             2
         ],
         "citation": "V. I. Arnold, Journal of Applied Mathematics and Mechanics 30, 223 (1966).",
-        "description": "An exact solution of Euler's equation",
+        "description": "The classic ABC flow, an exact solution of Euler's equation",
         "period": 817860.0
     },
     "BelousovZhabotinsky": {
@@ -1191,6 +1211,22 @@
         "citation": "A three-variable model of deterministic chaos in the Belousov\u2013Zhabotinsky reaction. Gy\u00f6rgyi, Field. Nature 1992",
         "description": "A reduced-order model of the BZ reaction that exhibits period doubling. The bifurcation parameter for controlling the onset of chaos is kf. The system undergoes regular cycling when kf=3e-4, and chaotic oscillations when kf=3.5e-4",
         "period": 827940.0
+    },
+    "IsothermalChemical": {
+        "initial_conditions": [
+            0.5141505602006595, 
+            0.9984288208727641, 
+            1.00617771187240
+        ],
+        "dt": 8.907e-05,
+        "parameters": {
+            "mu": 0.29786,
+            "kappa": 2.5,
+            "sigma": 0.013,
+            "delta": 1.0
+        },
+        "citation": "I. Prigogine, From Being to Becoming: Time and Complexity in the Physical Sciences, New York: W.H. Freeman and Company, 1980.",
+        "period": 7985.8
     },
     "ForcedBrusselator": {
         "initial_conditions": [
@@ -1428,6 +1464,24 @@
         "citation": "Itik, Banks. Int J Bifurcat Chaos 2010",
         "description": "A model of cancer cell populations.",
         "period": 828490.0
+    },
+    "Laser": {
+        "initial_conditions": [
+            -2.540801356216252, 
+            -1.940570579119389, 
+            -2.9680975444071955
+        ],
+        "dt": 8.52e-05,
+        "parameters": {
+            "a": 10.0,
+            "b": 1.0,
+            "c": 5.0,
+            "d": -1.0,
+            "h": -5.0,
+            "k": -6.0
+        },
+        "citation": "Abooee, Yaghini-Bonabi, Jahed-Motlagh. Comm Nonline Sci 2013",
+        "period": 88089.0
     },
     "WindmiReduced": {
         "initial_conditions": [
