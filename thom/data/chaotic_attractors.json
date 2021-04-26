@@ -1052,6 +1052,21 @@
         "description": "A chemical oscillator model describing mixed-modes in the BZ equations.",
         "period": 824580.0
     },
+    "VallisElNino": {
+        "initial_conditions": [
+            -6.99286331487343, 
+            0.023254276622294345, 
+            -0.1658177563067799
+        ],
+        "dt": 0.0003048,
+        "parameters": {
+            "b": 102, 
+            "c": 3, 
+            "p": 0
+        },
+        "citation": "Vallis GK. Conceptual models of El Nio and the southern oscillation. J Geophys Res 1988",
+        "period": 26719.0
+    },
     "DoublePendulum": {
         "initial_conditions": [
             -44.334542,
@@ -1443,6 +1458,31 @@
         "citation": "Houart, Dupont, Goldbeter. Bull Math Biol 1999.",
         "description": "Intracellular calcium ion oscillations with quasiperiodic parameter values. The original paper also includes parameters for a limit cycle",
         "period": 826590.0
+    },
+    "ExcitableCell": {
+        "initial_conditions": [
+            -44.57779976420271, 
+            0.13121643614884418, 
+            0.4658533583951385
+        ],
+        "dt": 4.4224e-05,
+        "parameters": {
+            "vk": -75,
+            "vi": 100,
+            "vl": -40,
+            "vc": 100,
+            "vn": -30,
+            "vm": -50,
+            "gkv": 1700,
+            "gkc": 11,
+            "gi": 1800,
+            "gl": 7,
+            "kc": 0.183333,
+            "rho": 0.27
+        },
+        "citation": "Teresa Chay. Chaos In A Three-variable Model Of An Excitable Cell. Physica D 1985",
+        "description": "A reduced-order variant of the Hodgkin-Huxley model. The parameter gkc controls the onset of chaos.",
+        "period": 235380.0
     },
     "ItikBanksTumor": {
         "initial_conditions": [

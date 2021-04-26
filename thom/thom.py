@@ -421,6 +421,14 @@ class IsothermalChemical(DynSys):
         betadot = (alpha * beta**2 + alpha - beta) / self.sigma
         gammadot = (beta - gamma) / self.delta
         return alphadot, betadot, gammadot
+    
+class VallisElNino(DynSys):
+    def rhs(self, X, t):
+        x, y, z = X
+        xdot = self.b * y - self.c * (x + self.p)
+        ydot = -y + x * z
+        zdot = -z - x * y + 1
+        return (xdot, ydot, zdot)
 
 class RabinovichFabrikant(DynSys):
     def rhs(self, X, t):
@@ -748,8 +756,7 @@ class ChenLee(DynSys):
         ydot = self.b*y + x*z
         zdot = self.c*z + x*y/3
         return (xdot, ydot, zdot)
-    
-    
+
 class WangSun(DynSys):
     def rhs(self, X, t):
         x, y, z = X
@@ -842,6 +849,31 @@ class SaltonSea(DynSys):
     
 #     Was not able to replicate
 #     """
+
+class ExcitableCell(DynSys):
+    def rhs(self, X, t):
+        v, n, c = X
+        
+        alpham = 0.1 * (25 + v) / (1 - np.exp(-0.1 * v - 2.5))
+        betam = 4 * np.exp(-(v + 50) / 18)
+        minf = alpham / (alpham + betam)
+        
+        
+        alphah = 0.07 * np.exp(-0.05 * v - 2.5)
+        betah = 1 / (1 + np.exp(-0.1 * v - 2))
+        hinf = alphah / (alphah + betah)
+        
+        alphan = 0.01 * (20 + v) / (1 - np.exp(-0.1 * v - 2))
+        betan = 0.125 * np.exp(-(v + 30) / 80)
+        ninf = alphan / (alphan + betan)
+        tau = 1 / (230 * (alphan + betan))
+        
+        ca = c / (1 + c)
+        
+        vdot = self.gi * minf**3 * hinf * (self.vi - v) + self.gkv * n**4 * (self.vk - v) + self.gkc * ca * (self.vk - v) + self.gl * (self.vl - v)
+        ndot = (ninf - n) / tau
+        cdot = self.rho * (minf**3 * hinf * (self.vc - v) - self.kc * c)
+        return vdot, ndot, cdot
 
 class CaTwoPlus(DynSys):
     def rhs(self, X, t):
