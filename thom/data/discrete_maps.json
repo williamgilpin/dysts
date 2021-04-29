@@ -1,0 +1,43 @@
+{
+    "Logistic": {
+        "initial_conditions": [
+            0.5
+        ],
+        "parameters": {
+            "r": 3.9
+        },
+        "citation": "Robert May. Simple mathematical models with very complicated dynamics. Nature (1976)."
+    },
+    "Chirikov": {
+        "initial_conditions": [
+            0.5,
+            0.3
+        ],
+        "parameters": {
+            "k": 0.971635
+        },
+        "citation": "B.V.Chirikov, Research concerning the theory of nonlinear resonance and stochasticity. (1979)."
+    },
+    "Henon": {
+        "initial_conditions": [
+            1.21674097, 
+            0.03536533
+        ],
+        "parameters": {
+            "a": 1.4,
+            "b": 0.3
+        },
+        "citation": "."
+    },
+    "EndCap": {
+        "initial_conditions": [
+            0.5,
+            0.3
+        ],
+        "parameters": {
+            "a": 1.4,
+            "b": 0.3
+        },
+        "citation": "."
+    }
+}
