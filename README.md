@@ -1,13 +1,13 @@
 # thom
 
-Simulate more than one hundred chaotic dynamical systems.
+Simulate hundreds of chaotic dynamical systems.
 
-**If you know of any finite-dimensional systems that we should add, please feel free to submit an issue or pull request. Please provide a reference or code that contains all parameter values necessary to produce the claimed dynamics.**
+**If you know of any systems that we should add, please feel free to submit an issue or pull request. Please provide a reference or code that contains all parameter values necessary to produce the claimed dynamics.**
 
 
 ## Implementation details
 
-The default integration step is stored in each model's `dt` field. This integration timestep was chosen based on the highest significant frequency observed in the power spectrum, with significance being determined relative to [surrogate time series](https://en.wikipedia.org/wiki/Surrogate_data_testing). The `period` field contains the timescale associated with the dominant frequency in each system's power spectrum.
+The default integration step is stored in each continuous-time model's `dt` field. This integration timestep was chosen based on the highest significant frequency observed in the power spectrum, with significance being determined relative to [surrogate time series](https://en.wikipedia.org/wiki/Surrogate_data_testing). The `period` field contains the timescale associated with the dominant frequency in each system's power spectrum.
 
 
 ## To do

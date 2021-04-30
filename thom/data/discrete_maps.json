@@ -1,22 +1,45 @@
 {
     "Logistic": {
         "initial_conditions": [
-            0.5
+            0.51
         ],
         "parameters": {
             "r": 3.9
         },
+        "inverse": false,
         "citation": "Robert May. Simple mathematical models with very complicated dynamics. Nature (1976)."
+    },
+    "Tent": {
+        "initial_conditions": [
+            0.51
+        ],
+        "parameters": {
+            "mu": 0.95
+        },
+        "inverse": false,
+        "citation": ""
     },
     "Chirikov": {
         "initial_conditions": [
-            0.5,
-            0.3
+            0.1,
+            0.1
         ],
         "parameters": {
             "k": 0.971635
         },
-        "citation": "B.V.Chirikov, Research concerning the theory of nonlinear resonance and stochasticity. (1979)."
+        "inverse": true,
+        "citation": "B. V. Chirikov, Research concerning the theory of nonlinear resonance and stochasticity. (1979)."
+    },
+    "Gauss": {
+        "initial_conditions": [
+            0.5
+        ],
+        "parameters": {
+            "a": 4.9,
+            "b": -0.5
+        },
+        "inverse": false,
+        "citation": "."
     },
     "Henon": {
         "initial_conditions": [
@@ -27,6 +50,32 @@
             "a": 1.4,
             "b": 0.3
         },
+        "inverse": true,
+        "citation": "."
+    },
+    "Baker": {
+        "initial_conditions": [
+            0.04995935, 
+            0.363224
+        ],
+        "parameters": {
+            "a": 1.0
+        },
+        "inverse": false,
+        "citation": "."
+    },
+    "DeJong": {
+        "initial_conditions": [
+            1.78166133, 
+            -1.15791549
+        ],
+        "parameters": {
+            "a": 1.641,
+            "b": 1.902, 
+            "c": 0.316, 
+            "d": 1.525
+        },
+        "inverse": false,
         "citation": "."
     },
     "EndCap": {
@@ -38,6 +87,7 @@
             "a": 1.4,
             "b": 0.3
         },
+        "inverse": true,
         "citation": "."
     }
 }

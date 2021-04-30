@@ -27,10 +27,7 @@ from dataclasses import dataclass, field, asdict
 import warnings
 import json
 
-# from utils import standardize_ts
-
-
-
+# Ikeda, Pickover
 
 import os
 import sys
@@ -129,6 +126,61 @@ class Logistic(DynMap):
     def rhs(self, X):
         return self._rhs(X, self.r)
     
+class Tent(DynMap):
+    @staticjit
+    def _rhs(X, mu):
+        return mu * (1 - 2 * np.abs(X - 0.5))
+    def rhs(self, X):
+        return self._rhs(X, self.mu)
+
+class Gauss(DynMap):
+    @staticjit
+    def _rhs(X, a, b):
+        return np.exp(-a * X**2) + b
+
+    def rhs(self, X):
+        return self._rhs(X, self.a, self.b)
+
+class Baker(DynMap):
+    @staticjit
+    def _rhs(X, a):
+        x, y = X
+        eps2 = 2.0 - 1e-10
+        x_flr = (eps2 * x) // 1
+        xp = eps2 * x - x_flr
+        yp = (a * y + x_flr) / 2
+        return xp, yp
+    
+    @staticjit
+    def _rhs_inv(X, a):
+        ### Bug here
+        xp, yp = X
+        eps2 = 2.0 - 1e-10
+        if yp > 0.5:
+            xflr = 0.5 + yp * a / 2
+        else:
+            xflr = yp * a / 2
+        x = (xp + xflr) / eps2
+        y = (2 * yp - xflr) / a - 10000
+        return x, y 
+
+    def rhs(self, X):
+        return self._rhs(X, self.a)
+    
+    def rhs_inv(self, X):
+        return self._rhs_inv(X, self.a)
+
+class DeJong(DynMap):
+    @staticjit
+    def _rhs(X, a, b, c, d):
+        x, y = X
+        xp = np.sin(a * y) - np.cos(b * x)
+        yp = np.sin(c * x) - np.cos(d * y)
+        return (xp, yp)
+
+    def rhs(self, X):
+        return self._rhs(X, self.a, self.b, self.c, self.d)
+
 class Chirikov(DynMap):
     @staticjit
     def _rhs(X, k):
@@ -136,20 +188,41 @@ class Chirikov(DynMap):
         pp = p + k * np.sin(x)
         xp = x + pp 
         return pp, xp
+
+    @staticjit
+    def _rhs_inv(X, k):
+        pp, xp = X
+        x = xp - pp
+        p = pp - k * np.sin(xp - pp)
+        return p, x
     
     def rhs(self, X):
         return self._rhs(X, self.k)
 
+    def rhs_inv(self, X):
+        return self._rhs_inv(X, self.k)
+
 class Henon(DynMap):
+
     @staticjit
     def _rhs(X, a, b):
         x, y = X
         xp = 1 - a * x**2 + y
         yp = b * x
         return xp, yp
+
+    @staticjit
+    def _rhs_inv(X, a, b):
+        xp, yp = X
+        x = yp / b
+        y = - xp - 1 + a * x**2
+        return x, y
     
     def rhs(self, X):
         return self._rhs(X, self.a, self.b)
+
+    def rhs_inv(self, X):
+        return self._rhs_inv(X, self.a, self.b)
 
 
         
