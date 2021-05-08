@@ -328,6 +328,7 @@ class DoubleGyre(DynSys):
         dz = self.omega
         return np.stack([dx, dy, dz]).T
     
+    
 class OscillatingFlow(DynSys):
     def rhs(self, X, t):
         x, y, z = X

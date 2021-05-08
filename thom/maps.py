@@ -225,6 +225,52 @@ class Henon(DynMap):
         return self._rhs_inv(X, self.a, self.b)
 
 
+from scipy.optimize import fsolve
+class BlinkingVortex(DynMap):
+    
+    def smoothstep(self, x):
+        y = 1 - 1 / (1 + np.exp(10**self.p * np.sin(x)))
+        return y
+    
+    def root(self, qq, rt, tt):
+        t = self.t
+        lam2 = self.b**2 + rt**2 + 2 * self.b * rt * np.cos(tt)
+        lam2 /= self.a**4 / self.b**2 + rt**2 - 2 * self.a**2 * rt * np.cos(tt) / self.b
+        lam = np.sqrt(lam2)
         
+        etac = (self.b - lam2 * self.a**2 / self.b)/(1 - lam2)
+        rho = np.abs((lam / (1 - lam2)) * ((self.a**2)/self.b - self.b))
+        
+        tp = np.arctan2(rt * np.sin(tt), -etac + rt * np.cos(tt))
+        
+        fac = (2 * lam)/(1 + lam2)
+
+        tlam = (2 * np.pi)**2 * ((rho**2)/self.gamma) * (1 + lam2) / (1 - lam2)
+        
+        out = qq - fac * np.sin(qq) - (tp - fac * np.sin(tp)) - 2 * np.pi * t / tlam
+        return out
+        
+    def rhs(self, X):
+        rt, tt = X
+        #phase = self.smoothstep(z)
+
+        root_term = lambda x : self.root(x, rt, tt)
+
+        thetat = fsolve(root_term, 0.01)[0]
+        
+        lam2 = self.b**2 + rt**2 + 2 * self.b * rt * np.cos(tt)
+        lam2 /= self.a**4 / self.b**2 + rt**2 - 2 * self.a**2 * rt * np.cos(tt) / self.b
+        lam = np.sqrt(lam2)
+        
+        etac = (self.b - lam2 * self.a**2 / self.b)/(1 - lam2)
+        rho = np.abs((lam / (1 - lam2)) * ((self.a**2)/self.b - self.b))
+        
+        
+        
+        
+        rout = np.sqrt(rho**2 + etac**2 + 2 * rho * etac * np.cos(thetat))
+        thout = np.arctan2(rho * np.sin(thetat), etac + rho * np.cos(thetat))
+        
+        return rout, thout
 
         

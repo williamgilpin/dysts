@@ -64,6 +64,20 @@
         "inverse": false,
         "citation": "."
     },
+    "BlinkingVortex": {
+        "initial_conditions": [
+            0.03, 
+            0.36
+        ],
+        "parameters": {
+            "a": 1.0,
+            "gamma": 1.0,
+            "b": 0.5,
+            "t": 1.5
+        },
+        "inverse": false,
+        "citation": "."
+    },
     "DeJong": {
         "initial_conditions": [
             1.78166133, 
