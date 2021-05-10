@@ -75,7 +75,8 @@
             "b": 0.5,
             "t": 1.5
         },
-        "inverse": false,
+        "hamiltonian": true,
+        "inverse": true,
         "citation": "."
     },
     "DeJong": {

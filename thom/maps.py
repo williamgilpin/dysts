@@ -1,11 +1,13 @@
-    
 """
-Various low-dimensional chaotic mapsin Python
+Low-dimensional chaotic maps in Python
+
+# (M, T, D) convention
 
 Requirements:
 + numpy
 + scipy
 + sdeint (for integration with noise)
++ numba (optional, for faster integration)
 + jax (optional, for faster integration)
 
 Resources:
@@ -29,6 +31,7 @@ import json
 
 # Ikeda, Pickover
 
+from importlib import import_module
 import os
 import sys
 curr_path = sys.path[0]
@@ -42,7 +45,7 @@ import numpy as np
 
 
 try:
-    from numba import jit
+    from numba import jit, njit
     has_jit = True
 except ModuleNotFoundError:
     import numpy as np
@@ -50,10 +53,9 @@ except ModuleNotFoundError:
     # Define placeholder functions
     def jit(func):
         return func
+    njit = jit
 
-## Compose staticmethod and jit decorators
-staticjit = lambda func: staticmethod(jit(func))
-
+staticjit = lambda func: staticmethod(njit(func)) # Compose staticmethod and jit decorators
 
 @dataclass(init=False)
 class DynMap:
@@ -91,10 +93,24 @@ class DynMap:
         except KeyError:
             print(f"No metadata available for {self.name}")
             return {"parameters" : None}
-          
+
     def rhs(self, X):
-        """The right hand side of a dynamical equation"""
-        return X
+        """The right hand side of a dynamical map"""
+        param_list = [getattr(self, param_name) for param_name in self.params.keys()]
+        xin = list()
+        for i in range(X.shape[-1]):
+            xin.append(X[..., i])
+        out = self._rhs(*xin, *param_list)
+        return np.vstack(out).T
+    
+    def rhs_inv(self, Xp):
+        """The inverse of the right hand side of a dynamical map"""
+        param_list = [getattr(self, param_name) for param_name in self.params.keys()]
+        xpin = list()
+        for i in range(Xp.shape[-1]):
+            xpin.append(Xp[..., i])
+        out = self._rhs_inv(*xpin, *param_list)
+        return np.vstack(out).T
     
     def __call__(self, X):
         """Wrapper around right hand side"""
@@ -103,48 +119,43 @@ class DynMap:
     def make_trajectory(self, n, **kwargs):
         """
         Generate a fixed-length trajectory with default timestep,
-        parameters, and initial conditions
-        - n : int, the number of trajectory points
+        parameters, and initial condition(s)
+        - n : int, the length of each trajectory
         """
-        curr = self.ic
-        if len(curr) == 1:
-            curr = self.ic[0]
+        
+        m = len(np.array(self.ic).shape)
+        if m < 1: m = 1
+        
+        if m == 1:
+            curr = np.array(self.ic)[None, :] # (M, D)
         else:
-            curr = self.ic
+            curr = np.array(self.ic)
             
-        traj = np.array([curr])
+        traj = np.copy(curr)[:, None, :] # (M, T, D)
         for i in range(n):
             curr = self.rhs(curr)
-            traj = np.vstack([traj, curr])
+            traj = np.concatenate([traj, curr[:, None, :]], axis=1)
         return traj
 
 
 class Logistic(DynMap):
     @staticjit
-    def _rhs(X, r):
-        return r * X * (1 - X)
-    def rhs(self, X):
-        return self._rhs(X, self.r)
+    def _rhs(x, r):
+        return r * x * (1 - x)
     
 class Tent(DynMap):
     @staticjit
-    def _rhs(X, mu):
-        return mu * (1 - 2 * np.abs(X - 0.5))
-    def rhs(self, X):
-        return self._rhs(X, self.mu)
+    def _rhs(x, mu):
+        return mu * (1 - 2 * np.abs(x - 0.5))
 
 class Gauss(DynMap):
     @staticjit
-    def _rhs(X, a, b):
-        return np.exp(-a * X**2) + b
-
-    def rhs(self, X):
-        return self._rhs(X, self.a, self.b)
+    def _rhs(x, a, b):
+        return np.exp(-a * x**2) + b
 
 class Baker(DynMap):
     @staticjit
-    def _rhs(X, a):
-        x, y = X
+    def _rhs(x, y, a):
         eps2 = 2.0 - 1e-10
         x_flr = (eps2 * x) // 1
         xp = eps2 * x - x_flr
@@ -152,125 +163,100 @@ class Baker(DynMap):
         return xp, yp
     
     @staticjit
-    def _rhs_inv(X, a):
+    def _rhs_inv(xp, yp, a):
         ### Bug here
-        xp, yp = X
         eps2 = 2.0 - 1e-10
         if yp > 0.5:
             xflr = 0.5 + yp * a / 2
         else:
             xflr = yp * a / 2
         x = (xp + xflr) / eps2
-        y = (2 * yp - xflr) / a - 10000
+        y = (2 * yp - xflr) / a
         return x, y 
-
-    def rhs(self, X):
-        return self._rhs(X, self.a)
-    
-    def rhs_inv(self, X):
-        return self._rhs_inv(X, self.a)
 
 class DeJong(DynMap):
     @staticjit
-    def _rhs(X, a, b, c, d):
-        x, y = X
+    def _rhs(x, y, a, b, c, d):
         xp = np.sin(a * y) - np.cos(b * x)
         yp = np.sin(c * x) - np.cos(d * y)
-        return (xp, yp)
-
-    def rhs(self, X):
-        return self._rhs(X, self.a, self.b, self.c, self.d)
+        return xp, yp
 
 class Chirikov(DynMap):
     @staticjit
-    def _rhs(X, k):
-        p, x = X
+    def _rhs(p, x, k):
         pp = p + k * np.sin(x)
         xp = x + pp 
         return pp, xp
 
     @staticjit
-    def _rhs_inv(X, k):
-        pp, xp = X
+    def _rhs_inv(pp, xp, k):
         x = xp - pp
         p = pp - k * np.sin(xp - pp)
         return p, x
-    
-    def rhs(self, X):
-        return self._rhs(X, self.k)
-
-    def rhs_inv(self, X):
-        return self._rhs_inv(X, self.k)
 
 class Henon(DynMap):
 
     @staticjit
-    def _rhs(X, a, b):
-        x, y = X
+    def _rhs(x, y, a, b):
         xp = 1 - a * x**2 + y
         yp = b * x
         return xp, yp
 
     @staticjit
-    def _rhs_inv(X, a, b):
-        xp, yp = X
+    def _rhs_inv(xp, yp, a, b):
         x = yp / b
         y = - xp - 1 + a * x**2
         return x, y
-    
-    def rhs(self, X):
-        return self._rhs(X, self.a, self.b)
 
-    def rhs_inv(self, X):
-        return self._rhs_inv(X, self.a, self.b)
 
 
 from scipy.optimize import fsolve
 class BlinkingVortex(DynMap):
     
+    def __post_init__(self):
+        from scipy.optimize import fsolve
+    
     def smoothstep(self, x):
         y = 1 - 1 / (1 + np.exp(10**self.p * np.sin(x)))
         return y
     
-    def root(self, qq, rt, tt):
-        t = self.t
-        lam2 = self.b**2 + rt**2 + 2 * self.b * rt * np.cos(tt)
-        lam2 /= self.a**4 / self.b**2 + rt**2 - 2 * self.a**2 * rt * np.cos(tt) / self.b
-        lam = np.sqrt(lam2)
-        
-        etac = (self.b - lam2 * self.a**2 / self.b)/(1 - lam2)
-        rho = np.abs((lam / (1 - lam2)) * ((self.a**2)/self.b - self.b))
-        
+    def _param_update(self):
+        self.b = -self.b
+    
+    # jit this
+    @staticjit
+    def root(qq, t, rt, tt, lam2, lam, etac, rho):
         tp = np.arctan2(rt * np.sin(tt), -etac + rt * np.cos(tt))
-        
         fac = (2 * lam)/(1 + lam2)
-
         tlam = (2 * np.pi)**2 * ((rho**2)/self.gamma) * (1 + lam2) / (1 - lam2)
-        
         out = qq - fac * np.sin(qq) - (tp - fac * np.sin(tp)) - 2 * np.pi * t / tlam
         return out
         
-    def rhs(self, X):
-        rt, tt = X
+    @staticmethod
+    def _rhs(self, rt, tt, a, gamma, b, t):
+#         print(X)
+#         rt, tt = X
         #phase = self.smoothstep(z)
-
-        root_term = lambda x : self.root(x, rt, tt)
-
-        thetat = fsolve(root_term, 0.01)[0]
+        a2b = a**2 / b
         
-        lam2 = self.b**2 + rt**2 + 2 * self.b * rt * np.cos(tt)
-        lam2 /= self.a**4 / self.b**2 + rt**2 - 2 * self.a**2 * rt * np.cos(tt) / self.b
+        lam2 = b**2 + rt**2 - 2 * b * rt * np.cos(tt)
+        lam2 /= a2b**2 + rt**2 - 2 * a2b * rt * np.cos(tt)
         lam = np.sqrt(lam2)
         
-        etac = (self.b - lam2 * self.a**2 / self.b)/(1 - lam2)
-        rho = np.abs((lam / (1 - lam2)) * ((self.a**2)/self.b - self.b))
+        etac = (b - lam2 * a2b)/(1 - lam2)
+        rho = np.abs((lam / (1 - lam2)) * (a2b - b))
         
-        
-        
+        root_term = lambda x : self.root(x, t, rt, tt, lam2, lam, etac, rho)
+        thetat = fsolve(root_term, 0.01)[0]
         
         rout = np.sqrt(rho**2 + etac**2 + 2 * rho * etac * np.cos(thetat))
         thout = np.arctan2(rho * np.sin(thetat), etac + rho * np.cos(thetat))
         
+        self._param_update()
+        
         return rout, thout
 
         
+    def rhs_inv(self, X):
+        raise NotImplementedError
+        return X
