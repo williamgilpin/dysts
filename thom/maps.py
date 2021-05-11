@@ -116,14 +116,16 @@ class DynMap:
         """Wrapper around right hand side"""
         return self.rhs(X)
     
-    def make_trajectory(self, n, **kwargs):
+    def make_trajectory(self, n, inverse=False, **kwargs):
         """
         Generate a fixed-length trajectory with default timestep,
         parameters, and initial condition(s)
         - n : int, the length of each trajectory
+        - inverse : bool, whether to reverse a trajectory
         """
         
         m = len(np.array(self.ic).shape)
+        
         if m < 1: m = 1
         
         if m == 1:
@@ -132,8 +134,14 @@ class DynMap:
             curr = np.array(self.ic)
             
         traj = np.copy(curr)[:, None, :] # (M, T, D)
+    
+        if inverse:
+            propagator = self.rhs_inv
+        else:
+            propagator = self.rhs
+        
         for i in range(n):
-            curr = self.rhs(curr)
+            curr = propagator(curr)
             traj = np.concatenate([traj, curr[:, None, :]], axis=1)
         return traj
 
@@ -222,41 +230,46 @@ class BlinkingVortex(DynMap):
     
     def _param_update(self):
         self.b = -self.b
-    
-    # jit this
+        
     @staticjit
-    def root(qq, t, rt, tt, lam2, lam, etac, rho):
-        tp = np.arctan2(rt * np.sin(tt), -etac + rt * np.cos(tt))
-        fac = (2 * lam)/(1 + lam2)
-        tlam = (2 * np.pi)**2 * ((rho**2)/self.gamma) * (1 + lam2) / (1 - lam2)
-        out = qq - fac * np.sin(qq) - (tp - fac * np.sin(tp)) - 2 * np.pi * t / tlam
-        return out
-        
-    @staticmethod
-    def _rhs(self, rt, tt, a, gamma, b, t):
-#         print(X)
-#         rt, tt = X
-        #phase = self.smoothstep(z)
+    def make_parameters(rt, tt, a, b, t):
         a2b = a**2 / b
-        
         lam2 = b**2 + rt**2 - 2 * b * rt * np.cos(tt)
         lam2 /= a2b**2 + rt**2 - 2 * a2b * rt * np.cos(tt)
         lam = np.sqrt(lam2)
-        
         etac = (b - lam2 * a2b)/(1 - lam2)
         rho = np.abs((lam / (1 - lam2)) * (a2b - b))
+        return lam2, lam, etac, rho
+    
+    @staticjit
+    def root(qq, t, rt, tt, lam2, lam, etac, rho, gamma):
+        tp = np.arctan2(rt * np.sin(tt), -etac + rt * np.cos(tt))
+        fac = (2 * lam)/(1 + lam2)
+        tlam = (2 * np.pi)**2 * ((rho**2)/gamma) * (1 + lam2) / (1 - lam2)
+        out = qq - fac * np.sin(qq) - (tp - fac * np.sin(tp)) - 2 * np.pi * t / tlam
+        return out
+    
+    def _rhs(self, rt, tt, a, gamma, b, t):
         
-        root_term = lambda x : self.root(x, t, rt, tt, lam2, lam, etac, rho)
-        thetat = fsolve(root_term, 0.01)[0]
+        lam2, lam, etac, rho = self.make_parameters(rt, tt, a, b, t)
         
+        # parallel case
+        if len(np.asarray(rt).shape) > 0:
+            thetat = list()
+            for arg_set in zip(rt, tt, lam2, lam, etac, rho):
+                root_term = lambda x : self.root(x, t, *arg_set, gamma)
+                thetat_i = fsolve(root_term, 0.01)[0]
+                thetat.append(thetat_i)
+            thetat = np.array(thetat)
+        else:
+            root_term = lambda x : self.root(x, t, rt, tt, lam2, lam, etac, rho, gamma)
+            thetat = fsolve(root_term, 0.01)[0]
         rout = np.sqrt(rho**2 + etac**2 + 2 * rho * etac * np.cos(thetat))
         thout = np.arctan2(rho * np.sin(thetat), etac + rho * np.cos(thetat))
         
         self._param_update()
         
         return rout, thout
-
         
-    def rhs_inv(self, X):
-        raise NotImplementedError
-        return X
+    def _rhs_inv(self, rt, tt, a, gamma, b, t):
+        return self._rhs(rt, tt, a, -gamma, -b, t)
