@@ -64,10 +64,60 @@
         "inverse": false,
         "citation": "."
     },
+    "Ikeda": {
+        "initial_conditions": [
+            0.9,  
+            0.55524451
+        ],
+        "parameters": {
+            "u": 0.9
+        },
+        "inverse": false,
+        "citation": "."
+    },
+    "Tinkerbell": {
+        "initial_conditions": [
+            0.13738266, 
+            -0.0308518
+        ],
+        "parameters": {
+            "a": 0.9,
+            "b": -0.6013,
+            "c": 2.0,
+            "d": 0.5
+        },
+        "inverse": false,
+        "citation": "."
+    },
+    "Circle": {
+        "initial_conditions": [
+            0.0
+        ],
+        "parameters": {
+            "omega": 0.333,
+            "k": 5.7
+        },
+        "inverse": false,
+        "citation": "."
+    },
+    "Pickover": {
+        "initial_conditions": [
+            -0.97631884, 
+            -1.2040783
+        ],
+        "parameters": {
+            "a": -1.4,
+            "b": 1.6,
+            "c": 1.0,
+            "d": 0.7
+        },
+        "inverse": false,
+        "citation": "."
+    },
     "BlinkingVortex": {
         "initial_conditions": [
-            0.03, 
-            0.36
+            1.35975188, 
+            -1.10169129
         ],
         "parameters": {
             "a": 1.0,

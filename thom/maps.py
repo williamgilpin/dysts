@@ -181,6 +181,12 @@ class Baker(DynMap):
         x = (xp + xflr) / eps2
         y = (2 * yp - xflr) / a
         return x, y 
+    
+class Circle(DynMap):
+    @staticjit
+    def _rhs(theta, omega, k):
+        thetap = theta + omega + (k / (2 * np.pi)) * np.sin(2 * np.pi * theta)
+        return thetap
 
 class DeJong(DynMap):
     @staticjit
@@ -188,7 +194,30 @@ class DeJong(DynMap):
         xp = np.sin(a * y) - np.cos(b * x)
         yp = np.sin(c * x) - np.cos(d * y)
         return xp, yp
+    
+class Ikeda(DynMap):
+    @staticjit
+    def _rhs(x, y, u):
+        t = 0.4 - 6 / (1 + x**2 + y**2)
+        xp = 1 + u * (x * np.cos(t) - y * np.sin(t))
+        yp = u * (x * np.sin(t) + y * np.cos(t))
+        return xp, yp
 
+class Tinkerbell(DynMap):
+    @staticjit
+    def _rhs(x, y, a, b, c, d):
+        xp = x**2 - y**2 + a * x + b * y
+        yp = 2 * x * y + c * x + d * y
+        return xp, yp
+    
+class Pickover(DynMap):
+    @staticjit
+    def _rhs(x, y, a, b, c, d):
+        xp = np.sin(a * y) + c * np.cos(a * x)
+        yp = np.sin(b * x) + d * np.cos(b * y)
+        return xp, yp
+
+ 
 class Chirikov(DynMap):
     @staticjit
     def _rhs(p, x, k):
