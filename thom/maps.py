@@ -97,19 +97,13 @@ class DynMap:
     def rhs(self, X):
         """The right hand side of a dynamical map"""
         param_list = [getattr(self, param_name) for param_name in self.params.keys()]
-        xin = list()
-        for i in range(X.shape[-1]):
-            xin.append(X[..., i])
-        out = self._rhs(*xin, *param_list)
+        out = self._rhs(*X.T, *param_list)
         return np.vstack(out).T
     
     def rhs_inv(self, Xp):
         """The inverse of the right hand side of a dynamical map"""
         param_list = [getattr(self, param_name) for param_name in self.params.keys()]
-        xpin = list()
-        for i in range(Xp.shape[-1]):
-            xpin.append(Xp[..., i])
-        out = self._rhs_inv(*xpin, *param_list)
+        out = self._rhs_inv(*Xp.T, *param_list)
         return np.vstack(out).T
     
     def __call__(self, X):

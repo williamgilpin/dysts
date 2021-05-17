@@ -1118,6 +1118,39 @@
         "citation": "Allshouse, M. & Peacock, T. 2015 Lagrangian based methods for coherent structure detection. Chaos 25 (097617).",
         "period": 825270.0
     },
+    "BlinkingRotlet": {
+        "initial_conditions": [
+            0.3,
+            0.01
+        ],
+        "dt": 0.002944,
+        "parameters": {
+            "sigma": -1.0,
+            "a": 1.0,
+            "b": 0.5298833894399929,
+            "tau": 3,
+            "bc": 1
+        },
+        "citation": "Meleshko, Aref. A blinking rotlet model for chaotic advection. Physics of Fluids 1996. See also Tallapragada and Sudarsanam PRE 2019",
+        "description": "The location of the mixer is chosen so that there is a stagnation point at its symmetric complement",
+        "period": 825270.0
+    },
+    "BlinkingVortex": {
+        "initial_conditions": [
+            0.3,
+            0.01
+        ],
+        "dt": 0.002944,
+        "parameters": {
+            "sigma": -1.0,
+            "a": 1.0,
+            "b": 0.5,
+            "tau": 3,
+            "bc": 0
+        },
+        "citation": "Aref. Stirring by chaotic advection. JFM 1984.",
+        "period": 825270.0
+    },
     "OscillatingFlow": {
         "initial_conditions": [
             3.14159265, 

@@ -52,6 +52,19 @@ import numpy as np
 
 from .utils import integrate_dyn
 
+try:
+    from numba import jit, njit
+    has_jit = True
+except ModuleNotFoundError:
+    import numpy as np
+    has_jit = False
+    # Define placeholder functions
+    def jit(func):
+        return func
+    njit = jit
+
+staticjit = lambda func: staticmethod(njit(func)) # Compose staticmethod and jit decorators
+
 # from numba import jit
 # from scipy.integrate import odeint
 # from sdeint import itoint
@@ -114,6 +127,9 @@ class DynSys:
         self.period = self._load_data()["period"]
         self.ic = self._load_data()["initial_conditions"]
         
+    def get_param_names(self):
+        return sorted(self.params.keys())
+        
     def _load_data(self):
         """Load data from a JSON file"""
         # with open(os.path.join(curr_path, "chaotic_attractors.json"), "r") as read_file:
@@ -125,10 +141,12 @@ class DynSys:
         except KeyError:
             print(f"No metadata available for {self.name}")
             return {"parameters" : None}
-          
+    
     def rhs(self, X, t):
         """The right hand side of a dynamical equation"""
-        return X
+        param_list = [getattr(self, param_name) for param_name in self.get_param_names()]
+        out = self._rhs(*X.T, t, *param_list)
+        return out
     
     def __call__(self, X, t):
         """Wrapper around right hand side"""
@@ -153,21 +171,21 @@ class DynSys:
 
 
 class Lorenz(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = self.sigma*(y - x)
-        ydot = x*(self.rho - z) - y
-        zdot = x*y - self.beta*z
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, beta, rho, sigma):
+        xdot = sigma * (y - x)
+        ydot = x * (rho - z) - y
+        zdot = x * y - beta * z
+        return xdot, ydot, zdot
 
 class LorenzBounded(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        f = 1 - (x**2 + y**2 + z**2)/self.r**2
-        xdot = self.sigma*(y - x)*f
-        ydot = (x*(self.rho - z) - y)*f
-        zdot = (x*y - self.beta*z)*f
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, beta, r, rho, sigma):
+        f = 1 - (x**2 + y**2 + z**2) / r**2
+        xdot = sigma*(y - x)*f
+        ydot = (x*(rho - z) - y)*f
+        zdot = (x*y - beta*z)*f
+        return xdot, ydot, zdot
         
 class LorenzCoupled(DynSys):
     def rhs(self, X, t):
@@ -199,20 +217,20 @@ class Lorenz84(DynSys):
         return (xdot, ydot, zdot)
     
 class Rossler(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = -y - z
-        ydot = x + self.a*y
-        zdot = self.b + z*(x - self.c)
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, a, b, c):
+        xdot = - y - z
+        ydot = x + a * y
+        zdot = b + z * (x - c)
+        return xdot, ydot, zdot
 
 class Thomas(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = -self.a*x + self.b*np.sin(y)
-        ydot = -self.a*y + self.b*np.sin(z)
-        zdot = -self.a*z + self.b*np.sin(x)
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, a, b):
+        xdot = -a*x + b*np.sin(y)
+        ydot = -a*y + b*np.sin(z)
+        zdot = -a*z + b*np.sin(x)
+        return xdot, ydot, zdot
     
 class ThomasLabyrinth(Thomas):
     pass
@@ -328,16 +346,44 @@ class DoubleGyre(DynSys):
         dz = self.omega
         return np.stack([dx, dy, dz]).T
     
+class BlinkingRotlet(DynSys):
+    @staticjit
+    def _rotlet(r, theta, a, b, bc):
+        """A rotlet velocity field"""
+        kappa = a ** 2 + (b ** 2 * r ** 2) / a ** 2 - 2 * b * r * np.cos(theta)
+        gamma = (1 - r ** 2 / a ** 2) * (a ** 2 - (b ** 2 * r ** 2) / a ** 2)
+        iota = (b ** 2 * r) / a ** 2 - b * np.cos(theta)
+        zeta = b ** 2 + r ** 2 - 2 * b * r * np.cos(theta)
+        nu = a**2 + b**2 - (2*b**2*r**2)/a**2
+        vr = b*np.sin(theta)*(- bc * (gamma/kappa**2) - 1/kappa + 1/zeta)
+        vth = bc * (gamma*iota)/kappa**2 + bc * r*nu/(a**2*kappa) + iota/kappa - (r - b*np.cos(theta))/zeta
+        return vr, vth
     
-class OscillatingFlow(DynSys):
+    @staticjit
+    def _protocol(t, tau, stiffness=20):
+        return  0.5 + 0.5 * np.tanh(stiffness * np.sin(2 * np.pi * t / tau))
+        
     def rhs(self, X, t):
-        x, y, z = X
+        r, theta = X
+        weight = self._protocol(t, self.tau) 
+        dr1, dth1 = self._rotlet(r, theta, self.a, self.b, self.bc)
+        dr2, dth2 = self._rotlet(r, theta, self.a, -self.b, self.bc)
+        dr = weight * dr1 + (1 - weight) * dr2
+        dth = (weight * dth1 + (1 - weight) * dth2) / r
+        return self.sigma * dr, self.sigma * dth
+    
+class BlinkingVortex(BlinkingRotlet):
+    pass
+        
+class OscillatingFlow(DynSys):
+    @staticjit
+    def _rhs(x, y, z, t, b, k, omega, u):
         #x, y = np.mod(x, 2 * np.pi / self.k), np.mod(y, 2 * np.pi / self.k)
-        f = x + self.b * np.sin(z)
-        dx = self.u * np.cos(self.k * y) * np.sin(self.k * f)
-        dy = -self.u * np.sin(self.k * y) * np.cos(self.k * f)
-        dz = self.omega
-        return np.stack([dx, dy, dz]).T
+        f = x + b * np.sin(z)
+        dx = u * np.cos(k * y) * np.sin(k * f)
+        dy = -u * np.sin(k * y) * np.cos(k * f)
+        dz = omega
+        return dx, dy, dz
 
 class BickleyJet(DynSys):
     def rhs(self, X, t):
@@ -639,12 +685,12 @@ class Rucklidge(DynSys):
         return (xdot, ydot, zdot)
 
 class Sakarya(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = self.a*x + self.h*y + self.s*y*z
-        ydot = -self.b*y - self.p*x + self.q*x*z
-        zdot = self.c*z - self.r*x*y
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, a, b, c, h, p, q, r, s):
+        xdot = a*x + h*y + s*y*z
+        ydot = -b*y - p*x + q*x*z
+        zdot = c*z - r*x*y
+        return xdot, ydot, zdot
     
 class LiuChen(Sakarya):
     pass
@@ -1183,12 +1229,12 @@ class GenesioTesi(DynSys):
 #         return (xdot, ydot, zdot)    
 
 class Hadley(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = -y**2 - z**2 - self.a*x + self.a*self.f
-        ydot = x*y - self.b*x*z - y + self.g
-        zdot = self.b*x*y + x*z - z
-        return (xdot, ydot, zdot)   
+    @staticjit
+    def _rhs(x, y, z, t, a, b, f, g):
+        xdot = -y**2 - z**2 - a*x + a*f
+        ydot = x*y - b*x*z - y + g
+        zdot = b*x*y + x*z - z
+        return xdot, ydot, zdot
 
 
 class ForcedVanDerPol(DynSys):
@@ -1273,8 +1319,6 @@ class StickSlipOscillator(DynSys):
         return (xdot, vdot, thdot) 
     
 class HastingsPowell(DynSys):
-    def f(self, x):
-        return 0.5*(np.abs(x + 1) - np.abs(x - 1))
     def rhs(self, X, t):
         x, y, z = X
         a1, b1, d1, a2, b2, d2 = self.a1, self.b1, self.d1, self.a2, self.b2, self.d2
@@ -1284,7 +1328,8 @@ class HastingsPowell(DynSys):
         return (xdot, ydot, zdot)   
     
 class CellularNeuralNetwork(DynSys):
-    def f(self, x):
+    @staticjit
+    def f(x):
         return 0.5*(np.abs(x + 1) - np.abs(x - 1))
     def rhs(self, X, t):
         x, y, z = X
@@ -1294,7 +1339,8 @@ class CellularNeuralNetwork(DynSys):
         return (xdot, ydot, zdot)   
 
 class BeerRNN(DynSys):
-    def _sig(self, x):
+    @staticjit
+    def _sig(x):
         return 1.0/(1. + np.exp(-x))
     def rhs(self, X, t):
         Xdot = (-X + np.matmul(self.w, self._sig(X + self.theta)))/self.tau
