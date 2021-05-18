@@ -96,6 +96,7 @@ class BaseDyn:
         """Bound a trajectory within a periodic domain"""
         return np.mod(traj, 2*np.pi)
 
+from scipy.integrate import solve_ivp
 class DynSys(BaseDyn):
     """
     A dynamical system base class, which loads and assigns parameter
@@ -120,25 +121,26 @@ class DynSys(BaseDyn):
         """Wrapper around right hand side"""
         return self.rhs(X, t)
     
-    def make_trajectory(self, n, **kwargs):
+    def make_trajectory(self, n, method="RK45"):
         """
         Generate a fixed-length trajectory with default timestep,
         parameters, and initial conditions
         - n : int, the number of trajectory points
-        - kwargs : dict, arguments passed to integrate_dyn
+        - method : the integration method
         """
         tpts = np.arange(n)*self.dt
+        
+        
+#         tpts = self.period*self.dt
         
         m = len(np.array(self.ic).shape)
         if m < 1: m = 1
         if m == 1:
-            
-            sol = integrate_dyn(self, self.ic, tpts, **kwargs)
-            
+            sol = integrate_dyn(self, self.ic, tpts, first_step=self.dt, method=method)
         else:
             sol = list()
             for ic in self.ic:
-                sol.append(integrate_dyn(self, ic, tpts, **kwargs))
+                sol.append(integrate_dyn(self, ic, tpts, first_step=self.dt, method=method))
             sol = np.transpose(np.array(sol), (0, 2, 1))
             
         return sol

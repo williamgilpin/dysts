@@ -66,7 +66,6 @@ class Lorenz96(DynSys):
 class Lorenz84(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, f, g):
-        x, y, z = X
         xdot = -a * x - y**2 - z**2 + a * f
         ydot = -y + x * y - b * x * z + g
         zdot = -z + b * x * y + x * z
@@ -92,44 +91,42 @@ class ThomasLabyrinth(Thomas):
     pass
 
 class DoublePendulum(DynSys):
-    def rhs(self, X, t):
-        th1, th2, p1, p2 = X
+    @staticjit
+    def _rhs(th1, th2, p1, p2, t, d, m):
         g = 9.82
-        m, d = self.m, self.d
         pre = (6/(m*d**2))
         denom = 16 - 9*np.cos(th1 - th2)**2
         th1_dot = pre*(2*p1 - 3*np.cos(th1 - th2)*p2)/denom
         th2_dot = pre*(8*p2 - 3*np.cos(th1 - th2)*p1)/denom
         p1_dot = -0.5*(m*d**2)*(th1_dot*th2_dot*np.sin(th1 - th2) + 3*(g/d)*np.sin(th1))
         p2_dot = -0.5*(m*d**2)*(-th1_dot*th2_dot*np.sin(th1 - th2) + 3*(g/d)*np.sin(th2))
-        return (th1_dot, th2_dot, p1_dot, p2_dot)
-
-class HenonHeiles(DynSys):
-    def rhs(self, X, t):
-        x, y, px, py = X
+        return th1_dot, th2_dot, p1_dot, p2_dot
+  
+class HenonHeiles(DynSys):  
+    @staticjit
+    def _rhs(x, y, px, py, t, lam):
         xdot = px
         ydot = py
-        pxdot = -x - 2*self.lam*x*y
-        pydot = -y - self.lam*(x**2 - y**2)
-        return (xdot, ydot, pxdot, pydot)    
+        pxdot = -x - 2 * lam * x * y
+        pydot = -y - lam * (x**2 - y**2)
+        return xdot, ydot, pxdot, pydot
 
 class Halvorsen(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = -self.a*x - self.b*(y + z) - y**2
-        ydot = -self.a*y - self.b*(z + x) - z**2
-        zdot = -self.a*z - self.b*(x + y) - x**2
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, a, b):
+        xdot = -a*x - b*(y + z) - y**2
+        ydot = -a*y - b*(z + x) - z**2
+        zdot = -a*z - b*(x + y) - x**2
+        return xdot, ydot, zdot
 
 class Chua(DynSys):
-    def diode(self, x):
-        return self.m1*x + (0.5)*(self.m0 - self.m1)*(np.abs(x + 1) - np.abs(x - 1))
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = self.alpha*(y - x - self.diode(x))
+    @staticjit
+    def _rhs(x, y, z, t, alpha, beta, m0, m1):
+        ramp_x = m1 * x +  0.5 * (m0 - m1)*(np.abs(x + 1) - np.abs(x - 1))
+        xdot = alpha*(y - x - ramp_x)
         ydot = x - y + z
-        zdot = -self.beta*y
-        return (xdot, ydot, zdot)
+        zdot = -beta*y
+        return xdot, ydot, zdot
     
 class MultiChua(DynSys):
     def diode(self, x):
@@ -146,12 +143,12 @@ class MultiChua(DynSys):
         return (xdot, ydot, zdot)
 
 class Duffing(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t, alpha, beta, delta, gamma, omega):
         xdot = y
-        ydot = -self.delta*y - self.beta*x - self.alpha*x**3 + self.gamma*np.cos(z)
-        zdot = self.omega
-        return (xdot, ydot, zdot)
+        ydot = -delta * y - beta * x - alpha * x**3 + gamma * np.cos(z)
+        zdot = omega
+        return xdot, ydot, zdot
 
 ## Can this be incorporated in a DynSys object __call___ method?
 # class MackeyGlass(object):
@@ -192,15 +189,15 @@ class Duffing(DynSys):
 #         return x_series
 
 class DoubleGyre(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        a = self.eps * np.sin(z)
-        b = 1 - 2 * self.eps * np.sin(z)
+    @staticjit
+    def _rhs(x, y, z, t, alpha, eps, omega):
+        a = eps * np.sin(z)
+        b = 1 - 2 * eps * np.sin(z)
         f = a * x ** 2 + b * x
-        dx = -self.a * np.pi * np.sin(np.pi * f) * np.cos(np.pi * y)
-        dy = self.a * np.pi * np.cos(np.pi * f) * np.sin(np.pi * y) * (2 * a * x + b)
-        dz = self.omega
-        return np.stack([dx, dy, dz]).T
+        dx = -alpha * np.pi * np.sin(np.pi * f) * np.cos(np.pi * y)
+        dy = alpha * np.pi * np.cos(np.pi * f) * np.sin(np.pi * y) * (2 * a * x + b)
+        dz = omega
+        return dx, dy, dz
     
 class BlinkingRotlet(DynSys):
     @staticjit
@@ -268,28 +265,30 @@ class JerkCircuit(DynSys):
         return (xdot, ydot, zdot)
 
 class ForcedBrusselator(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = self.a + x**2*y - (self.b + 1)*x + self.f*np.cos(z)
-        ydot = self.b*x - x**2*y
-        zdot = self.w
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, a, b, f, w):
+        xdot = a + x**2*y - (b + 1)*x + f*np.cos(z)
+        ydot = b*x - x**2*y
+        zdot = w
+        return xdot, ydot, zdot
 
 class WindmiReduced(DynSys):
-    def rhs(self, X, t):
-        i, v, p = X
-        idot = self.a1*(self.vsw - v)
-        vdot = self.b1*i - self.b2*p**1/2 - self.b3*v
-        pdot = self.vsw**2 - p**(5/4)*self.vsw**(1/2)*(1 + np.tanh(self.d1*(i-1)))/2
-        return (idot, vdot, pdot)  
+    @staticjit
+    def _rhs(i, v, p, t, a1, b1, b2, b3, d1, vsw):
+        idot = a1 * (vsw - v)
+        vdot = b1 * i - b2 * p ** 1 / 2 - b3 * v
+        pdot = (
+            vsw ** 2 - p ** (5 / 4) * vsw ** (1 / 2) * (1 + np.tanh(d1 * (i - 1))) / 2
+        )
+        return idot, vdot, pdot
 
 class MooreSpiegel(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t, a, b, eps):
         xdot = y
-        ydot = self.a*z
-        zdot = -z + self.eps*y - y*x**2 - self.b*x
-        return (xdot, ydot, zdot)
+        ydot = a*z
+        zdot = -z + eps * y - y * x**2 - b * x
+        return xdot, ydot, zdot
 
 class CoevolvingPredatorPrey(DynSys):
     def rhs(self, X, t):
@@ -300,12 +299,12 @@ class CoevolvingPredatorPrey(DynSys):
         return (xdot, ydot, alphadot)
 
 class KawczynskiStrizhak(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = self.gamma*(y - x**3 + 3*self.mu*x)
-        ydot = -2*self.mu*x - y - z + self.beta
-        zdot = self.kappa*(x - z)
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, beta, gamma, kappa, mu):
+        xdot = gamma * (y - x**3 + 3 * mu * x)
+        ydot = -2 * mu * x - y - z + beta
+        zdot = kappa * (x - z)
+        return xdot, ydot, zdot
 
 class BelousovZhabotinsky(DynSys):
     def rhs(self, X, t):    
@@ -334,44 +333,44 @@ class VallisElNino(DynSys):
         return (xdot, ydot, zdot)
 
 class RabinovichFabrikant(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = y*(z - 1 +x**2) + self.g*x
-        ydot = x*(3*z + 1 - x**2) + self.g*y
-        zdot = -2*z*(self.a + x*y)
+    @staticjit
+    def _rhs(x, y, z, t, a, g):
+        xdot = y*(z - 1 + x**2) + g * x
+        ydot = x*(3 * z + 1 - x**2) + g * y
+        zdot = -2 * z * (a + x * y)
         return (xdot, ydot, zdot)
     
 class NoseHoover(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t, a):
         xdot = y
         ydot = -x + y*z
-        zdot = self.a - y**2
-        return (xdot, ydot, zdot)
+        zdot = a - y**2
+        return xdot, ydot, zdot
 
 class Dadras(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = y - self.p*x + self.o*y*z
-        ydot = self.r*y - x*z + z
-        zdot = self.c*x*y - self.e*z
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, c, e, o, p, r):
+        xdot = y - p * x + o * y *z
+        ydot = r * y - x * z + z
+        zdot = c * x * y - e * z
+        return xdot, ydot, zdot
     
 class SprottTorus(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t):
         xdot = y + 2*x*y + x*z
         ydot = 1 - 2*x**2 + y*z
         zdot = x - x**2 - y**2
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
     
 class SprottJerk(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t, mu):
         xdot = y
         ydot = z
-        zdot = -x  + y**2 - self.mu*z
-        return (xdot, ydot, zdot)
+        zdot = -x  + y**2 - mu*z
+        return xdot, ydot, zdot
 # class JerkCircuit(DynSys):
 #     def rhs(self, X, t):
 #         x, y, z = X
@@ -381,164 +380,164 @@ class SprottJerk(DynSys):
 #         return (xdot, ydot, zdot)
     
 class SprottB(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = y*z
+    @staticjit
+    def _rhs(x, y, z, t):
+        xdot = y * z
         ydot = x - y
-        zdot = 1 - x*y
-        return (xdot, ydot, zdot)
+        zdot = 1 - x * y
+        return xdot, ydot, zdot
     
 class SprottC(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = y*z
+    @staticjit
+    def _rhs(x, y, z, t):
+        xdot = y * z
         ydot = x -y
         zdot = 1 - x**2
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
     
 class SprottD(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t):
         xdot = -y
         ydot = x + z
-        zdot = x*z + 3*y**2
-        return (xdot, ydot, zdot)
+        zdot = x * z + 3 * y**2
+        return xdot, ydot, zdot
     
 class SprottE(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t):
         xdot = y*z
         ydot = x**2 - y
         zdot = 1 - 4*x
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
     
 class SprottF(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t, a):
         xdot = y + z
-        ydot = -x + self.a*y
+        ydot = -x + a*y
         zdot = x**2 - z
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
     
 class SprottG(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = self.a*x + z
-        ydot = x*z - y
+    @staticjit
+    def _rhs(x, y, z, t, a):
+        xdot = a * x + z
+        ydot = x * z - y
         zdot = -x + y
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
     
 class SprottH(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t, a):
         xdot = -y + z**2
-        ydot = x + self.a*y
+        ydot = x + a*y
         zdot = x - z
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
     
 class SprottI(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = -self.a*y
+    @staticjit
+    def _rhs(x, y, z, t, a):
+        xdot = -a * y
         ydot = x + z
         zdot = x + y**2 - z
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
     
 class SprottJ(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = 2*z
-        ydot = -2*y + z
+    @staticjit
+    def _rhs(x, y, z, t):
+        xdot = 2 * z
+        ydot = -2 * y + z
         zdot = -x + y + y**2
         return (xdot, ydot, zdot)
 
 class SprottK(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = x*y - z
+    @staticjit
+    def _rhs(x, y, z, t, a):
+        xdot = x * y - z
         ydot = x - y
-        zdot = x + self.a*z
-        return (xdot, ydot, zdot)    
+        zdot = x + a*z
+        return xdot, ydot, zdot
 
 class SprottL(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = y + self.b*z
-        ydot = self.a*x**2 - y
+    @staticjit
+    def _rhs(x, y, z, t, a, b):
+        xdot = y + b * z
+        ydot = a * x**2 - y
         zdot = 1 - x
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
 
 class SprottM(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t, a):
         xdot = -z
         ydot = -x**2 - y
-        zdot = self.a*(1 + x) + y
-        return (xdot, ydot, zdot)
+        zdot = a * (1 + x) + y
+        return xdot, ydot, zdot
 
 class SprottN(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = -2*y
+    @staticjit
+    def _rhs(x, y, z, t):
+        xdot = -2 * y
         ydot = x + z**2
-        zdot = 1 + y - 2*z
-        return (xdot, ydot, zdot)
+        zdot = 1 + y - 2 * z
+        return xdot, ydot, zdot
 
 class SprottO(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t, a):
         xdot = y
         ydot = x - z
-        zdot = x + x*z + self.a*y
-        return (xdot, ydot, zdot)
+        zdot = x + x * z + a * y
+        return xdot, ydot, zdot
 
 class SprottP(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = self.a*y + z
+    @staticjit
+    def _rhs(x, y, z, t, a):
+        xdot = a * y + z
         ydot = -x + y**2
         zdot = x + y
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
     
 class SprottQ(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t, a, b):
         xdot = -z
         ydot = x - y
-        zdot = self.a*x + y**2 + self.b*z
+        zdot = a * x + y**2 + b * z
         return (xdot, ydot, zdot)
     
 class SprottR(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = self.a - y
-        ydot = self.b + z
-        zdot = x*y - z
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, a, b):
+        xdot = a - y
+        ydot = b + z
+        zdot = x * y - z
+        return xdot, ydot, zdot
     
 class SprottS(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = -x - 4*y
+    @staticjit
+    def _rhs(x, y, z, t):
+        xdot = -x - 4 * y
         ydot = x + z**2
         zdot = 1 + x
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
 
 class Arneodo(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
+    @staticjit
+    def _rhs(x, y, z, t, a, b, c, d):
         xdot = y
         ydot = z
-        zdot = -self.a*x - self.b*y - self.c*z  + self.d*x**3
-        return (xdot, ydot, zdot)
+        zdot = -a * x - b * y - c * z  + d * x**3
+        return xdot, ydot, zdot
     
 class Rucklidge(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = - self.a*x + self.b*y - y*z
+    @staticjit
+    def _rhs(x, y, z, t, a, b):
+        xdot = - a*x + b*y - y*z
         ydot = x
         zdot = -z + y**2
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
 
 class Sakarya(DynSys):
     @staticjit
