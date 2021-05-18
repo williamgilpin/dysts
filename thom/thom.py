@@ -64,13 +64,13 @@ class Lorenz96(DynSys):
         return Xdot
     
 class Lorenz84(DynSys):
-    def rhs(self, X, t):
-        Xdot = np.zeros_like(X)
+    @staticjit
+    def _rhs(x, y, z, t, a, b, f, g):
         x, y, z = X
-        xdot = -self.a * x - y**2 - z**2 + self.a * self.f
-        ydot = -y + x * y - self.b * x * z + self.g
-        zdot = -z + self.b * x * y + x * z
-        return (xdot, ydot, zdot)
+        xdot = -a * x - y**2 - z**2 + a * f
+        ydot = -y + x * y - b * x * z + g
+        zdot = -z + b * x * y + x * z
+        return xdot, ydot, zdot
     
 class Rossler(DynSys):
     @staticjit

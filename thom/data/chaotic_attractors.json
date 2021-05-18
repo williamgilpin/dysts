@@ -534,14 +534,14 @@
             6.05532273e+03,
             0.1
         ],
-        "dt": 0.005147,
+        "dt": 0.003497,
         "parameters": {
             "mu": 0.01,
             "w": 1
         },
         "citation": "TBD.",
         "description": "Froeschle, C., Guzzo, M. & Legga, E. Graphical evolution of the Arnold web: From order to chaos. Science 289, 2108–2110 (2000).",
-        "period": 10241.0
+        "period": 222400.0
     },
     "PanXuZhou": {
         "initial_conditions": [
