@@ -19,7 +19,7 @@ import numpy as np
 from numpy.fft import rfft, irfft
 
 import warnings
-from scipy.integrate import odeint
+from scipy.integrate import odeint, solve_ivp
 from scipy.signal import blackmanharris, fftconvolve
 from collections import deque
 from functools import partial
@@ -27,23 +27,6 @@ from functools import partial
 import json
 
 from sdeint import itoint
-
-## Numba support removed until jitclass API stabilizes
-# try:
-#     from numba import jit, njit, jitclass
-#     has_numba = True
-# except ModuleNotFoundError:
-#     warnings.warn("Numba installation not found, numerical integration will run slower.")
-#     has_numba = False
-#     # Define placeholder functions
-#     def jit(func):
-#         return func
-#     def njit(func):
-#         return func
-#     def autojit(func):
-#         return func
-#     def jitclass(c):
-#         return c
 
 
 import pkg_resources
@@ -53,7 +36,6 @@ def get_attractor_list():
     with open(data_path, "r") as file:
         data = json.load(file)
     return list(data.keys())
-
 
 def signif(x, figs=6):
     """
@@ -75,7 +57,7 @@ def standardize_ts(a, scale=1.0):
     stds[stds==0] = 1
     return (a - np.mean(a, axis=0, keepdims=True))/(scale*stds)
 
-def integrate_dyn(f, ic, tvals, noise=0, use_compile=True):
+def integrate_dyn(f, ic, tvals, noise=0):
     """
     Given the RHS of a dynamical system, integrate the system
     noise > 0 requires the Python library sdeint (assumes Brownian noise)
@@ -83,31 +65,24 @@ def integrate_dyn(f, ic, tvals, noise=0, use_compile=True):
     f : callable, the right hand side of a system of ODE
     ic : the initial conditions
     noise_amp : the amplitude of the Langevin forcing term
-    use_compile : bool, whether to compile the function with numba 
-        before performing integration
     
     DEV:
     scipy.integrate.solve_ivp(eq, (tpts[0], tpts[-1]), np.array(ic), 
     method='DOP853', dense_output=True)
     eq takes (t, X) and not vice-versa
     """
-#     try:
-#         fc = jit(f.__call__)
-#     except:
-#         warnings.warn("Unable to compile function.")
-#         fc = f
-    fc = f # jit currently doesn't play well with objects
+    ic = np.array(ic)
     if noise > 0:
-
-        def gw(y, t):
-            return noise * np.diag(ic)
-
-        def fw(y, t):
-            return np.array(fc(y, t))
-
+        gw = lambda y, t: noise * np.diag(ic)
+        fw = lambda y, t: np.array(f(y, t))
         sol = itoint(fw, gw, np.array(ic), tvals).T
     else:
-        sol = odeint(fc, np.array(ic), tvals).T
+        dt = np.median(np.diff(tvals))
+        fc = lambda t, y : f(y, t)
+        sol0 = solve_ivp(fc, [tvals[0], tvals[-1]], ic, t_eval=tvals, first_step=dt, min_step=dt/10, method="LSODA")
+        sol = sol0.y
+
+        #sol = odeint(f, np.array(ic), tvals).T
 
     return sol
 

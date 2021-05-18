@@ -9,6 +9,16 @@
         "inverse": false,
         "citation": "Robert May. Simple mathematical models with very complicated dynamics. Nature (1976)."
     },
+    "Ricker": {
+        "initial_conditions": [
+            0.51
+        ],
+        "parameters": {
+            "a": 3.3
+        },
+        "inverse": false,
+        "citation": "."
+    },
     "Tent": {
         "initial_conditions": [
             0.51
@@ -100,6 +110,18 @@
         "inverse": false,
         "citation": "."
     },
+    "MaynardSmith": {
+        "initial_conditions": [
+            0.0,
+            0.1
+        ],
+        "parameters": {
+            "a": 0.87,
+            "b": 0.75
+        },
+        "inverse": false,
+        "citation": "."
+    },
     "Pickover": {
         "initial_conditions": [
             -0.97631884, 
@@ -116,8 +138,8 @@
     },
     "BlinkingVortex": {
         "initial_conditions": [
-            1.35975188, 
-            -1.10169129
+            0.17, 
+            0.33
         ],
         "parameters": {
             "a": 1.0,

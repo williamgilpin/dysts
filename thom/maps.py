@@ -25,125 +25,18 @@ DEV:
 + Add a function that finds initial conditions on the attractor
 """
 
-from dataclasses import dataclass, field, asdict
-import warnings
-import json
-
-# Ikeda, Pickover
-
-from importlib import import_module
-import os
-import sys
-curr_path = sys.path[0]
-# print(curr_path)
-
-import pkg_resources
-data_path = pkg_resources.resource_filename('thom', 'data/discrete_maps.json')
-# print(data_path)
-
 import numpy as np
-
-
-try:
-    from numba import jit, njit
-    has_jit = True
-except ModuleNotFoundError:
-    import numpy as np
-    has_jit = False
-    # Define placeholder functions
-    def jit(func):
-        return func
-    njit = jit
-
-staticjit = lambda func: staticmethod(njit(func)) # Compose staticmethod and jit decorators
-
-@dataclass(init=False)
-class DynMap:
-    """
-    A dynamical system base class, which loads and assigns parameter
-    values from a file
-    - params : list, parameter values for the differential equations
-    
-    DEV: A function to look up additional metadata, if requested
-    """
-    name : str = None
-    params : dict = field(default_factory=dict)
-    
-    def __init__(self, **entries):
-        self.name = self.__class__.__name__
-        self._load_data()
-        dfac = lambda : self._load_data()["parameters"]
-        self.params = self._load_data()["parameters"]
-        self.params.update(entries)
-        # Cast all parameter arrays to numpy
-        for key in self.params:
-            if not np.isscalar(self.params[key]):
-                self.params[key] = np.array(self.params[key])
-        self.__dict__.update(self.params)
-        self.ic = self._load_data()["initial_conditions"]
-        
-    def _load_data(self):
-        """Load data from a JSON file"""
-        # with open(os.path.join(curr_path, "chaotic_attractors.json"), "r") as read_file:
-        #     data = json.load(read_file)
-        with open(data_path, "r") as read_file:
-            data = json.load(read_file)
-        try:
-            return data[self.name]
-        except KeyError:
-            print(f"No metadata available for {self.name}")
-            return {"parameters" : None}
-
-    def rhs(self, X):
-        """The right hand side of a dynamical map"""
-        param_list = [getattr(self, param_name) for param_name in self.params.keys()]
-        out = self._rhs(*X.T, *param_list)
-        return np.vstack(out).T
-    
-    def rhs_inv(self, Xp):
-        """The inverse of the right hand side of a dynamical map"""
-        param_list = [getattr(self, param_name) for param_name in self.params.keys()]
-        out = self._rhs_inv(*Xp.T, *param_list)
-        return np.vstack(out).T
-    
-    def __call__(self, X):
-        """Wrapper around right hand side"""
-        return self.rhs(X)
-    
-    def make_trajectory(self, n, inverse=False, **kwargs):
-        """
-        Generate a fixed-length trajectory with default timestep,
-        parameters, and initial condition(s)
-        - n : int, the length of each trajectory
-        - inverse : bool, whether to reverse a trajectory
-        """
-        
-        m = len(np.array(self.ic).shape)
-        
-        if m < 1: m = 1
-        
-        if m == 1:
-            curr = np.array(self.ic)[None, :] # (M, D)
-        else:
-            curr = np.array(self.ic)
-            
-        traj = np.copy(curr)[:, None, :] # (M, T, D)
-    
-        if inverse:
-            propagator = self.rhs_inv
-        else:
-            propagator = self.rhs
-        
-        for i in range(n):
-            curr = propagator(curr)
-            traj = np.concatenate([traj, curr[:, None, :]], axis=1)
-        return traj
-
+from .base import DynMap, staticjit
 
 class Logistic(DynMap):
     @staticjit
     def _rhs(x, r):
         return r * x * (1 - x)
+    
+class Ricker(DynMap):
+    @staticjit
+    def _rhs(x, a):
+        return x * np.exp(a - x)
     
 class Tent(DynMap):
     @staticjit
@@ -178,7 +71,7 @@ class Baker(DynMap):
     
 class Circle(DynMap):
     @staticjit
-    def _rhs(theta, omega, k):
+    def _rhs(theta, k, omega):
         thetap = theta + omega + (k / (2 * np.pi)) * np.sin(2 * np.pi * theta)
         return thetap
 
@@ -210,8 +103,14 @@ class Pickover(DynMap):
         xp = np.sin(a * y) + c * np.cos(a * x)
         yp = np.sin(b * x) + d * np.cos(b * y)
         return xp, yp
+    
+class MaynardSmith(DynMap):
+    @staticjit
+    def _rhs(x, y, a, b):
+        xp = y
+        yp = a * y + b - x**2
+        return xp, yp
 
- 
 class Chirikov(DynMap):
     @staticjit
     def _rhs(p, x, k):
@@ -271,8 +170,8 @@ class BlinkingVortex(DynMap):
         tlam = (2 * np.pi)**2 * ((rho**2)/gamma) * (1 + lam2) / (1 - lam2)
         out = qq - fac * np.sin(qq) - (tp - fac * np.sin(tp)) - 2 * np.pi * t / tlam
         return out
-    
-    def _rhs(self, rt, tt, a, gamma, b, t):
+
+    def _rhs(self, rt, tt, a, b, gamma, t):
         
         lam2, lam, etac, rho = self.make_parameters(rt, tt, a, b, t)
         
@@ -294,5 +193,5 @@ class BlinkingVortex(DynMap):
         
         return rout, thout
         
-    def _rhs_inv(self, rt, tt, a, gamma, b, t):
+    def _rhs_inv(self, rt, tt, a, b, gamma, t):
         return self._rhs(rt, tt, a, -gamma, -b, t)
