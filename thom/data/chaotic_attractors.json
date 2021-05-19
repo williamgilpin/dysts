@@ -263,7 +263,7 @@
             "b": 4,
             "eps": 9
         },
-        "citation": "TBD",
+        "citation": "Moore, Spiegel. A Thermally Excited Nonlinear Oscillator, Ap. J., 143, 871 (1966)",
         "period": 8089.3
     },
     "Bouali2": {
@@ -320,6 +320,23 @@
         "citation": "Arneodo, A., Coullet, P. & Tresser, C. Occurence of strange attractors in three-dimensional volterra equations. Physics Letters A 79, 259\u2013263 (1980)",
         "description": "also known as the ACT attractor, a modified Lotka-Volterra ecosystem",
         "period": 810880.0
+    },
+    "Coullet": {
+        "initial_conditions": [
+            0.34539837958549907,
+            0.4284701181998099, 
+            0.086983698175975
+        ],
+        "dt": 0.002295,
+        "parameters": {
+            "a": -0.8,
+            "b": 1.1,
+            "c": 0.45,
+            "d": -1.0
+        },
+        "citation": "Arneodo, A., Coullet, P. & Tresser, C. Occurence of strange attractors in three-dimensional volterra equations. Physics Letters A 79, 259\u2013263 (1980)",
+        "description": "A variant of the Arneodo attractor",
+        "period": 27928.0
     },
     "Rucklidge": {
         "initial_conditions": [
@@ -650,6 +667,7 @@
             "a": 2
         },
         "citation": "San-Um, Srisuchinwong. J. Comp 2012",
+        "description": "Also referred to as the Wimol-Banlue system",
         "period": 16719.0
     },
     "Finance": {
@@ -684,6 +702,20 @@
         "citation": "TBD",
         "period": 829680.0
     },
+    "RikitakeDynamo": {
+        "initial_conditions": [
+            -0.7791562791136255, 
+            -0.6302244598741468, 
+            2.671200187214492
+        ],
+        "dt": 0.0007077,
+        "parameters": {
+            "a": 1.0,
+            "mu": 1.0
+        },
+        "citation": "Rikitake, T., Oscillations of a system of disk dynamos, Mathematical Proceedings of the Cambridge Philosophical Society, 1958.",
+        "period": 598950.0
+    },
     "RabinovichFabrikant": {
         "initial_conditions": [
             -1.8207276,
@@ -709,7 +741,7 @@
             "mu": 1.2,
             "eta": 0.5
         },
-        "citation": "TBD",
+        "citation": "Anishchenko,  et al. Nonlinear dynamics of chaotic and stochastic systems: tutorial and modern developments. 2007.",
         "period": 8828.3
     },
     "GenesioTesi": {
@@ -1580,21 +1612,6 @@
         "citation": "Smith, Thiffeault, Horton. J Geophys Res. 2000. Horton, Weigel, Sprott. Chaos 2001.",
         "description": "A simplified form of the Windmi model of the Earth's magnetosphere. The parameter vsw controls the onset of chaos.",
         "period": 826450.0
-    },
-    "MixMasterUniverse": {
-        "initial_conditions": [
-            -25.17254711,
-            0.41108319,
-            -2.83552146,
-            0.73271588,
-            -7.66808841,
-            14.28088046
-        ],
-        "dt": 1e-05,
-        "parameters": {},
-        "citation": "Charles W. Misner, \"Mixmaster Universe\", Physical Review Letters, Vol. 22, Issue 20 (May 1969), pp. 1071-1074. Pollicott, Mark, and Howard Weiss. \"Some remarks on the dynamics of the Mixmaster universe.\" Qualitative Theory of Dynamical Systems 4 (2004): 425-438.",
-        "description": "A simplified model of the early Universe. This parametrization is taken from the second referenced paper",
-        "period": 855880.0
     },
     "TurchinHanski": {
         "initial_conditions": [

@@ -314,7 +314,7 @@ class BelousovZhabotinsky(DynSys):
         xdot = self.c1*x*ybar + self.c2*ybar + self.c3*x**2 + self.c4*rf + self.c5*x*z - self.kf*x
         zdot = (self.c6/self.z0)*rf + self.c7*x*z + self.c8*z*v + self.c9*z - self.kf*z
         vdot = self.c10*x*ybar + self.c11*ybar + self.c12*x**2 + self.c13*z*v - self.kf*v
-        return (xdot*self.t0, zdot*self.t0, vdot*self.t0)
+        return xdot*self.t0, zdot*self.t0, vdot*self.t0
 
 class IsothermalChemical(DynSys):
     def rhs(self, X, t):
@@ -332,6 +332,15 @@ class VallisElNino(DynSys):
         zdot = -z - x * y + 1
         return (xdot, ydot, zdot)
 
+## Not chaotic
+# class Robinson(DynSys):
+#     @staticjit
+#     def _rhs(x, y, z, t, a, b, c, d, v):
+#         xdot = y
+#         ydot = x - 2 * x**3 - a * y + b * x**2 * y - v * y * z
+#         zdot = -c * z + d * x**2
+#         return (xdot, ydot, zdot)
+    
 class RabinovichFabrikant(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, g):
@@ -356,6 +365,14 @@ class Dadras(DynSys):
         zdot = c * x * y - e * z
         return xdot, ydot, zdot
     
+class RikitakeDynamo(DynSys):
+    @staticjit
+    def _rhs(x, y, z, t, a, mu):
+        xdot = - mu * x + y * z
+        ydot = - mu * y + x * (z - a)
+        zdot = 1 - x * y
+        return xdot, ydot, zdot
+    
 class SprottTorus(DynSys):
     @staticjit
     def _rhs(x, y, z, t):
@@ -371,6 +388,8 @@ class SprottJerk(DynSys):
         ydot = z
         zdot = -x  + y**2 - mu*z
         return xdot, ydot, zdot
+    
+## Not chaotic
 # class JerkCircuit(DynSys):
 #     def rhs(self, X, t):
 #         x, y, z = X
@@ -530,6 +549,9 @@ class Arneodo(DynSys):
         ydot = z
         zdot = -a * x - b * y - c * z  + d * x**3
         return xdot, ydot, zdot
+
+class Coullet(Arneodo):
+    pass
     
 class Rucklidge(DynSys):
     @staticjit
@@ -551,21 +573,21 @@ class LiuChen(Sakarya):
     pass
         
 class RayleighBenard(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = self.a*(y - x)
-        ydot = self.r*y - x*z
-        zdot = x*y - self.b*z
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, a, b, r):
+        xdot = a * (y - x)
+        ydot = r * y - x * z
+        zdot = x * y - b * z
+        return xdot, ydot, zdot
     
     
 class Finance(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = (1/self.b - self.a)*x + z + x*y
-        ydot = -self.b*y - x**2
-        zdot = -x - self.c*z
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, a, b, c):
+        xdot = (1 / b - a) * x + z + x * y
+        ydot = -b * y - x**2
+        zdot = -x - c * z
+        return xdot, ydot, zdot
 
 # class Robinson:
 #     """
@@ -592,12 +614,12 @@ class Finance(DynSys):
 # hundreds of equations
 
 class Bouali2(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = self.a*x*(self.y0 - y) - self.b*z
-        ydot = -self.g*y*(1 - x**2)
-        zdot = -self.m*x*(1.5 - self.bb*z) - self.c*z
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, a, b, bb, c, g, m, y0):
+        xdot = a * x * (y0 - y) - b * z
+        ydot = -g * y * (1 - x**2)
+        zdot = -m * x*(1.5 - bb * z) - c * z
+        return xdot, ydot, zdot
     
 class Bouali(Bouali2):
     pass
@@ -829,11 +851,11 @@ class CircadianRhythm(DynSys):
     
 
 class FluidTrampoline(DynSys):
-    def rhs(self, X, t):
-        x, y, th = X
+    @staticmethod
+    def _rhs(x, y, th, t, gamma, psi, w):
         xdot = y
-        ydot = -1 - np.heaviside(-x, 0)*(x + self.psi*y*np.abs(y)) + self.gamma*np.cos(th)
-        thdot = self.w  
+        ydot = -1 - np.heaviside(-x, 0)*(x + psi*y*np.abs(y)) + gamma*np.cos(th)
+        thdot = w  
         return (xdot, ydot, thdot)
 
 # class InterfacialFlight:
@@ -1239,18 +1261,30 @@ class Torus(DynSys):
 
 class CaTwoPlusQuasiperiodic(CaTwoPlus):
     pass
-    
-class MixMasterUniverse(DynSys):
-    def rhs(self, X, t):
-        a, b, g, adot_, bdot_, gdot_ = X
-        adot = adot_
-        bdot = bdot_
-        gdot = gdot_
-        addot = (np.exp(2*b) - np.exp(2*g))**2 - np.exp(4*a)
-        bddot = (np.exp(2*g) - np.exp(2*a))**2 - np.exp(4*b)
-        gddot = (np.exp(2*a) - np.exp(2*b))**2 - np.exp(4*g)
-        return (adot, bdot, gdot, addot, bddot, gddot)
-    
+
+## Doesn't match described dynamics
+# class CosmologyFriedmann(DynSys):
+#     @staticjit
+#     def _rhs(x, y, z, t, a, b, c, d, p):
+#         xdot = y
+#         ydot = -a * y**2 / x - b * x - c * x**3 + d * p * x
+#         zdot = 3 * (y / x) * (p + z)
+#         return xdot, ydot, zdot
+        
+
+## Doesn't match described dynamics
+# class MixMasterUniverse(DynSys):
+#     def rhs(self, X, t):
+#         a, b, g, adot_, bdot_, gdot_ = X
+#         adot = adot_
+#         bdot = bdot_
+#         gdot = gdot_
+#         addot = (np.exp(2*b) - np.exp(2*g))**2 - np.exp(4*a)
+#         bddot = (np.exp(2*g) - np.exp(2*a))**2 - np.exp(4*b)
+#         gddot = (np.exp(2*a) - np.exp(2*b))**2 - np.exp(4*g)
+#         return (adot, bdot, gdot, addot, bddot, gddot)
+
+## Doesn't match described dynamics
 # class Universe(DynSys):
 #     def rhs(self, X, t):
 #         #Xdot = X * np.matmul(self.a, 1 - X)

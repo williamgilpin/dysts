@@ -121,17 +121,25 @@ class DynSys(BaseDyn):
         """Wrapper around right hand side"""
         return self.rhs(X, t)
     
-    def make_trajectory(self, n, method="RK45"):
+    def make_trajectory(self, n, method="RK45", resample=False, pts_per_period=100):
         """
         Generate a fixed-length trajectory with default timestep,
         parameters, and initial conditions
-        - n : int, the number of trajectory points
-        - method : the integration method
+        
+        Args:
+            n (int): the total number of trajectory points
+            method (str): the integration method
+            resample (bool): whether to resample trajectories to have matching dominant 
+                Fourier components
+            pts_per_period (int): if resampling, the number of points per period
+            
         """
         tpts = np.arange(n)*self.dt
         
-        
-#         tpts = self.period*self.dt
+#         print((self.period * self.dt))
+#         tlim = (self.period * self.dt) * (n / pts_per_period)
+#         print(tlim/self.dt)
+#         tpts = np.linspace(0, tlim, n)
         
         m = len(np.array(self.ic).shape)
         if m < 1: m = 1
