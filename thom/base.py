@@ -136,10 +136,12 @@ class DynSys(BaseDyn):
         """
         tpts = np.arange(n)*self.dt
         
+        if resample:
 #         print((self.period * self.dt))
-#         tlim = (self.period * self.dt) * (n / pts_per_period)
-#         print(tlim/self.dt)
-#         tpts = np.linspace(0, tlim, n)
+            tlim = (self.period * self.dt) * (n / pts_per_period)
+            upscale_factor = (tlim/self.dt)/n
+            if n > 10: warnings.warn(f"Excess integration required; scale factor {upscale_factor}")
+            tpts = np.linspace(0, tlim, n)
         
         m = len(np.array(self.ic).shape)
         if m < 1: m = 1

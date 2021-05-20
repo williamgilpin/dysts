@@ -214,8 +214,8 @@ class BlinkingRotlet(DynSys):
     
     @staticjit
     def _protocol(t, tau, stiffness=20):
-        return  0.5 + 0.5 * np.tanh(stiffness * np.sin(2 * np.pi * t / tau))
-        
+        return  0.5 + 0.5 * np.tanh(tau * stiffness * np.sin(2 * np.pi * t / tau))
+    
     def rhs(self, X, t):
         r, theta = X
         weight = self._protocol(t, self.tau) 

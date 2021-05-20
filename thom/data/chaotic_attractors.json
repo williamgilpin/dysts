@@ -699,7 +699,7 @@
             "c": 2.0,
             "e": 9.0
         },
-        "citation": "TBD",
+        "citation": "S Dadras, HR Momeni. Physics Letters A, 2009",
         "period": 829680.0
     },
     "RikitakeDynamo": {
@@ -727,7 +727,7 @@
             "g": 0.87,
             "a": 1.1
         },
-        "citation": "Rabinovich, Mikhail I.; Fabrikant, A. L. (1979). \"Stochastic Self-Modulation of Waves in Nonequilibrium Media\". Sov. Phys. JETP.",
+        "citation": "Rabinovich, Mikhail I.; Fabrikant, A. L. (1979). Stochastic Self-Modulation of Waves in Nonequilibrium Media. Sov. Phys. JETP.",
         "period": 826570.0
     },
     "AnishchenkoAstakhov": {
@@ -795,7 +795,7 @@
         "parameters": {
             "mu": 2.017
         },
-        "citation": "Sprott, J. C. \"Simplest dissipative chaotic flow.\" Physics letters A 228.4-5 (1997): 271-274..",
+        "citation": "Sprott, J. C. Simplest dissipative chaotic flow. Physics Letters A (1997).",
         "description": "Numerical integration of this attractor is extremely sensitive to the initial conditions",
         "period": 827700.0
     },
@@ -807,7 +807,7 @@
         ],
         "dt": 0.0008119,
         "parameters": {},
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 16607.0
     },
     "SprottC": {
@@ -818,7 +818,7 @@
         ],
         "dt": 0.001084,
         "parameters": {},
-        "citation": "TBD",
+        "citation":"Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 93216.0
     },
     "SprottD": {
@@ -829,7 +829,7 @@
         ],
         "dt": 0.001769,
         "parameters": {},
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 825720.0
     },
     "SprottE": {
@@ -840,7 +840,7 @@
         ],
         "dt": 0.0008543,
         "parameters": {},
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 828500.0
     },
     "SprottF": {
@@ -853,7 +853,7 @@
         "parameters": {
             "a": 0.5
         },
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 828820.0
     },
     "SprottG": {
@@ -866,7 +866,7 @@
         "parameters": {
             "a": 0.4
         },
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 2705.9
     },
     "SprottH": {
@@ -879,7 +879,7 @@
         "parameters": {
             "a": 0.5
         },
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 831400.0
     },
     "SprottI": {
@@ -892,7 +892,7 @@
         "parameters": {
             "a": 0.2
         },
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 828570.0
     },
     "SprottJ": {
@@ -903,7 +903,7 @@
         ],
         "dt": 0.001209,
         "parameters": {},
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 4004.7
     },
     "SprottK": {
@@ -916,7 +916,7 @@
         "parameters": {
             "a": 0.3
         },
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 6016.1
     },
     "SprottL": {
@@ -930,7 +930,7 @@
             "a": 0.9,
             "b": 3.9
         },
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 4003.4
     },
     "SprottM": {
@@ -943,7 +943,7 @@
         "parameters": {
             "a": 1.7
         },
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 2677.5
     },
     "SprottN": {
@@ -954,7 +954,7 @@
         ],
         "dt": 0.001213,
         "parameters": {},
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 829080.0
     },
     "SprottO": {
@@ -967,7 +967,7 @@
         "parameters": {
             "a": 2.7
         },
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 829230.0
     },
     "SprottP": {
@@ -980,7 +980,7 @@
         "parameters": {
             "a": 2.7
         },
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 3291.2
     },
     "SprottQ": {
@@ -994,7 +994,7 @@
             "a": 3.1,
             "b": 0.5
         },
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 826590.0
     },
     "SprottR": {
@@ -1008,7 +1008,7 @@
             "a": 0.9,
             "b": 0.4
         },
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 4426.4
     },
     "SprottS": {
@@ -1019,7 +1019,7 @@
         ],
         "dt": 0.0013,
         "parameters": {},
-        "citation": "TBD",
+        "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
         "period": 828250.0
     },
     "Hadley": {
@@ -1064,7 +1064,7 @@
         "parameters": {
             "a": 1.5
         },
-        "citation": "Nos\u00e9, S (1984). \"A unified formulation of the constant temperature molecular-dynamics methods\". Journal of Chemical Physics. 81 (1): 511\u2013519. Hoover, William G. (Mar 1985). \"Canonical dynamics: Equilibrium phase-space distributions\". Phys. Rev. A. 31 (3): 1695\u20131697.",
+        "citation": "Nose, S. A unified formulation of the constant temperature molecular-dynamics methods. Journal of Chemical Physics (1984). Hoover, William G. \"Canonical dynamics: Equilibrium phase-space distributions\". Phys. Rev. A. (1985).",
         "period": 831410.0
     },
     "KawczynskiStrizhak": {
