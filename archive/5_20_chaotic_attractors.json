@@ -12,7 +12,7 @@
             "beta": 2.667
         },
         "citation": "Lorenz, Edward N. \"Deterministic nonperiodic flow.\" Journal of the atmospheric sciences 20.2 (1963): 130-141.",
-        "period": 1.5008
+        "period": 18.915
     },
     "LorenzBounded": {
         "initial_conditions": [
@@ -28,7 +28,7 @@
             "r": 64
         },
         "citation": "Sprott & Xiong, Chaos 2015",
-        "period": 1.3716
+        "period": 10.547
     },
     "LorenzCoupled": {
         "initial_conditions": [
@@ -49,7 +49,7 @@
             "eps": 2.85
         },
         "citation": "Lorenz, Edward N. Deterministic nonperiodic flow. Journal of the atmospheric sciences 20.2 (1963): 130-141.",
-        "period": 1.6207
+        "period": 5.3951
     },
     "Lorenz84": {
         "initial_conditions": [
@@ -65,7 +65,7 @@
             "g": 4.194
         },
         "citation": "E. Lorenz, \u201cIrregularity: a fundamental property of the atmosphere,\u201d Tellus A, vol. 36, no. 2, pp. 98\u2013110, 1984.",
-        "period": 6.2586
+        "period": 2996.7
     },
     "Lorenz96": {
         "initial_conditions": [
@@ -79,7 +79,7 @@
             "f": 20.0
         },
         "citation": "Lorenz, Edward (1996). Predictability \u2013 A problem partly solved. Seminar on Predictability, Vol. I, ECMWF.",
-        "period": 2.1969
+        "period": 1180.7
     },
     "Thomas": {
         "initial_conditions": [
@@ -93,7 +93,7 @@
             "b": 10
         },
         "citation": "Thomas, Rene (1999). Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, labyrinth chaos. Int. J. Bifurc. Chaos.",
-        "period": 4.969
+        "period": 12.842
     },
     "ThomasLabyrinth": {
         "initial_conditions": [
@@ -108,7 +108,7 @@
         },
         "citation": "Thomas, Rene. Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, labyrinth chaos. Int. J. Bifurc. Chaos. (1999).",
         "description": "Trajectories seemingly undergo Brownian motion on an infinite lattice, and only remain bounded when a is less than one.",
-        "period": 6.05
+        "period": 45.917
     },
     "HenonHeiles": {
         "initial_conditions": [
@@ -122,7 +122,7 @@
             "lam": 1
         },
         "citation": "Henon, M.; Heiles, C. (1964). The applicability of the third integral of motion: Some numerical experiments. The Astronomical Journal. 69: 73.",
-        "period": 6.37
+        "period": 6.3423
     },
     "Chua": {
         "initial_conditions": [
@@ -138,7 +138,7 @@
             "m1": -0.71429
         },
         "citation": "Chua, L. O. (1969) Introduction to Nonlinear Network Theory, McGraw-Hill, New York.",
-        "period": 11.388
+        "period": 1.4636
     },
     "MultiChua": {
         "initial_conditions": [
@@ -168,7 +168,7 @@
             ]
         },
         "citation": "Mufcstak E. Yalcin, Johan A. K. Suykens, Joos Vandewalle. Cellular Neural Networks, Multi-Scroll Chaos And Synchronization. ",
-        "period": 2.2586
+        "period": 2336.2
     },
     "JerkCircuit": {
         "initial_conditions": [
@@ -182,7 +182,7 @@
             "eps": 1e-09
         },
         "citation": "Sprott IEEE Circ. Sys. 2011.",
-        "period": 9.7273
+        "period": 9.6554
     },
     "Colpitts": {
         "initial_conditions": [
@@ -200,7 +200,7 @@
         },
         "citation": "Kennedy (2007). IEEE Trans Circuits & Systems. 1994: 771-774. Li, Zhou, Yang. Chaos, Solitons, & Fractals.",
         "description": "An electrical circuit used as a signal generator.",
-        "period": 4.2676
+        "period": 3804.5
     },
     "Duffing": {
         "initial_conditions": [
@@ -219,7 +219,7 @@
         "bifurcation_parameter": "gamma",
         "nonautonomous": true,
         "citation": "Duffing, G. (1918), Forced oscillations with variable natural frequency and their technical relevance, Heft 41/42, Braunschweig: Vieweg.",
-        "period": 7.4496
+        "period": 22.425
     },
     "Torus": {
         "initial_conditions": [
@@ -235,7 +235,7 @@
         },
         "citation": "None.",
         "description": "A minimal quasiperiodic flow on a torus.",
-        "period": 6.36
+        "period": 3149.6
     },
     "Halvorsen": {
         "initial_conditions": [
@@ -249,7 +249,7 @@
             "b": 4
         },
         "citation": "TBD",
-        "period": 1.4889
+        "period": 1772.9
     },
     "MooreSpiegel": {
         "initial_conditions": [
@@ -264,7 +264,7 @@
             "eps": 9
         },
         "citation": "Moore, Spiegel. A Thermally Excited Nonlinear Oscillator, Ap. J., 143, 871 (1966)",
-        "period": 1.2887
+        "period": 1.2017
     },
     "Bouali2": {
         "initial_conditions": [
@@ -283,7 +283,7 @@
             "c": 0
         },
         "citation": "Bouali 2012",
-        "period": 2.6779
+        "period": 131.71
     },
     "Bouali": {
         "initial_conditions": [
@@ -302,7 +302,7 @@
             "c": 0.05
         },
         "citation": "Bouali 2012, related to the DequanLi attractor",
-        "period": 3.0411
+        "period": 12.695
     },
     "Arneodo": {
         "initial_conditions": [
@@ -319,7 +319,7 @@
         },
         "citation": "Arneodo, A., Coullet, P. & Tresser, C. Occurence of strange attractors in three-dimensional volterra equations. Physics Letters A 79, 259\u2013263 (1980)",
         "description": "also known as the ACT attractor, a modified Lotka-Volterra ecosystem",
-        "period": 3.1641
+        "period": 2.9801
     },
     "Coullet": {
         "initial_conditions": [
@@ -336,7 +336,7 @@
         },
         "citation": "Arneodo, A., Coullet, P. & Tresser, C. Occurence of strange attractors in three-dimensional volterra equations. Physics Letters A 79, 259\u2013263 (1980)",
         "description": "A variant of the Arneodo attractor",
-        "period": 5.7663
+        "period": 6.0063
     },
     "Rucklidge": {
         "initial_conditions": [
@@ -350,7 +350,7 @@
             "b": 6.7
         },
         "citation": "TBD",
-        "period": 6.0721
+        "period": 14.35
     },
     "BurkeShaw": {
         "initial_conditions": [
@@ -364,7 +364,7 @@
             "e": 13
         },
         "citation": "Shaw. Zeitschrift f\u00fcr Naturforschung (1981): 80-112.",
-        "period": 0.78333
+        "period": 1.1573
     },
     "ZhouChen": {
         "initial_conditions": [
@@ -381,7 +381,7 @@
             "e": -8.78
         },
         "citation": "Zhou, Chen. Int J Bifurcat Chaos, 2004",
-        "period": 0.87518
+        "period": 164.86
     },
     "LuChenCheng": {
         "initial_conditions": [
@@ -396,7 +396,7 @@
             "c": 18.1
         },
         "citation": "Lu, Chen, Cheng. Int J Bifurcat Chaos. 2004: 1507\u20131537.",
-        "period": 0.92333
+        "period": 916.22
     },
     "Chen": {
         "initial_conditions": [
@@ -411,7 +411,7 @@
             "c": 28
         },
         "citation": "Chen, Ueta. Int J Bifurcat Chaos. 2004: 1465-1466. Chen. Proc. First Int. Conf. Control of Oscillations and Chaos. 1997: 181\u2013186.",
-        "period": 0.58689
+        "period": 0.59444
     },
     "ChenLee": {
         "initial_conditions": [
@@ -426,7 +426,7 @@
             "c": -0.38
         },
         "citation": "Chen, Ueta. Int J Bifurcat Chaos. 2004: 1465-1466. Chen. Proc. First Int. Conf. Control of Oscillations and Chaos. 1997: 181\u2013186.",
-        "period": 2.8043
+        "period": 8.2856
     },
     "LuChen": {
         "initial_conditions": [
@@ -442,7 +442,7 @@
         },
         "citation": "Lu, Chen. Int J Bifurcat Chaos. 2002: 659-661.",
         "description": "    A system that switches shapes between the Lorenz and Chen attractors as the parameter c is varied from 12.7 to 28.5. Also called the Chen Celikovsky attractor",
-        "period": 2.3385
+        "period": 2.3405
     },
     "QiChen": {
         "initial_conditions": [
@@ -457,7 +457,7 @@
             "c": 80
         },
         "citation": "Qi et al. Chaos, Solitons & Fractals 2008.",
-        "period": 0.39179
+        "period": 0.51224
     },
     "YuWang": {
         "initial_conditions": [
@@ -473,7 +473,7 @@
             "d": 2.5
         },
         "citation": "Yu,  Wang. Eng Techn & Applied Science Research 2012.",
-        "period": 1.3366
+        "period": 0.9641
     },
     "YuWang2": {
         "initial_conditions": [
@@ -489,7 +489,7 @@
             "d": 2.5
         },
         "citation": "Yu,  Wang. Eng Techn & Applied Science Research 2012.",
-        "period": 0.39265
+        "period": 1.1551
     },
     "NewtonLiepnik": {
         "initial_conditions": [
@@ -503,7 +503,7 @@
             "b": 0.175
         },
         "citation": "Leipnik, R. B., and T. A. Newton. \"Double strange attractors in rigid body motion with linear feedback control.\" Physics Letters A 86.2 (1981): 63-67..",
-        "period": 8.5095
+        "period": 10.171
     },
     "DequanLi": {
         "initial_conditions": [
@@ -522,7 +522,7 @@
         },
         "citation": "Li, Phys Lett A. 2008: 387-393.",
         "description": "Sometimes called the \"Three Scroll\" unified attractor TSUCS-2",
-        "period": 0.083806
+        "period": 1.9981
     },
     "Tsucs2": {
         "initial_conditions": [
@@ -541,7 +541,7 @@
         },
         "citation": "TBD.",
         "description": "A named attractor related to the DequanLi attractor",
-        "period": 0.34526
+        "period": 0.34744
     },
     "ArnoldWeb": {
         "initial_conditions": [
@@ -558,7 +558,7 @@
         },
         "citation": "TBD.",
         "description": "Froeschle, C., Guzzo, M. & Legga, E. Graphical evolution of the Arnold web: From order to chaos. Science 289, 2108\u20132110 (2000).",
-        "period": 67.25
+        "period": 28811.0
     },
     "PanXuZhou": {
         "initial_conditions": [
@@ -577,7 +577,7 @@
         },
         "citation": "TBD.",
         "description": "A named attractor related to the DequanLi attractor",
-        "period": 11.886
+        "period": 6086.3
     },
     "WangSun": {
         "initial_conditions": [
@@ -595,7 +595,7 @@
             "q": 1.0
         },
         "citation": "TBD.",
-        "period": 26.958
+        "period": 61.013
     },
     "Sakarya": {
         "initial_conditions": [
@@ -615,7 +615,7 @@
             "s": 1.0
         },
         "citation": "TBD",
-        "period": 4.9844
+        "period": 5.2015
     },
     "LiuChen": {
         "initial_conditions": [
@@ -636,7 +636,7 @@
         },
         "citation": "Liu, Chen. Int J Bifurcat Chaos. 2004: 1395-1403.",
         "description": "Derived from Sakarya.",
-        "period": 2.0041
+        "period": 14.166
     },
     "Aizawa": {
         "initial_conditions": [
@@ -654,7 +654,7 @@
             "f": 0.1
         },
         "citation": "TBD",
-        "period": 2.5837
+        "period": 1.7952
     },
     "SanUmSrisuchinwong": {
         "initial_conditions": [
@@ -668,7 +668,7 @@
         },
         "citation": "San-Um, Srisuchinwong. J. Comp 2012",
         "description": "Also referred to as the Wimol-Banlue system",
-        "period": 7.4654
+        "period": 29.038
     },
     "Finance": {
         "initial_conditions": [
@@ -683,7 +683,7 @@
             "c": 1.1
         },
         "citation": "Guoliang Cai, Juanjuan Huang. International Journal of Nonlinear Science, Vol. 3 (2007)",
-        "period": 9.8932
+        "period": 8.1546
     },
     "Dadras": {
         "initial_conditions": [
@@ -700,7 +700,7 @@
             "e": 9.0
         },
         "citation": "S Dadras, HR Momeni. Physics Letters A, 2009",
-        "period": 3.2886
+        "period": 1185.9
     },
     "RikitakeDynamo": {
         "initial_conditions": [
@@ -714,7 +714,7 @@
             "mu": 1.0
         },
         "citation": "Rikitake, T., Oscillations of a system of disk dynamos, Mathematical Proceedings of the Cambridge Philosophical Society, 1958.",
-        "period": 5.8975
+        "period": 356.42
     },
     "RabinovichFabrikant": {
         "initial_conditions": [
@@ -728,7 +728,7 @@
             "a": 1.1
         },
         "citation": "Rabinovich, Mikhail I.; Fabrikant, A. L. (1979). Stochastic Self-Modulation of Waves in Nonequilibrium Media. Sov. Phys. JETP.",
-        "period": 2.3356
+        "period": 4165.2
     },
     "AnishchenkoAstakhov": {
         "initial_conditions": [
@@ -742,7 +742,7 @@
             "eta": 0.5
         },
         "citation": "Anishchenko,  et al. Nonlinear dynamics of chaotic and stochastic systems: tutorial and modern developments. 2007.",
-        "period": 6.814
+        "period": 6419.2
     },
     "GenesioTesi": {
         "initial_conditions": [
@@ -757,7 +757,7 @@
             "c": 1
         },
         "citation": "TBD",
-        "period": 5.9431
+        "period": 5.9555
     },
     "ShimizuMorioka": {
         "initial_conditions": [
@@ -771,7 +771,7 @@
             "b": 0.5
         },
         "citation": "Shimizu, Morioka. Phys Lett A. 1980: 201-204",
-        "period": 12.038
+        "period": 20.94
     },
     "SprottTorus": {
         "initial_conditions": [
@@ -783,7 +783,7 @@
         "parameters": {},
         "citation": "Sprott Physics Letters A 2014",
         "description": "Depending on the initial conditions, this is a torus or a complex attractor. The IC (0.1, 0.1, 0.1) give the torus.",
-        "period": 13.607
+        "period": 39.828
     },
     "SprottJerk": {
         "initial_conditions": [
@@ -797,7 +797,7 @@
         },
         "citation": "Sprott, J. C. Simplest dissipative chaotic flow. Physics Letters A (1997).",
         "description": "Numerical integration of this attractor is extremely sensitive to the initial conditions",
-        "period": 11.921
+        "period": 12.06
     },
     "SprottB": {
         "initial_conditions": [
@@ -808,7 +808,7 @@
         "dt": 0.0008119,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 8.2847
+        "period": 9.6565
     },
     "SprottC": {
         "initial_conditions": [
@@ -819,7 +819,7 @@
         "dt": 0.001084,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 8.8852
+        "period": 1496.7
     },
     "SprottD": {
         "initial_conditions": [
@@ -830,7 +830,7 @@
         "dt": 0.001769,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 4.8333
+        "period": 14594.0
     },
     "SprottE": {
         "initial_conditions": [
@@ -841,7 +841,7 @@
         "dt": 0.0008543,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 15.255
+        "period": 7058.8
     },
     "SprottF": {
         "initial_conditions": [
@@ -854,7 +854,7 @@
             "a": 0.5
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 19.244
+        "period": 13668.0
     },
     "SprottG": {
         "initial_conditions": [
@@ -867,7 +867,7 @@
             "a": 0.4
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 8.7097
+        "period": 17837.0
     },
     "SprottH": {
         "initial_conditions": [
@@ -880,7 +880,7 @@
             "a": 0.5
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 20.229
+        "period": 11696.0
     },
     "SprottI": {
         "initial_conditions": [
@@ -893,7 +893,7 @@
             "a": 0.2
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 10.93
+        "period": 25632.0
     },
     "SprottJ": {
         "initial_conditions": [
@@ -904,7 +904,7 @@
         "dt": 0.001209,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 4.836
+        "period": 4.8381
     },
     "SprottK": {
         "initial_conditions": [
@@ -917,7 +917,7 @@
             "a": 0.3
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 7.006
+        "period": 7.0808
     },
     "SprottL": {
         "initial_conditions": [
@@ -931,7 +931,7 @@
             "b": 3.9
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 6.7262
+        "period": 6998.2
     },
     "SprottM": {
         "initial_conditions": [
@@ -944,7 +944,7 @@
             "a": 1.7
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 5.3644
+        "period": 10.747
     },
     "SprottN": {
         "initial_conditions": [
@@ -955,7 +955,7 @@
         "dt": 0.001213,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 4.8135
+        "period": 4.8374
     },
     "SprottO": {
         "initial_conditions": [
@@ -968,7 +968,7 @@
             "a": 2.7
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 9.755
+        "period": 4.89
     },
     "SprottP": {
         "initial_conditions": [
@@ -981,7 +981,7 @@
             "a": 2.7
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 5.3414
+        "period": 12798.0
     },
     "SprottQ": {
         "initial_conditions": [
@@ -995,7 +995,7 @@
             "b": 0.5
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 4.8443
+        "period": 13350.0
     },
     "SprottR": {
         "initial_conditions": [
@@ -1009,7 +1009,7 @@
             "b": 0.4
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 7.0133
+        "period": 7.0043
     },
     "SprottS": {
         "initial_conditions": [
@@ -1020,7 +1020,7 @@
         "dt": 0.0013,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 3.3505
+        "period": 10749.0
     },
     "Hadley": {
         "initial_conditions": [
@@ -1036,7 +1036,7 @@
             "g": 1
         },
         "citation": "TBD",
-        "period": 1.4541
+        "period": 5874.2
     },
     "RayleighBenard": {
         "initial_conditions": [
@@ -1052,7 +1052,7 @@
         },
         "citation": "TBD",
         "description": "A low dimensional model of a convection cell",
-        "period": 0.91967
+        "period": 1.218
     },
     "NoseHoover": {
         "initial_conditions": [
@@ -1065,7 +1065,7 @@
             "a": 1.5
         },
         "citation": "Nose, S. A unified formulation of the constant temperature molecular-dynamics methods. Journal of Chemical Physics (1984). Hoover, William G. \"Canonical dynamics: Equilibrium phase-space distributions\". Phys. Rev. A. (1985).",
-        "period": 5.8673
+        "period": 6.1897
     },
     "KawczynskiStrizhak": {
         "initial_conditions": [
@@ -1082,7 +1082,7 @@
         },
         "citation": "P. E. Strizhak and A. L. Kawczynski, J. Phys. Chem. 99, 10830 (1995).",
         "description": "A chemical oscillator model describing mixed-modes in the BZ equations.",
-        "period": 19.18
+        "period": 7897.3
     },
     "VallisElNino": {
         "initial_conditions": [
@@ -1097,7 +1097,7 @@
             "p": 0
         },
         "citation": "Vallis GK. Conceptual models of El Nio and the southern oscillation. J Geophys Res 1988",
-        "period": 2.2087
+        "period": 5.0779
     },
     "DoublePendulum": {
         "initial_conditions": [
@@ -1116,7 +1116,7 @@
             1
         ],
         "citation": "None.",
-        "period": 4.0234
+        "period": 3217.7
     },
     "FluidTrampoline": {
         "initial_conditions": [
@@ -1133,7 +1133,7 @@
         "nonautonomous": true,
         "citation": "Gilet, Bush. JFM 2009.",
         "description": "A droplet bouncing on a horizontal soap film",
-        "period": 7.7351
+        "period": 17084.0
     },
     "DoubleGyre": {
         "initial_conditions": [
@@ -1148,7 +1148,7 @@
             "omega": 0.62832
         },
         "citation": "Allshouse, M. & Peacock, T. 2015 Lagrangian based methods for coherent structure detection. Chaos 25 (097617).",
-        "period": 13.953
+        "period": 24286.0
     },
     "BlinkingRotlet": {
         "initial_conditions": [
@@ -1169,7 +1169,7 @@
         ],
         "citation": "Meleshko, Aref. A blinking rotlet model for chaotic advection. Physics of Fluids 1996. See also Tallapragada and Sudarsanam PRE 2019",
         "description": "The location of the mixer is chosen so that there is a stagnation point at its symmetric complement",
-        "period": 4.7233
+        "period": 2340.1
     },
     "BlinkingVortex": {
         "initial_conditions": [
@@ -1189,7 +1189,7 @@
             1
         ],
         "citation": "Aref. Stirring by chaotic advection. JFM 1984.",
-        "period": 1.657
+        "period": 1276.1
     },
     "OscillatingFlow": {
         "initial_conditions": [
@@ -1210,7 +1210,7 @@
         ],
         "citation": "T. H. Solomon and J. P. Gollub, Phys. Rev. A 38, 6280 (1988).",
         "description": "A model flow with KAM tori. Original parameters have been rescaled by k",
-        "period": 23.857
+        "period": 22020.0
     },
     "BickleyJet": {
         "initial_conditions": [
@@ -1244,7 +1244,7 @@
         ],
         "citation": "A Spectral Clustering Approach to Lagrangian Vortex Detection. Hadjighasem, Karrasch, Teramoto, Haller. Phys Rev E 2016",
         "description": "A zonal jet passing between two counter rotating vortices. A steady Hamiltonian with a time-dependent perturbation",
-        "period": 86957.0
+        "period": 824120000.0
     },
     "ArnoldBeltramiChildress": {
         "initial_conditions": [
@@ -1265,7 +1265,7 @@
         ],
         "citation": "V. I. Arnold, Journal of Applied Mathematics and Mechanics 30, 223 (1966).",
         "description": "The classic ABC flow, an exact solution of Euler's equation",
-        "period": 161.98
+        "period": 58643.0
     },
     "BelousovZhabotinsky": {
         "initial_conditions": [
@@ -1299,7 +1299,7 @@
         },
         "citation": "A three-variable model of deterministic chaos in the Belousov\u2013Zhabotinsky reaction. Gy\u00f6rgyi, Field. Nature 1992",
         "description": "A reduced-order model of the BZ reaction that exhibits period doubling. The bifurcation parameter for controlling the onset of chaos is kf. The system undergoes regular cycling when kf=3e-4, and chaotic oscillations when kf=3.5e-4",
-        "period": 0.018257
+        "period": 6.307
     },
     "IsothermalChemical": {
         "initial_conditions": [
@@ -1315,7 +1315,7 @@
             "delta": 1.0
         },
         "citation": "Petrov, Scott, Showalter. Mixed\u2010mode oscillations in chemical systems. J Chem Phys 1992",
-        "period": 0.76784
+        "period": 732.24
     },
     "ForcedBrusselator": {
         "initial_conditions": [
@@ -1331,7 +1331,7 @@
             "w": 0.81
         },
         "citation": "I. Prigogine, From Being to Becoming: Time and Complexity in the Physical Sciences, New York: W.H. Freeman and Company, 1980.",
-        "period": 20.411
+        "period": 15993.0
     },
     "ForcedVanDerPol": {
         "initial_conditions": [
@@ -1348,7 +1348,7 @@
         "nonautonomous": true,
         "citation": "B. van der Pol: \"A theory of the amplitude of free and forced triode vibrations\", Radio Review (later Wireless World) 1 701\u2013710 (1920).",
         "description": "Non-autonomous.",
-        "period": 2.3163
+        "period": 15.958
     },
     "StickSlipOscillator": {
         "initial_conditions": [
@@ -1370,7 +1370,7 @@
         },
         "citation": "Awrejcewicz, Jan, and M. M. Holicke. Int J of Bifurcation and Chaos (1999).",
         "description": "gamma controls the transition to chaos.",
-        "period": 1.6129
+        "period": 824.11
     },
     "ForcedFitzHughNagumo": {
         "initial_conditions": [
@@ -1390,7 +1390,7 @@
         "nonautonomous": true,
         "citation": "FitzHugh, Richard (July 1961). \"Impulses and Physiological States in Theoretical Models of Nerve Membrane\". Biophysical Journal. 1 (6): 445\u2013466.",
         "description": "Non-autonomous.",
-        "period": 35.804
+        "period": 16537.0
     },
     "HindmarshRose": {
         "initial_conditions": [
@@ -1410,7 +1410,7 @@
         },
         "citation": "Marhl, Perc. Chaos, Solitons, Fractals 2005.",
         "description": "TBD.",
-        "period": 1.752
+        "period": 8.2181
     },
     "CellCycle": {
         "initial_conditions": [
@@ -1437,7 +1437,7 @@
         },
         "citation": "Romond, Rustici, Gonze, Goldbeter. 1999.",
         "description": "A simplified model of the cell cycle. The parameter `Kim` controls the bifurcations.",
-        "period": 204.71
+        "period": 348030.0
     },
     "CircadianRhythm": {
         "initial_conditions": [
@@ -1467,7 +1467,7 @@
         },
         "citation": " Leloup, Gonze, Goldbeter. 1999. Gonze, Leloup, Goldbeter. 2000",
         "description": "The Drosophila circadian rhythm under periodic light/dark forcing.",
-        "period": 27.0
+        "period": 14256.0
     },
     "CaTwoPlus": {
         "initial_conditions": [
@@ -1499,7 +1499,7 @@
         },
         "citation": "Houart, Dupont, Goldbeter. Bull Math Biol 1999.",
         "description": "Intracellular calcium ion oscillations.",
-        "period": 1.343
+        "period": 1262.3
     },
     "CaTwoPlusQuasiperiodic": {
         "initial_conditions": [
@@ -1531,7 +1531,7 @@
         },
         "citation": "Houart, Dupont, Goldbeter. Bull Math Biol 1999.",
         "description": "Intracellular calcium ion oscillations with quasiperiodic parameter values. The original paper also includes parameters for a limit cycle",
-        "period": 0.65614
+        "period": 616.79
     },
     "ExcitableCell": {
         "initial_conditions": [
@@ -1556,7 +1556,7 @@
         },
         "citation": "Teresa Chay. Chaos In A Three-variable Model Of An Excitable Cell. Physica D 1985",
         "description": "A reduced-order variant of the Hodgkin-Huxley model. The parameter gkc controls the onset of chaos.",
-        "period": 0.5528
+        "period": 364.77
     },
     "ItikBanksTumor": {
         "initial_conditions": [
@@ -1577,7 +1577,7 @@
         },
         "citation": "Itik, Banks. Int J Bifurcat Chaos 2010",
         "description": "A model of cancer cell populations.",
-        "period": 49.74
+        "period": 20534.0
     },
     "Laser": {
         "initial_conditions": [
@@ -1595,7 +1595,7 @@
             "k": -6.0
         },
         "citation": "Abooee, Yaghini-Bonabi, Jahed-Motlagh. Comm Nonline Sci 2013",
-        "period": 0.94667
+        "period": 9.015
     },
     "WindmiReduced": {
         "initial_conditions": [
@@ -1614,7 +1614,7 @@
         },
         "citation": "Smith, Thiffeault, Horton. J Geophys Res. 2000. Horton, Weigel, Sprott. Chaos 2001.",
         "description": "A simplified form of the Windmi model of the Earth's magnetosphere. The parameter vsw controls the onset of chaos.",
-        "period": 4.6733
+        "period": 7788.4
     },
     "TurchinHanski": {
         "initial_conditions": [
@@ -1634,7 +1634,7 @@
         },
         "citation": "Turchin, Hanski. The American Naturalist 1997. Turchin, Hanski. Ecology 2000",
         "description": " A chaotic three species food web.",
-        "period": 2.9956
+        "period": 3357.6
     },
     "Blasius": {
         "initial_conditions": [
@@ -1655,7 +1655,7 @@
         },
         "citation": "Blasius, Huppert, Stone. Nature 1999",
         "description": " A chaotic food web.",
-        "period": 6.6038
+        "period": 11557.0
     },
     "HastingsPowell": {
         "initial_conditions": [
@@ -1674,7 +1674,7 @@
         },
         "citation": "Hastings, Powell. Ecology 1991",
         "description": " A chaotic three species food web.",
-        "period": 135.19
+        "period": 53508.0
     },
     "SaltonSea": {
         "initial_conditions": [
@@ -1694,7 +1694,7 @@
             "d": 8.3
         },
         "citation": "Upadhyay, Bairagi, Kundu, Chattopadhyay, 2007",
-        "period": 0.96738
+        "period": 2250.8
     },
     "CoevolvingPredatorPrey": {
         "initial_conditions": [
@@ -1719,7 +1719,7 @@
         },
         "citation": "Gilpin & Feldman. PLOS Comp Biol 2017",
         "description": "A system of predator-prey equations with co-evolving prey.",
-        "period": 122.77
+        "period": 66973.0
     },
     "MacArthur": {
         "initial_conditions": [
@@ -1823,7 +1823,7 @@
         },
         "citation": "MacArthur, R. 1969. Species packing, and what competition minimizes. PNAS 64:1369. Parameter values taken from a model of phytoplankton in Huisman & Weissing. Nature 1999.",
         "description": "A model of chaotic oscillations in a plankton community, based on MacArthur's consumer resource model. Growth rates are determined using Liebig's law of the maximum",
-        "period": 43.406
+        "period": 36166.0
     },
     "BeerRNN": {
         "initial_conditions": [
@@ -1862,7 +1862,7 @@
             ]
         },
         "citation": "Beer, R. D. (1995). On the dynamics of small continuous-time recurrent neural networks. Adapt. Behav., 3(4), 469\u2013509.",
-        "period": 181.58
+        "period": 59980.0
     },
     "CellularNeuralNetwork": {
         "initial_conditions": [
@@ -1878,7 +1878,7 @@
             "d": 1.24
         },
         "citation": "Arena, Caponetto, Fortuna, and Porto., Int J Bifurcat Chaos. 1998:  1527-1539.",
-        "period": 3.2
+        "period": 19.434
     },
     "Hopfield": {
         "initial_conditions": [
@@ -1947,7 +1947,7 @@
         },
         "citation": "Lewis & Glass, Neur Comp (1992)",
         "description": "Small chaotic Hopfield network with frustrated connectivity",
-        "period": 10.865
+        "period": 10.31
     },
     "HyperRossler": {
         "initial_conditions": [
@@ -1964,7 +1964,7 @@
             "d": 0.05
         },
         "citation": "Rossler, 1979",
-        "period": 6.9924
+        "period": 3810.3
     },
     "Rossler": {
         "initial_conditions": [
@@ -1979,6 +1979,6 @@
             "c": 5.7
         },
         "citation": "Rossler, O. E. (1976), An Equation for Continuous Chaos, Physics Letters, 57A (5): 397\u2013398,",
-        "period": 5.9086
+        "period": 5.8536
     }
 }

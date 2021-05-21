@@ -47,6 +47,13 @@ class Gauss(DynMap):
     @staticjit
     def _rhs(x, a, b):
         return np.exp(-a * x**2) + b
+    
+class Bogdanov(DynMap):
+    @staticjit
+    def _rhs(x, y, eps, k, mu):
+        yp = (1 + eps) * y + k * x * (x - 1) + mu * x * y
+        xp = x + yp
+        return xp, yp
 
 class Baker(DynMap):
     @staticjit
@@ -111,6 +118,37 @@ class MaynardSmith(DynMap):
         yp = a * y + b - x**2
         return xp, yp
 
+class KaplanYorke(DynMap):
+    @staticjit
+    def _rhs(x, y, alpha):
+        xp = (2 * x) % 0.99999995
+        yp = alpha * y + np.cos(4 * np.pi * x)
+        return xp, yp
+
+class Gingerbreadman(DynMap):
+    @staticjit
+    def _rhs(x, y):
+        xp = 1 - y + np.abs(x)
+        yp = x
+        return xp, yp
+    
+class Duffing(DynMap):
+    @staticjit
+    def _rhs(x, y, a, b):
+        xp = y
+        yp = -b * x + a * y - y**3
+        return xp, yp
+    
+class Zaslavskii(DynMap):
+    @staticjit
+    def _rhs(x, y, eps, nu, r):
+        mu = (1 - np.exp(-r)) / r
+        xp = x + nu * (1 + mu * y) + eps * nu * mu * np.cos(2 * np.pi * x)
+        xp = xp % 0.99999995 
+        yp = np.exp(-r) * (y + eps * np.cos(2 * np.pi * x))
+        return xp, yp
+
+    
 class Chirikov(DynMap):
     @staticjit
     def _rhs(p, x, k):

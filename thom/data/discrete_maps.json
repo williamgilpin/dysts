@@ -19,6 +19,30 @@
         "inverse": false,
         "citation": "."
     },
+    "Bogdanov": {
+        "initial_conditions": [
+            0.51,
+            0.2
+        ],
+        "parameters": {
+            "eps": 0.0,
+            "k": 1.2,
+            "mu": 0.0
+        },
+        "inverse": false,
+        "citation": "Bogdanov, R (1981). Bifurcations of a Limit Cycle for a Family of Vector Fields on the Plane. Selecta Math. Soviet."
+    },
+    "KaplanYorke": {
+        "initial_conditions": [
+            0.2,
+            0.2
+        ],
+        "parameters": {
+            "alpha": 0.2
+        },
+        "inverse": false,
+        "citation": "J.L. Kaplan, J.A. Yorke (1979).Functional Differential Equations and Approximations of Fixed Points"
+    },
     "Tent": {
         "initial_conditions": [
             0.51
@@ -28,6 +52,41 @@
         },
         "inverse": false,
         "citation": ""
+    },
+    "Duffing": {
+        "initial_conditions": [
+            0.51,
+            0.1
+        ],
+        "parameters": {
+            "a": 2.75,
+            "b": 0.2
+        },
+        "inverse": false,
+        "citation": ""
+    },
+    "Gingerbreadman": {
+        "initial_conditions": [
+            0.51,
+            0.1
+        ],
+        "parameters": {
+        },
+        "inverse": false,
+        "citation": ""
+    },
+    "Zaslavskii": {
+        "initial_conditions": [
+            0.51,
+            0.1
+        ],
+        "parameters": {
+            "eps": 5.0,
+            "nu": 0.2,
+            "r": 2.0
+        },
+        "inverse": false,
+        "citation": "G.M. Zaslavskii (1978). The Simplest case of a strange attractor. Phys. Lett. A. 69 (3)"
     },
     "Chirikov": {
         "initial_conditions": [

@@ -207,8 +207,8 @@ def freq_from_fft(sig, fs=1):
     Estimate frequency from peak of FFT
     https://gist.github.com/endolith/255291
     
-    sig : a univariate signal
-    fs : the sampling frequency
+    sig (array): a univariate signal
+    fs (int): the sampling frequency
     """
     # Compute Fourier transform of windowed signal
     windowed = sig * blackmanharris(len(sig))
@@ -228,10 +228,10 @@ def resample_timepoints(model, ic, tpts, pts_per_period=100):
     integration points, determine a new set of timepoints that
     scales to the periodicity of the model
     
-    - model : callable, the right hand side of a set of ODEs
-    - ic : list, the initial conditions
-    - tpts : array, the timepoints over which to integrate
-    - pts_per_period : int, the number of timepoints to sample in
+    model (callable): the right hand side of a set of ODEs
+    ic (list): the initial conditions
+    tpts (array): the timepoints over which to integrate
+    pts_per_period (int): the number of timepoints to sample in
         each period
     """
     dt = (tpts[1] - tpts[0])
@@ -242,10 +242,31 @@ def resample_timepoints(model, ic, tpts, pts_per_period=100):
     #out = integrate_dyn(eq, ic, tt)
     return new_timepoints
 
-def find_significant_frequencies(sig, window=True, thresh=1.0, fs=1, n_samples=100, show=False):
+def make_surrogate(data, method="rp"):
     """
-    Find power spectral frequencies that are significant, meaning that they are 
-    overrepresented in the signal compared to shuffled copies.
+    
+    Parameters
+    ----------
+    method (str): "rs" or rp"
+    
+    """
+    if method == "rp":
+        phases = np.angle(np.fft.fft(data))
+        radii =  np.abs(np.fft.fft(data))
+        random_phases = 2 * np.pi * (2*(np.random.random(phases.shape) - 0.5))
+        surr_data = np.real(np.fft.ifft(radii * np.cos(random_phases) + 1j * radii * np.sin(random_phases)))
+    else:
+        surr_data = np.copy(data)
+        np.random.shuffle(surr_data)
+    return surr_data
+
+def find_significant_frequencies(sig, window=True, fs=1, n_samples=100, 
+                                 significance_threshold=0.95,
+                                 surrogate_method="rp",
+                                 show=False, return_amplitudes=False):
+    """
+    Find power spectral frequencies that are significant in a signal, by comparing
+    the appearance of a peak with its appearance in randomly-shuffled surrogates
     
     Parameters
     ----------
@@ -253,17 +274,14 @@ def find_significant_frequencies(sig, window=True, thresh=1.0, fs=1, n_samples=1
         whether to window the signal before taking the FFT
     thresh : float
         the number of standard deviations above mean to be significant
-    fs : int
-        the sampling frequency
-    n_samples : int
-        the number of surrogates to create
-    show : bool
-        show the psd of the signal and the surrogate
+    fs (int): the sampling frequency
+    n_samples (int): the number of surrogates to create
+    show (bool): whether to show the psd of the signal and the surrogate
     
     Returns
     -------
-    freqs : ndarray
-        The frequencies overrated in the dataset
+    freqs (ndarray): The frequencies overrated in the dataset
+    amps (ndarray): the amplitudes of the PSD at the identified frequencies
 
     """
     n = len(sig)
@@ -276,19 +294,36 @@ def find_significant_frequencies(sig, window=True, thresh=1.0, fs=1, n_samples=1
     
     all_surr_psd = list()
     for i in range(n_samples):
-        surr = np.copy(sig)
-        np.random.shuffle(surr)
+        #surr = np.copy(sig)
+        surr = make_surrogate(sig, method=surrogate_method)
+        #np.random.shuffle(surr)
         if window:
             surr = surr * blackmanharris(len(surr))
             psd_surr = rfft(surr)
         all_surr_psd.append(psd_surr)
     all_surr_psd = np.array(all_surr_psd)
 
-    surrogate_floor = np.mean(all_surr_psd, axis=0) + thresh * np.std(all_surr_psd, axis=0)  
-    freq_inds = np.arange(len(psd_sig))[psd_sig > surrogate_floor]
+#     thresh=1.0 
+#     surrogate_floor = np.mean(all_surr_psd, axis=0) + thresh * np.std(all_surr_psd, axis=0)  
+#     sel_inds = psd_sig > surrogate_floor
+    
+    frac_exceed = np.sum((psd_sig > all_surr_psd), axis=0)/all_surr_psd.shape[0]
+    sel_inds = (frac_exceed >= significance_threshold)
+    
+    
+    freq_inds = np.arange(len(psd_sig))[sel_inds]
+    amps = psd_sig[sel_inds]
     freqs = fs * freq_inds / len(sig)
-
-    return freqs
+    
+    ## cutoff low frequency components: half signal length times safety factor
+    freq_floor = (1 / halflen) * 10 # safety factor
+    amps = amps[freqs > freq_floor]
+    freqs = freqs[freqs > freq_floor]
+    
+    if return_amplitudes:
+        return freqs, amps
+    else:
+        return freqs
 
 
 def generate_ic_ensemble(

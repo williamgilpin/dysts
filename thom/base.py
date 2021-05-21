@@ -138,7 +138,7 @@ class DynSys(BaseDyn):
         
         if resample:
 #         print((self.period * self.dt))
-            tlim = (self.period * self.dt) * (n / pts_per_period)
+            tlim = (self.period) * (n / pts_per_period)
             upscale_factor = (tlim/self.dt)/n
             if n > 10: warnings.warn(f"Excess integration required; scale factor {upscale_factor}")
             tpts = np.linspace(0, tlim, n)
