@@ -43,7 +43,7 @@ Dataset datasheets and metadata are reported using standard dataset documentatio
 
 ## To do
 
-+ Find an efficient way to compile the right hand side of each continuous time system, ideally whenever the class is first invoked. Rather than using numba or jax, it might be easiest to just implement most of `thom.py` in Cython.
++ Finish making all differential equations compilable
 + Align the initial phases, potentially by picking default starting initial conditions that lie on the attractor, but which are as close as possible to the origin
 + Add a `dimension` field with the number of dynamical variables
 + Improve the resampling method used by `make_trajectory`
