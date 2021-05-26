@@ -31,12 +31,6 @@ from sdeint import itoint
 
 import pkg_resources
 
-def get_attractor_list():
-    data_path = pkg_resources.resource_filename('thom', 'data/chaotic_attractors.json')
-    with open(data_path, "r") as file:
-        data = json.load(file)
-    return list(data.keys())
-
 def signif(x, figs=6):
     """
     Round to a fixed number of significant digits
@@ -360,3 +354,55 @@ def generate_ic_ensemble(
         sol = integrate_dyn(model, ic_prime, tpts)
         all_samples.append(sol[:, -ntpts:])
     return np.array(all_samples)
+
+# def generate_lorenz_ensemble(tpts0, n_samples, params, frac_perturb_param=.1, 
+#                              n_classes=2, frac_transient=0.1, 
+#                              ic_range=None,
+#                             random_state=0):
+#     """
+#     Generate an ensemble of trajectories with random initial conditions, labelled by different
+#     sets of parameters.
+    
+#     tpts : the timesteps over which to run the simulation
+#     params : iterable, the starting values for the parameters
+#     n_samples : int, the number of different initial conditons
+#     n_classes : int , the number of different parameters
+#     frac_perturb_param : float, the amount to perturb the parameters by
+#     frac_transient : float, the fraction of time for the time series to settle onto the attractor
+#     ic_range : a starting value for the initial conditions
+#     random_state : int, the seed for the random number generator
+#     """
+#     np.random.seed(random_state)
+    
+#     ntpts = len(tpts0)
+#     dt = tpts0[1] - tpts0[0]
+#     t_range = tpts0[-1] - tpts0[0]
+#     tpts = np.arange(tpts0[0], tpts0[0] + t_range*(1 + frac_transient), dt)
+    
+#     num_per_class = int(n_samples/n_classes)
+
+#     all_params = list()
+#     all_samples = list()
+#     for i in range(n_classes):
+    
+#         params_perturb = 1 + frac_perturb_param*(2*np.random.random(len(params)) - 1)
+#         params_prime = params*params_perturb
+#         all_params.append(params_prime)
+    
+#         eq = Lorenz(*params_prime)
+        
+#         all_samples_per_class = list()
+#         for j in range(num_per_class):
+#             ic_prime = (-8.60632853, -14.85273055,  15.53352487)*np.random.random(3)
+#             sol = integrate_dyn(eq, ic_prime, tpts)
+            
+#             all_samples_per_class.append(sol[:, -ntpts:]) # remove transient
+#         all_samples.append(all_samples_per_class)
+    
+#     all_samples, all_params = np.array(all_samples), np.array(all_params)
+#     return all_samples, all_params
+    
+# num_samples = 120
+
+# data, labels = generate_lorenz_ensemble(np.linspace(0, 500, 125000), 2*num_samples, (10, 28, 2.5), 
+#                                     n_classes=8, frac_perturb_param=.2, frac_transient=.2)

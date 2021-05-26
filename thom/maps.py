@@ -12,10 +12,6 @@ Requirements:
 
 Resources:
 http://www.3d-meier.de/tut19/Seite1.html
-http://www.chaoscope.org/doc/attractors.htm
-http://nbodyphysics.com/chaoticmotion/html/_hadley_8cs_source.html
-https://chaoticatmospheres.com/mathrules-strange-attractors
-https://matousstieber.wordpress.com/2016/01/12/strange-attractors/
 
 DEV: 
 + Database: How to load a function object from a string? exec does not do this
@@ -47,6 +43,11 @@ class Gauss(DynMap):
     @staticjit
     def _rhs(x, a, b):
         return np.exp(-a * x**2) + b
+
+class Chebyshev(DynMap):
+    @staticjit
+    def _rhs(x, a):
+        return np.cos(a * np.arccos(x))
     
 class Bogdanov(DynMap):
     @staticjit
@@ -87,6 +88,43 @@ class DeJong(DynMap):
     def _rhs(x, y, a, b, c, d):
         xp = np.sin(a * y) - np.cos(b * x)
         yp = np.sin(c * x) - np.cos(d * y)
+        return xp, yp
+
+class Svensson(DynMap):
+    @staticjit
+    def _rhs(x, y, a, b, c, d):
+        xp = d * np.sin(a * x) - np.sin(b * y)
+        yp = c * np.cos(a * x) + np.cos(b * y)
+        return xp, yp
+    
+class Bedhead(DynMap):
+    @staticjit
+    def _rhs(x, y, a, b):
+        xp = np.sin(x * y / b) * y + np.cos(a * x - y)
+        yp =  x + np.sin( y ) / b
+        return xp, yp
+    
+# class ZeraouliaSprott(DynMap):
+#     @staticjit
+#     def _rhs(x, y, a, b):
+#         xp = - a * x / (1 + y**2)
+#         yp = x + b * y
+#         return xp, yp
+    
+class GumowskiMira(DynMap):
+    @staticjit
+    def _rhs(x, y, a, b):
+        fx = a * x + 2 * (1 - a) * x**2 / (1 + x**2)
+        xp = b * y + fx
+        fx1 = a * xp + 2 * (1 - a) * xp**2 / (1 + xp**2)
+        yp = fx1 - x
+        return xp, yp
+    
+class Hopalong(DynMap):
+    @staticjit
+    def _rhs(x, y, a, b, c):
+        xp = y - 1 - np.sqrt(np.abs(b * x - 1 - c))*np.sign(x - 1)
+        yp = a - x - 1
         return xp, yp
     
 class Ikeda(DynMap):
@@ -139,14 +177,14 @@ class Duffing(DynMap):
         yp = -b * x + a * y - y**3
         return xp, yp
     
-class Zaslavskii(DynMap):
-    @staticjit
-    def _rhs(x, y, eps, nu, r):
-        mu = (1 - np.exp(-r)) / r
-        xp = x + nu * (1 + mu * y) + eps * nu * mu * np.cos(2 * np.pi * x)
-        xp = xp % 0.99999995 
-        yp = np.exp(-r) * (y + eps * np.cos(2 * np.pi * x))
-        return xp, yp
+# class Zaslavskii(DynMap):
+#     @staticjit
+#     def _rhs(x, y, eps, nu, r):
+#         mu = (1 - np.exp(-r)) / r
+#         xp = x + nu * (1 + mu * y) + eps * nu * mu * np.cos(2 * np.pi * x)
+#         xp = xp % 0.99999995 
+#         yp = np.exp(-r) * (y + eps * np.cos(2 * np.pi * x))
+#         return xp, yp
 
     
 class Chirikov(DynMap):

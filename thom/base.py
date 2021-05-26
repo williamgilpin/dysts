@@ -1,25 +1,14 @@
 """
 Dynamical systems in Python
 
-# (M, T, D) convention
+(M, T, D) convention for outputs
 
 Requirements:
 + numpy
 + scipy
 + sdeint (for integration with noise)
 + numba (optional, for faster integration)
-+ jax (optional, for faster integration)
 
-Resources:
-http://www.3d-meier.de/tut19/Seite1.html
-http://www.chaoscope.org/doc/attractors.htm
-https://matousstieber.wordpress.com/2016/01/12/strange-attractors/
-
-DEV: 
-+ Add a function compute_dt that finds the timestep based on fft
-+ Set standard integration timestep based on this value
-+ Add a function that rescales outputs to the same interval
-+ Add a function that finds initial conditions on the attractor
 """
 
 
@@ -62,6 +51,7 @@ class BaseDyn:
     """
     name : str = None
     params : dict = field(default_factory=dict)
+    random_state : int = 0
     
     def __init__(self, **entries):
         self.name = self.__class__.__name__
@@ -134,13 +124,13 @@ class DynSys(BaseDyn):
             pts_per_period (int): if resampling, the number of points per period
             
         """
-        tpts = np.arange(n)*self.dt
+        tpts = np.arange(n) * self.dt
         
         if resample:
 #         print((self.period * self.dt))
             tlim = (self.period) * (n / pts_per_period)
             upscale_factor = (tlim/self.dt)/n
-            if n > 10: warnings.warn(f"Excess integration required; scale factor {upscale_factor}")
+            if upscale_factor > 1e3: warnings.warn(f"Excessive integration required; scale factor {upscale_factor}")
             tpts = np.linspace(0, tlim, n)
         
         m = len(np.array(self.ic).shape)
@@ -156,11 +146,6 @@ class DynSys(BaseDyn):
         return sol
         
 
-
-
-# # Ikeda, Pickover
-
-# @dataclass(init=False)
 class DynMap(BaseDyn):
     """
     A dynamical system base class, which loads and assigns parameter
@@ -206,15 +191,124 @@ class DynMap(BaseDyn):
             curr = np.array(self.ic)[None, :] # (M, D)
         else:
             curr = np.array(self.ic)
-            
-        traj = np.copy(curr)[:, None, :] # (M, T, D)
     
         if inverse:
             propagator = self.rhs_inv
         else:
             propagator = self.rhs
         
+        traj = np.zeros((curr.shape[0], n, curr.shape[-1]))
+#         traj[:, 0, :] = curr
         for i in range(n):
             curr = propagator(curr)
-            traj = np.concatenate([traj, curr[:, None, :]], axis=1)
-        return traj
+            traj[:, i, :] = curr
+            
+#         traj = np.copy(curr)[:, None, :] # (M, T, D)
+#         for i in range(n):
+#             curr = propagator(curr)
+#             traj = np.concatenate([traj, curr[:, None, :]], axis=1)
+        return np.squeeze(traj)
+
+    
+import collections  
+class DynSysDelay(DynSys):
+    """
+    A delayed differential equation object. Defaults to using Euler integration scheme
+    The delay timescale is assumed to be the "tau" field.
+    Uses a double-ended queue for memory efficiency
+    
+    Currently, only univariate delay equations are supported
+    """
+    def __init__(self): 
+        super().__init__()
+        #self.history = collections.deque(1.3 * np.random.rand(1 + mem_stride))
+        self.__call__ = self.rhs
+        
+    def rhs(self, X, Xprev, t):
+        """The right hand side of a dynamical equation"""
+        param_list = [getattr(self, param_name) for param_name in self.get_param_names()]
+        out = self._rhs(X, Xprev, t, *param_list)
+        return out
+        
+    def make_trajectory(self, n, d=3, method="Euler", noise=0.0, 
+                        resample=False, pts_per_period=100, clipping=100):
+        """
+        Generate a fixed-length trajectory with default timestep,
+        parameters, and initial conditions
+        
+        Args:
+            n (int): the total number of trajectory points
+            d (int): the number of embedding dimensions to return
+            method (str): Not used. Currently Euler is the only option here
+            noise (float): The amplitude of brownian forcing
+            resample (bool): whether to resample trajectories to have matching dominant 
+                Fourier components
+            pts_per_period (int): if resampling, the number of points per period
+            clipping (int): the nubmer of timesteps to pad the simulation (useful for 
+                transients).
+            
+        Development:
+            Support for multivariate and multidelay equations with multiple deques
+            
+        """
+        np.random.seed(self.random_state)
+        n += 2 * clipping
+        
+        mem_stride = int(np.ceil(self.tau / self.dt)) # stride
+        history = collections.deque(self.ic[-1] * (1 + 0.2 * np.random.rand(1 + mem_stride)) )
+        
+        if resample:
+            nt = int(np.ceil((self.period / self.dt) * (n / pts_per_period)))
+        else:
+            nt = n
+    
+        tpts = np.arange(nt) * self.dt
+        tlim = tpts[-1]
+        save_inds = np.linspace(0, nt, n).astype(int)
+        
+        # pre-allocate solution
+        sol = np.zeros(n)
+        sol[0] = self.ic[-1]
+        x_next = sol[0]
+        
+        ## Pre-compute noise
+        noise_vals = np.random.normal(size=nt, loc=0.0, scale=np.sqrt(self.dt))
+        for i, t in enumerate(tpts):
+            if i == 0:
+                continue
+            dt = tpts[i] - tpts[i - 1]
+            
+            nlags = 1
+            x_next = x_next + self.rhs(x_next, history.pop(), t) * self.dt + noise * noise_vals[i]
+            
+            if i in save_inds:
+                sol[save_inds == i] = x_next
+            history.appendleft(x_next)
+        
+        ## now stack to create an embedding
+        sol_embed = list()
+        embed_stride = int((n / nt) * mem_stride)
+        for i in range(d):
+            sol_embed.append(sol[i * embed_stride : -(d - i) * embed_stride])
+        
+        return np.vstack(sol_embed)[:, clipping:(n - clipping)]
+
+    
+def get_attractor_list(model_type="continuous"):
+    """
+    Returns the names of all models in the package
+    
+    Args:
+        model_type (str): "continuous" (default) or "discrete"
+        
+    Returns:
+        attractor_list (list of str): The names of all attractors in database
+    """
+    if model_type == "continuous":
+        data_path = data_path_continuous
+    else:
+        data_path = data_path_discrete
+    with open(data_path, "r") as file:
+        data = json.load(file)
+    attractor_list = sorted(list(data.keys()))
+    return attractor_list

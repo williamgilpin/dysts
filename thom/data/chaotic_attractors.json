@@ -176,13 +176,13 @@
             0.065382947,
             0.91801911
         ],
-        "dt": 0.001498,
+        "dt": 0.000749,
         "parameters": {
             "y0": 0.026,
             "eps": 1e-09
         },
         "citation": "Sprott IEEE Circ. Sys. 2011.",
-        "period": 9.7273
+        "period": 19.4546
     },
     "Colpitts": {
         "initial_conditions": [
@@ -349,7 +349,7 @@
             "a": 2.0,
             "b": 6.7
         },
-        "citation": "TBD",
+        "citation": "Rucklidge, A.M., Chaos in models of double convection, Journal of Fluid Mechanics, 1992, 237, 209-229.",
         "period": 6.0721
     },
     "BurkeShaw": {
@@ -521,7 +521,7 @@
             "f": 20
         },
         "citation": "Li, Phys Lett A. 2008: 387-393.",
-        "description": "Sometimes called the \"Three Scroll\" unified attractor TSUCS-2",
+        "description": "Related to the Three Scroll unified attractor TSUCS-2",
         "period": 0.083806
     },
     "Tsucs2": {
@@ -575,9 +575,9 @@
             "k": 16,
             "f": 0
         },
-        "citation": "TBD.",
+        "citation": "Zhou, Wuneng, et al. On dynamics analysis of a new chaotic attractor. Physics Letters A 372.36 (2008): 5773-5777..",
         "description": "A named attractor related to the DequanLi attractor",
-        "period": 11.886
+        "period": 1.7829
     },
     "WangSun": {
         "initial_conditions": [
@@ -636,7 +636,7 @@
         },
         "citation": "Liu, Chen. Int J Bifurcat Chaos. 2004: 1395-1403.",
         "description": "Derived from Sakarya.",
-        "period": 2.0041
+        "period": 8.0164
     },
     "Aizawa": {
         "initial_conditions": [
@@ -1115,8 +1115,29 @@
             0,
             1
         ],
+        "hamiltonian": true,
         "citation": "None.",
         "period": 4.0234
+    },
+    "SwingingAtwood": {
+        "initial_conditions": [
+            0.1, 
+            1.5707963267948966, 
+            0, 
+            0
+        ],
+        "dt": 1.0288e-4,
+        "parameters": {
+            "m1": 1.0,
+            "m2": 1.4
+        },
+        "unbounded_indices": [
+            0,
+            0
+        ],
+        "hamiltonian": true,
+        "citation": "Tufillaro, Nicholas B.; Abbott, Tyler A.; Griffiths, David J. (1984). Swinging Atwood's Machine. American Journal of Physics. 52 (10): 895–903.",
+        "period": 0.5810
     },
     "FluidTrampoline": {
         "initial_conditions": [
@@ -1131,7 +1152,7 @@
             "w": 1.21
         },
         "nonautonomous": true,
-        "citation": "Gilet, Bush. JFM 2009.",
+        "citation": "Gilet, Bush. The fluid trampoline: droplets bouncing on a soap film. JFM 2009.",
         "description": "A droplet bouncing on a horizontal soap film",
         "period": 7.7351
     },
@@ -1188,7 +1209,7 @@
             0,
             1
         ],
-        "citation": "Aref. Stirring by chaotic advection. JFM 1984.",
+        "citation": "Aref (1984). Stirring by chaotic advection. J. Fluid Mechanics.",
         "period": 1.657
     },
     "OscillatingFlow": {
@@ -1214,8 +1235,8 @@
     },
     "BickleyJet": {
         "initial_conditions": [
-            0.3,
             -0.4,
+            0.3,
             0.0
         ],
         "dt": 100.0,
@@ -1240,9 +1261,9 @@
             "omega": 1
         },
         "unbounded_indices": [
-            0
+            1
         ],
-        "citation": "A Spectral Clustering Approach to Lagrangian Vortex Detection. Hadjighasem, Karrasch, Teramoto, Haller. Phys Rev E 2016",
+        "citation": "Hadjighasem, Karrasch, Teramoto, Haller (2016). A Spectral Clustering Approach to Lagrangian Vortex Detection Phys Rev E.",
         "description": "A zonal jet passing between two counter rotating vortices. A steady Hamiltonian with a time-dependent perturbation",
         "period": 86957.0
     },
@@ -1273,7 +1294,7 @@
             0.61703254,
             0.84669066
         ],
-        "dt": 7.668e-07,
+        "dt": 3.834e-07,
         "parameters": {
             "y0": 7.72571e-06,
             "yb1": 6.92813e-07,
@@ -1297,7 +1318,7 @@
             "ci": 0.000833,
             "t0": 2308.62
         },
-        "citation": "A three-variable model of deterministic chaos in the Belousov\u2013Zhabotinsky reaction. Gy\u00f6rgyi, Field. Nature 1992",
+        "citation": "Gyorgyi and Field (1992). A three-variable model of deterministic chaos in the Belousov-Zhabotinsky reaction. Nature.",
         "description": "A reduced-order model of the BZ reaction that exhibits period doubling. The bifurcation parameter for controlling the onset of chaos is kf. The system undergoes regular cycling when kf=3e-4, and chaotic oscillations when kf=3.5e-4",
         "period": 0.018257
     },
@@ -1315,7 +1336,7 @@
             "delta": 1.0
         },
         "citation": "Petrov, Scott, Showalter. Mixed\u2010mode oscillations in chemical systems. J Chem Phys 1992",
-        "period": 0.76784
+        "period": 0.7302799999999999
     },
     "ForcedBrusselator": {
         "initial_conditions": [
@@ -1346,7 +1367,7 @@
             "w": 0.63
         },
         "nonautonomous": true,
-        "citation": "B. van der Pol: \"A theory of the amplitude of free and forced triode vibrations\", Radio Review (later Wireless World) 1 701\u2013710 (1920).",
+        "citation": "B. van der Pol (1920). A theory of the amplitude of free and forced triode vibrations. Radio Review 1.",
         "description": "Non-autonomous.",
         "period": 2.3163
     },
@@ -1368,7 +1389,7 @@
             "gamma": 1.0,
             "eps": 0.05
         },
-        "citation": "Awrejcewicz, Jan, and M. M. Holicke. Int J of Bifurcation and Chaos (1999).",
+        "citation": "Awrejcewicz, Jan, and M. M. Holicke (1999). Int J of Bifurcation and Chaos.",
         "description": "gamma controls the transition to chaos.",
         "period": 1.6129
     },
@@ -1388,7 +1409,7 @@
             "f": 0.25
         },
         "nonautonomous": true,
-        "citation": "FitzHugh, Richard (July 1961). \"Impulses and Physiological States in Theoretical Models of Nerve Membrane\". Biophysical Journal. 1 (6): 445\u2013466.",
+        "citation": "FitzHugh, Richard (1961). Impulses and Physiological States in Theoretical Models of Nerve Membrane. Biophysical Journal. 1 (6).",
         "description": "Non-autonomous.",
         "period": 35.804
     },
@@ -1861,7 +1882,7 @@
                 ]
             ]
         },
-        "citation": "Beer, R. D. (1995). On the dynamics of small continuous-time recurrent neural networks. Adapt. Behav., 3(4), 469\u2013509.",
+        "citation": "Beer, R. D. (1995). On the dynamics of small continuous-time recurrent neural networks. Adapt. Behav., 3(4), 4692013509.",
         "period": 181.58
     },
     "CellularNeuralNetwork": {
@@ -1949,6 +1970,94 @@
         "description": "Small chaotic Hopfield network with frustrated connectivity",
         "period": 10.865
     },
+    "MackeyGlass": {
+        "initial_conditions": [
+            1.12,
+            1.34164294
+        ],
+        "dt": 0.001243,
+        "parameters": {
+            "beta": 2,
+            "gamma": 1.0,
+            "n": 9.65,
+            "tau": 2.0
+        },
+        "citation": "Glass, L. and Mackey, M. C. (1979). Pathological physiological conditions resulting from instabilities in physiological control systems. Ann. NY. Acad. Sci.",
+        "description": "A standard delay dimension of three is used.",
+        "period": 7.43264
+    },
+    "IkedaDelay": {
+        "initial_conditions": [
+            6.5123
+        ],
+        "dt": 0.0006215,
+        "parameters": {
+            "mu": -20,
+            "x0": 0.0,
+            "c": 1.0,
+            "tau": 2.0
+        },
+        "citation": "K. Ikeda and K. Matsumoto (1987). High-dimensional chaotic behavior in systems with time-delayed feedback, Physica D, 29 (1-2), 223-235",
+        "description": "A standard delay dimension of three is used.",
+        "period": 1.486528
+    },
+    "SprottDelay": {
+        "initial_conditions": [
+            1.34164294
+        ],
+        "dt": 0.001875,
+        "parameters": {
+            "mu": 1.0,
+            "x0": 0.0,
+            "c": 0.0,
+            "tau": 5.1
+        },
+        "citation": "Sprott, J. C (2007). A simple chaotic delay differential equation. Physics Letters A 366.4-5: 397-402.",
+        "description": "A standard delay dimension of three is used.",
+        "period": 14.15628
+    },
+    "VossDelay": {
+        "initial_conditions": [
+            0.1
+        ],
+        "dt": 0.01215,
+        "parameters": {
+            "alpha": 3.24,
+            "tau": 13.28
+        },
+        "citation": "Voss (2002). Real-time anticipation of chaotic states of an electronic circuit.",
+        "description": "A delay model that can be implemented as an electronic circuit. A standard delay dimension of three is used.",
+        "period": 4.63215
+    },
+    "ScrollDelay": {
+        "initial_conditions": [
+            0.08323
+        ],
+        "dt": 0.01215,
+        "parameters": {
+            "alpha": 0.2,
+            "beta": 0.2,
+            "tau": 10.0
+        },
+        "citation": "R.D. Driver, Ordinary and Delay Differential Equations (Springer, New York, 1977).",
+        "description": "A delay model that can be implemented as an electronic circuit. A standard delay dimension of three is used.",
+        "period": 48.5132
+    },
+    "PiecewiseCircuit": {
+        "initial_conditions": [
+            0.08922
+        ],
+        "dt": 0.07032,
+        "parameters": {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "c": 2.24,
+            "tau": 4.9
+        },
+        "citation": "A. Tamasevicius, G. Mykolaitis, S. Bumeliene, Electron. Lett. 42, 13 (2006)",
+        "description": "A delay model that can be implemented as an electronic circuit. A standard delay dimension of three is used.",
+        "period": 101.87772
+    },
     "HyperRossler": {
         "initial_conditions": [
             -93.667697,
@@ -1978,7 +2087,7 @@
             "b": 0.2,
             "c": 5.7
         },
-        "citation": "Rossler, O. E. (1976), An Equation for Continuous Chaos, Physics Letters, 57A (5): 397\u2013398,",
+        "citation": "Rossler, O. E. (1976), An Equation for Continuous Chaos, Physics Letters, 57A (5): 3972013398,",
         "period": 5.9086
     }
 }
