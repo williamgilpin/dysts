@@ -111,7 +111,8 @@ class DynSys(BaseDyn):
         """Wrapper around right hand side"""
         return self.rhs(X, t)
     
-    def make_trajectory(self, n, method="RK45", resample=False, pts_per_period=100):
+    def make_trajectory(self, n, method="RK45", resample=False, pts_per_period=100,
+                       return_times=False):
         """
         Generate a fixed-length trajectory with default timestep,
         parameters, and initial conditions
@@ -122,6 +123,8 @@ class DynSys(BaseDyn):
             resample (bool): whether to resample trajectories to have matching dominant 
                 Fourier components
             pts_per_period (int): if resampling, the number of points per period
+            return_times (bool): Whether to return the timepoints at which the solution 
+                was computed
             
         """
         tpts = np.arange(n) * self.dt
@@ -142,8 +145,11 @@ class DynSys(BaseDyn):
             for ic in self.ic:
                 sol.append(integrate_dyn(self, ic, tpts, first_step=self.dt, method=method))
             sol = np.transpose(np.array(sol), (0, 2, 1))
-            
-        return sol
+        
+        if return_times:
+            return tpts, sol
+        else:
+            return sol
         
 
 class DynMap(BaseDyn):
@@ -175,12 +181,16 @@ class DynMap(BaseDyn):
         """Wrapper around right hand side"""
         return self.rhs(X)
     
-    def make_trajectory(self, n, inverse=False, **kwargs):
+    def make_trajectory(self, n, inverse=False, return_times=False, **kwargs):
         """
         Generate a fixed-length trajectory with default timestep,
         parameters, and initial condition(s)
-        - n : int, the length of each trajectory
-        - inverse : bool, whether to reverse a trajectory
+        
+        Args:
+            n (int): the length of each trajectory
+            inverse (bool): whether to reverse a trajectory
+            return_times (bool): Whether to return the timepoints at which the solution 
+                was computed
         """
         
         m = len(np.array(self.ic).shape)
@@ -207,8 +217,12 @@ class DynMap(BaseDyn):
 #         for i in range(n):
 #             curr = propagator(curr)
 #             traj = np.concatenate([traj, curr[:, None, :]], axis=1)
-        return np.squeeze(traj)
+        sol = np.squeeze(traj)
 
+        if return_times:
+            return np.arange(len(sol)), sol
+        else:
+            return sol
     
 import collections  
 class DynSysDelay(DynSys):
@@ -231,7 +245,8 @@ class DynSysDelay(DynSys):
         return out
         
     def make_trajectory(self, n, d=3, method="Euler", noise=0.0, 
-                        resample=False, pts_per_period=100, clipping=100):
+                        resample=False, pts_per_period=100, clipping=100,
+                        return_times=False):
         """
         Generate a fixed-length trajectory with default timestep,
         parameters, and initial conditions
@@ -246,6 +261,8 @@ class DynSysDelay(DynSys):
             pts_per_period (int): if resampling, the number of points per period
             clipping (int): the nubmer of timesteps to pad the simulation (useful for 
                 transients).
+            return_times (bool): Whether to return the timepoints at which the solution 
+                was computed
             
         Development:
             Support for multivariate and multidelay equations with multiple deques
@@ -291,7 +308,12 @@ class DynSysDelay(DynSys):
         for i in range(d):
             sol_embed.append(sol[i * embed_stride : -(d - i) * embed_stride])
         
-        return np.vstack(sol_embed)[:, clipping:(n - clipping)]
+        sol0 = np.vstack(sol_embed)[:, clipping:(n - clipping)]
+    
+        if return_times:
+            return tpts, sol0
+        else:
+            return sol0
 
     
 def get_attractor_list(model_type="continuous"):
