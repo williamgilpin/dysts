@@ -111,7 +111,7 @@ class DynSys(BaseDyn):
         """Wrapper around right hand side"""
         return self.rhs(X, t)
     
-    def make_trajectory(self, n, method="RK45", resample=False, pts_per_period=100,
+    def make_trajectory(self, n, method="Radau", resample=False, pts_per_period=100,
                        return_times=False):
         """
         Generate a fixed-length trajectory with default timestep,
