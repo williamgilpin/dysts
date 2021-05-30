@@ -41,12 +41,14 @@ This module is named after [Mary Cartwright](https://en.wikipedia.org/wiki/Mary_
 
 Dataset datasheets and metadata are reported using standard dataset documentation frameworks. See the dataset[`datasheet`](thom/metadata/datasheet.md)
 
-## To do
+## Development to-do list
 
 + Finish making all differential equations compilable
++ Speed up the delay equation implementation
++ Speed up multiple initial conditions for continuous time models
++ Add a separate jacobian database, and add an attribute that can be used to check if an analytical one exists
 + Align the initial phases, potentially by picking default starting initial conditions that lie on the attractor, but which are as close as possible to the origin
 + Add a `dimension` field with the number of dynamical variables
-+ Improve the resampling method used by `make_trajectory`
 + The advantage of maps are that they are deterministic but not differentiable
 
 

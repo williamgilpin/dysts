@@ -32,6 +32,9 @@ from .utils import integrate_dyn
 
 try:
     from numba import jit, njit
+#     from jax import jit
+#     njit = jit
+    
     has_jit = True
 except ModuleNotFoundError:
     import numpy as np

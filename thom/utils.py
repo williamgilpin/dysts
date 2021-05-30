@@ -333,14 +333,14 @@ def generate_ic_ensemble(
     Generate an ensemble of trajectories with random initial conditions, labelled by different
     initial conditions
     
-    Parameters
-    - model : function defining the numerical derivative
-    - tpts : the timesteps over which to run the simulation
-    - n_samples : int, the number of different initial conditons
-    - frac_perturb_param : float, the amount to perturb the ic by
-    - frac_transient : float, the fraction of time for the time series to settle onto the attractor
-    - ic_range : a starting value for the initial conditions
-    - random_state : int, the seed for the random number generator
+    Args:
+        model : function defining the numerical derivative
+        tpts (ndarray): the timesteps over which to run the simulation
+        n_samples (int): the number of different initial conditons
+        frac_perturb_param : float, the amount to perturb the ic by
+        frac_transient (float): the fraction of time for the time series to settle onto the attractor
+        ic_range : a starting value for the initial conditions
+        random_state (int): the seed for the random number generator
     """
     np.random.seed(random_state)
     ntpts = len(tpts0)
@@ -354,6 +354,76 @@ def generate_ic_ensemble(
         sol = integrate_dyn(model, ic_prime, tpts)
         all_samples.append(sol[:, -ntpts:])
     return np.array(all_samples)
+
+
+def jac_fd(func, y0, eps=1e-8):
+    """
+    Calculate numerical jacobian of a function with respect to a reference value
+    
+    Args:
+        func (callable): a vector-valued function
+        y0 (ndarray): a point around which to take the gradient
+        eps (float): the step size for the finite difference calculation
+        
+    Returns:
+        jac (ndarray): a numerical estimate of the Jacobian about that point
+    
+    """
+    d = len(y0)
+    all_rows = list()
+    for i in range(d):
+        y0p = np.copy(y0)
+        y0p[i] += eps
+        y0m = np.copy(y0)
+        y0m[i] += eps
+        dval = 0.5 * (func(y0p) - func(y0)) / 1e-8 + 0.5 * (func(y0m) - func(y0)) / 1e-8
+        all_rows.append(dval)
+    jac = np.array(all_rows).T
+    return jac
+
+    
+def find_slope(x, y):
+    """
+    Given two vectors or arrays, compute the best fit slope using an analytic
+    formula. For arrays is computed along the last axis.
+
+    Args:
+        x, y (ndarray): (N,) or (M, N)
+
+    Returns:
+        b (ndarray): the values of the slope for each of the last dimensions
+    """
+    n = x.shape[-1]
+    b = n * (x * y).sum(axis=-1) - x.sum(axis=-1) * y.sum(axis=-1)
+    b /= n * (x * x).sum(axis=-1) - x.sum(axis=-1) * x.sum(axis=-1)
+    return b
+
+    
+
+def make_epsilon_ball(pt, n, eps=1e-5, random_state=None):
+    """
+    Uniformly sample a fixed-radius ball of points around a given point via
+    using Muller's method
+    
+    Args:
+        pt (ndarray): The center of the sampling
+        n (int): The number of points to sample
+        eps (float): The radius of the ball
+        random_state (int): Initialize the random number generator
+        
+    Returns:
+        out (ndarray): The set of randomly-sampled points
+    """
+    np.random.seed(None)
+    pt = np.squeeze(np.array(pt))
+    d = len(pt)
+    vecs = np.random.normal(0, 1, size=(d, n))
+    r = np.random.random(n)**(1./d)
+    norm = np.linalg.norm(vecs, axis=0)
+    coords = r * vecs / norm
+    out = pt[:, None] + eps * coords
+    return out
+
 
 # def generate_lorenz_ensemble(tpts0, n_samples, params, frac_perturb_param=.1, 
 #                              n_classes=2, frac_transient=0.1, 
