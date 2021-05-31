@@ -32,10 +32,11 @@ from sdeint import itoint
 import pkg_resources
 
 def signif(x, figs=6):
-    """
-    Round to a fixed number of significant digits
-    x : float
-    figs : int, the desired number of significant figures
+    """Round a float to a fixed number of significant digits
+    
+    Args:
+        x (float): The number to round
+        figs (int): the desired number of significant figures
     """
     if x == 0 or not np.isfinite(x):
         return x
@@ -43,8 +44,7 @@ def signif(x, figs=6):
     return round(x, figs)
 
 def standardize_ts(a, scale=1.0):
-    """
-    Standardize a T x D time series along its first dimension
+    """Standardize a T x D time series along its first dimension
     For dimensions with zero variance, divide by one instead of zero
     """
     stds = np.std(a, axis=0, keepdims=True)
@@ -55,11 +55,12 @@ def integrate_dyn(f, ic, tvals, noise=0, **kwargs):
     """
     Given the RHS of a dynamical system, integrate the system
     noise > 0 requires the Python library sdeint (assumes Brownian noise)
-
-    f : callable, the right hand side of a system of ODE
-    ic : the initial conditions
-    noise_amp : the amplitude of the Langevin forcing term
-    kwargs : passed to scipy.integrate.solve_ivp
+    
+    Args:
+        f (callable): The right hand side of a system of ODEs.
+        ic (ndarray): the initial conditions
+        noise_amp (float): The amplitude of the Langevin forcing term.
+        kwargs (dict): Arguments passed to scipy.integrate.solve_ivp.
     """
     ic = np.array(ic)
     if noise > 0:
@@ -80,9 +81,10 @@ def integrate_weiner(f, noise_amp, ic, tvals):
     Given the RHS of a dynamical system, integrate the 
     system assuming Brownian noise
     Requires the Python library sdeint
-
-    f : the right hand side of a system of ODE
-    noise_amp : the amplitude of the Langevin forcing term
+    
+    Args:
+        f (callable): the right hand side of a system of ODE
+        noise_amp (float): the amplitude of the Langevin forcing term
     """
     sol = integrate_dyn(f, ic, tvals, noise=noise_amp)
     return sol

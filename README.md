@@ -1,6 +1,6 @@
 # dysts
 
-Simulate hundreds of chaotic dynamical systems.
+Simulate hundreds of chaotic systems.
 
 
 ## Usage

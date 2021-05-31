@@ -1,5 +1,5 @@
 import pkg_resources
-from .thom import *
+# from .dysts import *
 
 data_path = pkg_resources.resource_filename('dysts', 'data/chaotic_attractors.json')
 

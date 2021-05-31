@@ -1,7 +1,7 @@
 """
 Dynamical systems in Python
 
-(M, T, D) convention for outputs
+(M, T, D) or (T, D) convention for outputs
 
 Requirements:
 + numpy
@@ -19,11 +19,9 @@ import json
 import os
 import sys
 curr_path = sys.path[0]
-# print(curr_path)
 
 import pkg_resources
 data_path_continuous = pkg_resources.resource_filename('dysts', 'data/chaotic_attractors.json')
-# print(data_path)
 data_path_discrete = pkg_resources.resource_filename('dysts', 'data/discrete_maps.json')
 
 import numpy as np
@@ -49,12 +47,19 @@ staticjit = lambda func: staticmethod(njit(func)) # Compose staticmethod and jit
 
 @dataclass(init=False)
 class BaseDyn:
-    """
-    A base class for dynamical systems
+    """A base class for dynamical systems
+    
+    Attributes:
+        name (str): The name of the system
+        params (dict): The parameters of the system.
+        random_state (int): The seed for the random number generator. Defaults to None
+        
+    Development
+        Add a function to look up additional metadata, if requested
     """
     name : str = None
     params : dict = field(default_factory=dict)
-    random_state : int = 0
+    random_state : int = None
     
     def __init__(self, **entries):
         self.name = self.__class__.__name__
@@ -68,6 +73,7 @@ class BaseDyn:
                 self.params[key] = np.array(self.params[key])
         self.__dict__.update(self.params)
         self.ic = self._load_data()["initial_conditions"]
+        np.random.seed(self.random_state)
         
     def get_param_names(self):
         return sorted(self.params.keys())
@@ -92,11 +98,8 @@ class BaseDyn:
 from scipy.integrate import solve_ivp
 class DynSys(BaseDyn):
     """
-    A dynamical system base class, which loads and assigns parameter
+    A continuous dynamical system base class, which loads and assigns parameter
     values from a file
-    - params : list, parameter values for the differential equations
-    
-    DEV: A function to look up additional metadata, if requested
     """
     def __init__(self):
         self.data_path = data_path_continuous
@@ -117,8 +120,7 @@ class DynSys(BaseDyn):
     def make_trajectory(self, n, method="Radau", resample=False, pts_per_period=100,
                        return_times=False):
         """
-        Generate a fixed-length trajectory with default timestep,
-        parameters, and initial conditions
+        Generate a fixed-length trajectory with default timestep, parameters, and initial conditions
         
         Args:
             n (int): the total number of trajectory points
@@ -142,7 +144,7 @@ class DynSys(BaseDyn):
         m = len(np.array(self.ic).shape)
         if m < 1: m = 1
         if m == 1:
-            sol = integrate_dyn(self, self.ic, tpts, first_step=self.dt, method=method)
+            sol = integrate_dyn(self, self.ic, tpts, first_step=self.dt, method=method).T
         else:
             sol = list()
             for ic in self.ic:
@@ -159,7 +161,9 @@ class DynMap(BaseDyn):
     """
     A dynamical system base class, which loads and assigns parameter
     values from a file
-    - params : list, parameter values for the differential equations
+    
+    Args:
+        params : list, parameter values for the differential equations
     
     DEV: A function to look up additional metadata, if requested
     """
@@ -234,9 +238,11 @@ class DynSysDelay(DynSys):
     The delay timescale is assumed to be the "tau" field.
     Uses a double-ended queue for memory efficiency
     
-    Treat previous delay values as a part of the dynamical variable in rhs
+    Todo:
+        Treat previous delay values as a part of the dynamical variable in rhs
     
-    Currently, only univariate delay equations are supported
+        Currently, only univariate delay equations and single initial conditons 
+        are supported
     """
     def __init__(self): 
         super().__init__()
@@ -271,6 +277,7 @@ class DynSysDelay(DynSys):
             
         Development:
             Support for multivariate and multidelay equations with multiple deques
+            Support for multiple initial conditions
             
         """
         np.random.seed(self.random_state)
@@ -313,7 +320,7 @@ class DynSysDelay(DynSys):
         for i in range(d):
             sol_embed.append(sol[i * embed_stride : -(d - i) * embed_stride])
         
-        sol0 = np.vstack(sol_embed)[:, clipping:(n - clipping)]
+        sol0 = np.vstack(sol_embed)[:, clipping:(n - clipping)].T
     
         if return_times:
             return tpts, sol0
