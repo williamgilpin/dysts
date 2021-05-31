@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
-setup(name = 'thom',
-      packages=['thom'],
+setup(name = 'dysts',
+      packages=['dysts'],
       # packages=find_packages(),
-      package_dir={'thom': 'thom'},
-      package_data={'thom': ['data/*']},
+      package_dir={'dysts': 'dysts'},
+      package_data={'dysts': ['data/*']},
       )

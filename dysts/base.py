@@ -22,9 +22,9 @@ curr_path = sys.path[0]
 # print(curr_path)
 
 import pkg_resources
-data_path_continuous = pkg_resources.resource_filename('thom', 'data/chaotic_attractors.json')
+data_path_continuous = pkg_resources.resource_filename('dysts', 'data/chaotic_attractors.json')
 # print(data_path)
-data_path_discrete = pkg_resources.resource_filename('thom', 'data/discrete_maps.json')
+data_path_discrete = pkg_resources.resource_filename('dysts', 'data/discrete_maps.json')
 
 import numpy as np
 
@@ -233,6 +233,8 @@ class DynSysDelay(DynSys):
     A delayed differential equation object. Defaults to using Euler integration scheme
     The delay timescale is assumed to be the "tau" field.
     Uses a double-ended queue for memory efficiency
+    
+    Treat previous delay values as a part of the dynamical variable in rhs
     
     Currently, only univariate delay equations are supported
     """
