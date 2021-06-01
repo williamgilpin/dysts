@@ -235,7 +235,8 @@ import collections
 class DynSysDelay(DynSys):
     """
     A delayed differential equation object. Defaults to using Euler integration scheme
-    The delay timescale is assumed to be the "tau" field.
+    The delay timescale is assumed to be the "tau" field. The embedding dimension is set 
+    by default to ten, but delay equations are infinite dimensional.
     Uses a double-ended queue for memory efficiency
     
     Todo:
@@ -249,14 +250,15 @@ class DynSysDelay(DynSys):
         #self.history = collections.deque(1.3 * np.random.rand(1 + mem_stride))
         self.__call__ = self.rhs
         
-    def rhs(self, X, Xprev, t):
+    def rhs(self, X, t):
         """The right hand side of a dynamical equation"""
+        X, Xprev = X[0], X[1]
         param_list = [getattr(self, param_name) for param_name in self.get_param_names()]
         out = self._rhs(X, Xprev, t, *param_list)
         return out
         
-    def make_trajectory(self, n, d=3, method="Euler", noise=0.0, 
-                        resample=False, pts_per_period=100, clipping=100,
+    def make_trajectory(self, n, d=10, method="Euler", noise=0.0, 
+                        resample=False, pts_per_period=100,
                         return_times=False):
         """
         Generate a fixed-length trajectory with default timestep,
@@ -270,8 +272,6 @@ class DynSysDelay(DynSys):
             resample (bool): whether to resample trajectories to have matching dominant 
                 Fourier components
             pts_per_period (int): if resampling, the number of points per period
-            clipping (int): the nubmer of timesteps to pad the simulation (useful for 
-                transients).
             return_times (bool): Whether to return the timepoints at which the solution 
                 was computed
             
@@ -281,16 +281,27 @@ class DynSysDelay(DynSys):
             
         """
         np.random.seed(self.random_state)
-        n += 2 * clipping
         
         mem_stride = int(np.ceil(self.tau / self.dt)) # stride
-        history = collections.deque(self.ic[-1] * (1 + 0.2 * np.random.rand(1 + mem_stride)) )
+#         clipping = mem_stride
+#         n += 2 * clipping
         
         if resample:
             nt = int(np.ceil((self.period / self.dt) * (n / pts_per_period)))
         else:
             nt = n
-    
+        
+        # remove transient at front and back
+        clipping = int(np.ceil(mem_stride / (nt / n)))
+        n0 = n
+        n += (d + 1) * clipping
+        nt += (d + 1) * mem_stride
+        
+        if len(self.ic) >= mem_stride:
+            history = collections.deque(self.ic[-mem_stride:])
+        else:
+            history = collections.deque(self.ic[-1] * (1 + 0.2 * np.random.rand(1 + mem_stride)) )
+
         tpts = np.arange(nt) * self.dt
         tlim = tpts[-1]
         save_inds = np.linspace(0, nt, n).astype(int)
@@ -307,8 +318,7 @@ class DynSysDelay(DynSys):
                 continue
             dt = tpts[i] - tpts[i - 1]
             
-            nlags = 1
-            x_next = x_next + self.rhs(x_next, history.pop(), t) * self.dt + noise * noise_vals[i]
+            x_next = x_next + self.rhs([x_next, history.pop()], t) * self.dt + noise * noise_vals[i]
             
             if i in save_inds:
                 sol[save_inds == i] = x_next
@@ -319,8 +329,7 @@ class DynSysDelay(DynSys):
         embed_stride = int((n / nt) * mem_stride)
         for i in range(d):
             sol_embed.append(sol[i * embed_stride : -(d - i) * embed_stride])
-        
-        sol0 = np.vstack(sol_embed)[:, clipping:(n - clipping)].T
+        sol0 = np.vstack(sol_embed)[:, clipping:(n0 + clipping)].T
     
         if return_times:
             return tpts, sol0

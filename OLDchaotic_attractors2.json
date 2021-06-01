@@ -12,7 +12,13 @@
             "beta": 2.667
         },
         "citation": "Lorenz, Edward N. \"Deterministic nonperiodic flow.\" Journal of the atmospheric sciences 20.2 (1963): 130-141.",
-        "period": 1.5008
+        "period": 1.5008,
+        "maximum_lyapunov_estimated": [
+            0.9661809672411203,
+            0.05471143079012247,
+            -14.80708967844592
+        ],
+        "correlation_dimension": 1.974849388900799
     },
     "LorenzBounded": {
         "initial_conditions": [
@@ -28,7 +34,13 @@
             "r": 64
         },
         "citation": "Sprott & Xiong, Chaos 2015",
-        "period": 1.3716
+        "period": 1.3716,
+        "maximum_lyapunov_estimated": [
+            0.7097341659115661,
+            0.015478530410347597,
+            -11.608089748882971
+        ],
+        "correlation_dimension": 1.945768001251856
     },
     "LorenzCoupled": {
         "initial_conditions": [
@@ -49,7 +61,16 @@
             "eps": 2.85
         },
         "citation": "Lorenz, Edward N. Deterministic nonperiodic flow. Journal of the atmospheric sciences 20.2 (1963): 130-141.",
-        "period": 1.6207
+        "period": 1.6207,
+        "maximum_lyapunov_estimated": [
+            1.165053829164494,
+            0.1535976118743619,
+            -1.3763204340881487,
+            -2.212991752797264,
+            -13.322684030968123,
+            -14.958608925799677
+        ],
+        "correlation_dimension": 2.347985128940106
     },
     "Lorenz84": {
         "initial_conditions": [
@@ -65,7 +86,13 @@
             "g": 4.194
         },
         "citation": "E. Lorenz, \u201cIrregularity: a fundamental property of the atmosphere,\u201d Tellus A, vol. 36, no. 2, pp. 98\u2013110, 1984.",
-        "period": 6.2586
+        "period": 6.2586,
+        "maximum_lyapunov_estimated": [
+            1.165591135743354,
+            -0.15347384622161156,
+            -2.217643105296774
+        ],
+        "correlation_dimension": 1.844632538057218
     },
     "Lorenz96": {
         "initial_conditions": [
@@ -79,7 +106,14 @@
             "f": 20.0
         },
         "citation": "Lorenz, Edward (1996). Predictability \u2013 A problem partly solved. Seminar on Predictability, Vol. I, ECMWF.",
-        "period": 2.1969
+        "period": 2.1969,
+        "maximum_lyapunov_estimated": [
+            1.4274719070283224,
+            0.3288586902116929,
+            -1.3612750896746801,
+            -3.338953191965784
+        ],
+        "correlation_dimension": 2.1365708772424234
     },
     "Thomas": {
         "initial_conditions": [
@@ -93,7 +127,13 @@
             "b": 10
         },
         "citation": "Thomas, Rene (1999). Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, labyrinth chaos. Int. J. Bifurc. Chaos.",
-        "period": 4.969
+        "period": 4.969,
+        "maximum_lyapunov_estimated": [
+            0.8672551932507562,
+            0.07111165800456423,
+            -6.543785962535608
+        ],
+        "correlation_dimension": 1.5846767735831016
     },
     "ThomasLabyrinth": {
         "initial_conditions": [
@@ -108,7 +148,13 @@
         },
         "citation": "Thomas, Rene. Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, labyrinth chaos. Int. J. Bifurc. Chaos. (1999).",
         "description": "Trajectories seemingly undergo Brownian motion on an infinite lattice, and only remain bounded when a is less than one.",
-        "period": 6.05
+        "period": 6.05,
+        "maximum_lyapunov_estimated": [
+            1.363020860454817,
+            0.050129694660821525,
+            -2.915162882162834
+        ],
+        "correlation_dimension": 2.0497894444332876
     },
     "HenonHeiles": {
         "initial_conditions": [
@@ -122,7 +168,14 @@
             "lam": 1
         },
         "citation": "Henon, M.; Heiles, C. (1964). The applicability of the third integral of motion: Some numerical experiments. The Astronomical Journal. 69: 73.",
-        "period": 6.37
+        "period": 6.37,
+        "maximum_lyapunov_estimated": [
+            0.03924657167941366,
+            0.023550359936317284,
+            -0.00806152806458671,
+            -0.029253662005327214
+        ],
+        "correlation_dimension": 1.4678262667686064
     },
     "Chua": {
         "initial_conditions": [
@@ -138,7 +191,13 @@
             "m1": -0.71429
         },
         "citation": "Chua, L. O. (1969) Introduction to Nonlinear Network Theory, McGraw-Hill, New York.",
-        "period": 11.388
+        "period": 11.388,
+        "maximum_lyapunov_estimated": [
+            0.5696738571078162,
+            0.19372077195377072,
+            -4.511938294799983
+        ],
+        "correlation_dimension": 1.8524828859352602
     },
     "MultiChua": {
         "initial_conditions": [
@@ -168,7 +227,13 @@
             ]
         },
         "citation": "Mufcstak E. Yalcin, Johan A. K. Suykens, Joos Vandewalle. Cellular Neural Networks, Multi-Scroll Chaos And Synchronization. ",
-        "period": 2.2586
+        "period": 2.2586,
+        "maximum_lyapunov_estimated": [
+            0.19237703594892158,
+            -0.012916666771921242,
+            -3.0989426529231605
+        ],
+        "correlation_dimension": 1.710408909216266
     },
     "JerkCircuit": {
         "initial_conditions": [
@@ -182,7 +247,13 @@
             "eps": 1e-09
         },
         "citation": "Sprott IEEE Circ. Sys. 2011.",
-        "period": 19.4546
+        "period": 19.4546,
+        "maximum_lyapunov_estimated": [
+            0.39406956483581457,
+            0.14773499490014247,
+            -1.1036093666274422
+        ],
+        "correlation_dimension": 1.8041597348008964
     },
     "Colpitts": {
         "initial_conditions": [
@@ -200,7 +271,13 @@
         },
         "citation": "Kennedy (2007). IEEE Trans Circuits & Systems. 1994: 771-774. Li, Zhou, Yang. Chaos, Solitons, & Fractals.",
         "description": "An electrical circuit used as a signal generator.",
-        "period": 4.2676
+        "period": 4.2676,
+        "maximum_lyapunov_estimated": [
+            0.12813943102744185,
+            -0.015127661337774384,
+            -0.9790190723432142
+        ],
+        "correlation_dimension": 1.7247879952870946
     },
     "Duffing": {
         "initial_conditions": [
@@ -219,7 +296,13 @@
         "bifurcation_parameter": "gamma",
         "nonautonomous": true,
         "citation": "Duffing, G. (1918), Forced oscillations with variable natural frequency and their technical relevance, Heft 41/42, Braunschweig: Vieweg.",
-        "period": 7.4496
+        "period": 7.4496,
+        "maximum_lyapunov_estimated": [
+            0.08234421729115945,
+            -0.15843591168839968,
+            0.0
+        ],
+        "correlation_dimension": 0.9509356131512681
     },
     "Torus": {
         "initial_conditions": [
@@ -235,7 +318,13 @@
         },
         "citation": "None.",
         "description": "A minimal quasiperiodic flow on a torus.",
-        "period": 6.36
+        "period": 6.36,
+        "maximum_lyapunov_estimated": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "correlation_dimension": 1.048274997941354
     },
     "Halvorsen": {
         "initial_conditions": [
@@ -248,8 +337,14 @@
             "a": 1.4,
             "b": 4
         },
-        "citation": "See, for example, Zuñiga-Aguilar, C. J., et al (2018). Robust control for fractional variable-order chaotic systems with non-singular kernel. The European Physical Journal Plus 133.1 (2018): 1-13.",
-        "period": 1.4889
+        "citation": "TBD",
+        "period": 1.4889,
+        "maximum_lyapunov_estimated": [
+            0.8203354508866685,
+            -0.13714647666930485,
+            -4.818728822515945
+        ],
+        "correlation_dimension": 1.8489884189225716
     },
     "MooreSpiegel": {
         "initial_conditions": [
@@ -264,7 +359,13 @@
             "eps": 9
         },
         "citation": "Moore, Spiegel. A Thermally Excited Nonlinear Oscillator, Ap. J., 143, 871 (1966)",
-        "period": 1.2887
+        "period": 1.2887,
+        "maximum_lyapunov_estimated": [
+            0.6964938190920522,
+            0.03530801565704513,
+            -1.5597577959021036
+        ],
+        "correlation_dimension": 1.7059745995619235
     },
     "Bouali2": {
         "initial_conditions": [
@@ -283,7 +384,13 @@
             "c": 0
         },
         "citation": "Bouali 2012",
-        "period": 2.6779
+        "period": 2.6779,
+        "maximum_lyapunov_estimated": [
+            0.06785009046531985,
+            -0.0645234008096348,
+            0.01000297330976764
+        ],
+        "correlation_dimension": 1.781299236468819
     },
     "Bouali": {
         "initial_conditions": [
@@ -302,7 +409,13 @@
             "c": 0.05
         },
         "citation": "Bouali 2012, related to the DequanLi attractor",
-        "period": 3.0411
+        "period": 3.0411,
+        "maximum_lyapunov_estimated": [
+            0.07881338733099656,
+            -0.0716485532121206,
+            -0.1377223641547797
+        ],
+        "correlation_dimension": 1.723831273362832
     },
     "Arneodo": {
         "initial_conditions": [
@@ -319,7 +432,13 @@
         },
         "citation": "Arneodo, A., Coullet, P. & Tresser, C. Occurence of strange attractors in three-dimensional volterra equations. Physics Letters A 79, 259\u2013263 (1980)",
         "description": "also known as the ACT attractor, a modified Lotka-Volterra ecosystem",
-        "period": 3.1641
+        "period": 3.1641,
+        "maximum_lyapunov_estimated": [
+            0.29933042424375794,
+            -0.03473557506972272,
+            -1.2393248262940542
+        ],
+        "correlation_dimension": 1.8067506276080032
     },
     "Coullet": {
         "initial_conditions": [
@@ -336,7 +455,13 @@
         },
         "citation": "Arneodo, A., Coullet, P. & Tresser, C. Occurence of strange attractors in three-dimensional volterra equations. Physics Letters A 79, 259\u2013263 (1980)",
         "description": "A variant of the Arneodo attractor",
-        "period": 5.7663
+        "period": 5.7663,
+        "maximum_lyapunov_estimated": [
+            0.15011712257760557,
+            -0.006476379363206988,
+            -0.582166897426861
+        ],
+        "correlation_dimension": 1.8456015688084608
     },
     "Rucklidge": {
         "initial_conditions": [
@@ -350,7 +475,13 @@
             "b": 6.7
         },
         "citation": "Rucklidge, A.M., Chaos in models of double convection, Journal of Fluid Mechanics, 1992, 237, 209-229.",
-        "period": 6.0721
+        "period": 6.0721,
+        "maximum_lyapunov_estimated": [
+            0.17766282600329933,
+            0.05593589538943803,
+            -3.2700276306251452
+        ],
+        "correlation_dimension": 1.8152313976058352
     },
     "BurkeShaw": {
         "initial_conditions": [
@@ -364,7 +495,13 @@
             "e": 13
         },
         "citation": "Shaw. Zeitschrift f\u00fcr Naturforschung (1981): 80-112.",
-        "period": 0.78333
+        "period": 0.78333,
+        "maximum_lyapunov_estimated": [
+            2.3695985562209914,
+            0.38750779394051227,
+            -11.606365396761591
+        ],
+        "correlation_dimension": 1.959098829445948
     },
     "ZhouChen": {
         "initial_conditions": [
@@ -381,7 +518,13 @@
             "e": -8.78
         },
         "citation": "Zhou, Chen. Int J Bifurcat Chaos, 2004",
-        "period": 0.87518
+        "period": 0.87518,
+        "maximum_lyapunov_estimated": [
+            0.7386191209276499,
+            0.023013434148077952,
+            -11.459717063059376
+        ],
+        "correlation_dimension": 1.608645083366182
     },
     "LuChenCheng": {
         "initial_conditions": [
@@ -396,7 +539,13 @@
             "c": 18.1
         },
         "citation": "Lu, Chen, Cheng. Int J Bifurcat Chaos. 2004: 1507\u20131537.",
-        "period": 0.92333
+        "period": 0.92333,
+        "maximum_lyapunov_estimated": [
+            0.27894875308309197,
+            -0.05369835024565047,
+            -11.436175113745758
+        ],
+        "correlation_dimension": 1.6868297463135076
     },
     "Chen": {
         "initial_conditions": [
@@ -411,7 +560,13 @@
             "c": 28
         },
         "citation": "Chen, Ueta. Int J Bifurcat Chaos. 2004: 1465-1466. Chen. Proc. First Int. Conf. Control of Oscillations and Chaos. 1997: 181\u2013186.",
-        "period": 0.58689
+        "period": 0.58689,
+        "maximum_lyapunov_estimated": [
+            2.021950737439808,
+            0.14918037041924886,
+            -12.00977050931834
+        ],
+        "correlation_dimension": 2.046406235612868
     },
     "ChenLee": {
         "initial_conditions": [
@@ -426,7 +581,13 @@
             "c": -0.38
         },
         "citation": "Chen, Ueta. Int J Bifurcat Chaos. 2004: 1465-1466. Chen. Proc. First Int. Conf. Control of Oscillations and Chaos. 1997: 181\u2013186.",
-        "period": 2.8043
+        "period": 2.8043,
+        "maximum_lyapunov_estimated": [
+            0.20719103368642416,
+            -0.05072639524567596,
+            -5.476586964037222
+        ],
+        "correlation_dimension": 1.2269886532010605
     },
     "LuChen": {
         "initial_conditions": [
@@ -442,7 +603,13 @@
         },
         "citation": "Lu, Chen. Int J Bifurcat Chaos. 2002: 659-661.",
         "description": "    A system that switches shapes between the Lorenz and Chen attractors as the parameter c is varied from 12.7 to 28.5. Also called the Chen Celikovsky attractor",
-        "period": 2.3385
+        "period": 2.3385,
+        "maximum_lyapunov_estimated": [
+            0.6671656882683574,
+            0.24497426916413886,
+            -22.67368376897326
+        ],
+        "correlation_dimension": 1.3736072166527764
     },
     "QiChen": {
         "initial_conditions": [
@@ -457,7 +624,13 @@
             "c": 80
         },
         "citation": "Qi et al. Chaos, Solitons & Fractals 2008.",
-        "period": 0.39179
+        "period": 0.39179,
+        "maximum_lyapunov_estimated": [
+            3.9088873988770074,
+            0.4808475080709268,
+            -44.20555218278662
+        ],
+        "correlation_dimension": 1.8498391996179264
     },
     "YuWang": {
         "initial_conditions": [
@@ -473,7 +646,13 @@
             "d": 2.5
         },
         "citation": "Yu,  Wang. Eng Techn & Applied Science Research 2012.",
-        "period": 1.3366
+        "period": 1.3366,
+        "maximum_lyapunov_estimated": [
+            2.439381754736897,
+            -0.17729952045163494,
+            -13.886693070992376
+        ],
+        "correlation_dimension": 1.8399990660116579
     },
     "YuWang2": {
         "initial_conditions": [
@@ -489,7 +668,13 @@
             "d": 2.5
         },
         "citation": "Yu,  Wang. Eng Techn & Applied Science Research 2012.",
-        "period": 0.39265
+        "period": 0.39265,
+        "maximum_lyapunov_estimated": [
+            0.9783626759741436,
+            -0.36672279870312197,
+            -12.885558426579902
+        ],
+        "correlation_dimension": 1.5060990795209823
     },
     "NewtonLiepnik": {
         "initial_conditions": [
@@ -503,7 +688,13 @@
             "b": 0.175
         },
         "citation": "Leipnik, R. B., and T. A. Newton. \"Double strange attractors in rigid body motion with linear feedback control.\" Physics Letters A 86.2 (1981): 63-67..",
-        "period": 8.5095
+        "period": 8.5095,
+        "maximum_lyapunov_estimated": [
+            0.15811587737659566,
+            0.01508719223647954,
+            -0.7797955050042128
+        ],
+        "correlation_dimension": 1.9325268796105086
     },
     "DequanLi": {
         "initial_conditions": [
@@ -522,7 +713,13 @@
         },
         "citation": "Li, Phys Lett A. 2008: 387-393.",
         "description": "Related to the Three Scroll unified attractor TSUCS-2",
-        "period": 0.083806
+        "period": 0.083806,
+        "maximum_lyapunov_estimated": [
+            2.61534255455007,
+            -0.2613123830539953,
+            -3.501100991353862
+        ],
+        "correlation_dimension": 1.8044921656101853
     },
     "Tsucs2": {
         "initial_conditions": [
@@ -539,9 +736,15 @@
             "k": 0,
             "f": 20
         },
-        "citation": "Pan, Zhou, Li (2013). Synchronization of Three-Scroll Unified Chaotic System (TSUCS) and its hyper-chaotic system using active pinning control",
+        "citation": "TBD.",
         "description": "A named attractor related to the DequanLi attractor",
-        "period": 0.34526
+        "period": 0.34526,
+        "maximum_lyapunov_estimated": [
+            0.73309020909867,
+            -0.5163575949742961,
+            -1.4506008492806104
+        ],
+        "correlation_dimension": 1.4646390990886637
     },
     "ArnoldWeb": {
         "initial_conditions": [
@@ -556,8 +759,17 @@
             "mu": 0.01,
             "w": 1
         },
-        "citation": "Froeschle, C., Guzzo, M. & Legga, E (2000). Graphical evolution of the Arnold web: From order to chaos. Science 289.",
-        "period": 67.25
+        "citation": "TBD.",
+        "description": "Froeschle, C., Guzzo, M. & Legga, E. Graphical evolution of the Arnold web: From order to chaos. Science 289, 2108\u20132110 (2000).",
+        "period": 67.25,
+        "maximum_lyapunov_estimated": [
+            0.013010638541663825,
+            0.009816706664335593,
+            -0.0096070987623185,
+            -0.013262279168728155,
+            0.0
+        ],
+        "correlation_dimension": 0.8168596188462223
     },
     "PanXuZhou": {
         "initial_conditions": [
@@ -576,7 +788,13 @@
         },
         "citation": "Zhou, Wuneng, et al. On dynamics analysis of a new chaotic attractor. Physics Letters A 372.36 (2008): 5773-5777..",
         "description": "A named attractor related to the DequanLi attractor",
-        "period": 1.7829
+        "period": 1.7829,
+        "maximum_lyapunov_estimated": [
+            0.7100181076864012,
+            0.02018116046695606,
+            -13.579306068304737
+        ],
+        "correlation_dimension": 1.8389969518169405
     },
     "WangSun": {
         "initial_conditions": [
@@ -593,9 +811,14 @@
             "f": -1.0,
             "q": 1.0
         },
-        "citation": "Wang, Z., Sun, Y., van Wyk, B. J., Qi, G. & van Wyk, M. A (2009). A 3-D four-wing attractor and its analysis,” Brazilian J. Phys. 39, 547–553.",
-        "description": "A four-scroll chaotic attractor",
-        "period": 26.958
+        "citation": "TBD.",
+        "period": 26.958,
+        "maximum_lyapunov_estimated": [
+            0.08962411414494373,
+            -0.021277406460055347,
+            -1.3133040668639877
+        ],
+        "correlation_dimension": 1.7049893946367984
     },
     "Sakarya": {
         "initial_conditions": [
@@ -614,8 +837,14 @@
             "h": 1.0,
             "s": 1.0
         },
-        "citation": "Li, Chunbiao, et al (2015). A novel four-wing strange attractor born in bistability. IEICE Electronics Express 12.4.",
-        "period": 4.9844
+        "citation": "TBD",
+        "period": 4.9844,
+        "maximum_lyapunov_estimated": [
+            0.2647703554373596,
+            0.04502638015014362,
+            -1.2559903985931522
+        ],
+        "correlation_dimension": 2.0016362224265936
     },
     "LiuChen": {
         "initial_conditions": [
@@ -636,7 +865,13 @@
         },
         "citation": "Liu, Chen. Int J Bifurcat Chaos. 2004: 1395-1403.",
         "description": "Derived from Sakarya.",
-        "period": 8.0164
+        "period": 8.0164,
+        "maximum_lyapunov_estimated": [
+            0.29662240762517633,
+            -1.0271776885829762,
+            -18.916709060337787
+        ],
+        "correlation_dimension": 1.0570054685135126
     },
     "Aizawa": {
         "initial_conditions": [
@@ -653,8 +888,14 @@
             "e": 0.25,
             "f": 0.1
         },
-        "citation": "Aizawa, Yoji, and Tatsuya Uezu (1982). Topological Aspects in Chaos and in 2 k-Period Doubling Cascade. Progress of Theoretical Physics 67.3 (1982): 982-985. See also Langford (1984). Numerical studies of torus bifurcations. Numerical Methods for Bifurcation Problems. Birkhäuser, Basel, 1984. 285-295.",
-        "period": 2.5837
+        "citation": "TBD",
+        "period": 2.5837,
+        "maximum_lyapunov_estimated": [
+            0.14439499681023366,
+            0.045381625425739175,
+            -0.372542652804217
+        ],
+        "correlation_dimension": 1.9159655908503084
     },
     "SanUmSrisuchinwong": {
         "initial_conditions": [
@@ -668,7 +909,13 @@
         },
         "citation": "San-Um, Srisuchinwong. J. Comp 2012",
         "description": "Also referred to as the Wimol-Banlue system",
-        "period": 7.4654
+        "period": 7.4654,
+        "maximum_lyapunov_estimated": [
+            0.23188249324204668,
+            0.005893501971419186,
+            -1.2296735565703518
+        ],
+        "correlation_dimension": 1.9435429281329442
     },
     "Finance": {
         "initial_conditions": [
@@ -683,7 +930,13 @@
             "c": 1.1
         },
         "citation": "Guoliang Cai, Juanjuan Huang. International Journal of Nonlinear Science, Vol. 3 (2007)",
-        "period": 9.8932
+        "period": 9.8932,
+        "maximum_lyapunov_estimated": [
+            0.11474489170305249,
+            -0.004619471796398657,
+            -0.6277202666881837
+        ],
+        "correlation_dimension": 1.9261063279903297
     },
     "Dadras": {
         "initial_conditions": [
@@ -700,7 +953,13 @@
             "e": 9.0
         },
         "citation": "S Dadras, HR Momeni. Physics Letters A, 2009",
-        "period": 3.2886
+        "period": 3.2886,
+        "maximum_lyapunov_estimated": [
+            0.4827027734037002,
+            -0.011601436935699493,
+            -11.150018453067066
+        ],
+        "correlation_dimension": 1.80264514161987
     },
     "RikitakeDynamo": {
         "initial_conditions": [
@@ -714,7 +973,13 @@
             "mu": 1.0
         },
         "citation": "Rikitake, T., Oscillations of a system of disk dynamos, Mathematical Proceedings of the Cambridge Philosophical Society, 1958.",
-        "period": 5.8975
+        "period": 5.8975,
+        "maximum_lyapunov_estimated": [
+            0.14083061293290852,
+            -0.032431692744106615,
+            -2.124962908949729
+        ],
+        "correlation_dimension": 1.8694891113506753
     },
     "RabinovichFabrikant": {
         "initial_conditions": [
@@ -728,7 +993,13 @@
             "a": 1.1
         },
         "citation": "Rabinovich, Mikhail I.; Fabrikant, A. L. (1979). Stochastic Self-Modulation of Waves in Nonequilibrium Media. Sov. Phys. JETP.",
-        "period": 2.3356
+        "period": 2.3356,
+        "maximum_lyapunov_estimated": [
+            0.2714956662656254,
+            0.008507031846966233,
+            -0.71580379006728
+        ],
+        "correlation_dimension": 2.051757386583561
     },
     "AnishchenkoAstakhov": {
         "initial_conditions": [
@@ -742,7 +1013,13 @@
             "eta": 0.5
         },
         "citation": "Anishchenko,  et al. Nonlinear dynamics of chaotic and stochastic systems: tutorial and modern developments. 2007.",
-        "period": 6.814
+        "period": 6.814,
+        "maximum_lyapunov_estimated": [
+            0.06722750350024173,
+            -0.02056950835920077,
+            -0.426265388469354
+        ],
+        "correlation_dimension": 1.9453760315594668
     },
     "GenesioTesi": {
         "initial_conditions": [
@@ -756,8 +1033,14 @@
             "b": 1.1,
             "c": 1
         },
-        "citation": "Genesio, Tesi (1992). Harmonic balance methods for the analysis of chaotic dynamics in nonlinear systems. Automatica 28.3 (1992): 531-548.",
-        "period": 5.9431
+        "citation": "TBD",
+        "period": 5.9431,
+        "maximum_lyapunov_estimated": [
+            0.10698665292529815,
+            0.006971178355495919,
+            -0.5420549674773425
+        ],
+        "correlation_dimension": 1.8686505222251444
     },
     "ShimizuMorioka": {
         "initial_conditions": [
@@ -771,7 +1054,13 @@
             "b": 0.5
         },
         "citation": "Shimizu, Morioka. Phys Lett A. 1980: 201-204",
-        "period": 12.038
+        "period": 12.038,
+        "maximum_lyapunov_estimated": [
+            0.05080258550020102,
+            -0.012893295236305021,
+            -1.4037608793114187
+        ],
+        "correlation_dimension": 1.6454441944333176
     },
     "SprottTorus": {
         "initial_conditions": [
@@ -783,7 +1072,13 @@
         "parameters": {},
         "citation": "Sprott Physics Letters A 2014",
         "description": "Depending on the initial conditions, this is a torus or a complex attractor. The IC (0.1, 0.1, 0.1) give the torus.",
-        "period": 13.607
+        "period": 13.607,
+        "maximum_lyapunov_estimated": [
+            0.28423840086968155,
+            -0.017876159020376224,
+            -0.39873037602236455
+        ],
+        "correlation_dimension": 1.0708358553214101
     },
     "SprottJerk": {
         "initial_conditions": [
@@ -797,7 +1092,13 @@
         },
         "citation": "Sprott, J. C. Simplest dissipative chaotic flow. Physics Letters A (1997).",
         "description": "Numerical integration of this attractor is extremely sensitive to the initial conditions",
-        "period": 11.921
+        "period": 11.921,
+        "maximum_lyapunov_estimated": [
+            0.060908417219865715,
+            -0.008292181018293975,
+            -2.1200507385297724
+        ],
+        "correlation_dimension": 1.142991177823796
     },
     "SprottB": {
         "initial_conditions": [
@@ -808,7 +1109,13 @@
         "dt": 0.0008119,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 8.2847
+        "period": 8.2847,
+        "maximum_lyapunov_estimated": [
+            0.21461610039989906,
+            0.009825221003278315,
+            -1.2165711249319608
+        ],
+        "correlation_dimension": 1.9372977853258373
     },
     "SprottC": {
         "initial_conditions": [
@@ -819,7 +1126,13 @@
         "dt": 0.001084,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 8.8852
+        "period": 8.8852,
+        "maximum_lyapunov_estimated": [
+            0.17765619073209343,
+            -0.000132591271086447,
+            -1.163588794202228
+        ],
+        "correlation_dimension": 1.8682224119721211
     },
     "SprottD": {
         "initial_conditions": [
@@ -830,7 +1143,13 @@
         "dt": 0.001769,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 4.8333
+        "period": 4.8333,
+        "maximum_lyapunov_estimated": [
+            0.09926709604534886,
+            0.014475930983501625,
+            -1.3058849568254618
+        ],
+        "correlation_dimension": 1.9340163405979591
     },
     "SprottE": {
         "initial_conditions": [
@@ -841,7 +1160,13 @@
         "dt": 0.0008543,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 15.255
+        "period": 15.255,
+        "maximum_lyapunov_estimated": [
+            0.12053487396002593,
+            0.011406911045070505,
+            -1.1285240101857439
+        ],
+        "correlation_dimension": 1.5305385116032928
     },
     "SprottF": {
         "initial_conditions": [
@@ -854,7 +1179,13 @@
             "a": 0.5
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 19.244
+        "period": 19.244,
+        "maximum_lyapunov_estimated": [
+            0.11996294443009152,
+            0.030601482839091466,
+            -0.5998714340912205
+        ],
+        "correlation_dimension": 2.211310060127852
     },
     "SprottG": {
         "initial_conditions": [
@@ -867,7 +1198,13 @@
             "a": 0.4
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 8.7097
+        "period": 8.7097,
+        "maximum_lyapunov_estimated": [
+            0.03958683615174103,
+            -0.013202724433347,
+            -0.6122118987030959
+        ],
+        "correlation_dimension": 1.426724087455231
     },
     "SprottH": {
         "initial_conditions": [
@@ -880,7 +1217,13 @@
             "a": 0.5
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 20.229
+        "period": 20.229,
+        "maximum_lyapunov_estimated": [
+            0.12833921473790494,
+            0.0370507903544054,
+            -0.612185723956032
+        ],
+        "correlation_dimension": 2.154127662056536
     },
     "SprottI": {
         "initial_conditions": [
@@ -893,7 +1236,13 @@
             "a": 0.2
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 10.93
+        "period": 10.93,
+        "maximum_lyapunov_estimated": [
+            0.023547365181134018,
+            -0.003339053212653288,
+            -1.0270246336560889
+        ],
+        "correlation_dimension": 1.5853493521138096
     },
     "SprottJ": {
         "initial_conditions": [
@@ -904,7 +1253,13 @@
         "dt": 0.001209,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 4.836
+        "period": 4.836,
+        "maximum_lyapunov_estimated": [
+            0.04881307721165381,
+            -0.020327554557383894,
+            -2.038792695892178
+        ],
+        "correlation_dimension": 1.7698840105145996
     },
     "SprottK": {
         "initial_conditions": [
@@ -917,7 +1272,13 @@
             "a": 0.3
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 7.006
+        "period": 7.006,
+        "maximum_lyapunov_estimated": [
+            0.0472612566221831,
+            -0.02778342684656106,
+            -0.86736123339669
+        ],
+        "correlation_dimension": 1.8223196793093077
     },
     "SprottL": {
         "initial_conditions": [
@@ -931,7 +1292,13 @@
             "b": 3.9
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 6.7262
+        "period": 6.7262,
+        "maximum_lyapunov_estimated": [
+            0.04366989494873552,
+            -0.031155714012161127,
+            -0.9916027352362828
+        ],
+        "correlation_dimension": 1.4073746364914945
     },
     "SprottM": {
         "initial_conditions": [
@@ -944,7 +1311,13 @@
             "a": 1.7
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 5.3644
+        "period": 5.3644,
+        "maximum_lyapunov_estimated": [
+            0.057518765022120645,
+            -0.005308527197210389,
+            -1.0393417368355011
+        ],
+        "correlation_dimension": 1.565785890019658
     },
     "SprottN": {
         "initial_conditions": [
@@ -955,7 +1328,13 @@
         "dt": 0.001213,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 4.8135
+        "period": 4.8135,
+        "maximum_lyapunov_estimated": [
+            0.05001271658235358,
+            0.007529219635173763,
+            -2.0675519683141674
+        ],
+        "correlation_dimension": 1.7709729730442934
     },
     "SprottO": {
         "initial_conditions": [
@@ -968,7 +1347,13 @@
             "a": 2.7
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 9.755
+        "period": 9.755,
+        "maximum_lyapunov_estimated": [
+            0.06978132904892258,
+            0.011873666754784089,
+            -0.3193650451839899
+        ],
+        "correlation_dimension": 1.7159849986045284
     },
     "SprottP": {
         "initial_conditions": [
@@ -981,7 +1366,13 @@
             "a": 2.7
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 5.3414
+        "period": 5.3414,
+        "maximum_lyapunov_estimated": [
+            0.11511629409089315,
+            0.014933912564971192,
+            -0.510780890590595
+        ],
+        "correlation_dimension": 2.002213093011733
     },
     "SprottQ": {
         "initial_conditions": [
@@ -995,7 +1386,13 @@
             "b": 0.5
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 4.8443
+        "period": 4.8443,
+        "maximum_lyapunov_estimated": [
+            0.13071894296290024,
+            -0.0005605197774679673,
+            -0.6061860095064412
+        ],
+        "correlation_dimension": 1.8396304860093846
     },
     "SprottR": {
         "initial_conditions": [
@@ -1009,7 +1406,13 @@
             "b": 0.4
         },
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 7.0133
+        "period": 7.0133,
+        "maximum_lyapunov_estimated": [
+            0.07812056545245927,
+            0.005471250116396653,
+            -1.0845484699942456
+        ],
+        "correlation_dimension": 1.8164555581619684
     },
     "SprottS": {
         "initial_conditions": [
@@ -1020,7 +1423,13 @@
         "dt": 0.0013,
         "parameters": {},
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "period": 3.3505
+        "period": 3.3505,
+        "maximum_lyapunov_estimated": [
+            0.18893898458874667,
+            0.008772084679455746,
+            -1.1742870900351245
+        ],
+        "correlation_dimension": 1.8987990751778387
     },
     "Hadley": {
         "initial_conditions": [
@@ -1035,8 +1444,14 @@
             "f": 9,
             "g": 1
         },
-        "citation": "G. Hadley (1735). On the cause of the general trade winds. Philosophical Transactions of the Royal Society, vol. 34, pp. 58–62.",
-        "period": 1.4541
+        "citation": "TBD",
+        "period": 1.4541,
+        "maximum_lyapunov_estimated": [
+            0.27953762934224274,
+            -0.023502263291828793,
+            -0.45272918297221104
+        ],
+        "correlation_dimension": 1.8251489355365844
     },
     "RayleighBenard": {
         "initial_conditions": [
@@ -1051,8 +1466,14 @@
             "b": 5
         },
         "citation": "TBD",
-        "description": "A low dimensional model of a convection cell. The Lorenz equations are also a low-dimensional model of R-B convection.",
-        "period": 0.91967
+        "description": "A low dimensional model of a convection cell",
+        "period": 0.91967,
+        "maximum_lyapunov_estimated": [
+            1.7025381527267804,
+            0.34559284003782376,
+            -19.07355061268844
+        ],
+        "correlation_dimension": 1.918922035674015
     },
     "NoseHoover": {
         "initial_conditions": [
@@ -1064,8 +1485,14 @@
         "parameters": {
             "a": 1.5
         },
-        "citation": "Nose, S. A unified formulation of the constant temperature molecular-dynamics methods. Journal of Chemical Physics (1984). Hoover, William G. Canonical dynamics: Equilibrium phase-space distributions. Phys. Rev. A. (1985).",
-        "period": 5.8673
+        "citation": "Nose, S. A unified formulation of the constant temperature molecular-dynamics methods. Journal of Chemical Physics (1984). Hoover, William G. \"Canonical dynamics: Equilibrium phase-space distributions\". Phys. Rev. A. (1985).",
+        "period": 5.8673,
+        "maximum_lyapunov_estimated": [
+            0.06224316022653118,
+            -0.0021471258814539282,
+            -0.03780682339406112
+        ],
+        "correlation_dimension": 1.9564444567436652
     },
     "KawczynskiStrizhak": {
         "initial_conditions": [
@@ -1082,7 +1509,13 @@
         },
         "citation": "P. E. Strizhak and A. L. Kawczynski, J. Phys. Chem. 99, 10830 (1995).",
         "description": "A chemical oscillator model describing mixed-modes in the BZ equations.",
-        "period": 19.18
+        "period": 19.18,
+        "maximum_lyapunov_estimated": [
+            0.03572511935064669,
+            -0.08346784888970983,
+            -0.3191160467649058
+        ],
+        "correlation_dimension": 0.5049651080080511
     },
     "VallisElNino": {
         "initial_conditions": [
@@ -1097,7 +1530,13 @@
             "p": 0
         },
         "citation": "Vallis GK. Conceptual models of El Nio and the southern oscillation. J Geophys Res 1988",
-        "period": 2.2087
+        "period": 2.2087,
+        "maximum_lyapunov_estimated": [
+            0.5840243323066412,
+            0.07396845283142801,
+            -5.613130553713375
+        ],
+        "correlation_dimension": 1.3086093668876084
     },
     "DoublePendulum": {
         "initial_conditions": [
@@ -1117,16 +1556,23 @@
         ],
         "hamiltonian": true,
         "citation": "None.",
-        "period": 4.0234
+        "period": 4.0234,
+        "maximum_lyapunov_estimated": [
+            1.4102813189200663,
+            0.22223437391312384,
+            -0.2008247101463033,
+            -1.5030435448958883
+        ],
+        "correlation_dimension": 1.1836377337676542
     },
     "SwingingAtwood": {
         "initial_conditions": [
-            0.1, 
-            1.5707963267948966, 
-            0, 
+            0.1,
+            1.5707963267948966,
+            0,
             0
         ],
-        "dt": 1.0288e-4,
+        "dt": 0.00010288,
         "parameters": {
             "m1": 1.0,
             "m2": 1.4
@@ -1136,8 +1582,15 @@
             0
         ],
         "hamiltonian": true,
-        "citation": "Tufillaro, Nicholas B.; Abbott, Tyler A.; Griffiths, David J. (1984). Swinging Atwood's Machine. American Journal of Physics. 52 (10): 895–903.",
-        "period": 0.5810
+        "citation": "Tufillaro, Nicholas B.; Abbott, Tyler A.; Griffiths, David J. (1984). Swinging Atwood's Machine. American Journal of Physics. 52 (10): 895\u2013903.",
+        "period": 0.581,
+        "maximum_lyapunov_estimated": [
+            0.8782955927998393,
+            0.1172373123052752,
+            -0.31141399788853097,
+            -0.5052328335176687
+        ],
+        "correlation_dimension": 1.9272092764669615
     },
     "FluidTrampoline": {
         "initial_conditions": [
@@ -1154,7 +1607,13 @@
         "nonautonomous": true,
         "citation": "Gilet, Bush. The fluid trampoline: droplets bouncing on a soap film. JFM 2009.",
         "description": "A droplet bouncing on a horizontal soap film",
-        "period": 7.7351
+        "period": 7.7351,
+        "maximum_lyapunov_estimated": [
+            0.064924248101058,
+            -0.07776010179300319,
+            0.0
+        ],
+        "correlation_dimension": 1.0629315269536577
     },
     "DoubleGyre": {
         "initial_conditions": [
@@ -1169,13 +1628,18 @@
             "omega": 0.62832
         },
         "citation": "Allshouse, M. & Peacock, T. 2015 Lagrangian based methods for coherent structure detection. Chaos 25 (097617).",
-        "period": 13.953
+        "period": 13.953,
+        "maximum_lyapunov_estimated": [
+            0.07332296639384146,
+            -0.07531755252486233,
+            0.0
+        ],
+        "correlation_dimension": 0.10774883846585599
     },
     "BlinkingRotlet": {
         "initial_conditions": [
             0.3,
-            0.01,
-            0.0
+            0.01
         ],
         "dt": 0.0002834,
         "parameters": {
@@ -1191,13 +1655,17 @@
         ],
         "citation": "Meleshko, Aref. A blinking rotlet model for chaotic advection. Physics of Fluids 1996. See also Tallapragada and Sudarsanam PRE 2019",
         "description": "The location of the mixer is chosen so that there is a stagnation point at its symmetric complement",
-        "period": 4.7233
+        "period": 4.7233,
+        "maximum_lyapunov_estimated": [
+            0.5728078850698255,
+            -1.9866842580190691
+        ],
+        "correlation_dimension": 0.689629500454578
     },
     "BlinkingVortex": {
         "initial_conditions": [
             0.3,
-            0.01,
-            0.0
+            0.01
         ],
         "dt": 0.0001541,
         "parameters": {
@@ -1212,7 +1680,12 @@
             1
         ],
         "citation": "Aref (1984). Stirring by chaotic advection. J. Fluid Mechanics.",
-        "period": 1.657
+        "period": 1.657,
+        "maximum_lyapunov_estimated": [
+            0.7101417577713229,
+            -1.3395765100723502
+        ],
+        "correlation_dimension": 0.8836613274138262
     },
     "OscillatingFlow": {
         "initial_conditions": [
@@ -1233,7 +1706,13 @@
         ],
         "citation": "T. H. Solomon and J. P. Gollub, Phys. Rev. A 38, 6280 (1988).",
         "description": "A model flow with KAM tori. Original parameters have been rescaled by k",
-        "period": 23.857
+        "period": 23.857,
+        "maximum_lyapunov_estimated": [
+            0.08024955732020635,
+            -0.07993309468368928,
+            0.0
+        ],
+        "correlation_dimension": 0.953712586546198
     },
     "BickleyJet": {
         "initial_conditions": [
@@ -1267,7 +1746,13 @@
         ],
         "citation": "Hadjighasem, Karrasch, Teramoto, Haller (2016). A Spectral Clustering Approach to Lagrangian Vortex Detection Phys Rev E.",
         "description": "A zonal jet passing between two counter rotating vortices. A steady Hamiltonian with a time-dependent perturbation",
-        "period": 86957.0
+        "period": 86957.0,
+        "maximum_lyapunov_estimated": [
+            3.670434375219976e-06,
+            -3.665606032530734e-06,
+            0.0
+        ],
+        "correlation_dimension": 0.9479513852100462
     },
     "ArnoldBeltramiChildress": {
         "initial_conditions": [
@@ -1288,7 +1773,13 @@
         ],
         "citation": "V. I. Arnold, Journal of Applied Mathematics and Mechanics 30, 223 (1966).",
         "description": "The classic ABC flow, an exact solution of Euler's equation",
-        "period": 161.98
+        "period": 161.98,
+        "maximum_lyapunov_estimated": [
+            0.12916796788157683,
+            -0.0180014460822272,
+            -0.41852459663909014
+        ],
+        "correlation_dimension": 0.7512995977666088
     },
     "BelousovZhabotinsky": {
         "initial_conditions": [
@@ -1322,7 +1813,13 @@
         },
         "citation": "Gyorgyi and Field (1992). A three-variable model of deterministic chaos in the Belousov-Zhabotinsky reaction. Nature.",
         "description": "A reduced-order model of the BZ reaction that exhibits period doubling. The bifurcation parameter for controlling the onset of chaos is kf. The system undergoes regular cycling when kf=3e-4, and chaotic oscillations when kf=3.5e-4",
-        "period": 0.018257
+        "period": 0.018257,
+        "maximum_lyapunov_estimated": [
+            28.73357223365256,
+            -47.21285799999303,
+            -5946.28077289391
+        ],
+        "correlation_dimension": 0.8562900177356954
     },
     "IsothermalChemical": {
         "initial_conditions": [
@@ -1338,7 +1835,13 @@
             "delta": 1.0
         },
         "citation": "Petrov, Scott, Showalter. Mixed\u2010mode oscillations in chemical systems. J Chem Phys 1992",
-        "period": 0.7302799999999999
+        "period": 0.7302799999999999,
+        "maximum_lyapunov_estimated": [
+            0.8199828193689307,
+            -0.40014234481281197,
+            -7.518652891515186
+        ],
+        "correlation_dimension": 1.0888240945571184
     },
     "ForcedBrusselator": {
         "initial_conditions": [
@@ -1354,7 +1857,13 @@
             "w": 0.81
         },
         "citation": "I. Prigogine, From Being to Becoming: Time and Complexity in the Physical Sciences, New York: W.H. Freeman and Company, 1980.",
-        "period": 20.411
+        "period": 20.411,
+        "maximum_lyapunov_estimated": [
+            0.008870723681793835,
+            -0.24568354693925015,
+            0.0
+        ],
+        "correlation_dimension": 0.00491386017298545
     },
     "ForcedVanDerPol": {
         "initial_conditions": [
@@ -1371,7 +1880,13 @@
         "nonautonomous": true,
         "citation": "B. van der Pol (1920). A theory of the amplitude of free and forced triode vibrations. Radio Review 1.",
         "description": "Non-autonomous.",
-        "period": 2.3163
+        "period": 2.3163,
+        "maximum_lyapunov_estimated": [
+            0.1439282045900237,
+            -14.312519661829631,
+            0.0
+        ],
+        "correlation_dimension": 0.1539766747344126
     },
     "StickSlipOscillator": {
         "initial_conditions": [
@@ -1393,7 +1908,13 @@
         },
         "citation": "Awrejcewicz, Jan, and M. M. Holicke (1999). Int J of Bifurcation and Chaos.",
         "description": "gamma controls the transition to chaos.",
-        "period": 1.6129
+        "period": 1.6129,
+        "maximum_lyapunov_estimated": [
+            0.07829340011294172,
+            -0.06879732052539737,
+            0.0
+        ],
+        "correlation_dimension": 0.9521855046649108
     },
     "ForcedFitzHughNagumo": {
         "initial_conditions": [
@@ -1413,7 +1934,13 @@
         "nonautonomous": true,
         "citation": "FitzHugh, Richard (1961). Impulses and Physiological States in Theoretical Models of Nerve Membrane. Biophysical Journal. 1 (6).",
         "description": "Non-autonomous.",
-        "period": 35.804
+        "period": 35.804,
+        "maximum_lyapunov_estimated": [
+            -0.008195789102229477,
+            -1.0667786892236013,
+            0.0
+        ],
+        "correlation_dimension": 0.7228216132696198
     },
     "HindmarshRose": {
         "initial_conditions": [
@@ -1432,8 +1959,14 @@
             "c": 0.0322
         },
         "citation": "Marhl, Perc. Chaos, Solitons, Fractals 2005.",
-        "description": "A chaotic version of the Hindmarsh-Rose neuron model.",
-        "period": 1.752
+        "description": "TBD.",
+        "period": 1.752,
+        "maximum_lyapunov_estimated": [
+            0.35012169116850933,
+            -0.035757891603033935,
+            -6.970235231450843
+        ],
+        "correlation_dimension": 1.6605401360047416
     },
     "CellCycle": {
         "initial_conditions": [
@@ -1460,7 +1993,16 @@
         },
         "citation": "Romond, Rustici, Gonze, Goldbeter. 1999.",
         "description": "A simplified model of the cell cycle. The parameter `Kim` controls the bifurcations.",
-        "period": 204.71
+        "period": 204.71,
+        "maximum_lyapunov_estimated": [
+            0.004581064476871316,
+            -0.0007991209830259345,
+            -0.2110784644922059,
+            -0.4304874338489276,
+            -2.3084097848614844,
+            -4.893181278744979
+        ],
+        "correlation_dimension": 1.7112419558897796
     },
     "CircadianRhythm": {
         "initial_conditions": [
@@ -1490,7 +2032,15 @@
         },
         "citation": " Leloup, Gonze, Goldbeter. 1999. Gonze, Leloup, Goldbeter. 2000",
         "description": "The Drosophila circadian rhythm under periodic light/dark forcing.",
-        "period": 27.0
+        "period": 27.0,
+        "maximum_lyapunov_estimated": [
+            -0.00484556610953993,
+            -0.06783836000800342,
+            -0.34920804778099285,
+            -1.0622712337986815,
+            0.0
+        ],
+        "correlation_dimension": 0.5443712447761818
     },
     "CaTwoPlus": {
         "initial_conditions": [
@@ -1522,7 +2072,13 @@
         },
         "citation": "Houart, Dupont, Goldbeter. Bull Math Biol 1999.",
         "description": "Intracellular calcium ion oscillations.",
-        "period": 1.343
+        "period": 1.343,
+        "maximum_lyapunov_estimated": [
+            0.4464572079608515,
+            0.04055210989608269,
+            -9.233547319714715
+        ],
+        "correlation_dimension": 1.223236432519745
     },
     "CaTwoPlusQuasiperiodic": {
         "initial_conditions": [
@@ -1554,7 +2110,13 @@
         },
         "citation": "Houart, Dupont, Goldbeter. Bull Math Biol 1999.",
         "description": "Intracellular calcium ion oscillations with quasiperiodic parameter values. The original paper also includes parameters for a limit cycle",
-        "period": 0.65614
+        "period": 0.65614,
+        "maximum_lyapunov_estimated": [
+            0.3960295293306751,
+            0.12425952174341626,
+            -0.43232987357278924
+        ],
+        "correlation_dimension": 1.8475255276581741
     },
     "ExcitableCell": {
         "initial_conditions": [
@@ -1579,7 +2141,13 @@
         },
         "citation": "Teresa Chay. Chaos In A Three-variable Model Of An Excitable Cell. Physica D 1985",
         "description": "A reduced-order variant of the Hodgkin-Huxley model. The parameter gkc controls the onset of chaos.",
-        "period": 0.5528
+        "period": 0.5528,
+        "maximum_lyapunov_estimated": [
+            4.562551175471421,
+            -1.1126666374357228,
+            -32.78064015810015
+        ],
+        "correlation_dimension": 0.18684108490942966
     },
     "ItikBanksTumor": {
         "initial_conditions": [
@@ -1600,7 +2168,13 @@
         },
         "citation": "Itik, Banks. Int J Bifurcat Chaos 2010",
         "description": "A model of cancer cell populations.",
-        "period": 49.74
+        "period": 49.74,
+        "maximum_lyapunov_estimated": [
+            0.02563804230453074,
+            -0.027152728080288208,
+            -0.5444537203967033
+        ],
+        "correlation_dimension": 1.0157188633480996
     },
     "Laser": {
         "initial_conditions": [
@@ -1618,7 +2192,13 @@
             "k": -6.0
         },
         "citation": "Abooee, Yaghini-Bonabi, Jahed-Motlagh. Comm Nonline Sci 2013",
-        "period": 0.94667
+        "period": 0.94667,
+        "maximum_lyapunov_estimated": [
+            0.966373274051357,
+            -0.2936561633897491,
+            -15.797627249931486
+        ],
+        "correlation_dimension": 1.6945294098017616
     },
     "WindmiReduced": {
         "initial_conditions": [
@@ -1637,7 +2217,13 @@
         },
         "citation": "Smith, Thiffeault, Horton. J Geophys Res. 2000. Horton, Weigel, Sprott. Chaos 2001.",
         "description": "A simplified form of the Windmi model of the Earth's magnetosphere. The parameter vsw controls the onset of chaos.",
-        "period": 4.6733
+        "period": 4.6733,
+        "maximum_lyapunov_estimated": [
+            0.23072314431708443,
+            -0.03288867449828836,
+            -1.6565745001846905
+        ],
+        "correlation_dimension": 0.9751781109842211
     },
     "TurchinHanski": {
         "initial_conditions": [
@@ -1657,7 +2243,13 @@
         },
         "citation": "Turchin, Hanski. The American Naturalist 1997. Turchin, Hanski. Ecology 2000",
         "description": " A chaotic three species food web.",
-        "period": 2.9956
+        "period": 2.9956,
+        "maximum_lyapunov_estimated": [
+            -0.022080713183180334,
+            -0.8034795836490831,
+            0.0
+        ],
+        "correlation_dimension": 6.402096984347633e-21
     },
     "Blasius": {
         "initial_conditions": [
@@ -1678,7 +2270,13 @@
         },
         "citation": "Blasius, Huppert, Stone. Nature 1999",
         "description": " A chaotic food web.",
-        "period": 6.6038
+        "period": 6.6038,
+        "maximum_lyapunov_estimated": [
+            0.049083416678938126,
+            -0.000619113573553938,
+            -2.9412067352775813
+        ],
+        "correlation_dimension": 1.6861029344270353
     },
     "HastingsPowell": {
         "initial_conditions": [
@@ -1697,7 +2295,13 @@
         },
         "citation": "Hastings, Powell. Ecology 1991",
         "description": " A chaotic three species food web.",
-        "period": 135.19
+        "period": 135.19,
+        "maximum_lyapunov_estimated": [
+            0.007597798928926108,
+            0.007256793122053724,
+            -0.519914069525669
+        ],
+        "correlation_dimension": 1.0102679415670295
     },
     "SaltonSea": {
         "initial_conditions": [
@@ -1717,7 +2321,13 @@
             "d": 8.3
         },
         "citation": "Upadhyay, Bairagi, Kundu, Chattopadhyay, 2007",
-        "period": 0.96738
+        "period": 0.96738,
+        "maximum_lyapunov_estimated": [
+            0.32440089431377583,
+            -0.20430431510380984,
+            -4.301590051800904
+        ],
+        "correlation_dimension": 1.7431012603154845
     },
     "CoevolvingPredatorPrey": {
         "initial_conditions": [
@@ -1742,7 +2352,13 @@
         },
         "citation": "Gilpin & Feldman. PLOS Comp Biol 2017",
         "description": "A system of predator-prey equations with co-evolving prey.",
-        "period": 122.77
+        "period": 122.77,
+        "maximum_lyapunov_estimated": [
+            0.003737312462818118,
+            0.002168248705941976,
+            -1.9980652148215008
+        ],
+        "correlation_dimension": 1.4730019473949063
     },
     "MacArthur": {
         "initial_conditions": [
@@ -1846,7 +2462,20 @@
         },
         "citation": "MacArthur, R. 1969. Species packing, and what competition minimizes. PNAS 64:1369. Parameter values taken from a model of phytoplankton in Huisman & Weissing. Nature 1999.",
         "description": "A model of chaotic oscillations in a plankton community, based on MacArthur's consumer resource model. Growth rates are determined using Liebig's law of the maximum",
-        "period": 43.406
+        "period": 43.406,
+        "maximum_lyapunov_estimated": [
+            0.18313997738893095,
+            0.01144104763605274,
+            -0.03918975328208223,
+            -0.14642426968990727,
+            -0.25230981698950405,
+            -0.251173909226836,
+            -0.2517213419084764,
+            -0.25197203873845536,
+            -0.2532974004847072,
+            -14.490447908495156
+        ],
+        "correlation_dimension": 2.2501448958833103
     },
     "BeerRNN": {
         "initial_conditions": [
@@ -1885,7 +2514,13 @@
             ]
         },
         "citation": "Beer, R. D. (1995). On the dynamics of small continuous-time recurrent neural networks. Adapt. Behav., 3(4), 4692013509.",
-        "period": 181.58
+        "period": 181.58,
+        "maximum_lyapunov_estimated": [
+            0.01601729140332473,
+            -0.00047987383340646436,
+            -0.529578276607689
+        ],
+        "correlation_dimension": 1.4384966491684703
     },
     "CellularNeuralNetwork": {
         "initial_conditions": [
@@ -1901,7 +2536,13 @@
             "d": 1.24
         },
         "citation": "Arena, Caponetto, Fortuna, and Porto., Int J Bifurcat Chaos. 1998:  1527-1539.",
-        "period": 3.2
+        "period": 3.2,
+        "maximum_lyapunov_estimated": [
+            0.20740529350510956,
+            -0.07421047797461215,
+            -0.6324787213302366
+        ],
+        "correlation_dimension": 1.785611538341006
     },
     "Hopfield": {
         "initial_conditions": [
@@ -1970,7 +2611,16 @@
         },
         "citation": "Lewis & Glass, Neur Comp (1992)",
         "description": "Small chaotic Hopfield network with frustrated connectivity",
-        "period": 10.865
+        "period": 10.865,
+        "maximum_lyapunov_estimated": [
+            0.07862383440343114,
+            -0.008851703210734757,
+            -0.2559115139935364,
+            -0.3682733135864984,
+            -0.4284409485634426,
+            -1.4502953694786025
+        ],
+        "correlation_dimension": 1.949164886697449
     },
     "MackeyGlass": {
         "initial_conditions": [
@@ -1990,16 +2640,7 @@
     },
     "IkedaDelay": {
         "initial_conditions": [
-            0.94144317,  
-            3.79262024,  
-            3.17466302, 
-            -3.87959208,  
-            2.05198674,
-            0.95755518,  
-            1.45382405,  
-            3.04462032, 
-            -1.70340258,  
-            1.00350536
+            6.5123
         ],
         "dt": 0.0006215,
         "parameters": {
@@ -2014,16 +2655,7 @@
     },
     "SprottDelay": {
         "initial_conditions": [
-            9.30770542, 
-            12.7465327 ,  
-            9.98335715,  
-            7.33212279,  
-            8.554363,
-            11.19207081, 
-            10.35063786,  
-            6.07706904,  
-            8.05360832,  
-            8.98894939
+            1.34164294
         ],
         "dt": 0.001875,
         "parameters": {
@@ -2038,16 +2670,7 @@
     },
     "VossDelay": {
         "initial_conditions": [
-            0.24640194,  
-            0.02997028,  
-            0.02899997,  
-            0.07092207,  
-            0.29465271,
-            -0.46294535,  
-            0.27610925, 
-            -0.52696993,  
-            0.19878552, 
-            -0.23221942
+            0.1
         ],
         "dt": 0.01215,
         "parameters": {
@@ -2060,16 +2683,7 @@
     },
     "ScrollDelay": {
         "initial_conditions": [
-            -0.70009241, 
-            -0.1619611, 
-            -1.3858096, 
-            -2.00973849, 
-            -0.3170297,
-            0.33881451,  
-            0.97378904,  
-            1.95957145,  
-            0.89772925, 
-            -0.340544
+            0.08323
         ],
         "dt": 0.01215,
         "parameters": {
@@ -2083,16 +2697,7 @@
     },
     "PiecewiseCircuit": {
         "initial_conditions": [
-            2.34555749,  
-            1.47680635,  
-            0.82341021,  
-            1.732819,  
-            2.6907941,
-            2.37671687, 
-            -1.63813079, 
-            -2.08396784, 
-            -1.73699867, 
-            -1.12395851
+            0.08922
         ],
         "dt": 0.07032,
         "parameters": {
@@ -2119,7 +2724,7 @@
             "c": 0.5,
             "d": 0.05
         },
-        "citation": "Rossler, O. E. (1979). An equation for hyperchaos.",
+        "citation": "Rossler, 1979",
         "period": 6.9924
     },
     "Rossler": {

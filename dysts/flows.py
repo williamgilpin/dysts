@@ -219,13 +219,14 @@ class BlinkingRotlet(DynSys):
         return  0.5 + 0.5 * np.tanh(tau * stiffness * np.sin(2 * np.pi * t / tau))
     
     def rhs(self, X, t):
-        r, theta = X
-        weight = self._protocol(t, self.tau) 
+        r, theta, tt = X
+        weight = self._protocol(tt, self.tau) 
         dr1, dth1 = self._rotlet(r, theta, self.a, self.b, self.bc)
         dr2, dth2 = self._rotlet(r, theta, self.a, -self.b, self.bc)
         dr = weight * dr1 + (1 - weight) * dr2
         dth = (weight * dth1 + (1 - weight) * dth2) / r
-        return self.sigma * dr, self.sigma * dth
+        dtt = 1
+        return self.sigma * dr, self.sigma * dth, dtt
     
 class BlinkingVortex(BlinkingRotlet):
     pass
