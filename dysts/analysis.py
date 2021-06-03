@@ -65,3 +65,18 @@ def find_lyapunov_exponents(model, traj_length, pts_per_period=500):
     all_lyap = np.array(all_lyap)
     final_lyap = np.sum(all_lyap, axis=0) / (dt * traj_length)
     return np.sort(final_lyap)[::-1]
+
+def kaplan_yorke_dimension(spectrum0):
+    """Calculate the Kaplan-Yorke dimension, given a list of 
+    Lyapunov exponents"""
+    spectrum = np.sort(spectrum0)[::-1]
+    d = len(spectrum)
+    cspec = np.cumsum(spectrum)
+    j = np.max(np.where(cspec >= 0 ))
+    print(j, d)
+    if j > d - 2:
+        j = d - 2
+        warnings.warn("Cumulative sum of Lyapunov exponents never crosses zero. System may be ill-posed or undersampled.")
+    dky = 1 + j + cspec[j] / np.abs(spectrum[j + 1])
+
+    return dky

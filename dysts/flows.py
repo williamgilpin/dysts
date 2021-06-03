@@ -87,6 +87,9 @@ class DoublePendulum(DynSys):
         p1_dot = -0.5*(m*d**2)*(th1_dot*th2_dot*np.sin(th1 - th2) + 3*(g/d)*np.sin(th1))
         p2_dot = -0.5*(m*d**2)*(-th1_dot*th2_dot*np.sin(th1 - th2) + 3*(g/d)*np.sin(th2))
         return th1_dot, th2_dot, p1_dot, p2_dot
+    @staticjit
+    def _postprocessing(th1, th2, p1, p2):
+        return np.sin(th1), np.sin(th2), p1, p2
     
 class SwingingAtwood(DynSys):
     @staticjit
@@ -97,6 +100,14 @@ class SwingingAtwood(DynSys):
         prdot = pth**2 / (m1 * r**3) - m2 * g + m1 * g * np.cos(th)
         pthdot = - m1 * g * r * np.sin(th)
         return rdot, thdot, prdot, pthdot
+    
+class GuckenheimerHolmes(DynSys):  
+    @staticjit
+    def _rhs(x, y, z, t, a, b, c, d, e, f):
+        xdot = a * x - b * y + c * z * x + d * z * (x**2 + y**2)
+        ydot = a * y + b * x + c * z * y
+        zdot = e - z**2 - f * (x**2 + y**2) - a * z**3
+        return xdot, ydot, zdot
     
 class HenonHeiles(DynSys):  
     @staticjit
@@ -228,6 +239,9 @@ class BlinkingRotlet(DynSys):
         dtt = 1
         return self.sigma * dr, self.sigma * dth, dtt
     
+    def _postprocessing(self, r, th, tt):
+        return r * np.cos(th), r * np.sin(th), np.sin(2 * np.pi * tt / self.tau)
+    
 class BlinkingVortex(BlinkingRotlet):
     pass
         
@@ -239,14 +253,15 @@ class OscillatingFlow(DynSys):
         dy = -u * np.sin(k * y) * np.cos(k * f)
         dz = omega
         return dx, dy, dz
-
+    def _postprocessing(self, x, y, z):
+        return np.cos(self.k * x), y, np.sin(z)
 
 class BickleyJet(DynSys):
     @staticjit
     def _rhs(y, x, z, t, ell, eps, k, omega, sigma, u):
         sechy = 1 / np.cosh(y / ell)
         inds = np.arange(3)
-        un = k[inds] * (x - t * sigma[inds])
+        un = k[inds] * (x - z * sigma[inds])
         dx = (
             u
             * sechy ** 2
@@ -255,6 +270,10 @@ class BickleyJet(DynSys):
         dy = ell * u * sechy ** 2 * np.dot(eps * k, np.sin(un))
         dz = omega
         return dy, dx, dz
+    def _postprocessing(self, x, y, z):
+        km = np.min(self.k)
+        sm = np.min(self.sigma)
+        return x, np.sin(km * y), np.sin(self.omega * z * km * sm)
 
 class ArnoldBeltramiChildress(DynSys):
     @staticjit
@@ -263,6 +282,9 @@ class ArnoldBeltramiChildress(DynSys):
         dy = b * np.sin(x) + a * np.cos(z)
         dz = c * np.sin(y) + b * np.cos(x)
         return dx, dy, dz
+    @staticjit
+    def _postprocessing(x, y, z):
+        return np.sin(x), np.cos(y), np.sin(z)
 
 class JerkCircuit(DynSys):
     @staticjit
@@ -385,6 +407,23 @@ class RikitakeDynamo(DynSys):
         zdot = 1 - x * y
         return xdot, ydot, zdot
     
+class NuclearQuadrupole(DynSys):
+    @staticjit
+    def _rhs(q1, q2, p1, p2, t, a, b, d):
+        q1dot = a * p1
+        q2dot = a * p2
+        p1dot = -(a*q1) + (3*b*(q1**2 - q2**2))/np.sqrt(2) - d*q1*(q1**2 + q2**2)
+        p2dot = -(q2*(a + 3*np.sqrt(2)*b*q1 + d*(q1**2 + q2**2)))
+        return q1dot, q2dot, p1dot, p2dot
+    
+class PehlivanWei(DynSys):
+    @staticjit
+    def _rhs(x, y, z, t):
+        xdot = y - y * z
+        ydot = y + y * z - 2 * x
+        zdot = 2 - x * y - y**2
+        return xdot, ydot, zdot
+    
 class SprottTorus(DynSys):
     @staticjit
     def _rhs(x, y, z, t):
@@ -409,6 +448,14 @@ class SprottJerk(DynSys):
 #         ydot = z
 #         zdot = -z - x  - self.eps*(np.exp(y/self.y0) - 1)
 #         return (xdot, ydot, zdot)
+
+class SprottA(DynSys):
+    @staticjit
+    def _rhs(x, y, z, t):
+        xdot = y
+        ydot = - x + y * z
+        zdot = 1 - y**2
+        return xdot, ydot, zdot
     
 class SprottB(DynSys):
     @staticjit
@@ -437,9 +484,9 @@ class SprottD(DynSys):
 class SprottE(DynSys):
     @staticjit
     def _rhs(x, y, z, t):
-        xdot = y*z
+        xdot = y * z
         ydot = x**2 - y
-        zdot = 1 - 4*x
+        zdot = 1 - 4 * x
         return xdot, ydot, zdot
     
 class SprottF(DynSys):
@@ -552,6 +599,14 @@ class SprottS(DynSys):
         xdot = -x - 4 * y
         ydot = x + z**2
         zdot = 1 + x
+        return xdot, ydot, zdot
+    
+class SprottMore(DynSys):
+    @staticjit
+    def _rhs(x, y, z, t):
+        xdot = y
+        ydot = -x - np.sign(z) * y
+        zdot = y**2 - np.exp(-x**2)
         return xdot, ydot, zdot
 
 class Arneodo(DynSys):
@@ -724,6 +779,7 @@ class ArnoldWeb(DynSys):
         x2dot = p2
         zdot = w
         return p1dot, p2dot, x1dot, x2dot, zdot
+
         
 class NewtonLiepnik(DynSys):
     @staticjit
@@ -976,12 +1032,16 @@ class BeerRNN(DynSys):
         return Xdot 
 
 class Torus(DynSys):
-    def rhs(self, X, t):
-        x, y, z = X
-        xdot = (-self.a*self.n*np.sin(self.n*t))*np.cos(t) - (self.r + self.a*np.cos(self.n*t))*np.sin(t)
-        ydot = (-self.a*self.n*np.sin(self.n*t))*np.sin(t) + (self.r + self.a*np.cos(self.n*t))*np.cos(t)
-        zdot = self.a*self.n*np.cos(self.n*t)
-        return (xdot, ydot, zdot)
+    @staticjit
+    def _rhs(x, y, z, t, a, n, r):
+        xdot = (-a * n * np.sin(n * t)) * np.cos(t) - (r + a * np.cos(n * t)) * np.sin(
+            t
+        )
+        ydot = (-a * n * np.sin(n * t)) * np.sin(t) + (r + a * np.cos(n * t)) * np.cos(
+            t
+        )
+        zdot = a * n * np.cos(n * t)
+        return xdot, ydot, zdot
 
 class CaTwoPlusQuasiperiodic(CaTwoPlus):
     pass

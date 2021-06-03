@@ -26,7 +26,7 @@ data_path_discrete = pkg_resources.resource_filename('dysts', 'data/discrete_map
 
 import numpy as np
 
-from .utils import integrate_dyn
+from .utils import integrate_dyn, standardize_ts
 
 try:
     from numba import jit, njit
@@ -75,6 +75,9 @@ class BaseDyn:
         self.ic = self._load_data()["initial_conditions"]
         np.random.seed(self.random_state)
         
+        for key in self._load_data().keys():
+            setattr(self, key, self._load_data()[key])
+        
     def get_param_names(self):
         return sorted(self.params.keys())
         
@@ -118,7 +121,7 @@ class DynSys(BaseDyn):
         return self.rhs(X, t)
     
     def make_trajectory(self, n, method="Radau", resample=False, pts_per_period=100,
-                       return_times=False):
+                       return_times=False, standardize=False, postprocess=True):
         """
         Generate a fixed-length trajectory with default timestep, parameters, and initial conditions
         
@@ -128,8 +131,12 @@ class DynSys(BaseDyn):
             resample (bool): whether to resample trajectories to have matching dominant 
                 Fourier components
             pts_per_period (int): if resampling, the number of points per period
+            standardize (bool): Standardize the output time series.
             return_times (bool): Whether to return the timepoints at which the solution 
                 was computed
+            postprocess (bool): Whether to apply coordinate conversions and other domain-specific 
+                rescalings to the integration coordinates
+                
             
         """
         tpts = np.arange(n) * self.dt
@@ -150,6 +157,19 @@ class DynSys(BaseDyn):
             for ic in self.ic:
                 sol.append(integrate_dyn(self, ic, tpts, first_step=self.dt, method=method))
             sol = np.transpose(np.array(sol), (0, 2, 1))
+            
+#         # Map unbounded indices to compact interval
+#         if "unbounded_indices" in list(self._load_data().keys()):
+#             for ind in self._load_data()["unbounded_indices"]:
+#                 sol[ind] = np.sin(sol[ind]) 
+
+        if hasattr(self, "_postprocessing"):
+            sol2 = np.moveaxis(sol, (-1, 0), (0, -1))
+            print(sol2.shape)
+            sol = np.squeeze(np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0)))
+        
+        if standardize:
+            sol =  standardize_ts(sol)
         
         if return_times:
             return tpts, sol
@@ -188,7 +208,7 @@ class DynMap(BaseDyn):
         """Wrapper around right hand side"""
         return self.rhs(X)
     
-    def make_trajectory(self, n, inverse=False, return_times=False, **kwargs):
+    def make_trajectory(self, n, inverse=False, return_times=False, standardize=False, **kwargs):
         """
         Generate a fixed-length trajectory with default timestep,
         parameters, and initial condition(s)
@@ -196,6 +216,7 @@ class DynMap(BaseDyn):
         Args:
             n (int): the length of each trajectory
             inverse (bool): whether to reverse a trajectory
+            standardize (bool): Standardize the output time series.
             return_times (bool): Whether to return the timepoints at which the solution 
                 was computed
         """
@@ -225,6 +246,9 @@ class DynMap(BaseDyn):
 #             curr = propagator(curr)
 #             traj = np.concatenate([traj, curr[:, None, :]], axis=1)
         sol = np.squeeze(traj)
+    
+        if standardize:
+            sol =  standardize_ts(sol)
 
         if return_times:
             return np.arange(len(sol)), sol
@@ -258,7 +282,7 @@ class DynSysDelay(DynSys):
         return out
         
     def make_trajectory(self, n, d=10, method="Euler", noise=0.0, 
-                        resample=False, pts_per_period=100,
+                        resample=False, pts_per_period=100, standardize=False,
                         return_times=False):
         """
         Generate a fixed-length trajectory with default timestep,
@@ -272,6 +296,7 @@ class DynSysDelay(DynSys):
             resample (bool): whether to resample trajectories to have matching dominant 
                 Fourier components
             pts_per_period (int): if resampling, the number of points per period
+            standardize (bool): Standardize the output time series.
             return_times (bool): Whether to return the timepoints at which the solution 
                 was computed
             
@@ -330,6 +355,9 @@ class DynSysDelay(DynSys):
         for i in range(d):
             sol_embed.append(sol[i * embed_stride : -(d - i) * embed_stride])
         sol0 = np.vstack(sol_embed)[:, clipping:(n0 + clipping)].T
+        
+        if standardize:
+            sol0 =  standardize_ts(sol0)
     
         if return_times:
             return tpts, sol0

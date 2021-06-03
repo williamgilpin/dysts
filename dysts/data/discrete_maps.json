@@ -223,7 +223,7 @@
         "inverse": false,
         "citation": "."
     },
-    "BlinkingVortex": {
+    "BlinkingVortexMap": {
         "initial_conditions": [
             0.17, 
             0.33

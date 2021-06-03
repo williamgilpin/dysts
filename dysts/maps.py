@@ -217,7 +217,7 @@ class Henon(DynMap):
 
 
 from scipy.optimize import fsolve
-class BlinkingVortex(DynMap):
+class BlinkingVortexMap(DynMap):
     
     def __post_init__(self):
         from scipy.optimize import fsolve

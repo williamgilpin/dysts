@@ -31,6 +31,20 @@ from sdeint import itoint
 
 import pkg_resources
 
+
+# @njit
+def polar_to_cartesian(r, th):
+    """Convert polar coordinates to 2D Cartesian coordinates"""
+    x, y = r * np.cos(th), r * np.sin(th)
+    return x, y
+
+# @njit
+def cartesian_to_polar(x, y):
+    """Convert 2D cartesian coordinates to polar coordinates"""
+    th = np.arctan2(y, x)
+    r = np.sqrt(x**2 + y**2)
+    return r, th
+
 def signif(x, figs=6):
     """Round a float to a fixed number of significant digits
     
@@ -44,12 +58,15 @@ def signif(x, figs=6):
     return round(x, figs)
 
 def standardize_ts(a, scale=1.0):
-    """Standardize a T x D time series along its first dimension
+    """Standardize an array along dimension -2
+    For a T x D array, this corresponds to dimension T, while for (B, T, D)
+    this also corresponds to dimension T
     For dimensions with zero variance, divide by one instead of zero
     """
-    stds = np.std(a, axis=0, keepdims=True)
+#     if len(a.shape) == 1: a = a[:, None]
+    stds = np.std(a, axis=-2, keepdims=True)
     stds[stds==0] = 1
-    return (a - np.mean(a, axis=0, keepdims=True))/(scale*stds)
+    return (a - np.mean(a, axis=-2, keepdims=True))/(scale*stds)
 
 def integrate_dyn(f, ic, tvals, noise=0, **kwargs):
     """
