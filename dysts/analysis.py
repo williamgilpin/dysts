@@ -54,9 +54,24 @@ def find_lyapunov_exponents(model, traj_length, pts_per_period=500):
     all_lyap = list()
     for i in range(traj_length):
         yval = traj[i]
-
-        fcast = lambda x: np.array(model.rhs(x, tpts[i]))
-        jacval = jac_fd(fcast, yval)
+        rhsy = lambda x: np.array(model.rhs(x, tpts[i]))
+        jacval = jac_fd(rhsy, yval)
+        
+        # If postprocessing is applied to a trajectory,
+        # boost the jacobian to the new coordinates
+        if hasattr(model, "_postprocessing"):
+#             print("using different formulation")
+            y0 = np.copy(yval)
+            y2h = lambda y : model._postprocessing(*y)
+            
+            rhsh = lambda y: jac_fd(y2h, y) @ rhsy(y) # dh/dy * dy/dt = dh/dt
+            dydh = np.linalg.inv(jac_fd(y2h, y0)) # dy/dh
+            ## Alternate version if good second-order fd is ever available
+            # dydh = jac_fd(y2h, y0, m=2, eps=1e-2) @ rhsy(y0) + jac_fd(y2h, y0) @ jac_fd(rhsy, y0))
+            
+            jacval = jac_fd(rhsh, y0, eps=1e-3) @ dydh
+            
+        
         u_n = np.matmul(np.identity(d) + jacval * dt, u)
         q, r = np.linalg.qr(u_n)
         all_lyap.append(np.log(abs(r.diagonal())))

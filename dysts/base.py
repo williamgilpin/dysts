@@ -145,7 +145,7 @@ class DynSys(BaseDyn):
 #         print((self.period * self.dt))
             tlim = (self.period) * (n / pts_per_period)
             upscale_factor = (tlim/self.dt)/n
-            if upscale_factor > 1e3: warnings.warn(f"Excessive integration required; scale factor {upscale_factor}")
+            if upscale_factor > 1e3: warnings.warn(f"Expect slowdown due to excessive integration required; scale factor {upscale_factor}")
             tpts = np.linspace(0, tlim, n)
         
         m = len(np.array(self.ic).shape)
@@ -165,7 +165,6 @@ class DynSys(BaseDyn):
 
         if hasattr(self, "_postprocessing"):
             sol2 = np.moveaxis(sol, (-1, 0), (0, -1))
-            print(sol2.shape)
             sol = np.squeeze(np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0)))
         
         if standardize:

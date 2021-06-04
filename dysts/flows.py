@@ -1,5 +1,7 @@
 """
-Various low-dimensional dynamical systems in Python
+Various low-dimensional dynamical systems in Python. 
+For flows that occur on unbounded intervals (eg non-autonomous systems),
+coordinates are transformed to a basis where the domain remains bounded
 
 Requirements:
 + numpy
@@ -156,6 +158,9 @@ class Duffing(DynSys):
         ydot = -delta * y - beta * x - alpha * x**3 + gamma * np.cos(z)
         zdot = omega
         return xdot, ydot, zdot
+    @staticjit
+    def _postprocessing(x, y, z):
+        return x, y, np.cos(z)
     
 class MackeyGlass(DynSysDelay):
     @staticjit
@@ -211,6 +216,10 @@ class DoubleGyre(DynSys):
         dy = alpha * np.pi * np.cos(np.pi * f) * np.sin(np.pi * y) * (2 * a * x + b)
         dz = omega
         return dx, dy, dz
+    @staticjit
+    def _postprocessing(x, y, z):
+        return x, y, np.sin(z)
+
     
 class BlinkingRotlet(DynSys):
     @staticjit
@@ -301,6 +310,9 @@ class ForcedBrusselator(DynSys):
         ydot = b*x - x**2*y
         zdot = w
         return xdot, ydot, zdot
+    @staticjit
+    def _postprocessing(x, y, z):
+        return x, y, np.sin(z)
 
 class WindmiReduced(DynSys):
     @staticjit
@@ -772,13 +784,16 @@ class Tsucs2(DequanLi):
 class ArnoldWeb(DynSys):
     @staticjit
     def _rhs(p1, p2, x1, x2, z, t, mu, w):
-        denom = 4 + np.cos(t) + np.cos(x1) + np.cos(x2)
+        denom = 4 + np.cos(z) + np.cos(x1) + np.cos(x2)
         p1dot = -mu * np.sin(x1) / denom**2
         p2dot = -mu * np.sin(x2) / denom**2
         x1dot = p1
         x2dot = p2
         zdot = w
         return p1dot, p2dot, x1dot, x2dot, zdot
+    @staticjit
+    def _postprocessing(p1, p2, x1, x2, z):
+        return p1, p2, np.sin(x1), np.sin(x2), np.cos(z)
 
         
 class NewtonLiepnik(DynSys):
@@ -871,24 +886,31 @@ class CellCycle(DynSys):
         return  c1dot, m1dot, x1dot, c2dot, m2dot, x2dot
 
 class CircadianRhythm(DynSys):
-    def rhs(self, X, t):
-        m, fc, fs, fn, th = X
-        vs = 2.5*((0.5 + 0.5*np.cos(th)) + self.vmin)*(self.vmax - self.vmin)
-        mdot = vs*(self.Ki**self.n)/(self.Ki**self.n + fn**self.n) - self.vm*m/(self.km + m)
-        fcdot = self.ks*m - self.k1*fc + self.k2*fn - self.k*fc
-        fsdot = self.k*fc - self.vd*fs/(self.kd + fs)
-        fndot = self.k1*fc - self.k2*fn - self.vdn*fn/(self.kdn + fn)
-        thdot = 2*np.pi/24
-        return (mdot, fcdot, fsdot, fndot, thdot)
+    @staticjit
+    def _rhs(m, fc, fs, fn, th, t, Ki, k, k1, k2, kd, kdn, km, ks, n, vd, vdn, vm, vmax, vmin, v):
+        vs = 2.5 * ((0.5 + 0.5 * np.cos(th)) + vmin) * (vmax - vmin)
+        mdot = vs * (Ki ** n) / (Ki ** n + fn ** n) - vm * m / (km + m)
+        fcdot = ks * m - k1 * fc + k2 * fn - k * fc
+        fsdot = k * fc - vd * fs / (kd + fs)
+        fndot = k1 * fc - k2 * fn - vdn * fn / (kdn + fn)
+        thdot = 2 * np.pi / 24
+        return mdot, fcdot, fsdot, fndot, thdot
+    @staticjit
+    def _postprocessing(m, fc, fs, fn, th):
+        return m, fc, fs, fn, np.cos(th)
     
 
 class FluidTrampoline(DynSys):
     @staticmethod
     def _rhs(x, y, th, t, gamma, psi, w):
         xdot = y
-        ydot = -1 - np.heaviside(-x, 0)*(x + psi*y*np.abs(y)) + gamma*np.cos(th)
+        ydot = -1 - np.heaviside(-x, 0)*(x + psi * y * np.abs(y)) + gamma * np.cos(th)
         thdot = w  
         return (xdot, ydot, thdot)
+    @staticjit
+    def _postprocessing(x, y, th):
+        return x, y, np.cos(th)
+    
 
 class Aizawa(DynSys):
     @staticjit
@@ -938,6 +960,9 @@ class ForcedVanDerPol(DynSys):
         xdot = y
         zdot = w
         return xdot, ydot, zdot
+    @staticjit
+    def _postprocessing(x, y, z):
+        return x, y, np.sin(z)
 
 class ForcedFitzHughNagumo(DynSys):
     @staticjit
@@ -946,6 +971,9 @@ class ForcedFitzHughNagumo(DynSys):
         wdot = gamma * (v + a - b * w)
         zdot = omega
         return vdot, wdot, zdot
+    @staticjit
+    def _postprocessing(x, y, z):
+        return x, y, np.sin(z)
     
 class HindmarshRose(DynSys):
     @staticjit
@@ -993,16 +1021,24 @@ class TurchinHanski(DynSys):
         pdot = s * (1 - e * np.sin(z)) * p - s * (p ** 2) / n
         zdot = 2 * np.pi
         return ndot, pdot, zdot
+    @staticjit
+    def _postprocessing(x, y, z):
+        return x, y, np.sin(z)
 
 class StickSlipOscillator(DynSys):
     def _t(self, v):
         return self.t0*np.sign(v) - self.alpha*v + self.beta*v**3
-    def rhs(self, X, t):
-        x, v, th = X
+    @staticjit
+    def _rhs(x, v, th, t, a, alpha, b, beta, eps, gamma, t0, vs, w):
+        tq = t0 * np.sign(v - vs) - alpha*v + beta*(v - vs)**3
         xdot = v
-        vdot = self.eps*(self.gamma*np.cos(th) - self._t(v - self.vs) ) + self.a*x - self.b*x**3
-        thdot = self.w
-        return (xdot, vdot, thdot) 
+        vdot = eps * (gamma * np.cos(th) - tq) + a * x - b * x**3
+        thdot = w
+        return xdot, vdot, thdot
+    @staticjit
+    def _postprocessing(x, v, th):
+        return x, v, np.cos(th)
+    
     
 class HastingsPowell(DynSys):
     @staticjit

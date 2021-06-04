@@ -374,8 +374,8 @@ def generate_ic_ensemble(
         all_samples.append(sol[:, -ntpts:])
     return np.array(all_samples)
 
-
-def jac_fd(func, y0, eps=1e-8):
+from scipy.optimize import approx_fprime
+def jac_fd(func0, y0, eps=1e-3, m=1, method="central", verbose=False):
     """
     Calculate numerical jacobian of a function with respect to a reference value
     
@@ -388,16 +388,36 @@ def jac_fd(func, y0, eps=1e-8):
         jac (ndarray): a numerical estimate of the Jacobian about that point
     
     """
+    func = lambda x : np.array(func0(x)) # ensure an ndarray returned
+    y0 = np.array(y0) # ensure an ndarray input
+    
+#     d = len(y0)
+#     all_rows = list()
+#     for i in range(d):
+#         if m == 1:
+#             y0p = np.copy(y0)
+#             y0p[i] += eps / 2
+#             y0m = np.copy(y0)
+#             y0m[i] -= eps / 2
+#             if verbose: print(y0m, y0p)
+#             dval = (func(y0p) - func(y0m)) / eps
+#         elif m == 2:
+#             y0p = np.copy(y0)
+#             y0p[i] += eps
+#             y0m = np.copy(y0)
+#             y0m[i] -= eps
+#             dval = (func(y0p) + func(y0m) - 2 * func(y0)) / eps**2
+#         all_rows.append(dval)
+#     jac = np.array(all_rows).T
+
     d = len(y0)
     all_rows = list()
     for i in range(d):
-        y0p = np.copy(y0)
-        y0p[i] += eps
-        y0m = np.copy(y0)
-        y0m[i] += eps
-        dval = 0.5 * (func(y0p) - func(y0)) / 1e-8 + 0.5 * (func(y0m) - func(y0)) / 1e-8
-        all_rows.append(dval)
-    jac = np.array(all_rows).T
+        row_func = lambda yy : func(yy)[i]
+        row = approx_fprime(y0, row_func, epsilon=eps)
+        all_rows.append(row)
+    jac = np.array(all_rows)
+
     return jac
 
     
