@@ -102,6 +102,9 @@ class SwingingAtwood(DynSys):
         prdot = pth**2 / (m1 * r**3) - m2 * g + m1 * g * np.cos(th)
         pthdot = - m1 * g * r * np.sin(th)
         return rdot, thdot, prdot, pthdot
+    @staticjit
+    def _postprocessing(r, th, pr, pth):
+        return r, np.sin(th), pr, pth
     
 class GuckenheimerHolmes(DynSys):  
     @staticjit
@@ -424,8 +427,12 @@ class NuclearQuadrupole(DynSys):
     def _rhs(q1, q2, p1, p2, t, a, b, d):
         q1dot = a * p1
         q2dot = a * p2
-        p1dot = -(a*q1) + (3*b*(q1**2 - q2**2))/np.sqrt(2) - d*q1*(q1**2 + q2**2)
-        p2dot = -(q2*(a + 3*np.sqrt(2)*b*q1 + d*(q1**2 + q2**2)))
+        p1dot = (
+            -(a * q1)
+            + (3 * b * (q1 ** 2 - q2 ** 2)) / np.sqrt(2)
+            - d * q1 * (q1 ** 2 + q2 ** 2)
+        )
+        p2dot = -(q2 * (a + 3 * np.sqrt(2) * b * q1 + d * (q1 ** 2 + q2 ** 2)))
         return q1dot, q2dot, p1dot, p2dot
     
 class PehlivanWei(DynSys):
@@ -811,6 +818,124 @@ class HyperRossler(DynSys):
         ydot = x + a * y + w
         zdot = b + x * z
         wdot = - c * z + d*w
+        return xdot, ydot, zdot, wdot
+    
+class HyperLorenz(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a, b, c, d):
+        xdot = a * (y - x) + w
+        ydot = - x * z + c * x - y
+        zdot = -b * z + x * y
+        wdot = d * w - x * z
+        return xdot, ydot, zdot, wdot
+    
+class HyperCai(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a, b, c, d, e):
+        xdot = a * (y - x)
+        ydot = b * x + c * y - x * z + w
+        zdot = -d * z + y**2
+        wdot = - e * x
+        return xdot, ydot, zdot, wdot
+    
+class HyperBao(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a, b, c, d, e):
+        xdot = a * (y - x) + w
+        ydot = c * y - x * z
+        zdot = x * y - b * z
+        wdot = e * x + d * y * z
+        return xdot, ydot, zdot, wdot
+    
+class HyperJha(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a, b, c, d):
+        xdot = a * (y - x) + w
+        ydot = - x * z + b * x - y
+        zdot = x * y - c * z
+        wdot = - x * z + d * w
+        return xdot, ydot, zdot, wdot
+    
+class HyperQi(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a, b, c, d, e, f):
+        xdot = a * (y - x) + y * z
+        ydot = b * (x + y) - x * z
+        zdot = -c * z - e * w + x * y
+        wdot = - d * w + f * z + x * y
+        return xdot, ydot, zdot, wdot
+
+class Qi(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a, b, c, d):
+        xdot = a * (y - x) + y * z * w
+        ydot = b * (x + y) - x * z * w
+        zdot = -c * z + x * y * w
+        wdot = - d * w + x * y * z
+        return xdot, ydot, zdot, wdot
+    
+class LorenzStenflo(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a, b, c, d):
+        xdot = a * (y - x) + d * w
+        ydot = x * (c - z) - y
+        zdot = x * y - b * z
+        wdot = - x - a * w
+        return xdot, ydot, zdot, wdot
+    
+class HyperYangChen(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a=30, b=3, c=35, d=8):
+        xdot = a * (y - x)
+        ydot = c * x - x * z + w
+        zdot = -b * z + x * y
+        wdot = - d * x
+        return xdot, ydot, zdot, wdot
+    
+class HyperYan(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a=37, b=3, c=26, d=38):
+        xdot = a * (y - x)
+        ydot = (c - a) * x - x * z + c * y
+        zdot = -b * z + x * y - y * z + x * z - w
+        wdot = - d * w + y * z - x * z
+        return xdot, ydot, zdot, wdot
+    
+    
+class HyperXu(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a=10, b=40, c=2.5, d=2, e=16):
+        xdot = a * (y - x) + w
+        ydot = b * x + e * x * z
+        zdot = -c * z - x * y
+        wdot = x * z - d * y
+        return xdot, ydot, zdot, wdot
+    
+class HyperWang(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a=10, b=40, c=2.5, d=10.6, e=4):
+        xdot = a * (y - x)
+        ydot = -x * z + b * x + w
+        zdot = -c * z + e * x**2
+        wdot = -d * x 
+        return xdot, ydot, zdot, wdot
+    
+class HyperPang(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a=36, b=3, c=20, d=2):
+        xdot = a * (y - x)
+        ydot = -x * z + c * y + w
+        zdot = x * y - b * z
+        wdot = -d * (x + y)
+        return xdot, ydot, zdot, wdot
+    
+class HyperLu(DynSys):
+    @staticjit
+    def _rhs(x, y, z, w, t, a=36, b=3, c=20, d=1.3):
+        xdot = a * (y - x) + w
+        ydot = -x * z + c * y
+        zdot = x * y - b * z
+        wdot = d * w+ x * z
         return xdot, ydot, zdot, wdot
 
 class SaltonSea(DynSys):

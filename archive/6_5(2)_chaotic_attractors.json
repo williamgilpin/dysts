@@ -1218,14 +1218,14 @@
             16.440536886214517,
             -145.0243848950473
         ],
-        "dt": 0.0006259,
+        "dt": 0.00033646934916861703,
         "parameters": {
-            "a": 10, 
-            "b": 2.667, 
-            "c": 28, 
+            "a": 10,
+            "b": 2.667,
+            "c": 28,
             "d": 1.1
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "None",
         "period": 13.607
     },
     "HyperCai": {
@@ -1235,11 +1235,11 @@
             18.388272900250726,
             -14.904493939514888
         ],
-        "dt": 0.0006259,
+        "dt": 0.00035981895323748995,
         "parameters": {
-            "a": 27.5, 
-            "b": 3, 
-            "c": 19.3, 
+            "a": 27.5,
+            "b": 3,
+            "c": 19.3,
             "d": 2.9,
             "e": 3.3
         },
@@ -1253,15 +1253,15 @@
             23.919154915696105,
             -16.69675939965203
         ],
-        "dt": 0.0006259,
+        "dt": 0.00025699148371697607,
         "parameters": {
-            "a": 36, 
-            "b": 3, 
-            "c": 20, 
+            "a": 36,
+            "b": 3,
+            "c": 20,
             "d": 0.1,
             "e": 21
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "None",
         "period": 13.607
     },
     "HyperJha": {
@@ -1271,14 +1271,14 @@
             32.08179795423583,
             -51.189321449994914
         ],
-        "dt": 0.0006259,
+        "dt": 0.00033451346886721707,
         "parameters": {
-            "a": 10, 
-            "b": 28, 
-            "c": 2.667, 
+            "a": 10,
+            "b": 28,
+            "c": 2.667,
             "d": 1.3
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "None",
         "period": 13.607
     },
     "HyperQi": {
@@ -1288,16 +1288,16 @@
             50.16987924937642,
             -168.2485185683687
         ],
-        "dt": 0.0006259,
+        "dt": 2.539894035493084e-05,
         "parameters": {
-            "a": 50, 
-            "b": 24, 
-            "c": 13, 
+            "a": 50,
+            "b": 24,
+            "c": 13,
             "d": 8,
             "e": 33,
             "f": 30
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "None",
         "period": 13.607
     },
     "Qi": {
@@ -1310,11 +1310,11 @@
         "dt": 0.00069418,
         "parameters": {
             "a": 45,
-            "b": 10, 
-            "c": 1, 
+            "b": 10,
+            "c": 1,
             "d": 10
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "http://www.3d-meier.de/tut19/Seite0.html",
         "period": 13.607
     },
     "LorenzStenflo": {
@@ -1326,12 +1326,12 @@
         ],
         "dt": 0.0006259,
         "parameters": {
-            "a": 2, 
-            "b": 0.7, 
-            "c": 26, 
+            "a": 2,
+            "b": 0.7,
+            "c": 26,
             "d": 1.5
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "None",
         "period": 13.607
     },
     "HyperYangChen": {
@@ -1341,14 +1341,14 @@
             25.04917588890622,
             17.118520274514353
         ],
-        "dt": 0.0006259,
+        "dt": 0.0003372360476586783,
         "parameters": {
-            "a": 30, 
-            "b": 3, 
-            "c": 35, 
+            "a": 30,
+            "b": 3,
+            "c": 35,
             "d": 8
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "None",
         "period": 13.607
     },
     "HyperYan": {
@@ -1358,14 +1358,14 @@
             17.796515255115004,
             0.8072357311545831
         ],
-        "dt": 0.0006259,
+        "dt": 0.00011127133110885386,
         "parameters": {
-            "a": 37, 
-            "b": 3, 
-            "c": 26, 
+            "a": 37,
+            "b": 3,
+            "c": 26,
             "d": 38
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "None",
         "period": 13.607
     },
     "HyperXu": {
@@ -1375,15 +1375,15 @@
             -1.38552604,
             -8.82752779
         ],
-        "dt": 0.0006259,
+        "dt": 0.00038115220819907224,
         "parameters": {
-            "a": 10, 
-            "b": 40, 
-            "c": 2.5, 
+            "a": 10,
+            "b": 40,
+            "c": 2.5,
             "d": 2,
-            "e": 16   
+            "e": 16
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "None",
         "period": 13.607
     },
     "HyperWang": {
@@ -1393,15 +1393,15 @@
             37.04033781,
             -15.29027381
         ],
-        "dt": 0.0006259,
+        "dt": 0.00039103120395572386,
         "parameters": {
-            "a": 10, 
-            "b": 40, 
-            "c": 2.5, 
+            "a": 10,
+            "b": 40,
+            "c": 2.5,
             "d": 10.6,
-            "e": 4   
+            "e": 4
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "None",
         "period": 13.607
     },
     "HyperPang": {
@@ -1411,31 +1411,31 @@
             27.91032548,
             -1.26300886
         ],
-        "dt": 0.0006259,
+        "dt": 0.00033751641175086273,
         "parameters": {
-            "a": 36, 
-            "b": 3, 
-            "c": 20, 
+            "a": 36,
+            "b": 3,
+            "c": 20,
             "d": 2
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "None",
         "period": 13.607
     },
     "HyperLu": {
         "initial_conditions": [
-            8.11348619,  
-            10.55664382,  
-            18.44590719, 
+            8.11348619,
+            10.55664382,
+            18.44590719,
             -28.38151717
         ],
-        "dt": 0.0006259,
+        "dt": 0.00028835602330348666,
         "parameters": {
-            "a": 36, 
-            "b": 3, 
-            "c": 20, 
+            "a": 36,
+            "b": 3,
+            "c": 20,
             "d": 1.3
         },
-        "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
+        "citation": "None",
         "period": 13.607
     },
     "SprottTorus": {
@@ -3445,7 +3445,7 @@
             0.032086964,
             43.792796
         ],
-        "dt": 0.0004615,
+        "dt": 0.0006808233226054897,
         "parameters": {
             "a": 0.25,
             "b": 3.0,

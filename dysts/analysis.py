@@ -22,12 +22,73 @@ def sample_initial_conditions(model, points_to_sample, traj_length=1000, pts_per
         sample_points (ndarray): The points with shape (points_to_sample, d)
     
     """
-
-    initial_sol = model.make_trajectory(traj_length, resample=True, pts_per_period=pts_per_period)
+    initial_sol = model.make_trajectory(traj_length, resample=True, 
+                                        pts_per_period=pts_per_period, postprocess=False)
     sample_inds = np.random.choice(np.arange(initial_sol.shape[0]), points_to_sample, replace=False)
     sample_pts = initial_sol[sample_inds]
-    
     return sample_pts
+
+def compute_timestep(model, total_length=40000, transient_fraction=0.2, num_iters=20,
+                     pts_per_period=1000, visualize=False, return_period=True):
+    """Given a dynamical system object, find the integration timestep based on the largest
+    signficant frequency
+    
+    Args:
+        model (DynSys): A dynamical systems object.
+        total_length (int): The total trajectory length to use to determine timescales.
+        transient_fraction (float): The fraction of a trajectory to discard as transient
+        num_iters (int): The number of refinements to the timestep
+        pts_per_period (int): The target integration timestep relative to the signal.
+        visualize (bool): Whether to plot timestep versus time, in order to identify problems
+            with the procedure
+        return_period (bool): Whether to calculate and retunr the dominant timescale in the signal
+            
+    Returns
+        dt (float): The best integration timestep
+        period (float, optional): The dominant timescale in the signal
+    
+    """
+
+    base_freq = 1 / pts_per_period
+    cutoff = int(transient_fraction*total_length)
+
+    step_history = [np.copy(model.dt)]
+    for i in range(num_iters):
+        sol = model.make_trajectory(total_length, standardize=True)[cutoff:]
+        all_freqs = list()
+        for comp in sol.T:
+            try:
+                all_freqs = find_significant_frequencies(comp, surrogate_method="rs")
+                all_freqs.append(np.percentile(all_freqs, 98))
+                #all_freqs.append(np.max(all_freqs))
+            except:
+                pass
+        freq = np.median(all_freqs)
+        period = base_freq / freq
+        model.dt = model.dt * period
+        
+        step_history.append(model.dt)
+        if i % 5 == 0: 
+            print(f"Completed step {i} of {num_iters}")
+    dt = model.dt
+
+    if visualize:
+        plt.plot(step_history)
+    
+    if return_period:
+        sol = model.make_trajectory(total_length, standardize=True)[cutoff:]
+        all_freqs = list()
+        for comp in sol.T:
+            try:
+                freqs, amps = find_significant_frequencies(comp, surrogate_method="rs", return_amplitudes=True)
+                all_freqs.append(freqs[np.argmax(np.abs(amps))])
+            except:
+                pass
+        freq = np.median(all_freqs)
+        period = model.dt * (1 / freq)
+        return dt, period
+    else:
+        return dt
 
 
 def find_lyapunov_exponents(model, traj_length, pts_per_period=500):
@@ -88,7 +149,6 @@ def kaplan_yorke_dimension(spectrum0):
     d = len(spectrum)
     cspec = np.cumsum(spectrum)
     j = np.max(np.where(cspec >= 0 ))
-    print(j, d)
     if j > d - 2:
         j = d - 2
         warnings.warn("Cumulative sum of Lyapunov exponents never crosses zero. System may be ill-posed or undersampled.")

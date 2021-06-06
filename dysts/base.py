@@ -157,13 +157,9 @@ class DynSys(BaseDyn):
             for ic in self.ic:
                 sol.append(integrate_dyn(self, ic, tpts, first_step=self.dt, method=method))
             sol = np.transpose(np.array(sol), (0, 2, 1))
-            
-#         # Map unbounded indices to compact interval
-#         if "unbounded_indices" in list(self._load_data().keys()):
-#             for ind in self._load_data()["unbounded_indices"]:
-#                 sol[ind] = np.sin(sol[ind]) 
 
-        if hasattr(self, "_postprocessing"):
+        if hasattr(self, "_postprocessing") and postprocess:
+            warnings.warn("This system has at least one unbounded variable, which has been mapped to a bounded domain. Pass argument postprocess=False in order to generate trajectories from the raw system.")
             sol2 = np.moveaxis(sol, (-1, 0), (0, -1))
             sol = np.squeeze(np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0)))
         
@@ -282,7 +278,7 @@ class DynSysDelay(DynSys):
         
     def make_trajectory(self, n, d=10, method="Euler", noise=0.0, 
                         resample=False, pts_per_period=100, standardize=False,
-                        return_times=False):
+                        return_times=False, postprocess=True):
         """
         Generate a fixed-length trajectory with default timestep,
         parameters, and initial conditions
@@ -354,6 +350,11 @@ class DynSysDelay(DynSys):
         for i in range(d):
             sol_embed.append(sol[i * embed_stride : -(d - i) * embed_stride])
         sol0 = np.vstack(sol_embed)[:, clipping:(n0 + clipping)].T
+        
+        if hasattr(self, "_postprocessing") and postprocess:
+            warnings.warn("This system has at least one unbounded variable, which has been mapped to a bounded domain. Pass argument postprocess=False in order to generate trajectories from the raw system.")
+            sol2 = np.moveaxis(sol0, (-1, 0), (0, -1))
+            sol0 = np.squeeze(np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0)))
         
         if standardize:
             sol0 =  standardize_ts(sol0)
