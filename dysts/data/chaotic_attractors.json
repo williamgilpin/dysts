@@ -1218,15 +1218,24 @@
             16.440536886214517,
             -145.0243848950473
         ],
-        "dt": 0.0006259,
+        "dt": 0.00028984341439371934,
         "parameters": {
-            "a": 10, 
-            "b": 2.667, 
-            "c": 28, 
+            "a": 10,
+            "b": 2.667,
+            "c": 28,
             "d": 1.1
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 1.277546730110058,
+        "maximum_lyapunov_estimated": 0.3233192055243414,
+        "lyapunov_spectrum_estimated": [
+            0.3233192055243414,
+            0.21826786549056643,
+            0.08954630309812214,
+            -13.147994992523673
+        ],
+        "kaplan_yorke_dimension": 3.0466174495953546,
+        "correlation_dimension": 2.3986370092201508
     },
     "HyperCai": {
         "initial_conditions": [
@@ -1235,16 +1244,25 @@
             18.388272900250726,
             -14.904493939514888
         ],
-        "dt": 0.0006259,
+        "dt": 0.0003654032174278714,
         "parameters": {
-            "a": 27.5, 
-            "b": 3, 
-            "c": 19.3, 
+            "a": 27.5,
+            "b": 3,
+            "c": 19.3,
             "d": 2.9,
             "e": 3.3
         },
         "citation": "None",
-        "period": 13.607
+        "period": 0.6113936187028436,
+        "maximum_lyapunov_estimated": 1.8665916073157822,
+        "lyapunov_spectrum_estimated": [
+            1.8665916073157822,
+            0.2201400480630083,
+            0.02416829406063962,
+            -13.113307862649517
+        ],
+        "kaplan_yorke_dimension": 3.1619555370202126,
+        "correlation_dimension": 2.3430620352191367
     },
     "HyperBao": {
         "initial_conditions": [
@@ -1253,16 +1271,25 @@
             23.919154915696105,
             -16.69675939965203
         ],
-        "dt": 0.0006259,
+        "dt": 0.00030068702800142903,
         "parameters": {
-            "a": 36, 
-            "b": 3, 
-            "c": 20, 
+            "a": 36,
+            "b": 3,
+            "c": 20,
             "d": 0.1,
             "e": 21
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 0.5831505997603473,
+        "maximum_lyapunov_estimated": 0.8038269267650078,
+        "lyapunov_spectrum_estimated": [
+            0.8038269267650078,
+            0.40120483041084365,
+            0.09858791441139067,
+            -20.377796427274742
+        ],
+        "kaplan_yorke_dimension": 3.0640764821207336,
+        "correlation_dimension": 2.381738470523283
     },
     "HyperJha": {
         "initial_conditions": [
@@ -1271,15 +1298,24 @@
             32.08179795423583,
             -51.189321449994914
         ],
-        "dt": 0.0006259,
+        "dt": 0.0003746954441920209,
         "parameters": {
-            "a": 10, 
-            "b": 28, 
-            "c": 2.667, 
+            "a": 10,
+            "b": 28,
+            "c": 2.667,
             "d": 1.3
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 0.8564467295817622,
+        "maximum_lyapunov_estimated": 0.3806584202344442,
+        "lyapunov_spectrum_estimated": [
+            0.3806584202344442,
+            0.2888780868524859,
+            0.07397804391385562,
+            -13.05703778842732
+        ],
+        "kaplan_yorke_dimension": 3.0558739356965647,
+        "correlation_dimension": 2.323939899735909
     },
     "HyperQi": {
         "initial_conditions": [
@@ -1288,17 +1324,26 @@
             50.16987924937642,
             -168.2485185683687
         ],
-        "dt": 0.0006259,
+        "dt": 2.4164213125677487e-05,
         "parameters": {
-            "a": 50, 
-            "b": 24, 
-            "c": 13, 
+            "a": 50,
+            "b": 24,
+            "c": 13,
             "d": 8,
             "e": 33,
             "f": 30
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 0.06186038560173437,
+        "maximum_lyapunov_estimated": 12.878472296919046,
+        "lyapunov_spectrum_estimated": [
+            12.878472296919046,
+            4.870047191205436,
+            -0.5202545526488818,
+            -59.40028018738256
+        ],
+        "kaplan_yorke_dimension": 3.2781935338818404,
+        "correlation_dimension": 2.1190836761602556
     },
     "Qi": {
         "initial_conditions": [
@@ -1310,12 +1355,12 @@
         "dt": 0.00069418,
         "parameters": {
             "a": 45,
-            "b": 10, 
-            "c": 1, 
+            "b": 10,
+            "c": 1,
             "d": 10
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 0.40820999999999996
     },
     "LorenzStenflo": {
         "initial_conditions": [
@@ -1326,13 +1371,13 @@
         ],
         "dt": 0.0006259,
         "parameters": {
-            "a": 2, 
-            "b": 0.7, 
-            "c": 26, 
+            "a": 2,
+            "b": 0.7,
+            "c": 26,
             "d": 1.5
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 3.8877142857142855
     },
     "HyperYangChen": {
         "initial_conditions": [
@@ -1341,15 +1386,24 @@
             25.04917588890622,
             17.118520274514353
         ],
-        "dt": 0.0006259,
+        "dt": 0.00036508114507867846,
         "parameters": {
-            "a": 30, 
-            "b": 3, 
-            "c": 35, 
+            "a": 30,
+            "b": 3,
+            "c": 35,
             "d": 8
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 0.9127028626966961,
+        "maximum_lyapunov_estimated": 0.4339358641064494,
+        "lyapunov_spectrum_estimated": [
+            0.4339358641064494,
+            0.3378605785522084,
+            0.0864275217210039,
+            -34.66522483296487
+        ],
+        "kaplan_yorke_dimension": 3.0240801407113427,
+        "correlation_dimension": 2.4708198325820114
     },
     "HyperYan": {
         "initial_conditions": [
@@ -1358,33 +1412,51 @@
             17.796515255115004,
             0.8072357311545831
         ],
-        "dt": 0.0006259,
+        "dt": 0.00011572652857280079,
         "parameters": {
-            "a": 37, 
-            "b": 3, 
-            "c": 26, 
+            "a": 37,
+            "b": 3,
+            "c": 26,
             "d": 38
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 0.9127028626966961,
+        "maximum_lyapunov_estimated": 1.0567374962602327,
+        "lyapunov_spectrum_estimated": [
+            1.0567374962602327,
+            0.31589115887091557,
+            -15.265162560437695,
+            -39.35362673932406
+        ],
+        "kaplan_yorke_dimension": 2.0877547215288312,
+        "correlation_dimension": 1.8962092985870163
     },
     "HyperXu": {
         "initial_conditions": [
-            1.02683629,
-            2.7779999,
-            -1.38552604,
-            -8.82752779
+            0.68944486,
+            -0.60254126,
+            -0.5814657,
+            0.26629277
         ],
-        "dt": 0.0006259,
+        "dt": 0.0004584361211286094,
         "parameters": {
-            "a": 10, 
-            "b": 40, 
-            "c": 2.5, 
+            "a": 10,
+            "b": 40,
+            "c": 2.5,
             "d": 2,
-            "e": 16   
+            "e": 16
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 1.1328151255687646,
+        "maximum_lyapunov_estimated": 1.0552264365193786,
+        "lyapunov_spectrum_estimated": [
+            1.0552264365193786,
+            0.15566299895001995,
+            0.07137063864916243,
+            -13.789018361647202
+        ],
+        "kaplan_yorke_dimension": 3.0958089922194407,
+        "correlation_dimension": 2.3361477216651405
     },
     "HyperWang": {
         "initial_conditions": [
@@ -1393,16 +1465,25 @@
             37.04033781,
             -15.29027381
         ],
-        "dt": 0.0006259,
+        "dt": 0.0003402798297977575,
         "parameters": {
-            "a": 10, 
-            "b": 40, 
-            "c": 2.5, 
+            "a": 10,
+            "b": 40,
+            "c": 2.5,
             "d": 10.6,
-            "e": 4   
+            "e": 4
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 0.6481520567576332,
+        "maximum_lyapunov_estimated": 1.2654432033777314,
+        "lyapunov_spectrum_estimated": [
+            1.2654432033777314,
+            0.22647270474606856,
+            -0.12008724416216701,
+            -13.917149117286193
+        ],
+        "kaplan_yorke_dimension": 3.1010018883997184,
+        "correlation_dimension": 2.439991887189313
     },
     "HyperPang": {
         "initial_conditions": [
@@ -1411,32 +1492,50 @@
             27.91032548,
             -1.26300886
         ],
-        "dt": 0.0006259,
+        "dt": 0.0003291356000406641,
         "parameters": {
-            "a": 36, 
-            "b": 3, 
-            "c": 20, 
+            "a": 36,
+            "b": 3,
+            "c": 20,
             "d": 2
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 0.8439374360017028,
+        "maximum_lyapunov_estimated": 1.530593576076504,
+        "lyapunov_spectrum_estimated": [
+            1.530593576076504,
+            0.2885902332821805,
+            0.04373357028837783,
+            -21.043310356485847
+        ],
+        "kaplan_yorke_dimension": 3.0901741519053054,
+        "correlation_dimension": 2.404036308173654
     },
     "HyperLu": {
         "initial_conditions": [
-            8.11348619,  
-            10.55664382,  
-            18.44590719, 
+            8.11348619,
+            10.55664382,
+            18.44590719,
             -28.38151717
         ],
-        "dt": 0.0006259,
+        "dt": 0.000315613385769233,
         "parameters": {
-            "a": 36, 
-            "b": 3, 
-            "c": 20, 
+            "a": 36,
+            "b": 3,
+            "c": 20,
             "d": 1.3
         },
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "period": 13.607
+        "period": 0.7162856981996777,
+        "maximum_lyapunov_estimated": 1.0704842249919193,
+        "lyapunov_spectrum_estimated": [
+            1.0704842249919193,
+            0.568243102510714,
+            -0.031100144660001935,
+            -19.282159064346992
+        ],
+        "kaplan_yorke_dimension": 3.0814305023074535,
+        "correlation_dimension": 2.4396790467349634
     },
     "SprottTorus": {
         "initial_conditions": [
@@ -3445,7 +3544,7 @@
             0.032086964,
             43.792796
         ],
-        "dt": 0.0004615,
+        "dt": 0.000732209408095841,
         "parameters": {
             "a": 0.25,
             "b": 3.0,
@@ -3453,16 +3552,16 @@
             "d": 0.05
         },
         "citation": "Rossler, O. E. (1979). An equation for hyperchaos.",
-        "period": 6.9924,
-        "maximum_lyapunov_estimated": 0.109500254450277,
-        "correlation_dimension": 2.342638415428615,
+        "period": 1.1157476694793766,
+        "maximum_lyapunov_estimated": 0.11873225312328317,
+        "correlation_dimension": 1.9717810966453864,
         "lyapunov_spectrum_estimated": [
-            0.109500254450277,
-            0.014151358923363649,
-            -0.03328241546493198,
-            -39.970679165675506
+            0.11873225312328317,
+            -0.001633630063944051,
+            -0.1473029672028701,
+            -36.61176693870994
         ],
-        "kaplan_yorke_dimension": 3.0022608872252117
+        "kaplan_yorke_dimension": 2.8845112969082676
     },
     "Rossler": {
         "initial_conditions": [
