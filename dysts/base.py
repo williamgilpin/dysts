@@ -301,6 +301,7 @@ class DynSysDelay(DynSys):
             
         """
         np.random.seed(self.random_state)
+        n0 = n
         
         mem_stride = int(np.ceil(self.tau / self.dt)) # stride
 #         clipping = mem_stride
@@ -313,7 +314,6 @@ class DynSysDelay(DynSys):
         
         # remove transient at front and back
         clipping = int(np.ceil(mem_stride / (nt / n)))
-        n0 = n
         n += (d + 1) * clipping
         nt += (d + 1) * mem_stride
         

@@ -2534,15 +2534,15 @@
         ],
         "citation": "B. van der Pol (1920). A theory of the amplitude of free and forced triode vibrations. Radio Review 1.",
         "description": "Non-autonomous.",
-        "period": 2.3163,
-        "maximum_lyapunov_estimated": 0.12730200533355154,
-        "correlation_dimension": 1.3292831474975064,
+        "period": 14.476875,
+        "maximum_lyapunov_estimated": 0.26623039267826515,
+        "correlation_dimension": 1.3236754733399343,
         "lyapunov_spectrum_estimated": [
-            0.12730200533355154,
-            -0.0012504663867965566,
-            -14.186496769675758
+            0.26623039267826515,
+            -0.004350805471571073,
+            -20.587516244432287
         ],
-        "kaplan_yorke_dimension": 2.0088853182708357
+        "kaplan_yorke_dimension": 2.0126374172448234
     },
     "StickSlipOscillator": {
         "initial_conditions": [
@@ -3470,7 +3470,7 @@
         },
         "citation": "Voss (2002). Real-time anticipation of chaotic states of an electronic circuit.",
         "description": "A delay model that can be implemented as an electronic circuit. A standard delay dimension of three is used.",
-        "period": 4.63215,
+        "period": 23.16075,
         "maximum_lyapunov_estimated": 0.029847825391001673,
         "correlation_dimension": 0.3215769338785323,
         "lyapunov_spectrum_estimated": [
