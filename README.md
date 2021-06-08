@@ -8,27 +8,32 @@ Simulate hundreds of chaotic systems.
 
 Import a model and run a simulation with default initial conditions and parameter values
 
-    from dysts.flows import Lorenz
-    
-    model = Lorenz()
-    sol = model.make_trajectory(1000)
+```python
+from dysts.flows import Lorenz
+```
+
+model = Lorenz()
+sol = model.make_trajectory(1000)
     
 Load a precomputed collection of time series
 
-    from dysts.datasets import load_continuous
-    
-    series_train = load_continuous().to_array(standardize=True)
-    #plt.imshow(series_train[:, :200])
+```python
+from dysts.datasets import load_continuous
+
+series_train = load_continuous().to_array(standardize=True)
+#plt.imshow(series_train[:, :200])
+```
    
 Modify a model's parameter values
 
-    model = Lorenz()
-    model.gamma = 1
-    model.ic = [0, 0, 0.2]
-    sol = model.make_trajectory(1000)
+```python
+model = Lorenz()
+model.gamma = 1
+model.ic = [0, 0, 0.2]
+sol = model.make_trajectory(1000)
+```
     
-
-
+Additional functionality and examples can be found in [`the demonstrations notebook.`](demos.ipynb)
 
 ## Installation
 
