@@ -72,7 +72,11 @@ class BaseDyn:
             if not np.isscalar(self.params[key]):
                 self.params[key] = np.array(self.params[key])
         self.__dict__.update(self.params)
-        self.ic = self._load_data()["initial_conditions"]
+        
+        ic_val = self._load_data()["initial_conditions"]
+        if not np.isscalar(ic_val):
+            ic_val = np.array(ic_val)     
+        self.ic = ic_val
         np.random.seed(self.random_state)
         
         for key in self._load_data().keys():
@@ -360,7 +364,7 @@ class DynSysDelay(DynSys):
             sol0 =  standardize_ts(sol0)
     
         if return_times:
-            return tpts, sol0
+            return tpts[clipping:(n0 + clipping)], sol0
         else:
             return sol0
 
