@@ -93,6 +93,42 @@ def integrate_dyn(f, ic, tvals, noise=0, **kwargs):
 
     return sol
 
+def pad_axis(arr, d, axis=-1, padding=0):
+    """
+    Pad `axis` of `arr` with a constant `padding` to a desired shape
+    """
+    padding_length = d - arr.shape[axis]
+    
+    if padding_length <= 0:
+        return arr
+    if padding_length > 0:
+        slice_val = padding + np.zeros_like(np.take(arr, 0, axis=axis))
+        padding_chunk = np.stack([slice_val for i in range(padding_length)], axis=axis)
+    return np.concatenate([arr, padding_chunk], axis=axis)
+
+def pad_to_shape(arr, target_shape):
+    """
+    Given an array, and a target shape, pad the dimensions in order to reach the desired shape
+    Currently, if the rank of the array is lower than the target shape, singleton
+    dimensions are appended to the rank
+    
+    Args:
+        arr (ndarray): The array to pad.
+        target_shape (iterable): The desired shape.
+    
+    Returns
+        arr (ndarray): The padded array,
+    """
+    rank_difference = len(target_shape) - len(arr.shape)
+    if rank_difference > 0:
+        for i in range(rank_difference):
+            arr = arr[..., None]
+    
+    for axis, target in enumerate(target_shape):
+        arr = pad_axis(arr, target, axis=axis)
+        
+    return arr
+
 def integrate_weiner(f, noise_amp, ic, tvals):
     """
     Given the RHS of a dynamical system, integrate the 
