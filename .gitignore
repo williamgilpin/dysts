@@ -7,8 +7,7 @@ __pycache__/
 *.so
 
 # Ignore personal and development files
-private/
-private_archive/
+private*
 
 # Distribution / packaging
 .Python
