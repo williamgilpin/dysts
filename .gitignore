@@ -8,6 +8,7 @@ __pycache__/
 
 # Ignore personal and development files
 private/
+private_archive/
 
 # Distribution / packaging
 .Python
