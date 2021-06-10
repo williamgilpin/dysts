@@ -21,6 +21,7 @@ class TimeSeriesDataset:
             with open(datapath, "r") as file:
                 self.dataset = json.load(file)
         
+        
         self.rank = np.max(np.array([len(np.squeeze(np.array(self.dataset[item]["values"])).shape) for item in self.dataset]))
         self.is_multivariate = self.rank > 1
         
@@ -29,9 +30,11 @@ class TimeSeriesDataset:
 
         for key in self.dataset:
             self.dataset[key]["values"] = np.array(self.dataset[key]["values"])
-        
+        self.names = np.array(list(self.dataset.keys()))
 
-        
+    def get_rowvalues(self, key):
+        """Retrieve the value of a field from each row"""
+        return np.array([self.dataset[item][key] for item in self.dataset])
         
     def __getitem__(self, key):
         return self.dataset[key]
@@ -60,15 +63,13 @@ class TimeSeriesDataset:
             data_pd (pd.DataFrame): a 2D dataset consisting of indexed time series
         """
         data = self.dataset
-        all_names = np.array(list(data.keys()))
+        all_names = self.names
         all_times = np.vstack([data[item]["time"] for item in data])
         
 #         all_values = np.vstack([data[item]["values"] for item in data])
         all_values = self.to_array(standardize=standardize)
         #self.max_d
         
-        
-
         
         if self.is_multivariate:
             all_indices = (np.arange(all_times.shape[0])[:, None] * np.ones(all_times.shape[1])[None, :]).astype(int)
@@ -136,11 +137,12 @@ def load_continuous(subsets="train", univariate=True, granularity="fine"):
         granularity ("course" | "fine"): Whether to use fine or coarsely-spaced samples
     
     """
+    period = {"train": "10", "test": "2", "val": "2"}[subsets]
     granval = {"coarse": "15", "fine": "100"}[granularity]
     if univariate:
-        dataset = load_file(f"{subsets}_univariate__pts_per_period_{granval}__periods_10.json")
+        dataset = load_file(f"{subsets}_univariate__pts_per_period_{granval}__periods_{period}.json")
     else:
-        dataset = load_file(f"{subsets}_multivariate__pts_per_period_{granval}__periods_10.json")
+        dataset = load_file(f"{subsets}_multivariate__pts_per_period_{granval}__periods_{period}.json")
     return dataset
 
 def load_discrete(subsets="all"):
