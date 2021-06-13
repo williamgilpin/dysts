@@ -84,6 +84,7 @@ A partial list of improvements in future versions
 + Align the initial phases, potentially by picking default starting initial conditions that lie on the attractor, but which are as close as possible to the origin
 + Add a `dimension` field with the number of dynamical variables
 + The advantage of maps are that they are deterministic but not differentiable
++ Add a module for simulating several models at once via multiprocessing
 
 
 

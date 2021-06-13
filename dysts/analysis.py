@@ -91,7 +91,8 @@ def compute_timestep(model, total_length=40000, transient_fraction=0.2, num_iter
         return dt
 
 
-def find_lyapunov_exponents(model, traj_length, pts_per_period=500):
+def find_lyapunov_exponents(model, traj_length, pts_per_period=500, 
+                            tol=1e-8, min_tpts=10):
     """
     Given a dynamical system, compute its spectrum of Lyapunov exponents
 
@@ -135,8 +136,13 @@ def find_lyapunov_exponents(model, traj_length, pts_per_period=500):
         
         u_n = np.matmul(np.identity(d) + jacval * dt, u)
         q, r = np.linalg.qr(u_n)
-        all_lyap.append(np.log(abs(r.diagonal())))
+        lyap_estimate = np.log(abs(r.diagonal()))
+        all_lyap.append(lyap_estimate)
         u = q  # new axes after iteration
+        
+#         ## early stopping
+#         if np.min(np.abs(lyap_estimate)) < tol and i > min_tpts:
+#             traj_length = i
 
     all_lyap = np.array(all_lyap)
     final_lyap = np.sum(all_lyap, axis=0) / (dt * traj_length)
