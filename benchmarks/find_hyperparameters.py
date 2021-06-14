@@ -38,7 +38,8 @@ seasonality_models = {
 null_models = ["AutoARIMA", "FFT", "NaiveDrift", "NaiveMean", "NaiveSeasonal", "Prophet"]
 
 
-cwd = os.getcwd()
+# cwd = os.getcwd()
+cwd = os.path.dirname(os.path.realpath(__file__))
 input_path = os.path.dirname(cwd)  + "/dysts/data/train_univariate__pts_per_period_100__periods_12.json"
 dataname = os.path.splitext(os.path.basename(os.path.split(input_path)[-1]))[0]
 output_path = "./hyperparameters/hyperparameters_" + dataname + ".json"
