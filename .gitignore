@@ -9,6 +9,9 @@ __pycache__/
 # Ignore personal and development files
 private*
 
+# PyTorch checkpoints
+*.pth.tar
+
 # Distribution / packaging
 .Python
 build/
