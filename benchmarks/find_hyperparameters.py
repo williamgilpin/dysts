@@ -55,7 +55,7 @@ for equation_name in equation_data.dataset:
 #         continue
     
     print(equation_name)
-    train_data = np.array(equation_data.dataset[equation_name]["values"])
+    train_data = np.copy(np.array(equation_data.dataset[equation_name]["values"]))
     all_hyperparameters[equation_name] = dict()
     
     split_point = int(5/6 * len(train_data))
@@ -65,7 +65,7 @@ for equation_name in equation_data.dataset:
         print("\t" + model_name)
         all_scores = list()
         for tau in time_delays:
-            kwarg_vals = time_models[model_name]
+            kwarg_vals = time_models[model_name].copy()
             kwarg_vals[list(kwarg_vals.keys())[0]] = tau
             model = getattr(darts.models, model_name)(**kwarg_vals)
             
@@ -77,10 +77,11 @@ for equation_name in equation_data.dataset:
             true_y = TimeSeries.from_dataframe(pd.DataFrame(np.squeeze(y_val)[:-1]))
 
             all_scores.append(darts.metrics.mse(true_y, pred_y))
+        print(all_scores)
         best_tau = time_delays[np.argmin(all_scores)]
-        kwarg_vals = time_models[model_name]
+        kwarg_vals = time_models[model_name].copy()
         kwarg_vals[list(kwarg_vals.keys())[0]] = best_tau
-        all_hyperparameters[equation_name][model_name] = kwarg_vals
+        all_hyperparameters[equation_name][model_name] = kwarg_vals.copy()
         
     ## These models don't require hyperparameter tuning
     for model_name in null_models:
@@ -91,7 +92,7 @@ for equation_name in equation_data.dataset:
     for model_name in seasonality_models:
         all_scores = list()
         for season in season_values:
-            kwarg_vals = seasonality_models[model_name]
+            kwarg_vals = seasonality_models[model_name].copy()
             kwarg_vals[list(kwarg_vals.keys())[0]] = season
             model = getattr(darts.models, model_name)(**kwarg_vals)
             
@@ -104,9 +105,9 @@ for equation_name in equation_data.dataset:
 
             all_scores.append(darts.metrics.mse(true_y, pred_y))
         best_season = season_values[np.argmin(all_scores)]
-        kwarg_vals = seasonality_models[model_name]
+        kwarg_vals = seasonality_models[model_name].copy()
         kwarg_vals[list(kwarg_vals.keys())[0]] = best_season.name
-        all_hyperparameters[equation_name][model_name] = kwarg_vals
+        all_hyperparameters[equation_name][model_name] = kwarg_vals.copy()
         
     with open(output_path, 'w') as f:
         json.dump(all_hyperparameters, f, indent=4)   
