@@ -4,7 +4,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -17,10 +17,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "AnishchenkoAstakhov": {
@@ -28,7 +28,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -41,10 +41,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "Arneodo": {
@@ -52,7 +52,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -65,10 +65,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "ArnoldBeltramiChildress": {
@@ -76,7 +76,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -89,10 +89,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "ArnoldWeb": {
@@ -100,7 +100,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -113,10 +113,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "BeerRNN": {
@@ -124,7 +124,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -137,10 +137,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "BelousovZhabotinsky": {
@@ -148,7 +148,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -161,10 +161,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "BickleyJet": {
@@ -172,7 +172,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -185,10 +185,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "Blasius": {
@@ -196,7 +196,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -209,10 +209,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "BlinkingRotlet": {
@@ -220,7 +220,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -233,10 +233,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "BlinkingVortex": {
@@ -244,7 +244,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -257,10 +257,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "Bouali": {
@@ -268,7 +268,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -281,10 +281,10 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         }
     },
     "Bouali2": {
@@ -292,7 +292,7 @@
             "p": 25
         },
         "RandomForest": {
-            "lags": 3,
+            "lags": 25,
             "lags_exog": null
         },
         "AutoARIMA": {},
@@ -305,10 +305,610 @@
             "seasonal": "ADDITIVE"
         },
         "FourTheta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
         },
         "Theta": {
-            "season_mode": "NONE"
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "BurkeShaw": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "CaTwoPlus": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "CaTwoPlusQuasiperiodic": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "CellCycle": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "CellularNeuralNetwork": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Chen": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ChenLee": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Chua": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "CircadianRhythm": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "CoevolvingPredatorPrey": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Colpitts": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Coullet": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Dadras": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "DequanLi": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "DoubleGyre": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "DoublePendulum": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Duffing": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ExcitableCell": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Finance": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "FluidTrampoline": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ForcedBrusselator": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ForcedFitzHughNagumo": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ForcedVanDerPol": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "GenesioTesi": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "GuckenheimerHolmes": {
+        "ARIMA": {
+            "p": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
         }
     }
 }

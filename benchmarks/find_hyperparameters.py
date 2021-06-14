@@ -15,7 +15,8 @@ import darts.models
 
 pts_per_period = 100
 season_values = [darts.utils.utils.SeasonalityMode.ADDITIVE, darts.utils.utils.SeasonalityMode.NONE]
-time_delays = [1, 5, int(0.25 * pts_per_period), int(0.5 * pts_per_period), pts_per_period, int(1.5 * pts_per_period)]
+time_delays = [3, 5, 10, int(0.25 * pts_per_period), int(0.5 * pts_per_period), pts_per_period, int(1.5 * pts_per_period)]
+time_delays = [3, 5, int(0.25 * pts_per_period), int(0.5 * pts_per_period)]
 time_delays = [3, 5, int(0.25 * pts_per_period)]
 
 time_models = {
@@ -47,6 +48,10 @@ equation_data = load_file(input_path)
 
 all_hyperparameters = dict()
 for equation_name in equation_data.dataset:
+    
+#     if equation_name in all_hyperparameters.keys():
+#         continue
+    
     print(equation_name)
     train_data = np.array(equation_data.dataset[equation_name]["values"])
     all_hyperparameters[equation_name] = dict()

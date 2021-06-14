@@ -1,0 +1,116 @@
+Aizawa
+	ARIMA
+	RandomForest
+AnishchenkoAstakhov
+	ARIMA
+	RandomForest
+Arneodo
+	ARIMA
+	RandomForest
+ArnoldBeltramiChildress
+	ARIMA
+	RandomForest
+ArnoldWeb
+	ARIMA
+	RandomForest
+BeerRNN
+	ARIMA
+	RandomForest
+BelousovZhabotinsky
+	ARIMA
+	RandomForest
+BickleyJet
+	ARIMA
+	RandomForest
+Blasius
+	ARIMA
+	RandomForest
+BlinkingRotlet
+	ARIMA
+	RandomForest
+BlinkingVortex
+	ARIMA
+	RandomForest
+Bouali
+	ARIMA
+	RandomForest
+Bouali2
+	ARIMA
+	RandomForest
+BurkeShaw
+	ARIMA
+	RandomForest
+CaTwoPlus
+	ARIMA
+	RandomForest
+CaTwoPlusQuasiperiodic
+	ARIMA
+	RandomForest
+CellCycle
+	ARIMA
+	RandomForest
+CellularNeuralNetwork
+	ARIMA
+	RandomForest
+Chen
+	ARIMA
+	RandomForest
+ChenLee
+	ARIMA
+	RandomForest
+Chua
+	ARIMA
+	RandomForest
+CircadianRhythm
+	ARIMA
+	RandomForest
+CoevolvingPredatorPrey
+	ARIMA
+	RandomForest
+Colpitts
+	ARIMA
+	RandomForest
+Coullet
+	ARIMA
+	RandomForest
+Dadras
+	ARIMA
+	RandomForest
+DequanLi
+	ARIMA
+	RandomForest
+DoubleGyre
+	ARIMA
+	RandomForest
+DoublePendulum
+	ARIMA
+	RandomForest
+Duffing
+	ARIMA
+	RandomForest
+ExcitableCell
+	ARIMA
+	RandomForest
+Finance
+	ARIMA
+	RandomForest
+FluidTrampoline
+	ARIMA
+	RandomForest
+ForcedBrusselator
+	ARIMA
+	RandomForest
+ForcedFitzHughNagumo
+	ARIMA
+	RandomForest
+ForcedVanDerPol
+	ARIMA
+	RandomForest
+GenesioTesi
+	ARIMA
+	RandomForest
+GuckenheimerHolmes
+	ARIMA
+	RandomForest
+Hadley
+	ARIMA
