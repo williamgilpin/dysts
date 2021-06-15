@@ -42,9 +42,24 @@
         "ARIMA": {
             "p": 25
         },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
         "RandomForest": {
             "lags": 25,
             "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
         },
         "AutoARIMA": {},
         "FFT": {},

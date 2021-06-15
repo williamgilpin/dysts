@@ -22,6 +22,13 @@ time_delays = [1, 5, 10, 25]
 network_inputs = [5, 10, int(0.25 * pts_per_period), int(0.5 * pts_per_period), pts_per_period]
 SKIP_EXISTING = False
 
+import torch
+has_gpu = torch.cuda.is_available()
+if not has_gpu:
+    warnings.warn("No GPU found.")
+else:
+    warnings.warn("GPU working.")
+
 
 time_models = {
     'ARIMA': {"p": 10},
