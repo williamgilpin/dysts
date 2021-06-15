@@ -1,0 +1,395 @@
+{
+    "Aizawa": {
+        "SINDY": 11.129687180188998
+    },
+    "AnishchenkoAstakhov": {
+        "SINDY": 33.26853173715813
+    },
+    "Arneodo": {
+        "SINDY": 3.444838402415958
+    },
+    "ArnoldBeltramiChildress": {
+        "SINDY": 165.23975196160058
+    },
+    "ArnoldWeb": {
+        "SINDY": 200.0
+    },
+    "BeerRNN": {
+        "SINDY": 200.0
+    },
+    "BelousovZhabotinsky": {
+        "SINDY": 98.65698946072105
+    },
+    "BickleyJet": {
+        "SINDY": 200.0
+    },
+    "Blasius": {
+        "SINDY": 28.034725018707547
+    },
+    "BlinkingRotlet": {
+        "SINDY": 188.78740806354622
+    },
+    "BlinkingVortex": {
+        "SINDY": 158.71821082789543
+    },
+    "Bouali": {
+        "SINDY": 22.499992578285894
+    },
+    "Bouali2": {
+        "SINDY": 53.25204368965848
+    },
+    "BurkeShaw": {
+        "SINDY": 23.323671363316397
+    },
+    "CaTwoPlus": {
+        "SINDY": 24.33459861952981
+    },
+    "CaTwoPlusQuasiperiodic": {
+        "SINDY": 47.05538913668638
+    },
+    "CellCycle": {
+        "SINDY": 200.0
+    },
+    "CellularNeuralNetwork": {
+        "SINDY": 39.4581061877865
+    },
+    "Chen": {
+        "SINDY": 9.514985288614945
+    },
+    "ChenLee": {
+        "SINDY": 74.04327890199252
+    },
+    "Chua": {
+        "SINDY": 74.33280967583372
+    },
+    "CircadianRhythm": {
+        "SINDY": 50.12231502067449
+    },
+    "CoevolvingPredatorPrey": {
+        "SINDY": 200.0
+    },
+    "Colpitts": {
+        "SINDY": 73.10805750171001
+    },
+    "Coullet": {
+        "SINDY": 2.7298254216404394
+    },
+    "Dadras": {
+        "SINDY": 72.2707476846383
+    },
+    "DequanLi": {
+        "SINDY": 1.35464400008303
+    },
+    "DoubleGyre": {
+        "SINDY": 116.51564138144094
+    },
+    "DoublePendulum": {
+        "SINDY": 122.90036729064266
+    },
+    "Duffing": {
+        "SINDY": 4.984407269628915
+    },
+    "ExcitableCell": {
+        "SINDY": 134.75530040949448
+    },
+    "Finance": {
+        "SINDY": 35.19500559395336
+    },
+    "FluidTrampoline": {
+        "SINDY": 2.175333145225603
+    },
+    "ForcedBrusselator": {
+        "SINDY": 103.66924108152833
+    },
+    "ForcedFitzHughNagumo": {
+        "SINDY": 90.33015606245287
+    },
+    "ForcedVanDerPol": {
+        "SINDY": 136.17388107679906
+    },
+    "GenesioTesi": {
+        "SINDY": 2.729747911094784
+    },
+    "GuckenheimerHolmes": {
+        "SINDY": 35.18054266303171
+    },
+    "Hadley": {
+        "SINDY": 41.57017280289506
+    },
+    "Halvorsen": {
+        "SINDY": 26.153242505199437
+    },
+    "HastingsPowell": {
+        "SINDY": 200.0
+    },
+    "HenonHeiles": {
+        "SINDY": 3.0115938930999597
+    },
+    "HindmarshRose": {
+        "SINDY": 97.64076992771274
+    },
+    "Hopfield": {
+        "SINDY": 64.33529125530174
+    },
+    "HyperBao": {
+        "SINDY": 14.593296965637629
+    },
+    "HyperCai": {
+        "SINDY": 16.866281572061155
+    },
+    "HyperJha": {
+        "SINDY": 13.20842154242914
+    },
+    "HyperLorenz": {
+        "SINDY": 22.993578034128497
+    },
+    "HyperLu": {
+        "SINDY": 29.340008802149033
+    },
+    "HyperPang": {
+        "SINDY": 23.89287654101514
+    },
+    "HyperQi": {
+        "SINDY": 87.08262429265883
+    },
+    "HyperRossler": {
+        "SINDY": 6.7176307107723074
+    },
+    "HyperWang": {
+        "SINDY": 27.469484156429786
+    },
+    "HyperXu": {
+        "SINDY": 26.739690653844445
+    },
+    "HyperYan": {
+        "SINDY": 34.90524954605078
+    },
+    "HyperYangChen": {
+        "SINDY": 30.408647901702146
+    },
+    "IkedaDelay": {
+        "SINDY": 198.87673611091714
+    },
+    "IsothermalChemical": {
+        "SINDY": 9.800039613373093
+    },
+    "ItikBanksTumor": {
+        "SINDY": 110.31656937080834
+    },
+    "JerkCircuit": {
+        "SINDY": 30.26101379286148
+    },
+    "KawczynskiStrizhak": {
+        "SINDY": 86.55976459517031
+    },
+    "Laser": {
+        "SINDY": 23.076602663215574
+    },
+    "LiuChen": {
+        "SINDY": 188.96216112561956
+    },
+    "Lorenz": {
+        "SINDY": 27.631822613123575
+    },
+    "Lorenz84": {
+        "SINDY": 78.2475926767284
+    },
+    "Lorenz96": {
+        "SINDY": 91.78279945145624
+    },
+    "LorenzBounded": {
+        "SINDY": 15.657338267264183
+    },
+    "LorenzCoupled": {
+        "SINDY": 39.45665070834312
+    },
+    "LorenzStenflo": {
+        "SINDY": 45.84872744489221
+    },
+    "LuChen": {
+        "SINDY": 84.64327639159907
+    },
+    "LuChenCheng": {
+        "SINDY": 28.578676679989513
+    },
+    "MacArthur": {
+        "SINDY": 84.46621952404287
+    },
+    "MackeyGlass": {
+        "SINDY": 198.88858283434382
+    },
+    "MooreSpiegel": {
+        "SINDY": 15.83983327680985
+    },
+    "MultiChua": {
+        "SINDY": 51.26615359917821
+    },
+    "NewtonLiepnik": {
+        "SINDY": 16.942604810432087
+    },
+    "NoseHoover": {
+        "SINDY": 5.921234444490728
+    },
+    "NuclearQuadrupole": {
+        "SINDY": 8.979392852991577
+    },
+    "OscillatingFlow": {
+        "SINDY": 136.3079064895367
+    },
+    "PanXuZhou": {
+        "SINDY": 45.34521299450702
+    },
+    "PehlivanWei": {
+        "SINDY": 46.55729955424738
+    },
+    "PiecewiseCircuit": {
+        "SINDY": 191.54795121442328
+    },
+    "Qi": {
+        "SINDY": 29.564715466407154
+    },
+    "QiChen": {
+        "SINDY": 31.31706780039259
+    },
+    "RabinovichFabrikant": {
+        "SINDY": 10.80968078086471
+    },
+    "RayleighBenard": {
+        "SINDY": 33.81877341513588
+    },
+    "RikitakeDynamo": {
+        "SINDY": 16.53913439766093
+    },
+    "Rossler": {
+        "SINDY": 4.653208418017787
+    },
+    "Rucklidge": {
+        "SINDY": 60.911743112221764
+    },
+    "Sakarya": {
+        "SINDY": 25.84971417891041
+    },
+    "SaltonSea": {
+        "SINDY": 41.466701798736416
+    },
+    "SanUmSrisuchinwong": {
+        "SINDY": 12.110664617352617
+    },
+    "ScrollDelay": {
+        "SINDY": 198.8659161398522
+    },
+    "ShimizuMorioka": {
+        "SINDY": 7.305772761541086
+    },
+    "SprottA": {
+        "SINDY": 5.610525024801433
+    },
+    "SprottB": {
+        "SINDY": 56.938322451628366
+    },
+    "SprottC": {
+        "SINDY": 18.54358257564808
+    },
+    "SprottD": {
+        "SINDY": 2.540210476185869
+    },
+    "SprottDelay": {
+        "SINDY": 199.99788865226301
+    },
+    "SprottE": {
+        "SINDY": 29.953183751840694
+    },
+    "SprottF": {
+        "SINDY": 59.424943114053974
+    },
+    "SprottG": {
+        "SINDY": 7.262484397862153
+    },
+    "SprottH": {
+        "SINDY": 76.8132994091405
+    },
+    "SprottI": {
+        "SINDY": 3.5846375358991573
+    },
+    "SprottJ": {
+        "SINDY": 3.978887755644268
+    },
+    "SprottJerk": {
+        "SINDY": 5.419505430729923
+    },
+    "SprottK": {
+        "SINDY": 18.69813234263462
+    },
+    "SprottL": {
+        "SINDY": 28.731109555768448
+    },
+    "SprottM": {
+        "SINDY": 3.2745954300976416
+    },
+    "SprottMore": {
+        "SINDY": 5.291483444175941
+    },
+    "SprottN": {
+        "SINDY": 3.9726908280049025
+    },
+    "SprottO": {
+        "SINDY": 11.718571805590704
+    },
+    "SprottP": {
+        "SINDY": 4.327164258487588
+    },
+    "SprottQ": {
+        "SINDY": 5.199775220979453
+    },
+    "SprottR": {
+        "SINDY": 8.613975604180801
+    },
+    "SprottS": {
+        "SINDY": 4.719884172713608
+    },
+    "SprottTorus": {
+        "SINDY": 120.95696402190241
+    },
+    "StickSlipOscillator": {
+        "SINDY": 0.3680971513728384
+    },
+    "SwingingAtwood": {
+        "SINDY": 9.003472860401086
+    },
+    "Thomas": {
+        "SINDY": 183.55735471249076
+    },
+    "ThomasLabyrinth": {
+        "SINDY": 173.44075765130768
+    },
+    "Torus": {
+        "SINDY": 200.0
+    },
+    "Tsucs2": {
+        "SINDY": 25.976179989562315
+    },
+    "TurchinHanski": {
+        "SINDY": 63.504049943005704
+    },
+    "VallisElNino": {
+        "SINDY": 14.964375543115224
+    },
+    "VossDelay": {
+        "SINDY": 174.84719949450778
+    },
+    "WangSun": {
+        "SINDY": 144.58387960365863
+    },
+    "WindmiReduced": {
+        "SINDY": 200.0
+    },
+    "YuWang": {
+        "SINDY": 38.87945175489496
+    },
+    "YuWang2": {
+        "SINDY": 3.0330946450774436
+    },
+    "ZhouChen": {
+        "SINDY": 134.27040674289935
+    }
+}

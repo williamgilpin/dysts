@@ -20,7 +20,7 @@ time_delays = [3, 5, int(0.25 * pts_per_period)]
 
 time_delays = [1, 5, 10, 25]
 network_inputs = [5, 10, int(0.25 * pts_per_period), int(0.5 * pts_per_period), pts_per_period]
-SKIP_EXISTING = False
+SKIP_EXISTING = True
 
 import torch
 has_gpu = torch.cuda.is_available()
