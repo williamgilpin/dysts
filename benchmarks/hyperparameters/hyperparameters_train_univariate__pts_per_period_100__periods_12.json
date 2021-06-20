@@ -294,5 +294,4636 @@
         "Theta": {
             "season_mode": "ADDITIVE"
         }
+    },
+    "Blasius": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "BlinkingRotlet": {
+        "ARIMA": {
+            "p": 1
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "BlinkingVortex": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Bouali": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Bouali2": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "BurkeShaw": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "CaTwoPlus": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "CaTwoPlusQuasiperiodic": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "CellCycle": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "CellularNeuralNetwork": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Chen": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "ChenLee": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Chua": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "CircadianRhythm": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "CoevolvingPredatorPrey": {
+        "ARIMA": {
+            "p": 1
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Colpitts": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Coullet": {
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Dadras": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "DequanLi": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "DoubleGyre": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "DoublePendulum": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Duffing": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ExcitableCell": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Finance": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "FluidTrampoline": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ForcedBrusselator": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ForcedFitzHughNagumo": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ForcedVanDerPol": {
+        "ARIMA": {
+            "p": 1
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "GenesioTesi": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "GuckenheimerHolmes": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Hadley": {
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Halvorsen": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "HastingsPowell": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "HenonHeiles": {
+        "NBEATSModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "HindmarshRose": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Hopfield": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "HyperBao": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "HyperCai": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "HyperJha": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "HyperLorenz": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "HyperLu": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "HyperPang": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "HyperQi": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "HyperRossler": {
+        "ARIMA": {
+            "p": 1
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "HyperWang": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "HyperXu": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "HyperYan": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "HyperYangChen": {
+        "ARIMA": {
+            "p": 1
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "IkedaDelay": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "IsothermalChemical": {
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ItikBanksTumor": {
+        "ARIMA": {
+            "p": 1
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "JerkCircuit": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "KawczynskiStrizhak": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Laser": {
+        "ARIMA": {
+            "p": 1
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "LiuChen": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Lorenz": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Lorenz84": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Lorenz96": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "LorenzBounded": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "LorenzCoupled": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "LorenzStenflo": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "LuChen": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "LuChenCheng": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "MacArthur": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "MackeyGlass": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "MooreSpiegel": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "MultiChua": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "NewtonLiepnik": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "NoseHoover": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "NuclearQuadrupole": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "OscillatingFlow": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "PanXuZhou": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "PehlivanWei": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "PiecewiseCircuit": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Qi": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "QiChen": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "RabinovichFabrikant": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "RayleighBenard": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "RikitakeDynamo": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Rossler": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Rucklidge": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Sakarya": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "SaltonSea": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SanUmSrisuchinwong": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "ScrollDelay": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "ShimizuMorioka": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottA": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottB": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "SprottC": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottD": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottDelay": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottE": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "SprottF": {
+        "ARIMA": {
+            "p": 1
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottG": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "SprottH": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "SprottI": {
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottJ": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottJerk": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "SprottK": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottL": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottM": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "SprottMore": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottN": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottO": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottP": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottQ": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottR": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SprottS": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "SprottTorus": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "StickSlipOscillator": {
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "SwingingAtwood": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Thomas": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 5
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ThomasLabyrinth": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 10
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "Torus": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "Tsucs2": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "TurchinHanski": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "VallisElNino": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "VossDelay": {
+        "ARIMA": {
+            "p": 1
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "WangSun": {
+        "ARIMA": {
+            "p": 10
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "WindmiReduced": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "ADDITIVE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "YuWang": {
+        "ARIMA": {
+            "p": 25
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 5,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
+    },
+    "YuWang2": {
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "ADDITIVE"
+        },
+        "Theta": {
+            "season_mode": "ADDITIVE"
+        }
+    },
+    "ZhouChen": {
+        "ARIMA": {
+            "p": 5
+        },
+        "LinearRegressionModel": {
+            "lags": 1
+        },
+        "RandomForest": {
+            "lags": 1,
+            "lags_exog": null
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "AutoARIMA": {},
+        "FFT": {},
+        "NaiveDrift": {},
+        "NaiveMean": {},
+        "NaiveSeasonal": {},
+        "Prophet": {},
+        "ExponentialSmoothing": {
+            "seasonal": "NONE"
+        },
+        "FourTheta": {
+            "season_mode": "NONE"
+        },
+        "Theta": {
+            "season_mode": "NONE"
+        }
     }
 }
