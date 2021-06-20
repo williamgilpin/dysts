@@ -104,6 +104,11 @@ def find_lyapunov_exponents(model, traj_length, pts_per_period=500,
 
     Returns:
         final_lyap (ndarray): A list of computed Lyapunov exponents
+        
+    Reference:
+        Christiansen & Rugh (1997). Computing Lyapunov spectra with continuous 
+            Gram-Schmidt orthonormalization
+
 
     """
     d = np.asarray(model.ic).shape[-1]
