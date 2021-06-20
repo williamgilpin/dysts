@@ -62,9 +62,9 @@ parameter_candidates = dict()
 parameter_candidates["ARIMA"] = {"p": time_delays}
 parameter_candidates["LinearRegressionModel"] = {"lags": time_delays}
 parameter_candidates["RandomForest"] = {"lags": time_delays, "lags_exog": [None]}
-parameter_candidates["NBEATSModel"] = {"input_chunk_length": network_inputs, "output_chunk_length": network_outputs},
-parameter_candidates["TCNModel"] = {"input_chunk_length": network_inputs, "output_chunk_length": network_outputs},
-parameter_candidates["TransformerModel"] = {"input_chunk_length": network_inputs, "output_chunk_length": network_outputs},
+parameter_candidates["NBEATSModel"] = {"input_chunk_length": network_inputs, "output_chunk_length": network_outputs}
+parameter_candidates["TCNModel"] = {"input_chunk_length": network_inputs, "output_chunk_length": network_outputs}
+parameter_candidates["TransformerModel"] = {"input_chunk_length": network_inputs, "output_chunk_length": network_outputs}
 parameter_candidates["RNNModel"] = {
     "input_chunk_length" : network_inputs,
     "output_chunk_length" : network_outputs,

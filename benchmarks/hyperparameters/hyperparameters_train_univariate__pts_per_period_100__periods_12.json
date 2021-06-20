@@ -36,6 +36,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "AnishchenkoAstakhov": {
@@ -75,6 +82,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Arneodo": {
@@ -114,6 +128,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "ArnoldBeltramiChildress": {
@@ -153,6 +174,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "ArnoldWeb": {
@@ -192,6 +220,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "BeerRNN": {
