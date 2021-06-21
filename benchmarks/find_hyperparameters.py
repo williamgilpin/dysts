@@ -31,7 +31,7 @@ season_values = [darts.utils.utils.SeasonalityMode.ADDITIVE,
                  darts.utils.utils.SeasonalityMode.NONE
                 ]
 time_delays = [3, 5, 10, int(0.25 * pts_per_period), int(0.5 * pts_per_period), pts_per_period, int(1.5 * pts_per_period)]
-time_delays = [3, 5, int(0.25 * pts_per_period)]
+time_delays = [3, 5, 10, int(0.25 * pts_per_period)]
 network_inputs = [5, 10, int(0.25 * pts_per_period), int(0.5 * pts_per_period), pts_per_period]
 network_outputs = [1, 4]
 network_outputs = [1]
@@ -76,12 +76,17 @@ parameter_candidates["ExponentialSmoothing"] = {"seasonal": season_values}
 parameter_candidates["FourTheta"] = {"season_mode": season_values}
 parameter_candidates["Theta"] = {"season_mode": season_values}
 for model_name in ["AutoARIMA", "FFT", "NaiveDrift", "NaiveMean", "NaiveSeasonal", "Prophet"]:
-    parameter_candidates[model_name] = {"season_mode": season_values}
+    parameter_candidates[model_name] = {}
     
     
 for equation_name in equation_data.dataset:
     
+    print(equation_name)
+    if equation_name != "Hadley":
+        continue
+    
     train_data = np.copy(np.array(equation_data.dataset[equation_name]["values"]))
+    print(train_data)
 
     if equation_name not in all_hyperparameters.keys():
         all_hyperparameters[equation_name] = dict()
@@ -99,7 +104,14 @@ for equation_name in equation_data.dataset:
         model = getattr(darts.models, model_name)
         model_best = model.gridsearch(parameter_candidates[model_name], y_train_ts, val_series=y_test_ts)
         
-        all_hyperparameters[equation_name][model_name] = model_best[1]
+        best_hyperparameters = model_best[1].copy()
+        
+        # Write season object to name
+        for hyperparameter_name in best_hyperparameters:
+            if "season" in hyperparameter_name:
+                best_hyperparameters[hyperparameter_name] = best_hyperparameters[hyperparameter_name].name
+        
+        all_hyperparameters[equation_name][model_name] = best_hyperparameters
 
     with open(output_path, 'w') as f:
         json.dump(all_hyperparameters, f, indent=4)   

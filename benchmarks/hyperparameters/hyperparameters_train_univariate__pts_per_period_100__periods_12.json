@@ -262,6 +262,17 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "BelousovZhabotinsky": {
@@ -289,6 +300,25 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "BickleyJet": {
@@ -328,6 +358,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Blasius": {
@@ -367,6 +404,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "BlinkingRotlet": {
@@ -406,6 +450,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "BlinkingVortex": {
@@ -445,6 +496,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Bouali": {
@@ -472,6 +530,25 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Bouali2": {
@@ -499,6 +576,25 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "BurkeShaw": {
@@ -526,6 +622,25 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "CaTwoPlus": {
@@ -553,6 +668,25 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "CaTwoPlusQuasiperiodic": {
@@ -580,6 +714,25 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "CellCycle": {
@@ -607,6 +760,25 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "CellularNeuralNetwork": {
@@ -646,6 +818,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Chen": {
@@ -685,6 +864,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "ChenLee": {
@@ -724,6 +910,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Chua": {
@@ -751,6 +944,25 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "CircadianRhythm": {
@@ -778,6 +990,25 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "NBEATSModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1
+        },
+        "TCNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1
+        },
+        "TransformerModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "CoevolvingPredatorPrey": {
@@ -817,6 +1048,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Colpitts": {
@@ -856,9 +1094,19 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Coullet": {
+        "ARIMA": {
+            "p": 5
+        },
         "NBEATSModel": {
             "input_chunk_length": 100,
             "output_chunk_length": 1
@@ -885,6 +1133,20 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "LinearRegressionModel": {
+            "lags": 3
+        },
+        "RandomForest": {
+            "lags": 3,
+            "lags_exog": null
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Dadras": {
@@ -924,6 +1186,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "DequanLi": {
@@ -963,6 +1232,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "DoubleGyre": {
@@ -1002,6 +1278,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "DoublePendulum": {
@@ -1041,6 +1324,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Duffing": {
@@ -1080,6 +1370,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "ExcitableCell": {
@@ -1119,6 +1416,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Finance": {
@@ -1158,6 +1462,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "FluidTrampoline": {
@@ -1197,6 +1508,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "ForcedBrusselator": {
@@ -1236,6 +1554,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "ForcedFitzHughNagumo": {
@@ -1275,6 +1600,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "ForcedVanDerPol": {
@@ -1314,6 +1646,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "GenesioTesi": {
@@ -1353,6 +1692,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "GuckenheimerHolmes": {
@@ -1392,9 +1738,19 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Hadley": {
+        "ARIMA": {
+            "p": 25
+        },
         "NBEATSModel": {
             "input_chunk_length": 100,
             "output_chunk_length": 1
@@ -1421,6 +1777,20 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 25,
+            "lags_exog": null
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Halvorsen": {
@@ -1460,6 +1830,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HastingsPowell": {
@@ -1499,9 +1876,19 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HenonHeiles": {
+        "ARIMA": {
+            "p": 25
+        },
         "NBEATSModel": {
             "input_chunk_length": 5,
             "output_chunk_length": 1
@@ -1528,6 +1915,20 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "LinearRegressionModel": {
+            "lags": 3
+        },
+        "RandomForest": {
+            "lags": 3,
+            "lags_exog": null
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HindmarshRose": {
@@ -1567,6 +1968,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Hopfield": {
@@ -1606,6 +2014,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperBao": {
@@ -1645,6 +2060,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperCai": {
@@ -1684,6 +2106,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperJha": {
@@ -1723,6 +2152,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperLorenz": {
@@ -1762,6 +2198,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperLu": {
@@ -1801,6 +2244,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperPang": {
@@ -1840,6 +2290,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperQi": {
@@ -1879,6 +2336,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperRossler": {
@@ -1918,6 +2382,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperWang": {
@@ -1957,6 +2428,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperXu": {
@@ -1996,6 +2474,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperYan": {
@@ -2035,6 +2520,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "HyperYangChen": {
@@ -2074,6 +2566,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "IkedaDelay": {
@@ -2113,9 +2612,19 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "IsothermalChemical": {
+        "ARIMA": {
+            "p": 5
+        },
         "NBEATSModel": {
             "input_chunk_length": 50,
             "output_chunk_length": 1
@@ -2142,6 +2651,20 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 10,
+            "lags_exog": null
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "ItikBanksTumor": {
@@ -2181,6 +2704,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "JerkCircuit": {
@@ -2220,6 +2750,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "KawczynskiStrizhak": {
@@ -2259,6 +2796,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Laser": {
@@ -2298,6 +2842,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "LiuChen": {
@@ -2337,6 +2888,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Lorenz": {
@@ -2376,6 +2934,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Lorenz84": {
@@ -2415,6 +2980,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Lorenz96": {
@@ -2454,6 +3026,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "LorenzBounded": {
@@ -2493,6 +3072,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "LorenzCoupled": {
@@ -2532,6 +3118,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "LorenzStenflo": {
@@ -2571,6 +3164,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "LuChen": {
@@ -2610,6 +3210,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "LuChenCheng": {
@@ -2649,6 +3256,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "MacArthur": {
@@ -2688,6 +3302,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "MackeyGlass": {
@@ -2727,6 +3348,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "MooreSpiegel": {
@@ -2766,6 +3394,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "MultiChua": {
@@ -2805,6 +3440,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "NewtonLiepnik": {
@@ -2844,6 +3486,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "NoseHoover": {
@@ -2883,6 +3532,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "NuclearQuadrupole": {
@@ -2922,6 +3578,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "OscillatingFlow": {
@@ -2961,6 +3624,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "PanXuZhou": {
@@ -3000,6 +3670,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "PehlivanWei": {
@@ -3039,6 +3716,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "PiecewiseCircuit": {
@@ -3078,6 +3762,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Qi": {
@@ -3117,6 +3808,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "QiChen": {
@@ -3156,6 +3854,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "RabinovichFabrikant": {
@@ -3195,6 +3900,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "RayleighBenard": {
@@ -3234,6 +3946,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "RikitakeDynamo": {
@@ -3273,6 +3992,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Rossler": {
@@ -3312,6 +4038,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Rucklidge": {
@@ -3351,6 +4084,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "Sakarya": {
@@ -3390,6 +4130,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SaltonSea": {
@@ -3429,6 +4176,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SanUmSrisuchinwong": {
@@ -3468,6 +4222,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "ScrollDelay": {
@@ -3507,6 +4268,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "ShimizuMorioka": {
@@ -3546,6 +4314,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottA": {
@@ -3585,6 +4360,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottB": {
@@ -3624,6 +4406,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottC": {
@@ -3663,6 +4452,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottD": {
@@ -3702,6 +4498,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottDelay": {
@@ -3741,6 +4544,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottE": {
@@ -3780,6 +4590,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottF": {
@@ -3819,6 +4636,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottG": {
@@ -3858,6 +4682,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottH": {
@@ -3897,9 +4728,19 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottI": {
+        "ARIMA": {
+            "p": 5
+        },
         "NBEATSModel": {
             "input_chunk_length": 50,
             "output_chunk_length": 1
@@ -3926,6 +4767,20 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "LinearRegressionModel": {
+            "lags": 25
+        },
+        "RandomForest": {
+            "lags": 3,
+            "lags_exog": null
+        },
+        "RNNModel": {
+            "input_chunk_length": 5,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottJ": {
@@ -3965,6 +4820,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottJerk": {
@@ -4004,6 +4866,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 100,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottK": {
@@ -4043,6 +4912,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottL": {
@@ -4082,6 +4958,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottM": {
@@ -4121,6 +5004,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottMore": {
@@ -4160,6 +5050,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottN": {
@@ -4199,6 +5096,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottO": {
@@ -4238,6 +5142,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottP": {
@@ -4277,6 +5188,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottQ": {
@@ -4316,6 +5234,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 50,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottR": {
@@ -4355,6 +5280,13 @@
         },
         "Theta": {
             "season_mode": "ADDITIVE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 25,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottS": {
@@ -4394,6 +5326,13 @@
         },
         "Theta": {
             "season_mode": "NONE"
+        },
+        "RNNModel": {
+            "input_chunk_length": 10,
+            "output_chunk_length": 1,
+            "model": "LSTM",
+            "n_rnn_layers": 2,
+            "n_epochs": 200
         }
     },
     "SprottTorus": {
@@ -4436,6 +5375,9 @@
         }
     },
     "StickSlipOscillator": {
+        "ARIMA": {
+            "p": 5
+        },
         "NBEATSModel": {
             "input_chunk_length": 100,
             "output_chunk_length": 1
@@ -4894,6 +5836,9 @@
         }
     },
     "YuWang2": {
+        "ARIMA": {
+            "p": 5
+        },
         "NBEATSModel": {
             "input_chunk_length": 100,
             "output_chunk_length": 1
