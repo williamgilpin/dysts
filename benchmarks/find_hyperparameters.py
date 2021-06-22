@@ -15,12 +15,12 @@ import darts.models
 
 cwd = os.path.dirname(os.path.realpath(__file__))
 # cwd = os.getcwd()
-input_path = os.path.dirname(cwd)  + "/dysts/data/train_univariate__pts_per_period_100__periods_12.json"
-pts_per_period = 100
 
 
-# cwd = os.path.dirname(os.path.realpath(__file__))
-# input_path = os.path.dirname(cwd)  + "/dysts/data/train_univariate__pts_per_period_15__periods_12.json"
+input_path = os.path.dirname(cwd)  + "/dysts/data/train_univariate__pts_per_period_15__periods_12.json"
+pts_per_period = 15
+
+# input_path = os.path.dirname(cwd)  + "/dysts/data/train_univariate__pts_per_period_100__periods_12.json"
 # pts_per_period = 100
 
 SKIP_EXISTING = True

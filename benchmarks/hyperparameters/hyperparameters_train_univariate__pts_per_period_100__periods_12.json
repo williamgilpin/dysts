@@ -4463,7 +4463,7 @@
     },
     "SprottD": {
         "ARIMA": {
-            "p": 10
+            "p": 25
         },
         "LinearRegressionModel": {
             "lags": 10

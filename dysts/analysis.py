@@ -146,7 +146,9 @@ def find_lyapunov_exponents(model, traj_length, pts_per_period=500,
         u = q  # new axes after iteration
         
 #         ## early stopping
-#         if np.min(np.abs(lyap_estimate)) < tol and i > min_tpts:
+        if (np.min(np.abs(lyap_estimate)) < tol) and (i > min_tpts):
+            print("stopped early.")
+            break
 #             traj_length = i
 
     all_lyap = np.array(all_lyap)
