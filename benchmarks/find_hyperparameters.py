@@ -9,6 +9,7 @@ from dysts.datasets import *
 
 import pandas as pd
 
+import darts
 from darts.models import *
 from darts import TimeSeries
 import darts.models
@@ -101,11 +102,12 @@ for equation_name in equation_data.dataset:
             continue
         
         model = getattr(darts.models, model_name)
-        model_best = model.gridsearch(parameter_candidates[model_name], y_train_ts, val_series=y_test_ts)
+        model_best = model.gridsearch(parameter_candidates[model_name], y_train_ts, val_series=y_test_ts,
+                                     metric=darts.metrics.mse)
         
         best_hyperparameters = model_best[1].copy()
         
-        # Write season object to name
+        # Write season object to string
         for hyperparameter_name in best_hyperparameters:
             if "season" in hyperparameter_name:
                 best_hyperparameters[hyperparameter_name] = best_hyperparameters[hyperparameter_name].name

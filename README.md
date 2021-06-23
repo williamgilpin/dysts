@@ -57,13 +57,15 @@ These optional dependencies are needed for various specific tasks included in th
 
 ## Contributing
 
-If you know of any systems should be included, please feel free to submit an issue or pull request. The biggest bottleneck when adding new models is a lack of known parameter values and initial conditions, and so please provide a reference or code that contains all parameter values necessary to produce the claimed dynamics.
+If you know of any systems should be included, please feel free to submit an issue or pull request. The biggest bottleneck when adding new models is a lack of known parameter values and initial conditions, and so please provide a reference or code that contains all parameter values necessary to reproduce the claimed dynamics.
 
 ## Contents
 
 + Definitions and metadata for all chaotic systems are included in the database [`chaotic_attractors`](dysts/dysts/data/chaotic_attractors.json)
-+ Code to replicate benchmark forecasting and training experiments are included in [`benchmarks`](dysts/benchmarks)
-+ Pre-computed time series with partitions are included in [`data`](dysts/dysts/data)
++ Code to generate benchmark forecasting and training experiments are included in [`benchmarks`](dysts/benchmarks)
++ + All benchmark results and metrics are included in [`benchmarks/results`](dysts/benchmarks/results)
++ + Fitted hyperparameters for each dynamical system and forecasting model are included in [`benchmarks/hyperparameters`](dysts/benchmarks/hyperparameters)
++ Pre-computed time series with training and test partitions are included in [`data`](dysts/dysts/data)
 
 ## Implementation Notes
 
