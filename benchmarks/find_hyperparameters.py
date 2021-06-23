@@ -19,9 +19,11 @@ cwd = os.path.dirname(os.path.realpath(__file__))
 
 input_path = os.path.dirname(cwd)  + "/dysts/data/train_univariate__pts_per_period_15__periods_12.json"
 pts_per_period = 15
+network_inputs = [5, 10, int(0.5 * pts_per_period), pts_per_period] # can't have kernel less than 5
 
 # input_path = os.path.dirname(cwd)  + "/dysts/data/train_univariate__pts_per_period_100__periods_12.json"
 # pts_per_period = 100
+# network_inputs = [5, 10, int(0.25 * pts_per_period), int(0.5 * pts_per_period), pts_per_period]
 
 SKIP_EXISTING = True
 season_values = [darts.utils.utils.SeasonalityMode.ADDITIVE, 
@@ -32,7 +34,6 @@ season_values = [darts.utils.utils.SeasonalityMode.ADDITIVE,
                 ]
 time_delays = [3, 5, 10, int(0.25 * pts_per_period), int(0.5 * pts_per_period), pts_per_period, int(1.5 * pts_per_period)]
 time_delays = [3, 5, 10, int(0.25 * pts_per_period)]
-network_inputs = [5, 10, int(0.25 * pts_per_period), int(0.5 * pts_per_period), pts_per_period]
 network_outputs = [1, 4]
 network_outputs = [1]
 
@@ -81,9 +82,7 @@ for model_name in ["AutoARIMA", "FFT", "NaiveDrift", "NaiveMean", "NaiveSeasonal
     
 for equation_name in equation_data.dataset:
     
-    print(equation_name)
-    if equation_name != "Hadley":
-        continue
+    print(equation_name, flush=True)
     
     train_data = np.copy(np.array(equation_data.dataset[equation_name]["values"]))
     print(train_data)

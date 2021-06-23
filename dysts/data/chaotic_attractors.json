@@ -20,7 +20,8 @@
             0.09560442785568812,
             -14.887725721549213
         ],
-        "kaplan_yorke_dimension": 2.074079887088261
+        "kaplan_yorke_dimension": 2.074079887088261,
+        "pesin_entropy": 1.112596534229242
     },
     "LorenzBounded": {
         "initial_conditions": [
@@ -44,7 +45,8 @@
             -0.008305846134585685,
             -11.673212586712983
         ],
-        "kaplan_yorke_dimension": 2.067485624673264
+        "kaplan_yorke_dimension": 2.067485624673264,
+        "pesin_entropy": 0.7655166893705379
     },
     "LorenzCoupled": {
         "initial_conditions": [
@@ -76,7 +78,8 @@
             -13.657711372039643,
             -15.093749713081987
         ],
-        "kaplan_yorke_dimension": 3.103467747520539
+        "kaplan_yorke_dimension": 3.103467747520539,
+        "pesin_entropy": 1.3836781774581797
     },
     "Lorenz84": {
         "initial_conditions": [
@@ -100,7 +103,8 @@
             -0.12780221639441064,
             -2.361747806242195
         ],
-        "kaplan_yorke_dimension": 2.414032487708553
+        "kaplan_yorke_dimension": 2.414032487708553,
+        "pesin_entropy": 1.1143992546093684
     },
     "Lorenz96": {
         "initial_conditions": [
@@ -123,7 +127,8 @@
             -1.225600479459104,
             -3.430760086615324
         ],
-        "kaplan_yorke_dimension": 3.146918832536465
+        "kaplan_yorke_dimension": 3.146918832536465,
+        "pesin_entropy": 1.7309995500170836
     },
     "Thomas": {
         "initial_conditions": [
@@ -145,7 +150,8 @@
             0.13227811901111658,
             -6.5495765963425185
         ],
-        "kaplan_yorke_dimension": 2.1442455455631126
+        "kaplan_yorke_dimension": 2.1442455455631126,
+        "pesin_entropy": 0.9512034949548649
     },
     "ThomasLabyrinth": {
         "initial_conditions": [
@@ -168,7 +174,8 @@
             0.04621483538197126,
             -2.913291486585039
         ],
-        "kaplan_yorke_dimension": 2.4847867064242957
+        "kaplan_yorke_dimension": 2.4847867064242957,
+        "pesin_entropy": 1.4176762078642802
     },
     "HenonHeiles": {
         "initial_conditions": [
@@ -191,7 +198,8 @@
             0.00026380877626588076,
             -0.010034449927943372
         ],
-        "kaplan_yorke_dimension": 6.537839123220101
+        "kaplan_yorke_dimension": 6.537839123220101,
+        "pesin_entropy": 0.035692934902656966
     },
     "Chua": {
         "initial_conditions": [
@@ -215,7 +223,8 @@
             0.047719847058214415,
             -4.273468861294452
         ],
-        "kaplan_yorke_dimension": 2.1145443800891766
+        "kaplan_yorke_dimension": 2.1145443800891766,
+        "pesin_entropy": 0.49878705792276107
     },
     "MultiChua": {
         "initial_conditions": [
@@ -253,7 +262,8 @@
             0.01529033906844614,
             -2.998953157884127
         ],
-        "kaplan_yorke_dimension": 2.0811690330352763
+        "kaplan_yorke_dimension": 2.0811690330352763,
+        "pesin_entropy": 0.23342610907252845
     },
     "JerkCircuit": {
         "initial_conditions": [
@@ -275,7 +285,8 @@
             0.18811442095258255,
             -1.1476388622544471
         ],
-        "kaplan_yorke_dimension": 2.5114713610117443
+        "kaplan_yorke_dimension": 2.5114713610117443,
+        "pesin_entropy": 0.5898274120045862
     },
     "Colpitts": {
         "initial_conditions": [
@@ -301,7 +312,8 @@
             -0.026084464594097655,
             -0.9793709801016447
         ],
-        "kaplan_yorke_dimension": 2.1156754604002463
+        "kaplan_yorke_dimension": 2.1156754604002463,
+        "pesin_entropy": 0.1266369140273331
     },
     "Duffing": {
         "initial_conditions": [
@@ -331,7 +343,8 @@
             0.004744190353215685,
             -0.22754141791074403
         ],
-        "kaplan_yorke_dimension": 2.675913285960039
+        "kaplan_yorke_dimension": 2.675913285960039,
+        "pesin_entropy": 0.15379826747205746
     },
     "Torus": {
         "initial_conditions": [
@@ -355,7 +368,8 @@
             0.0,
             0.0
         ],
-        "kaplan_yorke_dimension": 1.0
+        "kaplan_yorke_dimension": 1.0,
+        "pesin_entropy": 0.0
     },
     "Halvorsen": {
         "initial_conditions": [
@@ -377,7 +391,8 @@
             -0.21043714927072532,
             -4.692536247951621
         ],
-        "kaplan_yorke_dimension": 2.118808223145618
+        "kaplan_yorke_dimension": 2.118808223145618,
+        "pesin_entropy": 0.7632787557248966
     },
     "MooreSpiegel": {
         "initial_conditions": [
@@ -400,7 +415,8 @@
             -0.06557108268778261,
             -1.1576221521389543
         ],
-        "kaplan_yorke_dimension": 2.298113662933388
+        "kaplan_yorke_dimension": 2.298113662933388,
+        "pesin_entropy": 0.4118068385010778
     },
     "Bouali2": {
         "initial_conditions": [
@@ -427,7 +443,8 @@
             0.014670707721433703,
             -0.009668167838434556
         ],
-        "kaplan_yorke_dimension": 5.089627283463573
+        "kaplan_yorke_dimension": 5.089627283463573,
+        "pesin_entropy": 0.048964165061304785
     },
     "Bouali": {
         "initial_conditions": [
@@ -455,7 +472,8 @@
             -0.0209974050966501,
             -0.18016343633535903
         ],
-        "kaplan_yorke_dimension": 2.343238159308096
+        "kaplan_yorke_dimension": 2.343238159308096,
+        "pesin_entropy": 0.06747909843969056
     },
     "Arneodo": {
         "initial_conditions": [
@@ -480,7 +498,8 @@
             -0.003388443467492428,
             -1.2294462105186104
         ],
-        "kaplan_yorke_dimension": 2.2071600135682297
+        "kaplan_yorke_dimension": 2.2071600135682297,
+        "pesin_entropy": 0.27186704186725563
     },
     "Coullet": {
         "initial_conditions": [
@@ -505,7 +524,8 @@
             -0.011679595427899078,
             -0.5671329434883985
         ],
-        "kaplan_yorke_dimension": 2.2267847308799515
+        "kaplan_yorke_dimension": 2.2267847308799515,
+        "pesin_entropy": 0.14387574780254334
     },
     "Rucklidge": {
         "initial_conditions": [
@@ -527,7 +547,8 @@
             0.030010289711614575,
             -3.2566715567797235
         ],
-        "kaplan_yorke_dimension": 2.0675586864973705
+        "kaplan_yorke_dimension": 2.0675586864973705,
+        "pesin_entropy": 0.21924310863123042
     },
     "BurkeShaw": {
         "initial_conditions": [
@@ -549,7 +570,8 @@
             0.20342222156252454,
             -11.475910056588258
         ],
-        "kaplan_yorke_dimension": 2.2285560267954843
+        "kaplan_yorke_dimension": 2.2285560267954843,
+        "pesin_entropy": 2.6163282757021236
     },
     "ZhouChen": {
         "initial_conditions": [
@@ -574,7 +596,8 @@
             0.09896952484569546,
             -11.87975176167028
         ],
-        "kaplan_yorke_dimension": 2.0758728910823505
+        "kaplan_yorke_dimension": 2.0758728910823505,
+        "pesin_entropy": 0.8845237018814736
     },
     "LuChenCheng": {
         "initial_conditions": [
@@ -597,7 +620,8 @@
             0.08329665126364216,
             -11.53579522997102
         ],
-        "kaplan_yorke_dimension": 2.0281718690985517
+        "kaplan_yorke_dimension": 2.0281718690985517,
+        "pesin_entropy": 0.3282803561709355
     },
     "Chen": {
         "initial_conditions": [
@@ -620,7 +644,8 @@
             0.21168332938496529,
             -12.154750366882478
         ],
-        "kaplan_yorke_dimension": 2.189980234697357
+        "kaplan_yorke_dimension": 2.189980234697357,
+        "pesin_entropy": 2.3452535499455056
     },
     "ChenLee": {
         "initial_conditions": [
@@ -643,7 +668,8 @@
             0.047896456110243846,
             -5.551652795639903
         ],
-        "kaplan_yorke_dimension": 2.04144186095621
+        "kaplan_yorke_dimension": 2.04144186095621,
+        "pesin_entropy": 0.22453573261479984
     },
     "LuChen": {
         "initial_conditions": [
@@ -667,7 +693,8 @@
             0.24823554116679925,
             -22.625303465477824
         ],
-        "kaplan_yorke_dimension": 2.0380483396973386
+        "kaplan_yorke_dimension": 2.0380483396973386,
+        "pesin_entropy": 0.8619844585114133
     },
     "QiChen": {
         "initial_conditions": [
@@ -690,7 +717,8 @@
             0.4641995777325576,
             -44.35508189220781
         ],
-        "kaplan_yorke_dimension": 2.102510638028074
+        "kaplan_yorke_dimension": 2.102510638028074,
+        "pesin_entropy": 4.481891259297293
     },
     "YuWang": {
         "initial_conditions": [
@@ -714,7 +742,8 @@
             -0.18902148155953774,
             -13.932776217482747
         ],
-        "kaplan_yorke_dimension": 2.165528440202843
+        "kaplan_yorke_dimension": 2.165528440202843,
+        "pesin_entropy": 2.4007035039178533
     },
     "YuWang2": {
         "initial_conditions": [
@@ -738,7 +767,8 @@
             -0.033844187489535285,
             -13.093988388882662
         ],
-        "kaplan_yorke_dimension": 2.062482758067868
+        "kaplan_yorke_dimension": 2.062482758067868,
+        "pesin_entropy": 0.8004715922970711
     },
     "NewtonLiepnik": {
         "initial_conditions": [
@@ -760,7 +790,8 @@
             0.028300351712033902,
             -0.7871475451975425
         ],
-        "kaplan_yorke_dimension": 2.2294194320222847
+        "kaplan_yorke_dimension": 2.2294194320222847,
+        "pesin_entropy": 0.17852638533384835
     },
     "DequanLi": {
         "initial_conditions": [
@@ -787,7 +818,8 @@
             0.005921854556744296,
             -3.3442392865742656
         ],
-        "kaplan_yorke_dimension": 2.4087566349582783
+        "kaplan_yorke_dimension": 2.4087566349582783,
+        "pesin_entropy": 0.8446674870223767
     },
     "Tsucs2": {
         "initial_conditions": [
@@ -814,7 +846,8 @@
             -0.32380143232824316,
             -1.092650354534297
         ],
-        "kaplan_yorke_dimension": 2.343429744048496
+        "kaplan_yorke_dimension": 2.343429744048496,
+        "pesin_entropy": 0.7216628272585501
     },
     "ArnoldWeb": {
         "initial_conditions": [
@@ -846,7 +879,8 @@
             -0.002575333053318534,
             -0.008223150098739904
         ],
-        "kaplan_yorke_dimension": 9.682613937578417
+        "kaplan_yorke_dimension": 9.682613937578417,
+        "pesin_entropy": 0.04930432041521724
     },
     "PanXuZhou": {
         "initial_conditions": [
@@ -873,7 +907,8 @@
             0.04385819535134095,
             -13.603991363171932
         ],
-        "kaplan_yorke_dimension": 2.0554734660688965
+        "kaplan_yorke_dimension": 2.0554734660688965,
+        "pesin_entropy": 0.777340347877577
     },
     "WangSun": {
         "initial_conditions": [
@@ -900,7 +935,8 @@
             -0.007439484104952211,
             -1.3190979947964558
         ],
-        "kaplan_yorke_dimension": 2.055629273655145
+        "kaplan_yorke_dimension": 2.055629273655145,
+        "pesin_entropy": 0.08214538088762345
     },
     "Sakarya": {
         "initial_conditions": [
@@ -928,7 +964,8 @@
             0.047062762570489414,
             -1.2888611717753382
         ],
-        "kaplan_yorke_dimension": 2.2663142935834766
+        "kaplan_yorke_dimension": 2.2663142935834766,
+        "pesin_entropy": 0.35182945768197527
     },
     "LiuChen": {
         "initial_conditions": [
@@ -957,7 +994,8 @@
             -1.0733393683736743,
             -18.75442411300829
         ],
-        "kaplan_yorke_dimension": 1.2538282866824686
+        "kaplan_yorke_dimension": 1.2538282866824686,
+        "pesin_entropy": 0.26689960214404507
     },
     "Aizawa": {
         "initial_conditions": [
@@ -983,7 +1021,8 @@
             0.04101806388551678,
             -0.3398543834127481
         ],
-        "kaplan_yorke_dimension": 2.4517188438665958
+        "kaplan_yorke_dimension": 2.4517188438665958,
+        "pesin_entropy": 0.15570198816374126
     },
     "SanUmSrisuchinwong": {
         "initial_conditions": [
@@ -1005,7 +1044,8 @@
             0.015300741579092813,
             -1.2388350556599639
         ],
-        "kaplan_yorke_dimension": 2.1996711801882927
+        "kaplan_yorke_dimension": 2.1996711801882927,
+        "pesin_entropy": 0.2436408342354837
     },
     "Finance": {
         "initial_conditions": [
@@ -1028,7 +1068,8 @@
             0.013015624488986601,
             -0.6318774091983708
         ],
-        "kaplan_yorke_dimension": 2.1923341343367744
+        "kaplan_yorke_dimension": 2.1923341343367744,
+        "pesin_entropy": 0.12324638474681072
     },
     "Dadras": {
         "initial_conditions": [
@@ -1053,7 +1094,8 @@
             0.04060965977950476,
             -11.186966730947484
         ],
-        "kaplan_yorke_dimension": 2.04529322919326
+        "kaplan_yorke_dimension": 2.04529322919326,
+        "pesin_entropy": 0.4995907556814133
     },
     "RikitakeDynamo": {
         "initial_conditions": [
@@ -1075,7 +1117,8 @@
             0.00032533622575367624,
             -2.1552616142595387
         ],
-        "kaplan_yorke_dimension": 2.064568021534762
+        "kaplan_yorke_dimension": 2.064568021534762,
+        "pesin_entropy": 0.13836200894698406
     },
     "NuclearQuadrupole": {
         "initial_conditions": [
@@ -1101,7 +1144,8 @@
             0.0015535426799998396,
             -0.2605078462171475
         ],
-        "kaplan_yorke_dimension": 4.283043350245615
+        "kaplan_yorke_dimension": 4.283043350245615,
+        "pesin_entropy": 0.3425922448694732
     },
     "RabinovichFabrikant": {
         "initial_conditions": [
@@ -1123,7 +1167,8 @@
             -0.000892784098171977,
             -0.6568700689021242
         ],
-        "kaplan_yorke_dimension": 2.344787840321537
+        "kaplan_yorke_dimension": 2.344787840321537,
+        "pesin_entropy": 0.21794784998541988
     },
     "AnishchenkoAstakhov": {
         "initial_conditions": [
@@ -1145,7 +1190,8 @@
             0.0027885641690685407,
             -0.4522578466563929
         ],
-        "kaplan_yorke_dimension": 2.122609676273513
+        "kaplan_yorke_dimension": 2.122609676273513,
+        "pesin_entropy": 0.05743858133139483
     },
     "GenesioTesi": {
         "initial_conditions": [
@@ -1168,7 +1214,8 @@
             0.0009026051699975553,
             -0.5465346114337934
         ],
-        "kaplan_yorke_dimension": 2.2167107883626533
+        "kaplan_yorke_dimension": 2.2167107883626533,
+        "pesin_entropy": 0.11494582234096534
     },
     "ShimizuMorioka": {
         "initial_conditions": [
@@ -1190,7 +1237,8 @@
             0.00396060426171218,
             -1.4103541702322864
         ],
-        "kaplan_yorke_dimension": 2.0315571818464067
+        "kaplan_yorke_dimension": 2.0315571818464067,
+        "pesin_entropy": 0.04415107297910898
     },
     "PehlivanWei": {
         "initial_conditions": [
@@ -1209,7 +1257,8 @@
             -0.033800418098302636,
             -0.5973797897654509
         ],
-        "kaplan_yorke_dimension": 2.1133651043625177
+        "kaplan_yorke_dimension": 2.1133651043625177,
+        "pesin_entropy": 0.11045272900840396
     },
     "HyperLorenz": {
         "initial_conditions": [
@@ -1235,7 +1284,8 @@
             -13.147994992523673
         ],
         "kaplan_yorke_dimension": 3.0466174495953546,
-        "correlation_dimension": 2.3986370092201508
+        "correlation_dimension": 2.3986370092201508,
+        "pesin_entropy": 0.6311333741130299
     },
     "HyperCai": {
         "initial_conditions": [
@@ -1262,7 +1312,8 @@
             -13.113307862649517
         ],
         "kaplan_yorke_dimension": 3.1619555370202126,
-        "correlation_dimension": 2.3430620352191367
+        "correlation_dimension": 2.3430620352191367,
+        "pesin_entropy": 2.1108999494394305
     },
     "HyperBao": {
         "initial_conditions": [
@@ -1289,7 +1340,8 @@
             -20.377796427274742
         ],
         "kaplan_yorke_dimension": 3.0640764821207336,
-        "correlation_dimension": 2.381738470523283
+        "correlation_dimension": 2.381738470523283,
+        "pesin_entropy": 1.303619671587242
     },
     "HyperJha": {
         "initial_conditions": [
@@ -1315,7 +1367,8 @@
             -13.05703778842732
         ],
         "kaplan_yorke_dimension": 3.0558739356965647,
-        "correlation_dimension": 2.323939899735909
+        "correlation_dimension": 2.323939899735909,
+        "pesin_entropy": 0.7435145510007858
     },
     "HyperQi": {
         "initial_conditions": [
@@ -1343,7 +1396,8 @@
             -59.40028018738256
         ],
         "kaplan_yorke_dimension": 3.2781935338818404,
-        "correlation_dimension": 2.1190836761602556
+        "correlation_dimension": 2.1190836761602556,
+        "pesin_entropy": 17.748519488124483
     },
     "Qi": {
         "initial_conditions": [
@@ -1369,7 +1423,8 @@
             -44.47430875263343
         ],
         "kaplan_yorke_dimension": 2.527057397724626,
-        "correlation_dimension": 1.8940373473447132
+        "correlation_dimension": 1.8940373473447132,
+        "pesin_entropy": 2.350481020735674
     },
     "LorenzStenflo": {
         "initial_conditions": [
@@ -1395,7 +1450,8 @@
             -3.449762905089308
         ],
         "kaplan_yorke_dimension": 2.1798101764256588,
-        "correlation_dimension": 2.1376654700693614
+        "correlation_dimension": 2.1376654700693614,
+        "pesin_entropy": 0.4938920928034546
     },
     "HyperYangChen": {
         "initial_conditions": [
@@ -1421,7 +1477,8 @@
             -34.66522483296487
         ],
         "kaplan_yorke_dimension": 3.0240801407113427,
-        "correlation_dimension": 2.4708198325820114
+        "correlation_dimension": 2.4708198325820114,
+        "pesin_entropy": 0.8582239643796618
     },
     "HyperYan": {
         "initial_conditions": [
@@ -1447,7 +1504,8 @@
             -39.35362673932406
         ],
         "kaplan_yorke_dimension": 2.0877547215288312,
-        "correlation_dimension": 1.8962092985870163
+        "correlation_dimension": 1.8962092985870163,
+        "pesin_entropy": 1.3726286551311482
     },
     "HyperXu": {
         "initial_conditions": [
@@ -1474,7 +1532,8 @@
             -13.789018361647202
         ],
         "kaplan_yorke_dimension": 3.0958089922194407,
-        "correlation_dimension": 2.3361477216651405
+        "correlation_dimension": 2.3361477216651405,
+        "pesin_entropy": 1.282260074118561
     },
     "HyperWang": {
         "initial_conditions": [
@@ -1501,7 +1560,8 @@
             -13.917149117286193
         ],
         "kaplan_yorke_dimension": 3.1010018883997184,
-        "correlation_dimension": 2.439991887189313
+        "correlation_dimension": 2.439991887189313,
+        "pesin_entropy": 1.4919159081238
     },
     "HyperPang": {
         "initial_conditions": [
@@ -1527,7 +1587,8 @@
             -21.043310356485847
         ],
         "kaplan_yorke_dimension": 3.0901741519053054,
-        "correlation_dimension": 2.404036308173654
+        "correlation_dimension": 2.404036308173654,
+        "pesin_entropy": 1.8629173796470622
     },
     "HyperLu": {
         "initial_conditions": [
@@ -1553,7 +1614,8 @@
             -19.282159064346992
         ],
         "kaplan_yorke_dimension": 3.0814305023074535,
-        "correlation_dimension": 2.4396790467349634
+        "correlation_dimension": 2.4396790467349634,
+        "pesin_entropy": 1.6387273275026333
     },
     "SprottTorus": {
         "initial_conditions": [
@@ -1573,7 +1635,8 @@
             -0.0493998264281215,
             -0.4195115503709367
         ],
-        "kaplan_yorke_dimension": 2.5028897860525756
+        "kaplan_yorke_dimension": 2.5028897860525756,
+        "pesin_entropy": 0.2633567221117143
     },
     "SprottJerk": {
         "initial_conditions": [
@@ -1595,7 +1658,8 @@
             0.011221101035694268,
             -2.1353182790748546
         ],
-        "kaplan_yorke_dimension": 2.0313325808200817
+        "kaplan_yorke_dimension": 2.0313325808200817,
+        "pesin_entropy": 0.0668259674308544
     },
     "SprottA": {
         "initial_conditions": [
@@ -1614,7 +1678,8 @@
             0.012153959623930555,
             -0.005554845745953054
         ],
-        "kaplan_yorke_dimension": 7.561647461898436
+        "kaplan_yorke_dimension": 7.561647461898436,
+        "pesin_entropy": 0.03852980115035365
     },
     "SprottB": {
         "initial_conditions": [
@@ -1633,7 +1698,8 @@
             0.019460768438020606,
             -1.2304473522249435
         ],
-        "kaplan_yorke_dimension": 2.195712524339404
+        "kaplan_yorke_dimension": 2.195712524339404,
+        "pesin_entropy": 0.2434978276794478
     },
     "SprottC": {
         "initial_conditions": [
@@ -1652,7 +1718,8 @@
             0.007784156974971207,
             -1.1759726908891368
         ],
-        "kaplan_yorke_dimension": 2.161688940022674
+        "kaplan_yorke_dimension": 2.161688940022674,
+        "pesin_entropy": 0.1881242737769636
     },
     "SprottD": {
         "initial_conditions": [
@@ -1671,7 +1738,8 @@
             0.006767280431185831,
             -1.299944694334755
         ],
-        "kaplan_yorke_dimension": 2.067858856646991
+        "kaplan_yorke_dimension": 2.067858856646991,
+        "pesin_entropy": 0.08866223628048786
     },
     "SprottE": {
         "initial_conditions": [
@@ -1690,7 +1758,8 @@
             -0.0005476661507420974,
             -1.103729760106193
         ],
-        "kaplan_yorke_dimension": 2.0941882403840655
+        "kaplan_yorke_dimension": 2.0941882403840655,
+        "pesin_entropy": 0.10359402857858058
     },
     "SprottF": {
         "initial_conditions": [
@@ -1711,7 +1780,8 @@
             0.028857841065800457,
             -0.6021056232434963
         ],
-        "kaplan_yorke_dimension": 2.2511228758216264
+        "kaplan_yorke_dimension": 2.2511228758216264,
+        "pesin_entropy": 0.15438598102285495
     },
     "SprottG": {
         "initial_conditions": [
@@ -1732,7 +1802,8 @@
             0.00483377905485132,
             -0.6309872733943198
         ],
-        "kaplan_yorke_dimension": 2.0713186302953543
+        "kaplan_yorke_dimension": 2.0713186302953543,
+        "pesin_entropy": 0.04517455968037247
     },
     "SprottH": {
         "initial_conditions": [
@@ -1753,7 +1824,8 @@
             0.0309112194466555,
             -0.5964694398356464
         ],
-        "kaplan_yorke_dimension": 2.252156277471384
+        "kaplan_yorke_dimension": 2.252156277471384,
+        "pesin_entropy": 0.15150206801113622
     },
     "SprottI": {
         "initial_conditions": [
@@ -1774,7 +1846,8 @@
             0.0006216128930428014,
             -1.0273420089235228
         ],
-        "kaplan_yorke_dimension": 2.0199947667280105
+        "kaplan_yorke_dimension": 2.0199947667280105,
+        "pesin_entropy": 0.017588622782607796
     },
     "SprottJ": {
         "initial_conditions": [
@@ -1793,7 +1866,8 @@
             0.0053473371784503575,
             -2.0591089942715994
         ],
-        "kaplan_yorke_dimension": 2.0238040067270786
+        "kaplan_yorke_dimension": 2.0238040067270786,
+        "pesin_entropy": 0.0481688994614019
     },
     "SprottK": {
         "initial_conditions": [
@@ -1814,7 +1888,8 @@
             -0.013497833702653022,
             -0.8804951424381066
         ],
-        "kaplan_yorke_dimension": 2.0326186188088657
+        "kaplan_yorke_dimension": 2.0326186188088657,
+        "pesin_entropy": 0.04281472536380626
     },
     "SprottL": {
         "initial_conditions": [
@@ -1836,7 +1911,8 @@
             0.0008291076777121052,
             -1.013583890860391
         ],
-        "kaplan_yorke_dimension": 2.0342044086185505
+        "kaplan_yorke_dimension": 2.0342044086185505,
+        "pesin_entropy": 0.03603106300471493
     },
     "SprottM": {
         "initial_conditions": [
@@ -1857,7 +1933,8 @@
             -0.0034913501029248404,
             -1.0373237814216933
         ],
-        "kaplan_yorke_dimension": 2.048380023999223
+        "kaplan_yorke_dimension": 2.048380023999223,
+        "pesin_entropy": 0.059015558763315996
     },
     "SprottN": {
         "initial_conditions": [
@@ -1876,7 +1953,8 @@
             0.003768489981490211,
             -2.0708793299472923
         ],
-        "kaplan_yorke_dimension": 2.0293478308213406
+        "kaplan_yorke_dimension": 2.0293478308213406,
+        "pesin_entropy": 0.05871759051750815
     },
     "SprottO": {
         "initial_conditions": [
@@ -1897,7 +1975,8 @@
             0.012214485765699265,
             -0.3164763600859588
         ],
-        "kaplan_yorke_dimension": 2.2490082879042737
+        "kaplan_yorke_dimension": 2.2490082879042737,
+        "pesin_entropy": 0.07877106919762265
     },
     "SprottP": {
         "initial_conditions": [
@@ -1918,7 +1997,8 @@
             0.010292384242088833,
             -0.493262581748199
         ],
-        "kaplan_yorke_dimension": 2.2469585539565724
+        "kaplan_yorke_dimension": 2.2469585539565724,
+        "pesin_entropy": 0.12102669811797137
     },
     "SprottQ": {
         "initial_conditions": [
@@ -1940,7 +2020,8 @@
             0.004666647188057904,
             -0.6162185677571862
         ],
-        "kaplan_yorke_dimension": 2.2274985162834637
+        "kaplan_yorke_dimension": 2.2274985162834637,
+        "pesin_entropy": 0.13975310735239796
     },
     "SprottR": {
         "initial_conditions": [
@@ -1962,7 +2043,8 @@
             0.004278661617268512,
             -1.0836816818004342
         ],
-        "kaplan_yorke_dimension": 2.076270240661735
+        "kaplan_yorke_dimension": 2.076270240661735,
+        "pesin_entropy": 0.08396858236568519
     },
     "SprottS": {
         "initial_conditions": [
@@ -1981,7 +2063,8 @@
             0.016720831336476845,
             -1.1883501553945832
         ],
-        "kaplan_yorke_dimension": 2.1781973770686083
+        "kaplan_yorke_dimension": 2.1781973770686083,
+        "pesin_entropy": 0.2063961819399372
     },
     "SprottMore": {
         "initial_conditions": [
@@ -2001,7 +2084,8 @@
             -0.004961044693920098,
             -0.320630532897039
         ],
-        "kaplan_yorke_dimension": 3.0665656034553654
+        "kaplan_yorke_dimension": 3.0665656034553654,
+        "pesin_entropy": 0.3514121055022692
     },
     "GuckenheimerHolmes": {
         "initial_conditions": [
@@ -2027,7 +2111,8 @@
             -0.9302407283647308
         ],
         "kaplan_yorke_dimension": 2.7145966269453337,
-        "correlation_dimension": 2.062860717843848
+        "correlation_dimension": 2.062860717843848,
+        "pesin_entropy": 0.6016702855018189
     },
     "Hadley": {
         "initial_conditions": [
@@ -2051,7 +2136,8 @@
             -0.03866527144378719,
             -0.4360883241516055
         ],
-        "kaplan_yorke_dimension": 2.5357160630568876
+        "kaplan_yorke_dimension": 2.5357160630568876,
+        "pesin_entropy": 0.28396210574821656
     },
     "RayleighBenard": {
         "initial_conditions": [
@@ -2075,7 +2161,8 @@
             0.48902671197908365,
             -19.295403901424237
         ],
-        "kaplan_yorke_dimension": 2.1175042858174784
+        "kaplan_yorke_dimension": 2.1175042858174784,
+        "pesin_entropy": 2.31909867819933
     },
     "NoseHoover": {
         "initial_conditions": [
@@ -2096,7 +2183,8 @@
             0.02349325530545544,
             -0.024410142692778292
         ],
-        "kaplan_yorke_dimension": 4.729234860142638
+        "kaplan_yorke_dimension": 4.729234860142638,
+        "pesin_entropy": 0.06692287393488962
     },
     "KawczynskiStrizhak": {
         "initial_conditions": [
@@ -2121,7 +2209,8 @@
             -0.07149985995993595,
             -0.3150957773427542
         ],
-        "kaplan_yorke_dimension": 1.4092145947947747
+        "kaplan_yorke_dimension": 1.4092145947947747,
+        "pesin_entropy": 0.025862499562663073
     },
     "VallisElNino": {
         "initial_conditions": [
@@ -2144,7 +2233,8 @@
             0.06821338013502296,
             -5.645929015863226
         ],
-        "kaplan_yorke_dimension": 2.1223674123653042
+        "kaplan_yorke_dimension": 2.1223674123653042,
+        "pesin_entropy": 0.6953912234406275
     },
     "DoublePendulum": {
         "initial_conditions": [
@@ -2173,7 +2263,8 @@
             -0.2912339732698885,
             -8.223040716296493
         ],
-        "kaplan_yorke_dimension": 3.827693121504275
+        "kaplan_yorke_dimension": 3.827693121504275,
+        "pesin_entropy": 7.097388211998084
     },
     "SwingingAtwood": {
         "initial_conditions": [
@@ -2199,7 +2290,8 @@
             -3.002075505122432,
             -7.664246463289054
         ],
-        "kaplan_yorke_dimension": 4.0198847313975445
+        "kaplan_yorke_dimension": 4.0198847313975445,
+        "pesin_entropy": 10.773094126465404
     },
     "FluidTrampoline": {
         "initial_conditions": [
@@ -2227,7 +2319,8 @@
             0.005239499120968162,
             -0.07041661408400374
         ],
-        "kaplan_yorke_dimension": 2.888467046139712
+        "kaplan_yorke_dimension": 2.888467046139712,
+        "pesin_entropy": 0.06256284111437485
     },
     "DoubleGyre": {
         "initial_conditions": [
@@ -2254,7 +2347,8 @@
             -0.00668548431575046,
             -0.07521141482172994
         ],
-        "kaplan_yorke_dimension": 2.8596480622819045
+        "kaplan_yorke_dimension": 2.8596480622819045,
+        "pesin_entropy": 0.0713408313287311
     },
     "BlinkingRotlet": {
         "initial_conditions": [
@@ -2276,6 +2370,7 @@
             "tau": 3,
             "bc": 1
         },
+        "hamiltonian": true,
         "citation": "Meleshko & Aref. A blinking rotlet model for chaotic advection. Physics of Fluids 1996. See also Tallapragada and Sudarsanam PRE 2019",
         "description": "The location of the mixer is chosen so that there is a stagnation point at its symmetric complement. Solution is given in polar coordinates (r, theta).",
         "period": 2.9520625,
@@ -2286,7 +2381,8 @@
             0.043072584371834505,
             -6.759304992381002
         ],
-        "kaplan_yorke_dimension": 2.875902776410176
+        "kaplan_yorke_dimension": 2.875902776410176,
+        "pesin_entropy": 5.960867220170071
     },
     "BlinkingVortex": {
         "initial_conditions": [
@@ -2308,6 +2404,7 @@
             "tau": 3,
             "bc": 0
         },
+        "hamiltonian": true,
         "citation": "Aref (1984). Stirring by chaotic advection. J. Fluid Mechanics.",
         "description": "Solution is given in polar coordinates (r, theta)",
         "period": 2.7616666666666667,
@@ -2318,7 +2415,8 @@
             -0.008285759415892893,
             -8.429792884928574
         ],
-        "kaplan_yorke_dimension": 2.793297251332424
+        "kaplan_yorke_dimension": 2.793297251332424,
+        "pesin_entropy": 7.222631460181894
     },
     "OscillatingFlow": {
         "initial_conditions": [
@@ -2348,7 +2446,8 @@
             -0.007260754145089961,
             -0.4540947908424686
         ],
-        "kaplan_yorke_dimension": 2.9490247064638355
+        "kaplan_yorke_dimension": 2.9490247064638355,
+        "pesin_entropy": 0.43820792973112055
     },
     "BickleyJet": {
         "initial_conditions": [
@@ -2381,6 +2480,7 @@
             1,
             2
         ],
+        "hamiltonian": true,
         "citation": "Hadjighasem, Karrasch, Teramoto, Haller (2016). A Spectral Clustering Approach to Lagrangian Vortex Detection Phys Rev E.",
         "description": "A zonal jet passing between two counter rotating vortices. A steady Hamiltonian with a time-dependent perturbation",
         "period": 87826.57,
@@ -2391,7 +2491,8 @@
             -1.8506657505287314e-12,
             -2.7776667915357724e-07
         ],
-        "kaplan_yorke_dimension": 3.0144864699939147
+        "kaplan_yorke_dimension": 3.0144864699939147,
+        "pesin_entropy": 2.8179238848219544e-07
     },
     "ArnoldBeltramiChildress": {
         "initial_conditions": [
@@ -2420,7 +2521,8 @@
             -0.2780549521425758,
             -0.7282222466096478
         ],
-        "kaplan_yorke_dimension": 2.695732824015077
+        "kaplan_yorke_dimension": 2.695732824015077,
+        "pesin_entropy": 0.7847030722869099
     },
     "BelousovZhabotinsky": {
         "initial_conditions": [
@@ -2462,7 +2564,8 @@
             -6.966461149750339,
             -5902.023434489229
         ],
-        "kaplan_yorke_dimension": 2.0173110425567797
+        "kaplan_yorke_dimension": 2.0173110425567797,
+        "pesin_entropy": 107.42813600667483
     },
     "IsothermalChemical": {
         "initial_conditions": [
@@ -2486,7 +2589,8 @@
             -0.23470154029469534,
             -7.387969959371565
         ],
-        "kaplan_yorke_dimension": 2.034341661393785
+        "kaplan_yorke_dimension": 2.034341661393785,
+        "pesin_entropy": 0.46152589148219963
     },
     "ForcedBrusselator": {
         "initial_conditions": [
@@ -2514,7 +2618,8 @@
             -0.014324988801487894,
             -0.24903311030509162
         ],
-        "kaplan_yorke_dimension": 2.0153501203734776
+        "kaplan_yorke_dimension": 2.0153501203734776,
+        "pesin_entropy": 0.018147677021652625
     },
     "ForcedVanDerPol": {
         "initial_conditions": [
@@ -2542,7 +2647,8 @@
             -0.004350805471571073,
             -20.587516244432287
         ],
-        "kaplan_yorke_dimension": 2.0126374172448234
+        "kaplan_yorke_dimension": 2.0126374172448234,
+        "pesin_entropy": 0.26623039267826515
     },
     "StickSlipOscillator": {
         "initial_conditions": [
@@ -2576,7 +2682,8 @@
             0.007033322538157221,
             -0.06071831876796987
         ],
-        "kaplan_yorke_dimension": 2.8365569468743135
+        "kaplan_yorke_dimension": 2.8365569468743135,
+        "pesin_entropy": 0.0507943313678742
     },
     "ForcedFitzHughNagumo": {
         "initial_conditions": [
@@ -2607,7 +2714,8 @@
             -0.0033225645382305748,
             -0.9264167044194939
         ],
-        "kaplan_yorke_dimension": 1.5705852319395741
+        "kaplan_yorke_dimension": 1.5705852319395741,
+        "pesin_entropy": 1.2881170129500874e-05
     },
     "HindmarshRose": {
         "initial_conditions": [
@@ -2635,7 +2743,8 @@
             0.006390254542237242,
             -7.031972827978082
         ],
-        "kaplan_yorke_dimension": 2.0499472808911197
+        "kaplan_yorke_dimension": 2.0499472808911197,
+        "pesin_entropy": 0.2879836987961777
     },
     "CellCycle": {
         "initial_conditions": [
@@ -2673,7 +2782,8 @@
             -2.822318944353081,
             -6.740449170659539
         ],
-        "kaplan_yorke_dimension": 2.020556544556026
+        "kaplan_yorke_dimension": 2.020556544556026,
+        "pesin_entropy": 0.004543460121794124
     },
     "CircadianRhythm": {
         "initial_conditions": [
@@ -2717,7 +2827,8 @@
             -0.35222737346600097,
             -1.0910668456444448
         ],
-        "kaplan_yorke_dimension": 2.6285982453399157
+        "kaplan_yorke_dimension": 2.6285982453399157,
+        "pesin_entropy": 0.0938606843058542
     },
     "CaTwoPlus": {
         "initial_conditions": [
@@ -2757,7 +2868,8 @@
             0.06399088045208896,
             -9.196657966414218
         ],
-        "kaplan_yorke_dimension": 2.0536582709172286
+        "kaplan_yorke_dimension": 2.0536582709172286,
+        "pesin_entropy": 0.5038842965642204
     },
     "CaTwoPlusQuasiperiodic": {
         "initial_conditions": [
@@ -2797,7 +2909,8 @@
             0.07060744332510784,
             -0.1524353566565689
         ],
-        "kaplan_yorke_dimension": 3.8636716295947604
+        "kaplan_yorke_dimension": 3.8636716295947604,
+        "pesin_entropy": 0.20940326120320724
     },
     "ExcitableCell": {
         "initial_conditions": [
@@ -2830,7 +2943,8 @@
             -0.4157894601148156,
             -33.16626354711519
         ],
-        "kaplan_yorke_dimension": 2.121639429656314
+        "kaplan_yorke_dimension": 2.121639429656314,
+        "pesin_entropy": 4.394939951399914
     },
     "ItikBanksTumor": {
         "initial_conditions": [
@@ -2859,7 +2973,8 @@
             -0.015522672493756186,
             -0.5552704754047547
         ],
-        "kaplan_yorke_dimension": 2.009157247122884
+        "kaplan_yorke_dimension": 2.009157247122884,
+        "pesin_entropy": 0.02176420362319617
     },
     "Laser": {
         "initial_conditions": [
@@ -2885,7 +3000,8 @@
             -0.13964657104513556,
             -15.917864350534234
         ],
-        "kaplan_yorke_dimension": 2.049680633465388
+        "kaplan_yorke_dimension": 2.049680633465388,
+        "pesin_entropy": 0.926379775977096
     },
     "WindmiReduced": {
         "initial_conditions": [
@@ -2912,7 +3028,8 @@
             0.003003871313527696,
             -1.6005451223695135
         ],
-        "kaplan_yorke_dimension": 2.0859330282766297
+        "kaplan_yorke_dimension": 2.0859330282766297,
+        "pesin_entropy": 0.14666841553939866
     },
     "TurchinHanski": {
         "initial_conditions": [
@@ -2944,7 +3061,8 @@
             -0.1786892896145637,
             -2.5745636681665918
         ],
-        "kaplan_yorke_dimension": 1.7009488179336976
+        "kaplan_yorke_dimension": 1.7009488179336976,
+        "pesin_entropy": 0.12328748039043003
     },
     "Blasius": {
         "initial_conditions": [
@@ -2973,7 +3091,8 @@
             0.009058261251522773,
             -2.947220172586401
         ],
-        "kaplan_yorke_dimension": 2.0203118386321486
+        "kaplan_yorke_dimension": 2.0203118386321486,
+        "pesin_entropy": 0.05912394866031891
     },
     "HastingsPowell": {
         "initial_conditions": [
@@ -3000,7 +3119,8 @@
             0.005749865146953138,
             -0.5185495837409412
         ],
-        "kaplan_yorke_dimension": 2.027660724112963
+        "kaplan_yorke_dimension": 2.027660724112963,
+        "pesin_entropy": 0.014372334452385914
     },
     "SaltonSea": {
         "initial_conditions": [
@@ -3028,7 +3148,8 @@
             0.02602781718783836,
             -4.678178002996844
         ],
-        "kaplan_yorke_dimension": 2.0979368074025633
+        "kaplan_yorke_dimension": 2.0979368074025633,
+        "pesin_entropy": 0.4712134254525803
     },
     "CoevolvingPredatorPrey": {
         "initial_conditions": [
@@ -3061,7 +3182,8 @@
             0.0024533301920705965,
             -1.9716049844856873
         ],
-        "kaplan_yorke_dimension": 2.0033310722187743
+        "kaplan_yorke_dimension": 2.0033310722187743,
+        "pesin_entropy": 0.00667883309430494
     },
     "MacArthur": {
         "initial_conditions": [
@@ -3180,7 +3302,8 @@
             -0.2541638883264,
             -14.332315933645646
         ],
-        "kaplan_yorke_dimension": 3.9622939320684436
+        "kaplan_yorke_dimension": 3.9622939320684436,
+        "pesin_entropy": 0.1748158232900272
     },
     "BeerRNN": {
         "initial_conditions": [
@@ -3227,7 +3350,8 @@
             -0.00058567198547622,
             -0.5315013686786237
         ],
-        "kaplan_yorke_dimension": 2.0306864786018775
+        "kaplan_yorke_dimension": 2.0306864786018775,
+        "pesin_entropy": 0.016639835066133854
     },
     "CellularNeuralNetwork": {
         "initial_conditions": [
@@ -3251,7 +3375,8 @@
             -0.05306986535167041,
             -0.6125628624338584
         ],
-        "kaplan_yorke_dimension": 2.206204139821723
+        "kaplan_yorke_dimension": 2.206204139821723,
+        "pesin_entropy": 0.1975148218042097
     },
     "Hopfield": {
         "initial_conditions": [
@@ -3331,19 +3456,20 @@
             -0.41290312355310005,
             -1.4384249540180303
         ],
-        "kaplan_yorke_dimension": 2.2677913192232495
+        "kaplan_yorke_dimension": 2.2677913192232495,
+        "pesin_entropy": 0.08594613940528621
     },
     "MackeyGlass": {
         "initial_conditions": [
-            0.83347846, 
-            1.04053938, 
-            1.25764979, 
-            0.38088098, 
+            0.83347846,
+            1.04053938,
+            1.25764979,
+            0.38088098,
             0.92160075,
-            1.14714708, 
-            0.80463944, 
-            0.86849516, 
-            1.16961728, 
+            1.14714708,
+            0.80463944,
+            0.86849516,
+            1.16961728,
             0.76980123
         ],
         "dt": 0.001243,
@@ -3353,6 +3479,7 @@
             "n": 9.65,
             "tau": 2.0
         },
+        "delay": true,
         "citation": "Glass, L. and Mackey, M. C. (1979). Pathological physiological conditions resulting from instabilities in physiological control systems. Ann. NY. Acad. Sci.",
         "description": "A standard delay dimension of three is used.",
         "period": 7.43264,
@@ -3370,7 +3497,8 @@
             -0.18584871959889662,
             -2.2412562118189827
         ],
-        "kaplan_yorke_dimension": 8.012917999650943
+        "kaplan_yorke_dimension": 8.012917999650943,
+        "pesin_entropy": 0.3741375523997009
     },
     "IkedaDelay": {
         "initial_conditions": [
@@ -3392,6 +3520,7 @@
             "c": 1.0,
             "tau": 2.0
         },
+        "delay": true,
         "citation": "K. Ikeda and K. Matsumoto (1987). High-dimensional chaotic behavior in systems with time-delayed feedback, Physica D, 29 (1-2), 223-235",
         "description": "A standard delay dimension of three is used.",
         "period": 1.486528,
@@ -3409,7 +3538,8 @@
             -0.2833034824174493,
             -0.6392438255039592
         ],
-        "kaplan_yorke_dimension": 8.284295212220359
+        "kaplan_yorke_dimension": 8.284295212220359,
+        "pesin_entropy": 0.7465581459689814
     },
     "SprottDelay": {
         "initial_conditions": [
@@ -3431,6 +3561,7 @@
             "c": 0.0,
             "tau": 5.1
         },
+        "delay": true,
         "citation": "Sprott, J. C (2007). A simple chaotic delay differential equation. Physics Letters A 366.4-5: 397-402.",
         "description": "A standard delay dimension of three is used.",
         "period": 14.15628,
@@ -3448,7 +3579,8 @@
             -0.012665556385738196,
             -0.014601336849935557
         ],
-        "kaplan_yorke_dimension": 18.013378102775214
+        "kaplan_yorke_dimension": 18.013378102775214,
+        "pesin_entropy": 0.2056760250875861
     },
     "VossDelay": {
         "initial_conditions": [
@@ -3468,6 +3600,7 @@
             "alpha": 3.24,
             "tau": 13.28
         },
+        "delay": true,
         "citation": "Voss (2002). Real-time anticipation of chaotic states of an electronic circuit.",
         "description": "A delay model that can be implemented as an electronic circuit. A standard delay dimension of three is used.",
         "period": 23.16075,
@@ -3485,7 +3618,8 @@
             -0.019016383554425968,
             -9.625045518169777
         ],
-        "kaplan_yorke_dimension": 8.13505137593863
+        "kaplan_yorke_dimension": 8.13505137593863,
+        "pesin_entropy": 0.040600955873224424
     },
     "ScrollDelay": {
         "initial_conditions": [
@@ -3506,6 +3640,7 @@
             "beta": 0.2,
             "tau": 10.0
         },
+        "delay": true,
         "citation": "R.D. Driver, Ordinary and Delay Differential Equations (Springer, New York, 1977).",
         "description": "A delay model that can be implemented as an electronic circuit. A standard delay dimension of three is used.",
         "period": 48.5132,
@@ -3523,7 +3658,8 @@
             -0.008605197946011937,
             -0.012607310979495853
         ],
-        "kaplan_yorke_dimension": 6.359079465434583
+        "kaplan_yorke_dimension": 6.359079465434583,
+        "pesin_entropy": 0.016452858090143806
     },
     "PiecewiseCircuit": {
         "initial_conditions": [
@@ -3545,6 +3681,7 @@
             "c": 2.24,
             "tau": 4.9
         },
+        "delay": true,
         "citation": "A. Tamasevicius, G. Mykolaitis, S. Bumeliene, Electron. Lett. 42, 13 (2006)",
         "description": "A delay model that can be implemented as an electronic circuit. A standard delay dimension of three is used.",
         "period": 59.92807058823529,
@@ -3562,7 +3699,8 @@
             -0.5553991058827761
         ],
         "correlation_dimension": 1.3715663776355644,
-        "kaplan_yorke_dimension": 9.098082330516
+        "kaplan_yorke_dimension": 9.098082330516,
+        "pesin_entropy": 0.014785562725300386
     },
     "HyperRossler": {
         "initial_conditions": [
@@ -3588,7 +3726,8 @@
             -0.1473029672028701,
             -36.61176693870994
         ],
-        "kaplan_yorke_dimension": 2.8845112969082676
+        "kaplan_yorke_dimension": 2.8845112969082676,
+        "pesin_entropy": 0.11873225312328317
     },
     "Rossler": {
         "initial_conditions": [
@@ -3611,6 +3750,7 @@
             0.02841852476308361,
             -5.765580072115927
         ],
-        "kaplan_yorke_dimension": 2.016159103266072
+        "kaplan_yorke_dimension": 2.016159103266072,
+        "pesin_entropy": 0.09694090720355081
     }
 }

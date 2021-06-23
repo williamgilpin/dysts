@@ -121,6 +121,8 @@ def find_lyapunov_exponents(model, traj_length, pts_per_period=500,
     all_lyap = list()
     for i in range(traj_length):
         yval = traj[i]
+        #rhsy = lambda x: np.array(model.rhs(x, tpts[i]))
+        
         rhsy = lambda x: np.array(model.rhs(x, tpts[i]))
         jacval = jac_fd(rhsy, yval)
         
@@ -138,7 +140,6 @@ def find_lyapunov_exponents(model, traj_length, pts_per_period=500,
             
             jacval = jac_fd(rhsh, y0, eps=1e-3) @ dydh
             
-        
         u_n = np.matmul(np.identity(d) + jacval * dt, u)
         q, r = np.linalg.qr(u_n)
         lyap_estimate = np.log(abs(r.diagonal()))
@@ -168,3 +169,24 @@ def kaplan_yorke_dimension(spectrum0):
     dky = 1 + j + cspec[j] / np.abs(spectrum[j + 1])
 
     return dky
+
+import neurokit2
+from dysts.utils import standardize_ts
+
+def mse_mv(traj):
+    """
+    Generate a rough estimate of the multivariate multiscale entropy
+    
+    DEV: Need to replace with a different version, when an implementation
+    becomes available
+    """
+    if len(traj.shape) == 1:
+        mmse = neurokit2.complexity.entropy_multiscale(sol, dimension=2, composite=True, refined=True)
+        return mmse
+    
+    traj = standardize_ts(traj)
+    all_mse = list()
+    for sol_coord in traj.T:
+        all_mse.append(neurokit2.complexity.entropy_multiscale(sol_coord, dimension=traj.shape[-1], 
+                                                               composite=True, refined=True))
+    return np.median(all_mse)
