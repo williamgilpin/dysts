@@ -5,9 +5,11 @@ import dysts.flows
 from dysts.analysis import *
 from dysts.utils import *
 from dysts.base import *
+from dysts.lyap import *
 # import neurokit2
 # from dysts.utils import standardize_ts
 
+print("test", flush=True)
 
 # We will make a local copy of the internal database
 OUTPUT_FILE = "./chaotic_attractors2.json"
@@ -37,7 +39,7 @@ for i, item in enumerate(get_attractor_list()):
     corr_flag = True
     print("Find CorrDim?", corr_flag)
 
-    entropy_flag = True
+    entropy_flag = False
     print("Find MSE?", entropy_flag)
     
     model = getattr(dysts.flows, item)()
@@ -51,7 +53,6 @@ for i, item in enumerate(get_attractor_list()):
     current_fields = list(data.keys())
     
     sample_pts = sample_initial_conditions(model, points_to_sample)
-
     all_estimates_lyap = list()
     all_estimates_corrdim = list()
     all_estimates_kydim = list()
@@ -69,7 +70,6 @@ for i, item in enumerate(get_attractor_list()):
             all_estimates_kydim.append(kaplan_yorke_dimension(lyapval))
             all_estimates_pesin.append(np.sum(np.array(lyapval)[np.array(lyapval) > 0]))
             
-            
         if corr_flag or entropy_flag:
             sol = model.make_trajectory(3 * pts_per_trajectory, resample=True, pts_per_period=100)
             if corr_flag:
@@ -80,8 +80,6 @@ for i, item in enumerate(get_attractor_list()):
                     pass
             if entropy_flag:
                 all_estimates_mmse.append(mse_mv(sol))
-                
-
 
     if lyap_flag:
         
