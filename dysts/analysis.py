@@ -171,7 +171,6 @@ def kaplan_yorke_dimension(spectrum0):
 
 import neurokit2
 from dysts.utils import standardize_ts
-
 def mse_mv(traj):
     """
     Generate a rough estimate of the multivariate multiscale entropy
@@ -179,13 +178,14 @@ def mse_mv(traj):
     DEV: Need to replace with a different version, when an implementation
     becomes available
     """
+    mmse_opts = {"composite": True, "refined": False, "fuzzy": True}
     if len(traj.shape) == 1:
-        mmse = neurokit2.complexity.entropy_multiscale(sol, dimension=2, composite=True, refined=True)
+        mmse = neurokit2.complexity.entropy_multiscale(sol, dimension=2, **mmse_opts)
         return mmse
     
     traj = standardize_ts(traj)
     all_mse = list()
     for sol_coord in traj.T:
-        all_mse.append(neurokit2.complexity.entropy_multiscale(sol_coord, dimension=traj.shape[-1], 
-                                                               composite=True, refined=True))
+        all_mse.append(neurokit2.complexity.entropy_multiscale(sol_coord, dimension=2, 
+                                                               **mmse_opts))
     return np.median(all_mse)

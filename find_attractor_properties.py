@@ -6,8 +6,6 @@ from dysts.analysis import *
 from dysts.utils import *
 from dysts.base import *
 from dysts.lyap import *
-# import neurokit2
-# from dysts.utils import standardize_ts
 
 print("test", flush=True)
 
@@ -54,6 +52,7 @@ for i, item in enumerate(get_attractor_list()):
     
     sample_pts = sample_initial_conditions(model, points_to_sample)
     all_estimates_lyap = list()
+    all_estimates_maxlyap = list()
     all_estimates_corrdim = list()
     all_estimates_kydim = list()
     all_estimates_pesin = list()
@@ -67,6 +66,7 @@ for i, item in enumerate(get_attractor_list()):
         if lyap_flag:
             lyapval = find_lyapunov_exponents(model, 5 * pts_per_trajectory, pts_per_period=500)
             all_estimates_lyap.append(lyapval)
+            all_estimates_maxlyap.append(np.max(lyapval))
             all_estimates_kydim.append(kaplan_yorke_dimension(lyapval))
             all_estimates_pesin.append(np.sum(np.array(lyapval)[np.array(lyapval) > 0]))
             
@@ -84,6 +84,7 @@ for i, item in enumerate(get_attractor_list()):
     if lyap_flag:
         
         # lyap = np.median(np.array(all_estimates_lyap), axis=0)
+        # maxlyap = np.median(all_estimates_maxlyap)
         # kydim = np.median(all_estimates_kydim)
         # pesin_entropy = np.median(all_estimates_pesin)
         
@@ -94,11 +95,12 @@ for i, item in enumerate(get_attractor_list()):
         lyap_weights /= np.sum(lyap_weights )
         lyap = np.sum(lyap_weights[:, None] * all_estimates_lyap, axis=0) 
         
+        maxlyap = np.sum(lyap_weights * np.array(all_estimates_maxlyap))
         kydim = np.sum(lyap_weights * np.array(all_estimates_kydim))
         pesin_entropy = np.sum(lyap_weights * np.array(all_estimates_pesin))
         
-        data[item]["maximum_lyapunov_estimated"] = np.max(lyap)
-        print(f"lyap: {np.max(lyap)} ", end="")
+        data[item]["maximum_lyapunov_estimated"] = maxlyap
+        print(f"lyap: {maxlyap} ", end="")
         
         data[item]["lyapunov_spectrum_estimated"] = list(lyap)
         print(f"spectrum: {lyap} ", end="")
