@@ -27,6 +27,7 @@ print(f"Total models being analyzed is {len(data.keys())}.")
 
 
 for i, item in enumerate(get_attractor_list()):
+    print(item, flush=True)
     
     lyap_flag = ("maximum_lyapunov_estimated" not in data[item]) or RECALCULATE
     lyap_flag = True

@@ -86,7 +86,6 @@ for equation_name in equation_data.dataset:
     print(equation_name, flush=True)
     
     train_data = np.copy(np.array(equation_data.dataset[equation_name]["values"]))
-    print(train_data)
 
     if equation_name not in all_hyperparameters.keys():
         all_hyperparameters[equation_name] = dict()
