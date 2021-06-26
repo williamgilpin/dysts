@@ -70,7 +70,7 @@ for equation_name in equation_data.dataset:
             continue
         all_results[equation_name][model_name] = dict()
         
-        print(equation_name + " " + model_name)
+        print(equation_name + " " + model_name, flush=True)
         
         # look up season object from string
         for hyperparameter_name in all_hyperparameters[equation_name][model_name]:

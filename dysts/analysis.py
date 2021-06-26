@@ -173,10 +173,13 @@ import neurokit2
 from dysts.utils import standardize_ts
 def mse_mv(traj):
     """
-    Generate a rough estimate of the multivariate multiscale entropy
+    Generate an estimate of the multivariate multiscale entropy
     
-    DEV: Need to replace with a different version, when an implementation
-    becomes available
+    The current version computes the entropy separately for each channel and
+    then averages. It therefore represents an upper bound on the true 
+    multivariate multiscale entropy
+    
+    DEV: Implement algorithm from Ahmed and Mandic PRE 2011
     """
     mmse_opts = {"composite": True, "refined": False, "fuzzy": True}
     if len(traj.shape) == 1:
