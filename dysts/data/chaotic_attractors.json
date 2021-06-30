@@ -1,20 +1,20 @@
 {
     "Aizawa": {
         "citation": "Aizawa, Yoji, and Tatsuya Uezu (1982). Topological Aspects in Chaos and in 2 k-Period Doubling Cascade. Progress of Theoretical Physics 67.3 (1982): 982-985. See also Langford (1984). Numerical studies of torus bifurcations. Numerical Methods for Bifurcation Problems. Birkhauser, Basel, 1984. 285-295.",
-        "correlation_dimension": 1.9717048016764243,
+        "correlation_dimension": 1.8926529653780282,
         "dt": 0.0009043,
         "initial_conditions": [
             -0.78450179,
             -0.62887672,
             -0.17620268
         ],
-        "kaplan_yorke_dimension": 2.4517188438665958,
+        "kaplan_yorke_dimension": 2.3501297618370773,
         "lyapunov_spectrum_estimated": [
-            0.11468392427822449,
-            0.04101806388551678,
-            -0.3398543834127481
+            0.08947878317195473,
+            0.020305496211675024,
+            -0.3090729926541944
         ],
-        "maximum_lyapunov_estimated": 0.11468392427822449,
+        "maximum_lyapunov_estimated": 0.08947878317195473,
         "parameters": {
             "a": 0.95,
             "b": 0.7,
@@ -24,34 +24,36 @@
             "f": 0.1
         },
         "period": 2.5837,
-        "pesin_entropy": 0.15570198816374126
+        "pesin_entropy": 0.10978427938362978,
+        "multiscale_entropy": 0.514512246123007
     },
     "AnishchenkoAstakhov": {
         "citation": "Anishchenko,  et al. Nonlinear dynamics of chaotic and stochastic systems: tutorial and modern developments. 2007.",
-        "correlation_dimension": 1.9860933485876138,
+        "correlation_dimension": 1.934087922565906,
         "dt": 0.0007768,
         "initial_conditions": [
             3.6225814,
             3.3226339,
             1.9973142
         ],
-        "kaplan_yorke_dimension": 2.122609676273513,
+        "kaplan_yorke_dimension": 2.0916403758729327,
         "lyapunov_spectrum_estimated": [
-            0.05465001716232629,
-            0.0027885641690685407,
-            -0.4522578466563929
+            0.039777554890210017,
+            0.0008785544495802295,
+            -0.44025308728606666
         ],
-        "maximum_lyapunov_estimated": 0.05465001716232629,
+        "maximum_lyapunov_estimated": 0.03977755489021002,
         "parameters": {
             "eta": 0.5,
             "mu": 1.2
         },
         "period": 6.814,
-        "pesin_entropy": 0.05743858133139483
+        "pesin_entropy": 0.040715925817307534,
+        "multiscale_entropy": 0.7612343892027325
     },
     "Arneodo": {
         "citation": "Arneodo, A., Coullet, P. & Tresser, C. Occurence of strange attractors in three-dimensional Volterra equations. Physics Letters A 79, 259--263 (1980)",
-        "correlation_dimension": 1.9131408387471067,
+        "correlation_dimension": 1.9333366595280337,
         "description": "also known as the ACT attractor, a modified Lotka-Volterra ecosystem",
         "dt": 0.001215,
         "initial_conditions": [
@@ -59,13 +61,13 @@
             0.19079818,
             3.4703629
         ],
-        "kaplan_yorke_dimension": 2.2071600135682297,
+        "kaplan_yorke_dimension": 2.198607392233255,
         "lyapunov_spectrum_estimated": [
-            0.27186704186725563,
-            -0.003388443467492428,
-            -1.2294462105186104
+            0.24285661379003065,
+            -0.0006168721448237418,
+            -1.2169777901647385
         ],
-        "maximum_lyapunov_estimated": 0.27186704186725563,
+        "maximum_lyapunov_estimated": 0.24285661379003065,
         "parameters": {
             "a": -5.5,
             "b": 4.5,
@@ -73,11 +75,12 @@
             "d": -1.0
         },
         "period": 3.1641,
-        "pesin_entropy": 0.27186704186725563
+        "pesin_entropy": 0.2428749592514372,
+        "multiscale_entropy": 0.7388404221540498
     },
     "ArnoldBeltramiChildress": {
         "citation": "V. I. Arnold, Journal of Applied Mathematics and Mechanics 30, 223 (1966).",
-        "correlation_dimension": 1.7198548228076131,
+        "correlation_dimension": 1.9304327374472745,
         "description": "The classic ABC flow, an exact solution of Euler's equation",
         "dt": 0.007127,
         "initial_conditions": [
@@ -85,29 +88,30 @@
             -1762.805,
             -647.37622
         ],
-        "kaplan_yorke_dimension": 2.695732824015077,
+        "kaplan_yorke_dimension": 2.612281260580053,
         "lyapunov_spectrum_estimated": [
-            0.7847030722869099,
-            -0.2780549521425758,
-            -0.7282222466096478
+            1.47222087191395,
+            -0.01824039630029517,
+            -2.378562986862767
         ],
-        "maximum_lyapunov_estimated": 0.7847030722869099,
+        "maximum_lyapunov_estimated": 1.47222087191395,
         "parameters": {
             "a": 1.73205,
             "b": 1.41421,
             "c": 1
         },
         "period": 2.8508,
-        "pesin_entropy": 0.7847030722869099,
+        "pesin_entropy": 1.47222087191395,
         "unbounded_indices": [
             0,
             1,
             2
-        ]
+        ],
+        "multiscale_entropy": 1.2759526834024162
     },
     "ArnoldWeb": {
         "citation": "Froeschle, C., Guzzo, M. & Legga, E (2000). Graphical evolution of the Arnold web: From order to chaos. Science 289.",
-        "correlation_dimension": 2.3241283086283433,
+        "correlation_dimension": 2.271925873318733,
         "dt": 0.003497,
         "initial_conditions": [
             0.10469507,
@@ -116,44 +120,45 @@
             6055.32273,
             0.1
         ],
-        "kaplan_yorke_dimension": 9.682613937578417,
+        "kaplan_yorke_dimension": 22.554733912627043,
         "lyapunov_spectrum_estimated": [
-            0.041650630081887866,
-            0.005656309915168804,
-            0.001997380418160575,
-            -0.002575333053318534,
-            -0.008223150098739904
+            0.06266308160064184,
+            0.0032177165561558833,
+            0.0011281526899086728,
+            -0.00233619507966634,
+            -0.0039196281630406
         ],
-        "maximum_lyapunov_estimated": 0.041650630081887866,
+        "maximum_lyapunov_estimated": 0.06266308160064184,
         "nonautonomous": true,
         "parameters": {
             "mu": 0.01,
             "w": 1
         },
         "period": 67.25,
-        "pesin_entropy": 0.04930432041521724,
+        "pesin_entropy": 0.06706808893310089,
         "unbounded_indices": [
             2,
             3,
             4
-        ]
+        ],
+        "multiscale_entropy": 0.620621428966386
     },
     "BeerRNN": {
         "citation": "Beer, R. D. (1995). On the dynamics of small continuous-time recurrent neural networks. Adapt. Behav., 3(4), 4692013509.",
-        "correlation_dimension": 1.4356949270551964,
+        "correlation_dimension": 1.4274264497038096,
         "dt": 0.007263,
         "initial_conditions": [
             1.5014532,
             2.3742845,
             0.65819415
         ],
-        "kaplan_yorke_dimension": 2.0306864786018775,
+        "kaplan_yorke_dimension": 2.0303797735862443,
         "lyapunov_spectrum_estimated": [
-            0.016639835066133854,
-            -0.00058567198547622,
-            -0.5315013686786237
+            0.016274571192515633,
+            -0.00011803510272572572,
+            -0.5318869010933206
         ],
-        "maximum_lyapunov_estimated": 0.016639835066133854,
+        "maximum_lyapunov_estimated": 0.01627457119251563,
         "parameters": {
             "tau": [
                 1.0,
@@ -184,11 +189,12 @@
             ]
         },
         "period": 181.58,
-        "pesin_entropy": 0.016639835066133854
+        "pesin_entropy": 0.01647451962951782,
+        "multiscale_entropy": 0.5244807630539362
     },
     "BelousovZhabotinsky": {
         "citation": "Gyorgyi and Field (1992). A three-variable model of deterministic chaos in the Belousov-Zhabotinsky reaction. Nature.",
-        "correlation_dimension": 0.8567434473255703,
+        "correlation_dimension": 0.8599643745060099,
         "description": "A reduced-order model of the BZ reaction that exhibits period doubling. The bifurcation parameter for controlling the onset of chaos is kf. The system undergoes regular cycling when kf=3e-4, and chaotic oscillations when kf=3.5e-4",
         "dt": 3.834e-07,
         "initial_conditions": [
@@ -196,13 +202,13 @@
             0.61703254,
             0.84669066
         ],
-        "kaplan_yorke_dimension": 2.0173110425567797,
+        "kaplan_yorke_dimension": 2.0206505961796535,
         "lyapunov_spectrum_estimated": [
-            107.42813600667483,
-            -6.966461149750339,
-            -5902.023434489229
+            114.64513768787073,
+            -0.4669861532822692,
+            -5529.048679334775
         ],
-        "maximum_lyapunov_estimated": 107.42813600667483,
+        "maximum_lyapunov_estimated": 114.64513768787073,
         "parameters": {
             "c1": -8.03474,
             "c10": 0.0223915,
@@ -227,11 +233,12 @@
             "z0": 8.33e-06
         },
         "period": 0.018257,
-        "pesin_entropy": 107.42813600667483
+        "pesin_entropy": 114.64513768787073,
+        "multiscale_entropy": 0.8764191281600929
     },
     "BickleyJet": {
         "citation": "Hadjighasem, Karrasch, Teramoto, Haller (2016). A Spectral Clustering Approach to Lagrangian Vortex Detection Phys Rev E.",
-        "correlation_dimension": 2.022316102263824,
+        "correlation_dimension": 2.0025138386006334,
         "description": "A zonal jet passing between two counter rotating vortices. A steady Hamiltonian with a time-dependent perturbation",
         "dt": 100.0,
         "hamiltonian": true,
@@ -240,13 +247,13 @@
             0.3,
             0.0
         ],
-        "kaplan_yorke_dimension": 3.0144864699939147,
+        "kaplan_yorke_dimension": 250259.23394643582,
         "lyapunov_spectrum_estimated": [
-            2.8179238848219544e-07,
-            -1.8506657505287314e-12,
-            -2.7776667915357724e-07
+            1.9651794377408363e-07,
+            2.5409880958463764e-09,
+            -9.631983584415862e-08
         ],
-        "maximum_lyapunov_estimated": 2.8179238848219544e-07,
+        "maximum_lyapunov_estimated": 1.965179437740836e-07,
         "parameters": {
             "ell": 1.77,
             "eps": [
@@ -268,15 +275,16 @@
             "u": 6.266e-05
         },
         "period": 87826.57,
-        "pesin_entropy": 2.8179238848219544e-07,
+        "pesin_entropy": 1.99059498764899e-07,
         "unbounded_indices": [
             1,
             2
-        ]
+        ],
+        "multiscale_entropy": 0.733566708397195
     },
     "Blasius": {
         "citation": "Blasius, Huppert, Stone. Nature 1999",
-        "correlation_dimension": 1.6856818574461006,
+        "correlation_dimension": 1.6871652299106432,
         "description": " A chaotic food web.",
         "dt": 0.0014,
         "initial_conditions": [
@@ -284,13 +292,13 @@
             5.1113788,
             0.016508812
         ],
-        "kaplan_yorke_dimension": 2.0203118386321486,
+        "kaplan_yorke_dimension": 2.016657959617314,
         "lyapunov_spectrum_estimated": [
-            0.05006568740879614,
-            0.009058261251522773,
-            -2.947220172586401
+            0.04712755400915782,
+            0.001803137034352918,
+            -2.9362739640325555
         ],
-        "maximum_lyapunov_estimated": 0.05006568740879614,
+        "maximum_lyapunov_estimated": 0.047127554009157836,
         "parameters": {
             "a": 1,
             "alpha1": 0.2,
@@ -302,11 +310,12 @@
             "zs": 0.006
         },
         "period": 6.6038,
-        "pesin_entropy": 0.05912394866031891
+        "pesin_entropy": 0.04893069104351076,
+        "multiscale_entropy": 0.5917316835585642
     },
     "BlinkingRotlet": {
         "citation": "Meleshko & Aref. A blinking rotlet model for chaotic advection. Physics of Fluids 1996. See also Tallapragada and Sudarsanam PRE 2019",
-        "correlation_dimension": 2.1661241121108707,
+        "correlation_dimension": 2.0693373122119807,
         "description": "The location of the mixer is chosen so that there is a stagnation point at its symmetric complement. Solution is given in polar coordinates (r, theta).",
         "dt": 0.0002834,
         "hamiltonian": true,
@@ -315,13 +324,13 @@
             -0.05204435,
             0.0
         ],
-        "kaplan_yorke_dimension": 2.875902776410176,
+        "kaplan_yorke_dimension": 2.910902586026695,
         "lyapunov_spectrum_estimated": [
-            5.917794635798236,
-            0.043072584371834505,
-            -6.759304992381002
+            5.609358269449125,
+            0.007963961496808246,
+            -6.16801583110239
         ],
-        "maximum_lyapunov_estimated": 5.917794635798236,
+        "maximum_lyapunov_estimated": 5.609358269449125,
         "nonautonomous": true,
         "parameters": {
             "a": 1.0,
@@ -331,16 +340,17 @@
             "tau": 3
         },
         "period": 2.9520625,
-        "pesin_entropy": 5.960867220170071,
+        "pesin_entropy": 5.617567417119514,
         "unbounded_indices": [
             0,
             1,
             2
-        ]
+        ],
+        "multiscale_entropy": 1.2895030395332947
     },
     "BlinkingVortex": {
         "citation": "Aref (1984). Stirring by chaotic advection. J. Fluid Mechanics.",
-        "correlation_dimension": 2.2294099669137246,
+        "correlation_dimension": 2.212155663068541,
         "description": "Solution is given in polar coordinates (r, theta)",
         "dt": 0.0001541,
         "hamiltonian": true,
@@ -349,13 +359,13 @@
             -0.05204435,
             0.0
         ],
-        "kaplan_yorke_dimension": 2.793297251332424,
+        "kaplan_yorke_dimension": 2.8911482753116986,
         "lyapunov_spectrum_estimated": [
-            7.222631460181894,
-            -0.008285759415892893,
-            -8.429792884928574
+            4.877365151111008,
+            -0.0016245138226140734,
+            -5.476774413564737
         ],
-        "maximum_lyapunov_estimated": 7.222631460181894,
+        "maximum_lyapunov_estimated": 4.877365151111009,
         "nonautonomous": true,
         "parameters": {
             "a": 1.0,
@@ -365,16 +375,17 @@
             "tau": 3
         },
         "period": 2.7616666666666667,
-        "pesin_entropy": 7.222631460181894,
+        "pesin_entropy": 4.877593783333199,
         "unbounded_indices": [
             0,
             1,
             2
-        ]
+        ],
+        "multiscale_entropy": 1.1011364489263011
     },
     "Bouali": {
         "citation": "Bouali (2012).",
-        "correlation_dimension": 1.7207991399766793,
+        "correlation_dimension": 1.7283783962483246,
         "description": "Related to the DequanLi attractor",
         "dt": 0.000444,
         "initial_conditions": [
@@ -382,13 +393,13 @@
             3.0544196,
             -0.0067836194
         ],
-        "kaplan_yorke_dimension": 2.343238159308096,
+        "kaplan_yorke_dimension": 2.224727237508172,
         "lyapunov_spectrum_estimated": [
-            0.06747909843969056,
-            -0.0209974050966501,
-            -0.18016343633535903
+            0.04911273564448129,
+            0.0006869653413631164,
+            -0.22171821407820913
         ],
-        "maximum_lyapunov_estimated": 0.06747909843969056,
+        "maximum_lyapunov_estimated": 0.04911273564448129,
         "parameters": {
             "a": 1.0,
             "b": -0.3,
@@ -399,24 +410,25 @@
             "y0": 4.0
         },
         "period": 3.0411,
-        "pesin_entropy": 0.06747909843969056
+        "pesin_entropy": 0.049816045406570614,
+        "multiscale_entropy": 0.7505556173926505
     },
     "Bouali2": {
         "citation": "Bouali 2012",
-        "correlation_dimension": 1.9191671585171575,
+        "correlation_dimension": 1.925056080468132,
         "dt": 0.0004124,
         "initial_conditions": [
             -0.79392257,
             1.3617589,
             -0.030578888
         ],
-        "kaplan_yorke_dimension": 5.089627283463573,
+        "kaplan_yorke_dimension": 16.471858210544983,
         "lyapunov_spectrum_estimated": [
-            0.03429345733987108,
-            0.014670707721433703,
-            -0.009668167838434556
+            0.020389225004628773,
+            0.0033455417942589724,
+            -0.009602768742817189
         ],
-        "maximum_lyapunov_estimated": 0.03429345733987108,
+        "maximum_lyapunov_estimated": 0.02038922500462878,
         "parameters": {
             "a": 3.0,
             "b": 2.2,
@@ -427,34 +439,36 @@
             "y0": 1.0
         },
         "period": 2.6779,
-        "pesin_entropy": 0.048964165061304785
+        "pesin_entropy": 0.02439941982137089,
+        "multiscale_entropy": 0.4520009826326611
     },
     "BurkeShaw": {
         "citation": "Shaw. Zeitschrift fur Naturforschung (1981): 80-112.",
-        "correlation_dimension": 2.072252862376316,
+        "correlation_dimension": 2.0538157998881426,
         "dt": 0.0001175,
         "initial_conditions": [
             -0.79153188,
             0.65244479,
             0.22517831
         ],
-        "kaplan_yorke_dimension": 2.2285560267954843,
+        "kaplan_yorke_dimension": 2.2113447891991065,
         "lyapunov_spectrum_estimated": [
-            2.412906054139599,
-            0.20342222156252454,
-            -11.475910056588258
+            2.3453555864112117,
+            0.027056468824027846,
+            -11.225316054517004
         ],
-        "maximum_lyapunov_estimated": 2.412906054139599,
+        "maximum_lyapunov_estimated": 2.3453555864112117,
         "parameters": {
             "e": 13,
             "n": 10
         },
         "period": 0.78333,
-        "pesin_entropy": 2.6163282757021236
+        "pesin_entropy": 2.37241205523524,
+        "multiscale_entropy": 0.906432166797223
     },
     "CaTwoPlus": {
         "citation": "Houart, Dupont, Goldbeter. Bull Math Biol 1999.",
-        "correlation_dimension": 1.2242154077421163,
+        "correlation_dimension": 1.2267327876216785,
         "description": "Intracellular calcium ion oscillations.",
         "dt": 0.0001531,
         "initial_conditions": [
@@ -462,13 +476,13 @@
             1.0055612,
             0.14407867
         ],
-        "kaplan_yorke_dimension": 2.0536582709172286,
+        "kaplan_yorke_dimension": 2.0647813731079956,
         "lyapunov_spectrum_estimated": [
-            0.4398934161121314,
-            0.06399088045208896,
-            -9.196657966414218
+            0.5788123099350391,
+            0.022652249040266133,
+            -9.284523260554844
         ],
-        "maximum_lyapunov_estimated": 0.4398934161121314,
+        "maximum_lyapunov_estimated": 0.5788123099350391,
         "parameters": {
             "K2": 0.1,
             "K5": 0.3194,
@@ -491,11 +505,12 @@
             "p": 1
         },
         "period": 1.343,
-        "pesin_entropy": 0.5038842965642204
+        "pesin_entropy": 0.6014645592138562,
+        "multiscale_entropy": 0.5770296569860646
     },
     "CaTwoPlusQuasiperiodic": {
         "citation": "Houart, Dupont, Goldbeter. Bull Math Biol 1999.",
-        "correlation_dimension": 1.8497553030749776,
+        "correlation_dimension": 1.8508709631136986,
         "description": "Intracellular calcium ion oscillations with quasiperiodic parameter values. The original paper also includes parameters for a limit cycle",
         "dt": 7.48e-05,
         "initial_conditions": [
@@ -503,13 +518,13 @@
             0.87886607,
             0.3148781
         ],
-        "kaplan_yorke_dimension": 3.8636716295947604,
+        "kaplan_yorke_dimension": 4.547800407390443,
         "lyapunov_spectrum_estimated": [
-            0.1387958178780994,
-            0.07060744332510784,
-            -0.1524353566565689
+            0.1620868046117494,
+            -0.02225809783295617,
+            -0.054895455267669285
         ],
-        "maximum_lyapunov_estimated": 0.1387958178780994,
+        "maximum_lyapunov_estimated": 0.1620868046117494,
         "parameters": {
             "K2": 0.1,
             "K5": 0.3,
@@ -532,11 +547,12 @@
             "p": 2
         },
         "period": 0.65614,
-        "pesin_entropy": 0.20940326120320724
+        "pesin_entropy": 0.16210233717161812,
+        "multiscale_entropy": 0.8512706770213926
     },
     "CellCycle": {
         "citation": "Romond, Rustici, Gonze, Goldbeter. 1999.",
-        "correlation_dimension": 1.7412932046469747,
+        "correlation_dimension": 1.7558665560565607,
         "description": "A simplified model of the cell cycle. The parameter `Kim` controls the bifurcations.",
         "dt": 0.04217,
         "initial_conditions": [
@@ -547,16 +563,16 @@
             0.94987035,
             0.98912572
         ],
-        "kaplan_yorke_dimension": 2.020556544556026,
+        "kaplan_yorke_dimension": 2.020810681242375,
         "lyapunov_spectrum_estimated": [
-            0.004543460121794124,
-            -0.00039608037205876427,
-            -0.20779022544916775,
-            -0.4279811377688717,
-            -2.822318944353081,
-            -6.740449170659539
+            0.00469985418122158,
+            -0.0003567612310661562,
+            -0.20915644240415007,
+            -0.43394905365820846,
+            -2.850536314608979,
+            -6.767614340964144
         ],
-        "maximum_lyapunov_estimated": 0.004543460121794124,
+        "maximum_lyapunov_estimated": 0.004699854181221581,
         "parameters": {
             "K": 0.01,
             "Kc": 0.5,
@@ -571,24 +587,25 @@
             "vi": 0.05
         },
         "period": 204.71,
-        "pesin_entropy": 0.004543460121794124
+        "pesin_entropy": 0.004765100518900255,
+        "multiscale_entropy": 1.021736994304444
     },
     "CellularNeuralNetwork": {
         "citation": "Arena, Caponetto, Fortuna, and Porto., Int J Bifurcat Chaos. 1998:  1527-1539.",
-        "correlation_dimension": 1.793363600770936,
+        "correlation_dimension": 1.7777777253372764,
         "dt": 0.0007232,
         "initial_conditions": [
             -0.26574016,
             -0.36754928,
             -0.073094132
         ],
-        "kaplan_yorke_dimension": 2.206204139821723,
+        "kaplan_yorke_dimension": 2.167668286708633,
         "lyapunov_spectrum_estimated": [
-            0.1975148218042097,
-            -0.05306986535167041,
-            -0.6125628624338584
+            0.09799656528996928,
+            0.0036354952626342415,
+            -0.6061495728157424
         ],
-        "maximum_lyapunov_estimated": 0.1975148218042097,
+        "maximum_lyapunov_estimated": 0.09799656528996928,
         "parameters": {
             "a": 4.4,
             "b": 3.21,
@@ -596,72 +613,75 @@
             "d": 1.24
         },
         "period": 3.2,
-        "pesin_entropy": 0.1975148218042097
+        "pesin_entropy": 0.1016320623247746,
+        "multiscale_entropy": 1.2414841874061011
     },
     "Chen": {
         "citation": "Chen, Ueta. Int J Bifurcat Chaos. 2004: 1465-1466. Chen. Proc. First Int. Conf. Control of Oscillations and Chaos. 1997: 181--186.",
-        "correlation_dimension": 2.0942788770234975,
+        "correlation_dimension": 2.080398064710209,
         "dt": 0.0001209,
         "initial_conditions": [
             3.2689697,
             5.2990458,
             19.435349
         ],
-        "kaplan_yorke_dimension": 2.189980234697357,
+        "kaplan_yorke_dimension": 2.168621926035506,
         "lyapunov_spectrum_estimated": [
-            2.1335702205605402,
-            0.21168332938496529,
-            -12.154750366882478
+            2.0471208808332557,
+            -0.05031354288886987,
+            -11.841816202859391
         ],
-        "maximum_lyapunov_estimated": 2.1335702205605402,
+        "maximum_lyapunov_estimated": 2.0471208808332557,
         "parameters": {
             "a": 35,
             "b": 3,
             "c": 28
         },
         "period": 0.58689,
-        "pesin_entropy": 2.3452535499455056
+        "pesin_entropy": 2.047313967129477,
+        "multiscale_entropy": 0.7604529380690989
     },
     "ChenLee": {
         "citation": "Chen, Ueta. Int J Bifurcat Chaos. 2004: 1465-1466. Chen. Proc. First Int. Conf. Control of Oscillations and Chaos. 1997: 181--186.",
-        "correlation_dimension": 1.2291916081637395,
+        "correlation_dimension": 1.2279387897055603,
         "dt": 0.0001963,
         "initial_conditions": [
             0.17177112,
             0.10360479,
             6.2553878
         ],
-        "kaplan_yorke_dimension": 2.04144186095621,
+        "kaplan_yorke_dimension": 2.0300416878282137,
         "lyapunov_spectrum_estimated": [
-            0.176639276504556,
-            0.047896456110243846,
-            -5.551652795639903
+            0.16460631102343384,
+            0.00018225769802326938,
+            -5.485329903201408
         ],
-        "maximum_lyapunov_estimated": 0.176639276504556,
+        "maximum_lyapunov_estimated": 0.16460631102343387,
         "parameters": {
             "a": 5,
             "b": -10,
             "c": -0.38
         },
         "period": 2.8043,
-        "pesin_entropy": 0.22453573261479984
+        "pesin_entropy": 0.16478856872146466,
+        "multiscale_entropy": 0.6224325755254609
     },
     "Chua": {
         "citation": "Chua, L. O. (1969) Introduction to Nonlinear Network Theory, McGraw-Hill, New York.",
-        "correlation_dimension": 1.8406533289378875,
+        "correlation_dimension": 1.7987707234207353,
         "dt": 0.006605,
         "initial_conditions": [
             1.1262351,
             -0.11386474,
             -0.78324421
         ],
-        "kaplan_yorke_dimension": 2.1145443800891766,
+        "kaplan_yorke_dimension": 2.10727056025829,
         "lyapunov_spectrum_estimated": [
-            0.45106721086454665,
-            0.047719847058214415,
-            -4.273468861294452
+            0.4605474829443073,
+            0.0022048281168492866,
+            -4.319076735248446
         ],
-        "maximum_lyapunov_estimated": 0.45106721086454665,
+        "maximum_lyapunov_estimated": 0.4605474829443073,
         "parameters": {
             "alpha": 15.6,
             "beta": 28.0,
@@ -669,11 +689,12 @@
             "m1": -0.71429
         },
         "period": 1.4235,
-        "pesin_entropy": 0.49878705792276107
+        "pesin_entropy": 0.4645707969482971,
+        "multiscale_entropy": 1.2693527097629784
     },
     "CircadianRhythm": {
         "citation": " Leloup, Gonze, Goldbeter. 1999. Gonze, Leloup, Goldbeter. 2000",
-        "correlation_dimension": 1.638053238587168,
+        "correlation_dimension": 1.6328881174569194,
         "description": "The Drosophila circadian rhythm under periodic light/dark forcing.",
         "dt": 0.001728,
         "initial_conditions": [
@@ -683,15 +704,15 @@
             11.619073,
             2004.0233
         ],
-        "kaplan_yorke_dimension": 2.6285982453399157,
+        "kaplan_yorke_dimension": 2.640554412377753,
         "lyapunov_spectrum_estimated": [
-            0.09276691794936329,
-            0.0010937663564909155,
-            -0.14931744560486146,
-            -0.35222737346600097,
-            -1.0910668456444448
+            0.09298369588063138,
+            0.00046501992305171574,
+            -0.14586025062784352,
+            -0.3598453092044599,
+            -1.091393481159416
         ],
-        "maximum_lyapunov_estimated": 0.09276691794936329,
+        "maximum_lyapunov_estimated": 0.09298369588063138,
         "nonautonomous": true,
         "parameters": {
             "Ki": 1,
@@ -711,14 +732,15 @@
             "vs": 6
         },
         "period": 27.0,
-        "pesin_entropy": 0.0938606843058542,
+        "pesin_entropy": 0.09372724379002938,
         "unbounded_indices": [
             4
-        ]
+        ],
+        "multiscale_entropy": 0.7054585345031309
     },
     "CoevolvingPredatorPrey": {
         "citation": "Gilpin & Feldman. PLOS Comp Biol 2017",
-        "correlation_dimension": 1.4387195470858136,
+        "correlation_dimension": 1.453444520919468,
         "description": "A system of predator-prey equations with co-evolving prey.",
         "dt": 0.008103,
         "initial_conditions": [
@@ -726,13 +748,13 @@
             0.46664421,
             0.66580212
         ],
-        "kaplan_yorke_dimension": 2.0033310722187743,
+        "kaplan_yorke_dimension": 2.0026539580881706,
         "lyapunov_spectrum_estimated": [
-            0.0042255029022343436,
-            0.0024533301920705965,
-            -1.9716049844856873
+            0.0034879428860592264,
+            0.0017391810332012293,
+            -1.9676998121970224
         ],
-        "maximum_lyapunov_estimated": 0.0042255029022343436,
+        "maximum_lyapunov_estimated": 0.003487942886059227,
         "parameters": {
             "a1": 2.5,
             "a2": 0.05,
@@ -748,11 +770,12 @@
             "vv": 0.33333
         },
         "period": 122.77,
-        "pesin_entropy": 0.00667883309430494
+        "pesin_entropy": 0.005379136261058156,
+        "multiscale_entropy": 1.006450625395487
     },
     "Colpitts": {
         "citation": "Kennedy (2007). IEEE Trans Circuits & Systems. 1994: 771-774. Li, Zhou, Yang. Chaos, Solitons, & Fractals.",
-        "correlation_dimension": 1.7321555806075333,
+        "correlation_dimension": 1.7352885770533426,
         "description": "An electrical circuit used as a signal generator.",
         "dt": 0.0004609,
         "initial_conditions": [
@@ -760,13 +783,13 @@
             0.64637337,
             8.7869304
         ],
-        "kaplan_yorke_dimension": 2.1156754604002463,
+        "kaplan_yorke_dimension": 2.134959031654127,
         "lyapunov_spectrum_estimated": [
-            0.1266369140273331,
-            -0.026084464594097655,
-            -0.9793709801016447
+            0.13750285290669104,
+            -0.0021021241106901328,
+            -1.0014048629576902
         ],
-        "maximum_lyapunov_estimated": 0.1266369140273331,
+        "maximum_lyapunov_estimated": 0.1375028529066911,
         "parameters": {
             "a": 30,
             "b": 0.8,
@@ -775,11 +798,12 @@
             "e": 10
         },
         "period": 4.2676,
-        "pesin_entropy": 0.1266369140273331
+        "pesin_entropy": 0.1390751886208436,
+        "multiscale_entropy": 0.7266290517682168
     },
     "Coullet": {
         "citation": "Arneodo, A., Coullet, P. & Tresser, C. Occurence of strange attractors in three-dimensional volterra equations. Physics Letters A 79, 259--263 (1980)",
-        "correlation_dimension": 2.043399335550397,
+        "correlation_dimension": 2.0922372256742787,
         "description": "A variant of the Arneodo attractor",
         "dt": 0.002295,
         "initial_conditions": [
@@ -787,13 +811,13 @@
             0.4284701181998099,
             0.086983698175975
         ],
-        "kaplan_yorke_dimension": 2.2267847308799515,
+        "kaplan_yorke_dimension": 2.252992250313846,
         "lyapunov_spectrum_estimated": [
-            0.14387574780254334,
-            -0.011679595427899078,
-            -0.5671329434883985
+            0.14890693833273877,
+            -6.504894715051528e-05,
+            -0.5873658566804084
         ],
-        "maximum_lyapunov_estimated": 0.14387574780254334,
+        "maximum_lyapunov_estimated": 0.14890693833273877,
         "parameters": {
             "a": -0.8,
             "b": 1.1,
@@ -801,24 +825,25 @@
             "d": -1.0
         },
         "period": 5.7663,
-        "pesin_entropy": 0.14387574780254334
+        "pesin_entropy": 0.14919849957322842,
+        "multiscale_entropy": 0.9055084400125268
     },
     "Dadras": {
         "citation": "S Dadras, HR Momeni. Physics Letters A, 2009",
-        "correlation_dimension": 1.776460365573121,
+        "correlation_dimension": 1.605056083622306,
         "dt": 0.0001447,
         "initial_conditions": [
             1.0284085,
             -3.5348655,
             -0.72081646
         ],
-        "kaplan_yorke_dimension": 2.04529322919326,
+        "kaplan_yorke_dimension": 2.0430103150081735,
         "lyapunov_spectrum_estimated": [
-            0.45898109590190855,
-            0.04060965977950476,
-            -11.186966730947484
+            0.47344233096408,
+            0.0064562720284210215,
+            -11.157725546142514
         ],
-        "maximum_lyapunov_estimated": 0.45898109590190855,
+        "maximum_lyapunov_estimated": 0.47344233096408,
         "parameters": {
             "c": 2.0,
             "e": 9.0,
@@ -827,11 +852,12 @@
             "r": 1.7
         },
         "period": 3.2886,
-        "pesin_entropy": 0.4995907556814133
+        "pesin_entropy": 0.4798988304624064,
+        "multiscale_entropy": 0.8537980405426894
     },
     "DequanLi": {
         "citation": "Li, Phys Lett A. 2008: 387-393.",
-        "correlation_dimension": 2.046511143799855,
+        "correlation_dimension": 1.9326161168463631,
         "description": "Related to the Three Scroll unified attractor TSUCS-2",
         "dt": 2.598e-05,
         "initial_conditions": [
@@ -839,13 +865,13 @@
             -104.12614,
             202.46173
         ],
-        "kaplan_yorke_dimension": 2.4087566349582783,
+        "kaplan_yorke_dimension": 2.6848604732863537,
         "lyapunov_spectrum_estimated": [
-            0.8387456324656324,
-            0.005921854556744296,
-            -3.3442392865742656
+            1.8601963396884453,
+            0.09866428540326228,
+            -2.867185439620747
         ],
-        "maximum_lyapunov_estimated": 0.8387456324656324,
+        "maximum_lyapunov_estimated": 1.8601963396884453,
         "parameters": {
             "a": 40,
             "c": 1.833,
@@ -855,24 +881,25 @@
             "k": 55
         },
         "period": 0.083806,
-        "pesin_entropy": 0.8446674870223767
+        "pesin_entropy": 1.9588606250917073,
+        "multiscale_entropy": 0.8319369667525882
     },
     "DoubleGyre": {
         "citation": "Allshouse, M. & Peacock, T. 2015 Lagrangian based methods for coherent structure detection. Chaos 25 (097617).",
-        "correlation_dimension": 2.3854441956020698,
+        "correlation_dimension": 2.3304138196892192,
         "dt": 0.002944,
         "initial_conditions": [
             1.5327241,
             0.99802126,
             3879.3323
         ],
-        "kaplan_yorke_dimension": 2.8596480622819045,
+        "kaplan_yorke_dimension": 2.881525629972418,
         "lyapunov_spectrum_estimated": [
-            0.0713408313287311,
-            -0.00668548431575046,
-            -0.07521141482172994
+            0.06285936079346421,
+            -0.0036702088073069326,
+            -0.06633987533400756
         ],
-        "maximum_lyapunov_estimated": 0.0713408313287311,
+        "maximum_lyapunov_estimated": 0.06285936079346421,
         "nonautonomous": true,
         "parameters": {
             "alpha": 0.1,
@@ -880,14 +907,15 @@
             "omega": 0.62832
         },
         "period": 13.953,
-        "pesin_entropy": 0.0713408313287311,
+        "pesin_entropy": 0.06285936079346421,
         "unbounded_indices": [
             2
-        ]
+        ],
+        "multiscale_entropy": 0.66519273658672
     },
     "DoublePendulum": {
         "citation": "None.",
-        "correlation_dimension": 2.655112578953074,
+        "correlation_dimension": 2.6609798545500714,
         "dt": 0.0007725,
         "hamiltonian": true,
         "initial_conditions": [
@@ -896,42 +924,43 @@
             -1.2249799,
             2.535486
         ],
-        "kaplan_yorke_dimension": 3.827693121504275,
+        "kaplan_yorke_dimension": 3.810221473882809,
         "lyapunov_spectrum_estimated": [
-            6.715406851508352,
-            0.3819813604897322,
-            -0.2912339732698885,
-            -8.223040716296493
+            8.464443924343541,
+            0.46411672696182493,
+            -0.17345525567611142,
+            -10.805817517613212
         ],
-        "maximum_lyapunov_estimated": 6.715406851508352,
+        "maximum_lyapunov_estimated": 8.464443924343541,
         "parameters": {
             "d": 1.0,
             "m": 1.0
         },
         "period": 4.0234,
-        "pesin_entropy": 7.097388211998084,
+        "pesin_entropy": 8.928560651305366,
         "unbounded_indices": [
             0,
             1
-        ]
+        ],
+        "multiscale_entropy": 0.5591104791210428
     },
     "Duffing": {
         "bifurcation_parameter": "gamma",
         "citation": "Duffing, G. (1918), Forced oscillations with variable natural frequency and their technical relevance, Heft 41/42, Braunschweig: Vieweg.",
-        "correlation_dimension": 2.243039019466387,
+        "correlation_dimension": 2.019134182605584,
         "dt": 0.001773,
         "initial_conditions": [
             -1.1635382,
             -0.5092374,
             0.0
         ],
-        "kaplan_yorke_dimension": 2.675913285960039,
+        "kaplan_yorke_dimension": 2.561219319140712,
         "lyapunov_spectrum_estimated": [
-            0.14905407711884178,
-            0.004744190353215685,
-            -0.22754141791074403
+            0.09952054532941002,
+            0.0003077550037828977,
+            -0.17595301607629793
         ],
-        "maximum_lyapunov_estimated": 0.14905407711884178,
+        "maximum_lyapunov_estimated": 0.09952054532941003,
         "nonautonomous": true,
         "parameters": {
             "alpha": 1.0,
@@ -941,14 +970,15 @@
             "omega": 1.4
         },
         "period": 7.4496,
-        "pesin_entropy": 0.15379826747205746,
+        "pesin_entropy": 0.10008657388524086,
         "unbounded_indices": [
             2
-        ]
+        ],
+        "multiscale_entropy": 0.8686568999981737
     },
     "ExcitableCell": {
         "citation": "Teresa Chay. Chaos In A Three-variable Model Of An Excitable Cell. Physica D 1985",
-        "correlation_dimension": 0.1894317318105157,
+        "correlation_dimension": 0.19124944684169679,
         "description": "A reduced-order variant of the Hodgkin-Huxley model. The parameter gkc controls the onset of chaos.",
         "dt": 4.4224e-05,
         "initial_conditions": [
@@ -956,13 +986,13 @@
             0.13121643614884418,
             0.4658533583951385
         ],
-        "kaplan_yorke_dimension": 2.121639429656314,
+        "kaplan_yorke_dimension": 2.1287842177704674,
         "lyapunov_spectrum_estimated": [
-            4.394939951399914,
-            -0.4157894601148156,
-            -33.16626354711519
+            17.030315084501463,
+            -0.3267053778962445,
+            -129.70230355691595
         ],
-        "maximum_lyapunov_estimated": 4.394939951399914,
+        "maximum_lyapunov_estimated": 17.030315084501463,
         "parameters": {
             "gi": 1800,
             "gkc": 11,
@@ -978,35 +1008,37 @@
             "vn": -30
         },
         "period": 0.5528,
-        "pesin_entropy": 4.394939951399914
+        "pesin_entropy": 17.030315084501463,
+        "multiscale_entropy": 0.7807524009298388
     },
     "Finance": {
         "citation": "Guoliang Cai, Juanjuan Huang. International Journal of Nonlinear Science, Vol. 3 (2007)",
-        "correlation_dimension": 1.917210104396962,
+        "correlation_dimension": 1.922279579804101,
         "dt": 0.0008706,
         "initial_conditions": [
             -0.51664739,
             -3.9568707,
             0.0012893581
         ],
-        "kaplan_yorke_dimension": 2.1923341343367744,
+        "kaplan_yorke_dimension": 2.172040321306389,
         "lyapunov_spectrum_estimated": [
-            0.11023076025782412,
-            0.013015624488986601,
-            -0.6318774091983708
+            0.10708598383274774,
+            0.0009835797228343356,
+            -0.6279525877233353
         ],
-        "maximum_lyapunov_estimated": 0.11023076025782412,
+        "maximum_lyapunov_estimated": 0.10708598383274774,
         "parameters": {
             "a": 0.001,
             "b": 0.2,
             "c": 1.1
         },
         "period": 9.8932,
-        "pesin_entropy": 0.12324638474681072
+        "pesin_entropy": 0.1084488028544319,
+        "multiscale_entropy": 0.7817861077722251
     },
     "FluidTrampoline": {
         "citation": "Gilet, Bush. The fluid trampoline: droplets bouncing on a soap film. JFM 2009.",
-        "correlation_dimension": 2.2635022892046903,
+        "correlation_dimension": 2.18441887672186,
         "description": "A droplet bouncing on a horizontal soap film",
         "dt": 0.002073,
         "initial_conditions": [
@@ -1014,13 +1046,13 @@
             -2.8807787,
             0.1
         ],
-        "kaplan_yorke_dimension": 2.888467046139712,
+        "kaplan_yorke_dimension": 2.8462636972682116,
         "lyapunov_spectrum_estimated": [
-            0.05732334199340669,
-            0.005239499120968162,
-            -0.07041661408400374
+            0.08081301489037329,
+            -0.0011783910877478326,
+            -0.09403052188090477
         ],
-        "maximum_lyapunov_estimated": 0.05732334199340669,
+        "maximum_lyapunov_estimated": 0.08081301489037328,
         "nonautonomous": true,
         "parameters": {
             "gamma": 1.82,
@@ -1028,27 +1060,28 @@
             "w": 1.21
         },
         "period": 7.7351,
-        "pesin_entropy": 0.06256284111437485,
+        "pesin_entropy": 0.08094585172323163,
         "unbounded_indices": [
             2
-        ]
+        ],
+        "multiscale_entropy": 0.796312585554829
     },
     "ForcedBrusselator": {
         "citation": "I. Prigogine, From Being to Becoming: Time and Complexity in the Physical Sciences, New York: W.H. Freeman and Company, 1980.",
-        "correlation_dimension": 1.61508274982892,
+        "correlation_dimension": 1.616157126800283,
         "dt": 0.001939,
         "initial_conditions": [
             0.40635464,
             1.8192295,
             6381.6484
         ],
-        "kaplan_yorke_dimension": 2.0153501203734776,
+        "kaplan_yorke_dimension": 1.190019824057157,
         "lyapunov_spectrum_estimated": [
-            0.018147677021652625,
-            -0.014324988801487894,
-            -0.24903311030509162
+            0.0028307087627546254,
+            -0.014898681909916936,
+            -0.23304448314240073
         ],
-        "maximum_lyapunov_estimated": 0.018147677021652625,
+        "maximum_lyapunov_estimated": 0.0028307087627546254,
         "nonautonomous": true,
         "parameters": {
             "a": 0.4,
@@ -1057,28 +1090,29 @@
             "w": 0.81
         },
         "period": 20.411,
-        "pesin_entropy": 0.018147677021652625,
+        "pesin_entropy": 0.0028307087627546254,
         "unbounded_indices": [
             2
-        ]
+        ],
+        "multiscale_entropy": 0.47299463051887286
     },
     "ForcedFitzHughNagumo": {
         "citation": "FitzHugh, Richard (1961). Impulses and Physiological States in Theoretical Models of Nerve Membrane. Biophysical Journal. 1 (6).",
-        "correlation_dimension": 1.6108397295434371,
+        "correlation_dimension": 1.6159744662497548,
         "description": "Non-autonomous.",
         "dt": 0.002005,
         "initial_conditions": [
             -1.2155252,
             -0.046470891,
-            5833.9213
+            0.0
         ],
         "kaplan_yorke_dimension": 1.5705852319395741,
         "lyapunov_spectrum_estimated": [
-            1.2881170129500874e-05,
-            -0.0033225645382305748,
-            -0.9264167044194939
+            0.0006271045837994497,
+            -0.0017541532237019502,
+            -0.9544351506941636
         ],
-        "maximum_lyapunov_estimated": 1.2881170129500874e-05,
+        "maximum_lyapunov_estimated": 0.0006271045837994498,
         "nonautonomous": true,
         "parameters": {
             "a": 0.7,
@@ -1089,14 +1123,15 @@
             "omega": 0.043650793650793655
         },
         "period": 42.12235294117647,
-        "pesin_entropy": 1.2881170129500874e-05,
+        "pesin_entropy": 0.000828176101772673,
         "unbounded_indices": [
             2
-        ]
+        ],
+        "multiscale_entropy": 0.946734422406113
     },
     "ForcedVanDerPol": {
         "citation": "B. van der Pol (1920). A theory of the amplitude of free and forced triode vibrations. Radio Review 1.",
-        "correlation_dimension": 1.3236754733399343,
+        "correlation_dimension": 1.3243672479645296,
         "description": "Non-autonomous.",
         "dt": 0.0003544,
         "initial_conditions": [
@@ -1104,13 +1139,13 @@
             0.19640249,
             687.39073
         ],
-        "kaplan_yorke_dimension": 2.0126374172448234,
+        "kaplan_yorke_dimension": 2.012828649055009,
         "lyapunov_spectrum_estimated": [
-            0.26623039267826515,
-            -0.004350805471571073,
-            -20.587516244432287
+            0.2651824388815116,
+            -0.0008450617218488057,
+            -20.60632249066986
         ],
-        "maximum_lyapunov_estimated": 0.26623039267826515,
+        "maximum_lyapunov_estimated": 0.26518243888151155,
         "nonautonomous": true,
         "parameters": {
             "a": 1.2,
@@ -1118,51 +1153,53 @@
             "w": 0.63
         },
         "period": 14.476875,
-        "pesin_entropy": 0.26623039267826515,
+        "pesin_entropy": 0.26518243888151155,
         "unbounded_indices": [
             2
-        ]
+        ],
+        "multiscale_entropy": 0.39443058905146283
     },
     "GenesioTesi": {
         "citation": "Genesio, Tesi (1992). Harmonic balance methods for the analysis of chaotic dynamics in nonlinear systems. Automatica 28.3 (1992): 531-548.",
-        "correlation_dimension": 1.986255689981805,
+        "correlation_dimension": 1.9474141853715994,
         "dt": 0.002508,
         "initial_conditions": [
             -0.053772565,
             -0.26162564,
             0.33501557
         ],
-        "kaplan_yorke_dimension": 2.2167107883626533,
+        "kaplan_yorke_dimension": 2.1892507433089325,
         "lyapunov_spectrum_estimated": [
-            0.11404321717096778,
-            0.0009026051699975553,
-            -0.5465346114337934
+            0.09974381765927798,
+            0.00038146676582121423,
+            -0.5282231255530121
         ],
-        "maximum_lyapunov_estimated": 0.11404321717096778,
+        "maximum_lyapunov_estimated": 0.09974381765927796,
         "parameters": {
             "a": 0.44,
             "b": 1.1,
             "c": 1
         },
         "period": 5.9431,
-        "pesin_entropy": 0.11494582234096534
+        "pesin_entropy": 0.10027488648885732,
+        "multiscale_entropy": 0.7003576241153363
     },
     "GuckenheimerHolmes": {
         "citation": "Guckenheimer, John, and Philip Holmes (1983).  Nonlinear oscillations, dynamical systems, and bifurcations of vector fields. Vol. 42. Springer Science & Business Media.",
-        "correlation_dimension": 2.062860717843848,
+        "correlation_dimension": 2.072148151317943,
         "dt": 0.012763,
         "initial_conditions": [
             -0.55582369,
             0.05181624,
             0.37766104
         ],
-        "kaplan_yorke_dimension": 2.7145966269453337,
+        "kaplan_yorke_dimension": 2.3663164666051353,
         "lyapunov_spectrum_estimated": [
-            0.4799062388267902,
-            0.12176404667502874,
-            -0.9302407283647308
+            0.34082003567895874,
+            -0.0032191807339425173,
+            -0.9216135618098852
         ],
-        "maximum_lyapunov_estimated": 0.4799062388267902,
+        "maximum_lyapunov_estimated": 0.34082003567895874,
         "parameters": {
             "a": 0.4,
             "b": 20.25,
@@ -1172,24 +1209,25 @@
             "f": 0.44
         },
         "period": 0.3076923076923077,
-        "pesin_entropy": 0.6016702855018189
+        "pesin_entropy": 0.3408200356941137,
+        "multiscale_entropy": 0.5385101182847213
     },
     "Hadley": {
         "citation": "G. Hadley (1735). On the cause of the general trade winds. Philosophical Transactions of the Royal Society, vol. 34, pp. 58--62.",
-        "correlation_dimension": 2.061208124263907,
+        "correlation_dimension": 2.029661693798021,
         "dt": 0.0007125,
         "initial_conditions": [
             1.3664423,
             0.9309146,
             0.64283417
         ],
-        "kaplan_yorke_dimension": 2.5357160630568876,
+        "kaplan_yorke_dimension": 2.7273838319442127,
         "lyapunov_spectrum_estimated": [
-            0.28396210574821656,
-            -0.03866527144378719,
-            -0.4360883241516055
+            0.31166133927315953,
+            -0.0010838827053467116,
+            -0.42739317979015523
         ],
-        "maximum_lyapunov_estimated": 0.28396210574821656,
+        "maximum_lyapunov_estimated": 0.31166133927315953,
         "parameters": {
             "a": 0.2,
             "b": 4,
@@ -1197,34 +1235,36 @@
             "g": 1
         },
         "period": 1.4541,
-        "pesin_entropy": 0.28396210574821656
+        "pesin_entropy": 0.3144504334934165,
+        "multiscale_entropy": 0.9351389987191853
     },
     "Halvorsen": {
         "citation": "See, for example, Zuniga-Aguilar, C. J., et al (2018). Robust control for fractional variable-order chaotic systems with non-singular kernel. The European Physical Journal Plus 133.1 (2018): 1-13.",
-        "correlation_dimension": 1.8998241704633192,
+        "correlation_dimension": 1.8842400748281847,
         "dt": 0.0002144,
         "initial_conditions": [
             -8.6807408,
             -2.4741399,
             0.070775762
         ],
-        "kaplan_yorke_dimension": 2.118808223145618,
+        "kaplan_yorke_dimension": 2.118235268907861,
         "lyapunov_spectrum_estimated": [
-            0.7632787557248966,
-            -0.21043714927072532,
-            -4.692536247951621
+            0.586197150399321,
+            -0.031953945256851884,
+            -4.6876300977027565
         ],
-        "maximum_lyapunov_estimated": 0.7632787557248966,
+        "maximum_lyapunov_estimated": 0.586197150399321,
         "parameters": {
             "a": 1.4,
             "b": 4
         },
         "period": 1.4889,
-        "pesin_entropy": 0.7632787557248966
+        "pesin_entropy": 0.586197150399321,
+        "multiscale_entropy": 0.7527831765757674
     },
     "HastingsPowell": {
         "citation": "Hastings, Powell. Ecology 1991",
-        "correlation_dimension": 1.0150171606858593,
+        "correlation_dimension": 1.0147969186008294,
         "description": " A chaotic three species food web.",
         "dt": 0.006489,
         "initial_conditions": [
@@ -1232,13 +1272,13 @@
             0.17549271,
             9.9014657
         ],
-        "kaplan_yorke_dimension": 2.027660724112963,
+        "kaplan_yorke_dimension": 2.027757892627057,
         "lyapunov_spectrum_estimated": [
-            0.008622469305432777,
-            0.005749865146953138,
-            -0.5185495837409412
+            0.008585012825774563,
+            0.005765040490702786,
+            -0.5169232002224432
         ],
-        "maximum_lyapunov_estimated": 0.008622469305432777,
+        "maximum_lyapunov_estimated": 0.008585012825774561,
         "parameters": {
             "a1": 5.0,
             "a2": 0.1,
@@ -1248,11 +1288,12 @@
             "d2": 0.01
         },
         "period": 135.19,
-        "pesin_entropy": 0.014372334452385914
+        "pesin_entropy": 0.014350053316477346,
+        "multiscale_entropy": 0.47829796264231095
     },
     "HenonHeiles": {
         "citation": "Henon, M.; Heiles, C. (1964). The applicability of the third integral of motion: Some numerical experiments. The Astronomical Journal. 69: 73.",
-        "correlation_dimension": 1.4716174307930618,
+        "correlation_dimension": 1.483374075624846,
         "dt": 0.002548,
         "initial_conditions": [
             -0.29707259,
@@ -1260,23 +1301,24 @@
             0.42548865,
             0.071905482
         ],
-        "kaplan_yorke_dimension": 6.537839123220101,
+        "kaplan_yorke_dimension": 6.81141589838772,
         "lyapunov_spectrum_estimated": [
-            0.022981434740562523,
-            0.012447691385828557,
-            0.00026380877626588076,
-            -0.010034449927943372
+            0.026747154244887203,
+            0.011500891097175434,
+            -1.4057113933414076e-05,
+            -0.011151041415888588
         ],
-        "maximum_lyapunov_estimated": 0.022981434740562523,
+        "maximum_lyapunov_estimated": 0.026747154244887203,
         "parameters": {
             "lam": 1
         },
         "period": 6.37,
-        "pesin_entropy": 0.035692934902656966
+        "pesin_entropy": 0.03870865064107525,
+        "multiscale_entropy": 0.7137794258156454
     },
     "HindmarshRose": {
         "citation": "Marhl, Perc. Chaos, Solitons, Fractals 2005.",
-        "correlation_dimension": 1.6468409811526064,
+        "correlation_dimension": 1.646027113328854,
         "description": "A chaotic version of the Hindmarsh-Rose neuron model.",
         "dt": 8.059e-05,
         "initial_conditions": [
@@ -1284,13 +1326,13 @@
             -0.021557059,
             0.041475046
         ],
-        "kaplan_yorke_dimension": 2.0499472808911197,
+        "kaplan_yorke_dimension": 2.0405369895957373,
         "lyapunov_spectrum_estimated": [
-            0.28159344425394045,
-            0.006390254542237242,
-            -7.031972827978082
+            0.2621464274609406,
+            0.0017705383465481184,
+            -6.510663065519547
         ],
-        "maximum_lyapunov_estimated": 0.28159344425394045,
+        "maximum_lyapunov_estimated": 0.2621464274609406,
         "parameters": {
             "a": 0.49,
             "b": 1.0,
@@ -1301,11 +1343,12 @@
             "tz": 0.8
         },
         "period": 1.752,
-        "pesin_entropy": 0.2879836987961777
+        "pesin_entropy": 0.2639169709155772,
+        "multiscale_entropy": 0.8692605688019491
     },
     "Hopfield": {
         "citation": "Lewis & Glass, Neur Comp (1992)",
-        "correlation_dimension": 2.0130053895569664,
+        "correlation_dimension": 1.988149295653683,
         "description": "Small chaotic Hopfield network with frustrated connectivity",
         "dt": 0.00113,
         "initial_conditions": [
@@ -1316,16 +1359,16 @@
             0.45273118,
             0.78389688
         ],
-        "kaplan_yorke_dimension": 2.2677913192232495,
+        "kaplan_yorke_dimension": 2.264479110541058,
         "lyapunov_spectrum_estimated": [
-            0.08227018241459015,
-            0.003675956990696055,
-            -0.27962857884137504,
-            -0.3765237024282361,
-            -0.41290312355310005,
-            -1.4384249540180303
+            0.07726437124258394,
+            -0.00018152933777384922,
+            -0.29083324580448194,
+            -0.36906925337474944,
+            -0.40604718386075256,
+            -1.4425404449511432
         ],
-        "maximum_lyapunov_estimated": 0.08227018241459015,
+        "maximum_lyapunov_estimated": 0.07726437124258394,
         "parameters": {
             "beta": 0.5,
             "eps": 10,
@@ -1382,11 +1425,12 @@
             "tau": 2.5
         },
         "period": 10.865,
-        "pesin_entropy": 0.08594613940528621
+        "pesin_entropy": 0.07748903749076723,
+        "multiscale_entropy": 0.9160145554679957
     },
     "HyperBao": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 2.381738470523283,
+        "correlation_dimension": 1.9031345525981107,
         "dt": 0.00030068702800142903,
         "initial_conditions": [
             9.271308063781017,
@@ -1394,14 +1438,14 @@
             23.919154915696105,
             -16.69675939965203
         ],
-        "kaplan_yorke_dimension": 3.0640764821207336,
+        "kaplan_yorke_dimension": 3.0460429607933572,
         "lyapunov_spectrum_estimated": [
-            0.8038269267650078,
-            0.40120483041084365,
-            0.09858791441139067,
-            -20.377796427274742
+            0.6959739496471207,
+            0.2076688444499756,
+            0.01646766869238271,
+            -19.983737503321315
         ],
-        "maximum_lyapunov_estimated": 0.8038269267650078,
+        "maximum_lyapunov_estimated": 0.6959739496471207,
         "parameters": {
             "a": 36,
             "b": 3,
@@ -1410,11 +1454,12 @@
             "e": 21
         },
         "period": 0.5831505997603473,
-        "pesin_entropy": 1.303619671587242
+        "pesin_entropy": 0.9201105075982862,
+        "multiscale_entropy": 0.8910215561062699
     },
     "HyperCai": {
         "citation": "None",
-        "correlation_dimension": 2.3430620352191367,
+        "correlation_dimension": 2.3775113946995137,
         "dt": 0.0003654032174278714,
         "initial_conditions": [
             -10.691273602120157,
@@ -1422,14 +1467,14 @@
             18.388272900250726,
             -14.904493939514888
         ],
-        "kaplan_yorke_dimension": 3.1619555370202126,
+        "kaplan_yorke_dimension": 3.138030987910704,
         "lyapunov_spectrum_estimated": [
-            1.8665916073157822,
-            0.2201400480630083,
-            0.02416829406063962,
-            -13.113307862649517
+            1.634443623908957,
+            0.12845528254618424,
+            -0.003328688360603957,
+            -12.747646341795276
         ],
-        "maximum_lyapunov_estimated": 1.8665916073157822,
+        "maximum_lyapunov_estimated": 1.6344436239089568,
         "parameters": {
             "a": 27.5,
             "b": 3,
@@ -1438,11 +1483,12 @@
             "e": 3.3
         },
         "period": 0.6113936187028436,
-        "pesin_entropy": 2.1108999494394305
+        "pesin_entropy": 1.7628989064551457,
+        "multiscale_entropy": 1.1155413734604414
     },
     "HyperJha": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 2.323939899735909,
+        "correlation_dimension": 2.295404578145075,
         "dt": 0.0003746954441920209,
         "initial_conditions": [
             13.76544888070825,
@@ -1450,14 +1496,14 @@
             32.08179795423583,
             -51.189321449994914
         ],
-        "kaplan_yorke_dimension": 3.0558739356965647,
+        "kaplan_yorke_dimension": 3.053181782412727,
         "lyapunov_spectrum_estimated": [
-            0.3806584202344442,
-            0.2888780868524859,
-            0.07397804391385562,
-            -13.05703778842732
+            0.3949499860671474,
+            0.2920214751184925,
+            0.005568431034995312,
+            -13.022125042186726
         ],
-        "maximum_lyapunov_estimated": 0.3806584202344442,
+        "maximum_lyapunov_estimated": 0.3949499860671474,
         "parameters": {
             "a": 10,
             "b": 28,
@@ -1465,11 +1511,12 @@
             "d": 1.3
         },
         "period": 0.8564467295817622,
-        "pesin_entropy": 0.7435145510007858
+        "pesin_entropy": 0.6925398922206352,
+        "multiscale_entropy": 0.8934166449122942
     },
     "HyperLorenz": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 2.3986370092201508,
+        "correlation_dimension": 2.3256965997358985,
         "dt": 0.00028984341439371934,
         "initial_conditions": [
             -9.186073735061425,
@@ -1477,14 +1524,14 @@
             16.440536886214517,
             -145.0243848950473
         ],
-        "kaplan_yorke_dimension": 3.0466174495953546,
+        "kaplan_yorke_dimension": 3.044709906668086,
         "lyapunov_spectrum_estimated": [
-            0.3233192055243414,
-            0.21826786549056643,
-            0.08954630309812214,
-            -13.147994992523673
+            0.2925643599949083,
+            0.24691553258701357,
+            0.04704434899468292,
+            -13.118440302968889
         ],
-        "maximum_lyapunov_estimated": 0.3233192055243414,
+        "maximum_lyapunov_estimated": 0.2925643599949083,
         "parameters": {
             "a": 10,
             "b": 2.667,
@@ -1492,11 +1539,12 @@
             "d": 1.1
         },
         "period": 1.277546730110058,
-        "pesin_entropy": 0.6311333741130299
+        "pesin_entropy": 0.5865242415766048,
+        "multiscale_entropy": 0.8026458791332332
     },
     "HyperLu": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 2.4396790467349634,
+        "correlation_dimension": 2.343735648584751,
         "dt": 0.000315613385769233,
         "initial_conditions": [
             8.11348619,
@@ -1504,14 +1552,14 @@
             18.44590719,
             -28.38151717
         ],
-        "kaplan_yorke_dimension": 3.0814305023074535,
+        "kaplan_yorke_dimension": 3.0822889656900583,
         "lyapunov_spectrum_estimated": [
-            1.0704842249919193,
-            0.568243102510714,
-            -0.031100144660001935,
-            -19.282159064346992
+            1.0855770127041702,
+            0.4753850931706396,
+            0.02849951886859947,
+            -19.313823203887658
         ],
-        "maximum_lyapunov_estimated": 1.0704842249919193,
+        "maximum_lyapunov_estimated": 1.0855770127041702,
         "parameters": {
             "a": 36,
             "b": 3,
@@ -1519,11 +1567,12 @@
             "d": 1.3
         },
         "period": 0.7162856981996777,
-        "pesin_entropy": 1.6387273275026333
+        "pesin_entropy": 1.5894616248138722,
+        "multiscale_entropy": 1.0455788608813867
     },
     "HyperPang": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 2.404036308173654,
+        "correlation_dimension": 2.409444534598458,
         "dt": 0.0003291356000406641,
         "initial_conditions": [
             8.40863585,
@@ -1531,14 +1580,14 @@
             27.91032548,
             -1.26300886
         ],
-        "kaplan_yorke_dimension": 3.0901741519053054,
+        "kaplan_yorke_dimension": 3.08902125132107,
         "lyapunov_spectrum_estimated": [
-            1.530593576076504,
-            0.2885902332821805,
-            0.04373357028837783,
-            -21.043310356485847
+            1.586932998381499,
+            0.28444192185263556,
+            -0.0011541322141891326,
+            -21.007696151519628
         ],
-        "maximum_lyapunov_estimated": 1.530593576076504,
+        "maximum_lyapunov_estimated": 1.586932998381499,
         "parameters": {
             "a": 36,
             "b": 3,
@@ -1546,11 +1595,12 @@
             "d": 2
         },
         "period": 0.8439374360017028,
-        "pesin_entropy": 1.8629173796470622
+        "pesin_entropy": 1.871913394885623,
+        "multiscale_entropy": 0.9172158388570456
     },
     "HyperQi": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 2.1190836761602556,
+        "correlation_dimension": 2.0678487037707702,
         "dt": 2.4164213125677487e-05,
         "initial_conditions": [
             11.250900857894639,
@@ -1558,14 +1608,14 @@
             50.16987924937642,
             -168.2485185683687
         ],
-        "kaplan_yorke_dimension": 3.2781935338818404,
+        "kaplan_yorke_dimension": 3.2816770286126777,
         "lyapunov_spectrum_estimated": [
-            12.878472296919046,
-            4.870047191205436,
-            -0.5202545526488818,
-            -59.40028018738256
+            13.908799876284396,
+            2.8519979827853357,
+            -0.04957904444451209,
+            -59.32758839771818
         ],
-        "maximum_lyapunov_estimated": 12.878472296919046,
+        "maximum_lyapunov_estimated": 13.908799876284396,
         "parameters": {
             "a": 50,
             "b": 24,
@@ -1575,11 +1625,12 @@
             "f": 30
         },
         "period": 0.06186038560173437,
-        "pesin_entropy": 17.748519488124483
+        "pesin_entropy": 16.760797859069733,
+        "multiscale_entropy": 0.9988440965886223
     },
     "HyperRossler": {
         "citation": "Rossler, O. E. (1979). An equation for hyperchaos.",
-        "correlation_dimension": 1.9717810966453864,
+        "correlation_dimension": 1.8918979971680174,
         "dt": 0.000732209408095841,
         "initial_conditions": [
             -93.667697,
@@ -1587,14 +1638,14 @@
             0.032086964,
             43.792796
         ],
-        "kaplan_yorke_dimension": 2.8845112969082676,
+        "kaplan_yorke_dimension": 2.916384112225743,
         "lyapunov_spectrum_estimated": [
-            0.11873225312328317,
-            -0.001633630063944051,
-            -0.1473029672028701,
-            -36.61176693870994
+            0.27859233648384435,
+            -7.749198930652314e-05,
+            -0.3014660985555502,
+            -70.26609894565237
         ],
-        "maximum_lyapunov_estimated": 0.11873225312328317,
+        "maximum_lyapunov_estimated": 0.27859233648384435,
         "parameters": {
             "a": 0.25,
             "b": 3.0,
@@ -1602,11 +1653,12 @@
             "d": 0.05
         },
         "period": 1.1157476694793766,
-        "pesin_entropy": 0.11873225312328317
+        "pesin_entropy": 0.2789695684743801,
+        "multiscale_entropy": 0.9144754695112332
     },
     "HyperWang": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 2.439991887189313,
+        "correlation_dimension": 2.384028593490252,
         "dt": 0.0003402798297977575,
         "initial_conditions": [
             0.16824907,
@@ -1614,14 +1666,14 @@
             37.04033781,
             -15.29027381
         ],
-        "kaplan_yorke_dimension": 3.1010018883997184,
+        "kaplan_yorke_dimension": 3.105321722354005,
         "lyapunov_spectrum_estimated": [
-            1.2654432033777314,
-            0.22647270474606856,
-            -0.12008724416216701,
-            -13.917149117286193
+            1.2224015619377895,
+            0.25827623672371736,
+            -0.0075512136517132625,
+            -13.986919236227278
         ],
-        "maximum_lyapunov_estimated": 1.2654432033777314,
+        "maximum_lyapunov_estimated": 1.2224015619377895,
         "parameters": {
             "a": 10,
             "b": 40,
@@ -1630,11 +1682,12 @@
             "e": 4
         },
         "period": 0.6481520567576332,
-        "pesin_entropy": 1.4919159081238
+        "pesin_entropy": 1.480677798661507,
+        "multiscale_entropy": 0.9969261837212393
     },
     "HyperXu": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 2.3361477216651405,
+        "correlation_dimension": 2.305709840802521,
         "dt": 0.0004584361211286094,
         "initial_conditions": [
             0.68944486,
@@ -1642,14 +1695,14 @@
             -0.5814657,
             0.26629277
         ],
-        "kaplan_yorke_dimension": 3.0958089922194407,
+        "kaplan_yorke_dimension": 3.0909471864561056,
         "lyapunov_spectrum_estimated": [
-            1.0552264365193786,
-            0.15566299895001995,
-            0.07137063864916243,
-            -13.789018361647202
+            1.0420068843753962,
+            0.20717763316365526,
+            -0.0033988115975040426,
+            -13.697896294059921
         ],
-        "maximum_lyapunov_estimated": 1.0552264365193786,
+        "maximum_lyapunov_estimated": 1.0420068843753962,
         "parameters": {
             "a": 10,
             "b": 40,
@@ -1658,11 +1711,12 @@
             "e": 16
         },
         "period": 1.1328151255687646,
-        "pesin_entropy": 1.282260074118561
+        "pesin_entropy": 1.2491913312241498,
+        "multiscale_entropy": 0.9312323303231519
     },
     "HyperYan": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 1.8962092985870163,
+        "correlation_dimension": 1.7169092247689766,
         "dt": 0.00011572652857280079,
         "initial_conditions": [
             -6.576620730899293,
@@ -1670,14 +1724,14 @@
             17.796515255115004,
             0.8072357311545831
         ],
-        "kaplan_yorke_dimension": 2.0877547215288312,
+        "kaplan_yorke_dimension": 2.0711118082329567,
         "lyapunov_spectrum_estimated": [
-            1.0567374962602327,
-            0.31589115887091557,
-            -15.265162560437695,
-            -39.35362673932406
+            0.9120352761173002,
+            0.15303345953001665,
+            -14.977382134147613,
+            -39.36365990052555
         ],
-        "maximum_lyapunov_estimated": 1.0567374962602327,
+        "maximum_lyapunov_estimated": 0.9120352761173002,
         "parameters": {
             "a": 37,
             "b": 3,
@@ -1685,11 +1739,12 @@
             "d": 38
         },
         "period": 0.9127028626966961,
-        "pesin_entropy": 1.3726286551311482
+        "pesin_entropy": 1.0650687356473167,
+        "multiscale_entropy": 0.8166157518949907
     },
     "HyperYangChen": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 2.4708198325820114,
+        "correlation_dimension": 2.4394788306107964,
         "dt": 0.00036508114507867846,
         "initial_conditions": [
             3.534464234888686,
@@ -1697,14 +1752,14 @@
             25.04917588890622,
             17.118520274514353
         ],
-        "kaplan_yorke_dimension": 3.0240801407113427,
+        "kaplan_yorke_dimension": 3.026605264361547,
         "lyapunov_spectrum_estimated": [
-            0.4339358641064494,
-            0.3378605785522084,
-            0.0864275217210039,
-            -34.66522483296487
+            0.5742688696462735,
+            0.327365255173604,
+            0.023510192276255986,
+            -34.77284163099938
         ],
-        "maximum_lyapunov_estimated": 0.4339358641064494,
+        "maximum_lyapunov_estimated": 0.5742688696462734,
         "parameters": {
             "a": 30,
             "b": 3,
@@ -1712,7 +1767,8 @@
             "d": 8
         },
         "period": 0.9127028626966961,
-        "pesin_entropy": 0.8582239643796618
+        "pesin_entropy": 0.9255171125652686,
+        "multiscale_entropy": 0.9730322217427024
     },
     "IkedaDelay": {
         "citation": "K. Ikeda and K. Matsumoto (1987). High-dimensional chaotic behavior in systems with time-delayed feedback, Physica D, 29 (1-2), 223-235",
@@ -1757,20 +1813,20 @@
     },
     "IsothermalChemical": {
         "citation": "Petrov, Scott, Showalter. Mixed-mode oscillations in chemical systems. J Chem Phys 1992",
-        "correlation_dimension": 1.0899437284121607,
+        "correlation_dimension": 1.0903385466106001,
         "dt": 8.907e-05,
         "initial_conditions": [
             0.5141505602006595,
             0.9984288208727641,
             1.0061777118724
         ],
-        "kaplan_yorke_dimension": 2.034341661393785,
+        "kaplan_yorke_dimension": 2.0385823810364654,
         "lyapunov_spectrum_estimated": [
-            0.46152589148219963,
-            -0.23470154029469534,
-            -7.387969959371565
+            0.3365871343421436,
+            -0.05136527222093221,
+            -7.392541736904205
         ],
-        "maximum_lyapunov_estimated": 0.46152589148219963,
+        "maximum_lyapunov_estimated": 0.3365871343421436,
         "parameters": {
             "delta": 1.0,
             "kappa": 2.5,
@@ -1778,11 +1834,12 @@
             "sigma": 0.013
         },
         "period": 0.7302799999999999,
-        "pesin_entropy": 0.46152589148219963
+        "pesin_entropy": 0.3365871343421436,
+        "multiscale_entropy": 0.6589422003608746
     },
     "ItikBanksTumor": {
         "citation": "Itik, Banks. Int J Bifurcat Chaos 2010",
-        "correlation_dimension": 1.0078949844455365,
+        "correlation_dimension": 1.0127192656492157,
         "description": "A model of cancer cell populations.",
         "dt": 0.002487,
         "initial_conditions": [
@@ -1790,13 +1847,13 @@
             0.87071642,
             0.015926427
         ],
-        "kaplan_yorke_dimension": 2.009157247122884,
+        "kaplan_yorke_dimension": 2.0152772613355485,
         "lyapunov_spectrum_estimated": [
-            0.02176420362319617,
-            -0.015522672493756186,
-            -0.5552704754047547
+            0.022156938955395417,
+            -0.0135394920593605,
+            -0.5610833889492404
         ],
-        "maximum_lyapunov_estimated": 0.02176420362319617,
+        "maximum_lyapunov_estimated": 0.022156938955395417,
         "parameters": {
             "a12": 1,
             "a13": 2.5,
@@ -1808,34 +1865,36 @@
             "r3": 4.5
         },
         "period": 49.74,
-        "pesin_entropy": 0.02176420362319617
+        "pesin_entropy": 0.022156938955395417,
+        "multiscale_entropy": 0.5883298730506914
     },
     "JerkCircuit": {
         "citation": "Sprott IEEE Circ. Sys. 2011.",
-        "correlation_dimension": 1.7893225572318991,
+        "correlation_dimension": 1.836822800294913,
         "dt": 0.000749,
         "initial_conditions": [
             -1.300882,
             0.065382947,
             0.91801911
         ],
-        "kaplan_yorke_dimension": 2.5114713610117443,
+        "kaplan_yorke_dimension": 2.5082428902531144,
         "lyapunov_spectrum_estimated": [
-            0.40171299105200364,
-            0.18811442095258255,
-            -1.1476388622544471
+            0.394872929553187,
+            0.1849026306096344,
+            -1.1407351759248092
         ],
-        "maximum_lyapunov_estimated": 0.40171299105200364,
+        "maximum_lyapunov_estimated": 0.394872929553187,
         "parameters": {
             "eps": 1e-09,
             "y0": 0.026
         },
         "period": 19.4546,
-        "pesin_entropy": 0.5898274120045862
+        "pesin_entropy": 0.5797755601628214,
+        "multiscale_entropy": 0.38139916676685187
     },
     "KawczynskiStrizhak": {
         "citation": "P. E. Strizhak and A. L. Kawczynski, J. Phys. Chem. 99, 10830 (1995).",
-        "correlation_dimension": 0.5074333181999937,
+        "correlation_dimension": 0.49778489205270265,
         "description": "A chemical oscillator model describing mixed-modes in the BZ equations.",
         "dt": 0.00959,
         "initial_conditions": [
@@ -1843,13 +1902,13 @@
             5.8636902,
             -1.2031947
         ],
-        "kaplan_yorke_dimension": 1.4092145947947747,
+        "kaplan_yorke_dimension": 1.4235221965773541,
         "lyapunov_spectrum_estimated": [
-            0.025862499562663073,
-            -0.07149985995993595,
-            -0.3150957773427542
+            0.025607519929323416,
+            -0.06145426210744069,
+            -0.31683393262481707
         ],
-        "maximum_lyapunov_estimated": 0.025862499562663073,
+        "maximum_lyapunov_estimated": 0.02560751992932341,
         "parameters": {
             "beta": -0.4,
             "gamma": 0.49,
@@ -1857,24 +1916,25 @@
             "mu": 2.1
         },
         "period": 7.991666666666667,
-        "pesin_entropy": 0.025862499562663073
+        "pesin_entropy": 0.02560751992932341,
+        "multiscale_entropy": 0.5935098791328474
     },
     "Laser": {
         "citation": "Abooee, Yaghini-Bonabi, Jahed-Motlagh. Comm Nonline Sci 2013",
-        "correlation_dimension": 1.7190779289218372,
+        "correlation_dimension": 1.7191054642322454,
         "dt": 8.52e-05,
         "initial_conditions": [
             -2.540801356216252,
             -1.940570579119389,
             -2.9680975444071955
         ],
-        "kaplan_yorke_dimension": 2.049680633465388,
+        "kaplan_yorke_dimension": 2.049321615812801,
         "lyapunov_spectrum_estimated": [
-            0.926379775977096,
-            -0.13964657104513556,
-            -15.917864350534234
+            0.7637435195473311,
+            0.020943250302999646,
+            -15.909545615344538
         ],
-        "maximum_lyapunov_estimated": 0.926379775977096,
+        "maximum_lyapunov_estimated": 0.7637435195473311,
         "parameters": {
             "a": 10.0,
             "b": 1.0,
@@ -1884,11 +1944,12 @@
             "k": -6.0
         },
         "period": 0.94667,
-        "pesin_entropy": 0.926379775977096
+        "pesin_entropy": 0.7848314215142518,
+        "multiscale_entropy": 1.004437967414151
     },
     "LiuChen": {
         "citation": "Liu, Chen. Int J Bifurcat Chaos. 2004: 1395-1403.",
-        "correlation_dimension": 1.064075374500539,
+        "correlation_dimension": 1.06018642946504,
         "description": "Derived from Sakarya.",
         "dt": 0.0001483,
         "initial_conditions": [
@@ -1896,13 +1957,13 @@
             5.2437205e-10,
             -6.4444208e-10
         ],
-        "kaplan_yorke_dimension": 1.2538282866824686,
+        "kaplan_yorke_dimension": 1.2188137323261288,
         "lyapunov_spectrum_estimated": [
-            0.26689960214404507,
-            -1.0733393683736743,
-            -18.75442411300829
+            0.21332142584135133,
+            -0.9748996261500176,
+            -18.807059276226646
         ],
-        "maximum_lyapunov_estimated": 0.26689960214404507,
+        "maximum_lyapunov_estimated": 0.2133214258413513,
         "parameters": {
             "a": 0.4,
             "b": 12.0,
@@ -1914,48 +1975,50 @@
             "s": 1.0
         },
         "period": 8.0164,
-        "pesin_entropy": 0.26689960214404507
+        "pesin_entropy": 0.2133214258413513,
+        "multiscale_entropy": 0.7641473604711979
     },
     "Lorenz": {
         "citation": "Lorenz, Edward N (1963). Deterministic nonperiodic flow. Journal of the atmospheric sciences 20.2 (1963): 130-141.",
-        "correlation_dimension": 1.9905597638856043,
+        "correlation_dimension": 1.993931310517824,
         "dt": 0.0001801,
         "initial_conditions": [
             -9.7869288,
             -15.03852,
             20.533978
         ],
-        "kaplan_yorke_dimension": 2.074079887088261,
+        "kaplan_yorke_dimension": 2.075158758095728,
         "lyapunov_spectrum_estimated": [
-            1.016992106373554,
-            0.09560442785568812,
-            -14.887725721549213
+            1.0910931847726466,
+            0.02994120961308413,
+            -14.915552395875103
         ],
-        "maximum_lyapunov_estimated": 1.016992106373554,
+        "maximum_lyapunov_estimated": 1.0910931847726466,
         "parameters": {
             "beta": 2.667,
             "rho": 28,
             "sigma": 10
         },
         "period": 1.5008,
-        "pesin_entropy": 1.112596534229242
+        "pesin_entropy": 1.121034394385731,
+        "multiscale_entropy": 1.1541457906835575
     },
     "Lorenz84": {
         "citation": "E. Lorenz (1984). Irregularity: a fundamental property of the atmosphere. Tellus A, vol. 36, no. 2, pp. 98--110, 1984.",
-        "correlation_dimension": 1.8589294769114586,
+        "correlation_dimension": 1.8667731027742769,
         "dt": 0.000363,
         "initial_conditions": [
             1.926479236120359,
             -0.13402110197257552,
             -1.72146730664761
         ],
-        "kaplan_yorke_dimension": 2.414032487708553,
+        "kaplan_yorke_dimension": 2.4449761695022096,
         "lyapunov_spectrum_estimated": [
-            1.1143992546093684,
-            -0.12780221639441064,
-            -2.361747806242195
+            1.0474807193950644,
+            -0.045398035352994866,
+            -2.251992293230755
         ],
-        "maximum_lyapunov_estimated": 1.1143992546093684,
+        "maximum_lyapunov_estimated": 1.0474807193950644,
         "parameters": {
             "a": 1.32,
             "b": 7.91,
@@ -1963,11 +2026,12 @@
             "g": 4.194
         },
         "period": 6.2586,
-        "pesin_entropy": 1.1143992546093684
+        "pesin_entropy": 1.0474807193950644,
+        "multiscale_entropy": 0.6685802317710752
     },
     "Lorenz96": {
         "citation": "Lorenz, Edward (1996). Predictability: A problem partly solved. Seminar on Predictability, Vol. I, ECMWF.",
-        "correlation_dimension": 2.3145935552616836,
+        "correlation_dimension": 2.2561447518650386,
         "dt": 0.0001428,
         "initial_conditions": [
             -2.46820633,
@@ -1975,36 +2039,37 @@
             1.59270902,
             10.21372147
         ],
-        "kaplan_yorke_dimension": 3.146918832536465,
+        "kaplan_yorke_dimension": 3.1698163415908196,
         "lyapunov_spectrum_estimated": [
-            1.4301889845590217,
-            0.30081056545806195,
-            -1.225600479459104,
-            -3.430760086615324
+            1.6247012663091516,
+            0.17185232259745578,
+            -1.1936282999960617,
+            -3.550455057872212
         ],
-        "maximum_lyapunov_estimated": 1.4301889845590217,
+        "maximum_lyapunov_estimated": 1.6247012663091516,
         "parameters": {
             "f": 20.0
         },
         "period": 2.1969,
-        "pesin_entropy": 1.7309995500170836
+        "pesin_entropy": 1.7965535889066073,
+        "multiscale_entropy": 0.8046726640855828
     },
     "LorenzBounded": {
         "citation": "Sprott & Xiong (2015). Chaos.",
-        "correlation_dimension": 1.9688723768350849,
+        "correlation_dimension": 1.9641115851657072,
         "dt": 0.0002606,
         "initial_conditions": [
             -13.284881,
             -12.444334,
             34.188198
         ],
-        "kaplan_yorke_dimension": 2.067485624673264,
+        "kaplan_yorke_dimension": 2.0704391073439155,
         "lyapunov_spectrum_estimated": [
-            0.7655166893705379,
-            -0.008305846134585685,
-            -11.673212586712983
+            0.8497533717540197,
+            0.001413707285345669,
+            -12.120634680260636
         ],
-        "maximum_lyapunov_estimated": 0.7655166893705379,
+        "maximum_lyapunov_estimated": 0.8497533717540197,
         "parameters": {
             "beta": 2.667,
             "r": 64,
@@ -2012,11 +2077,12 @@
             "sigma": 10
         },
         "period": 1.3716,
-        "pesin_entropy": 0.7655166893705379
+        "pesin_entropy": 0.8513198508911037,
+        "multiscale_entropy": 1.1983193915488475
     },
     "LorenzCoupled": {
         "citation": "Lorenz, Edward N. Deterministic nonperiodic flow. Journal of the atmospheric sciences 20.2 (1963): 130-141.",
-        "correlation_dimension": 2.4036487878547987,
+        "correlation_dimension": 2.3989498239642524,
         "dt": 0.0001799,
         "initial_conditions": [
             7.0921483,
@@ -2026,16 +2092,16 @@
             0.96121877,
             0.89550187
         ],
-        "kaplan_yorke_dimension": 3.103467747520539,
+        "kaplan_yorke_dimension": 3.0408069075490425,
         "lyapunov_spectrum_estimated": [
-            1.1943411192753137,
-            0.18933705818286595,
-            -1.1643639794679,
-            -2.016002540936344,
-            -13.657711372039643,
-            -15.093749713081987
+            1.2218762961515068,
+            0.1222254715421154,
+            -1.265209618630438,
+            -1.9333037412103384,
+            -13.618111101381306,
+            -15.073328947851422
         ],
-        "maximum_lyapunov_estimated": 1.1943411192753137,
+        "maximum_lyapunov_estimated": 1.2218762961515068,
         "parameters": {
             "beta": 2.667,
             "eps": 2.85,
@@ -2045,11 +2111,12 @@
             "sigma": 10
         },
         "period": 1.6207,
-        "pesin_entropy": 1.3836781774581797
+        "pesin_entropy": 1.3441017676936224,
+        "multiscale_entropy": 1.1717493753138832
     },
     "LorenzStenflo": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 2.1376654700693614,
+        "correlation_dimension": 2.119146547661978,
         "dt": 0.0006259,
         "initial_conditions": [
             4.233438598886809,
@@ -2057,14 +2124,14 @@
             21.86662535600487,
             -1.4080695182833802
         ],
-        "kaplan_yorke_dimension": 2.1798101764256588,
+        "kaplan_yorke_dimension": 2.1738121741011174,
         "lyapunov_spectrum_estimated": [
-            0.4460185775982798,
-            0.04787351520517482,
-            -2.7302820227106332,
-            -3.449762905089308
+            0.44944459925783387,
+            0.026077542739630446,
+            -2.7358399678801906,
+            -3.4213273148340293
         ],
-        "maximum_lyapunov_estimated": 0.4460185775982798,
+        "maximum_lyapunov_estimated": 0.44944459925783387,
         "parameters": {
             "a": 2,
             "b": 0.7,
@@ -2072,11 +2139,12 @@
             "d": 1.5
         },
         "period": 3.8877142857142855,
-        "pesin_entropy": 0.4938920928034546
+        "pesin_entropy": 0.47552214199746434,
+        "multiscale_entropy": 1.0299236916146275
     },
     "LuChen": {
         "citation": "Lu, Chen. Int J Bifurcat Chaos. 2002: 659-661.",
-        "correlation_dimension": 1.3774753272936289,
+        "correlation_dimension": 1.372789971167648,
         "description": "    A system that switches shapes between the Lorenz and Chen attractors as the parameter c is varied from 12.7 to 28.5. Also called the Chen Celikovsky attractor",
         "dt": 0.0001216,
         "initial_conditions": [
@@ -2084,48 +2152,50 @@
             9.8813092,
             22.676714
         ],
-        "kaplan_yorke_dimension": 2.0380483396973386,
+        "kaplan_yorke_dimension": 2.0358980309317456,
         "lyapunov_spectrum_estimated": [
-            0.613748917344614,
-            0.24823554116679925,
-            -22.625303465477824
+            0.6651845739025707,
+            0.1450338199952451,
+            -22.56999542505058
         ],
-        "maximum_lyapunov_estimated": 0.613748917344614,
+        "maximum_lyapunov_estimated": 0.6651845739025707,
         "parameters": {
             "a": 36,
             "b": 3,
             "c": 18
         },
         "period": 2.3385,
-        "pesin_entropy": 0.8619844585114133
+        "pesin_entropy": 0.8102183938978158,
+        "multiscale_entropy": 0.4483903807918106
     },
     "LuChenCheng": {
         "citation": "Lu, Chen, Cheng. Int J Bifurcat Chaos. 2004: 1507--1537.",
-        "correlation_dimension": 1.7022072937057722,
+        "correlation_dimension": 1.7225991312358646,
         "dt": 0.0001108,
         "initial_conditions": [
             -5.5177615,
             2.4990595,
             10.461798
         ],
-        "kaplan_yorke_dimension": 2.0281718690985517,
+        "kaplan_yorke_dimension": 2.0293036172873244,
         "lyapunov_spectrum_estimated": [
-            0.24498370490729332,
-            0.08329665126364216,
-            -11.53579522997102
+            0.35106210160478324,
+            -0.012414362698175424,
+            -11.556516575635818
         ],
-        "maximum_lyapunov_estimated": 0.24498370490729332,
+        "maximum_lyapunov_estimated": 0.35106210160478324,
         "parameters": {
             "a": -10,
             "b": -4,
             "c": 18.1
         },
         "period": 0.92333,
-        "pesin_entropy": 0.3282803561709355
+        "pesin_entropy": 0.3510621518701211,
+        "multiscale_entropy": 0.6029763775293518
     },
     "MacArthur": {
         "citation": "MacArthur, R. 1969. Species packing, and what competition minimizes. PNAS 64:1369. Parameter values taken from a model of phytoplankton in Huisman & Weissing. Nature 1999.",
-        "correlation_dimension": 2.384095841038369,
+        "correlation_dimension": 2.2702320395980986,
         "description": "A model of chaotic oscillations in a plankton community, based on MacArthur's consumer resource model. Growth rates are determined using Liebig's law of the maximum",
         "dt": 0.004384,
         "initial_conditions": [
@@ -2140,20 +2210,20 @@
             0.21253581,
             0.22598604
         ],
-        "kaplan_yorke_dimension": 3.9622939320684436,
+        "kaplan_yorke_dimension": 3.8961444775216614,
         "lyapunov_spectrum_estimated": [
-            0.16305415948641122,
-            0.011761663803615992,
-            -0.03484621912435647,
-            -0.1460225168234712,
-            -0.2514915440117932,
-            -0.25196525072217957,
-            -0.25256606159104056,
-            -0.25286235007960856,
-            -0.2541638883264,
-            -14.332315933645646
+            0.1934617869736995,
+            0.004866584152339167,
+            -0.0431132227766039,
+            -0.17665092099562724,
+            -0.30357752906614904,
+            -0.30392441898183636,
+            -0.30474608910196055,
+            -0.3051840587615213,
+            -0.3058908399877519,
+            -17.37453227551654
         ],
-        "maximum_lyapunov_estimated": 0.16305415948641122,
+        "maximum_lyapunov_estimated": 0.1934617869736995,
         "parameters": {
             "c": [
                 [
@@ -2241,7 +2311,8 @@
             ]
         },
         "period": 43.406,
-        "pesin_entropy": 0.1748158232900272
+        "pesin_entropy": 0.19832837112603868,
+        "multiscale_entropy": 0.7844902548776685
     },
     "MackeyGlass": {
         "citation": "Glass, L. and Mackey, M. C. (1979). Pathological physiological conditions resulting from instabilities in physiological control systems. Ann. NY. Acad. Sci.",
@@ -2286,44 +2357,45 @@
     },
     "MooreSpiegel": {
         "citation": "Moore, Spiegel. A Thermally Excited Nonlinear Oscillator, Ap. J., 143, 871 (1966)",
-        "correlation_dimension": 1.7523055520903814,
+        "correlation_dimension": 1.8466427700305443,
         "dt": 0.0001598,
         "initial_conditions": [
             -3.4733266,
             19.666962,
             -3.8262485
         ],
-        "kaplan_yorke_dimension": 2.298113662933388,
+        "kaplan_yorke_dimension": 2.3217713120052443,
         "lyapunov_spectrum_estimated": [
-            0.4118068385010778,
-            -0.06557108268778261,
-            -1.1576221521389543
+            0.4074353399833356,
+            -0.022079955878999143,
+            -1.1975751283606624
         ],
-        "maximum_lyapunov_estimated": 0.4118068385010778,
+        "maximum_lyapunov_estimated": 0.4074353399833356,
         "parameters": {
             "a": 10,
             "b": 4,
             "eps": 9
         },
         "period": 1.2887,
-        "pesin_entropy": 0.4118068385010778
+        "pesin_entropy": 0.4076334003995097,
+        "multiscale_entropy": 0.5401952179209213
     },
     "MultiChua": {
         "citation": "Mufcstak E. Yalcin, Johan A. K. Suykens, Joos Vandewalle. Cellular Neural Networks, Multi-Scroll Chaos And Synchronization. ",
-        "correlation_dimension": 1.606914806025376,
+        "correlation_dimension": 1.7519423469999007,
         "dt": 0.0007589,
         "initial_conditions": [
             -21.160123,
             1.0322356,
             27.405269
         ],
-        "kaplan_yorke_dimension": 2.0811690330352763,
+        "kaplan_yorke_dimension": 2.0710214570482988,
         "lyapunov_spectrum_estimated": [
-            0.2181357700040823,
-            0.01529033906844614,
-            -2.998953157884127
+            0.2210571234274344,
+            -0.00140279701621115,
+            -3.10264254580399
         ],
-        "maximum_lyapunov_estimated": 0.2181357700040823,
+        "maximum_lyapunov_estimated": 0.2210571234274344,
         "parameters": {
             "a": 9,
             "b": 14.286,
@@ -2345,56 +2417,59 @@
             ]
         },
         "period": 2.2586,
-        "pesin_entropy": 0.23342610907252845
+        "pesin_entropy": 0.22151080996231726,
+        "multiscale_entropy": 0.8118881305702679
     },
     "NewtonLiepnik": {
         "citation": "Leipnik, R. B., and T. A. Newton (1981). Double strange attractors in rigid body motion with linear feedback control. Physics Letters A 86.2 (1981): 63-67.",
-        "correlation_dimension": 1.9742093892845003,
+        "correlation_dimension": 2.0051574625339903,
         "dt": 0.0009871,
         "initial_conditions": [
             0.29430753,
             0.10649486,
             0.29081125
         ],
-        "kaplan_yorke_dimension": 2.2294194320222847,
+        "kaplan_yorke_dimension": 2.2206092778719664,
         "lyapunov_spectrum_estimated": [
-            0.15022603362181444,
-            0.028300351712033902,
-            -0.7871475451975425
+            0.1723564207468104,
+            -0.00036976661148194504,
+            -0.7795789311467557
         ],
-        "maximum_lyapunov_estimated": 0.15022603362181444,
+        "maximum_lyapunov_estimated": 0.1723564207468104,
         "parameters": {
             "a": 0.4,
             "b": 0.175
         },
         "period": 8.5095,
-        "pesin_entropy": 0.17852638533384835
+        "pesin_entropy": 0.17242608410350868,
+        "multiscale_entropy": 0.6322918700854281
     },
     "NoseHoover": {
         "citation": "Nose, S. A unified formulation of the constant temperature molecular-dynamics methods. Journal of Chemical Physics (1984). Hoover, William G. Canonical dynamics: Equilibrium phase-space distributions. Phys. Rev. A. (1985).",
-        "correlation_dimension": 1.9631612871325728,
+        "correlation_dimension": 1.9624149541987226,
         "dt": 0.0009857,
         "initial_conditions": [
             -1.9758582,
             0.24647527,
             0.79024299
         ],
-        "kaplan_yorke_dimension": 4.729234860142638,
+        "kaplan_yorke_dimension": 6.213204677134776,
         "lyapunov_spectrum_estimated": [
-            0.043429618629434175,
-            0.02349325530545544,
-            -0.024410142692778292
+            0.04757010871740569,
+            0.0013844486958287268,
+            -0.011653762286922777
         ],
-        "maximum_lyapunov_estimated": 0.043429618629434175,
+        "maximum_lyapunov_estimated": 0.04757010871740569,
         "parameters": {
             "a": 1.5
         },
         "period": 5.8673,
-        "pesin_entropy": 0.06692287393488962
+        "pesin_entropy": 0.04895455741323442,
+        "multiscale_entropy": 0.5656074689683536
     },
     "NuclearQuadrupole": {
         "citation": "Baran V. and Raduta A. A. (1998), International Journal of Modern Physics E, 7, pp 527\u2013551",
-        "correlation_dimension": 2.1482163373786918,
+        "correlation_dimension": 2.0980551223412083,
         "dt": 0.03277,
         "hamiltonian": true,
         "initial_conditions": [
@@ -2403,25 +2478,26 @@
             -0.85075322,
             1.63576085
         ],
-        "kaplan_yorke_dimension": 4.283043350245615,
+        "kaplan_yorke_dimension": 4.280996083113027,
         "lyapunov_spectrum_estimated": [
-            0.28191207285946446,
-            0.05912662933000888,
-            0.0015535426799998396,
-            -0.2605078462171475
+            0.27858365099437626,
+            0.06629535725881477,
+            -0.00449888101008936,
+            -0.2658004759134054
         ],
-        "maximum_lyapunov_estimated": 0.28191207285946446,
+        "maximum_lyapunov_estimated": 0.27858365099437626,
         "parameters": {
             "a": 1.0,
             "b": 0.55,
             "d": 0.4
         },
         "period": 6.023076923076923,
-        "pesin_entropy": 0.3425922448694732
+        "pesin_entropy": 0.3448827969293456,
+        "multiscale_entropy": 0.8209529097052416
     },
     "OscillatingFlow": {
         "citation": "T. H. Solomon and J. P. Gollub, Phys. Rev. A 38, 6280 (1988).",
-        "correlation_dimension": 2.379069541455471,
+        "correlation_dimension": 2.346659533315372,
         "description": "A model flow with KAM tori. Original parameters have been rescaled by k",
         "dt": 0.002672,
         "initial_conditions": [
@@ -2429,13 +2505,13 @@
             1.04719755,
             0.4
         ],
-        "kaplan_yorke_dimension": 2.9490247064638355,
+        "kaplan_yorke_dimension": 2.962629189215532,
         "lyapunov_spectrum_estimated": [
-            0.43820792973112055,
-            -0.007260754145089961,
-            -0.4540947908424686
+            0.4274159768365289,
+            -0.005029615144529367,
+            -0.43888500460322705
         ],
-        "maximum_lyapunov_estimated": 0.43820792973112055,
+        "maximum_lyapunov_estimated": 0.4274159768365288,
         "nonautonomous": true,
         "parameters": {
             "b": 0.48,
@@ -2444,15 +2520,16 @@
             "u": 0.72
         },
         "period": 23.857,
-        "pesin_entropy": 0.43820792973112055,
+        "pesin_entropy": 0.4274159768365288,
         "unbounded_indices": [
             0,
             1
-        ]
+        ],
+        "multiscale_entropy": 0.6177682255070645
     },
     "PanXuZhou": {
         "citation": "Zhou, Wuneng, et al. On dynamics analysis of a new chaotic attractor. Physics Letters A 372.36 (2008): 5773-5777..",
-        "correlation_dimension": 1.9004143357675616,
+        "correlation_dimension": 0.7715266839229182,
         "description": "A named attractor related to the DequanLi attractor",
         "dt": 0.0007607,
         "initial_conditions": [
@@ -2460,13 +2537,13 @@
             -1.98052429,
             14.65665869
         ],
-        "kaplan_yorke_dimension": 2.0554734660688965,
+        "kaplan_yorke_dimension": 2.0644468877116084,
         "lyapunov_spectrum_estimated": [
-            0.733482152526236,
-            0.04385819535134095,
-            -13.603991363171932
+            0.8697394318152156,
+            0.01603608355912526,
+            -13.744271396596757
         ],
-        "maximum_lyapunov_estimated": 0.733482152526236,
+        "maximum_lyapunov_estimated": 0.8697394318152157,
         "parameters": {
             "a": 10,
             "c": -2.6667,
@@ -2476,27 +2553,29 @@
             "k": 16
         },
         "period": 1.7829,
-        "pesin_entropy": 0.777340347877577
+        "pesin_entropy": 0.885775515374341,
+        "multiscale_entropy": 1.0993195372407014
     },
     "PehlivanWei": {
         "citation": "Pehlivan, Ihsan, and Wei Zhouchao (2012). Analysis, nonlinear control, and chaos generator circuit of another strange chaotic system.",
-        "correlation_dimension": 1.793414249831702,
+        "correlation_dimension": 1.7200323215068793,
         "dt": 0.01299,
         "initial_conditions": [
             0.21665608,
             0.86710502,
             0.50627859
         ],
-        "kaplan_yorke_dimension": 2.1133651043625177,
+        "kaplan_yorke_dimension": 2.1563635563177295,
         "lyapunov_spectrum_estimated": [
-            0.11045272900840396,
-            -0.033800418098302636,
-            -0.5973797897654509
+            0.09512327528959069,
+            0.0015323304198873254,
+            -0.6168618108533457
         ],
-        "maximum_lyapunov_estimated": 0.11045272900840396,
+        "maximum_lyapunov_estimated": 0.0951232752895907,
         "parameters": {},
         "period": 3.7487330316742087,
-        "pesin_entropy": 0.11045272900840396
+        "pesin_entropy": 0.09665562724246173,
+        "multiscale_entropy": 0.6547493000137818
     },
     "PiecewiseCircuit": {
         "citation": "A. Tamasevicius, G. Mykolaitis, S. Bumeliene, Electron. Lett. 42, 13 (2006)",
@@ -2541,7 +2620,7 @@
     },
     "Qi": {
         "citation": "Letellier & Rossler (2007). Hyperchaos. Scholarpedia 2.8 (2007): 1936.",
-        "correlation_dimension": 1.8940373473447132,
+        "correlation_dimension": 1.8913519055600239,
         "dt": 0.00069418,
         "initial_conditions": [
             0.2562042648386667,
@@ -2549,14 +2628,14 @@
             7.259823760387948,
             1.3162558970131963
         ],
-        "kaplan_yorke_dimension": 2.527057397724626,
+        "kaplan_yorke_dimension": 2.498645226832379,
         "lyapunov_spectrum_estimated": [
-            1.8068316212673512,
-            0.5436493994683229,
-            -4.368251972013998,
-            -44.47430875263343
+            2.0360429519545677,
+            0.1320125824983059,
+            -4.347891883424509,
+            -44.356041824978305
         ],
-        "maximum_lyapunov_estimated": 1.8068316212673512,
+        "maximum_lyapunov_estimated": 2.0360429519545677,
         "parameters": {
             "a": 45,
             "b": 10,
@@ -2564,58 +2643,61 @@
             "d": 10
         },
         "period": 0.40820999999999996,
-        "pesin_entropy": 2.350481020735674
+        "pesin_entropy": 2.168055534452874,
+        "multiscale_entropy": 0.8855652233700573
     },
     "QiChen": {
         "citation": "Qi et al. Chaos, Solitons & Fractals 2008.",
-        "correlation_dimension": 1.873369782915053,
+        "correlation_dimension": 1.830987290684598,
         "dt": 4.153e-05,
         "initial_conditions": [
             17.420882,
             5.5459627,
             78.89139
         ],
-        "kaplan_yorke_dimension": 2.102510638028074,
+        "kaplan_yorke_dimension": 2.0917466081236316,
         "lyapunov_spectrum_estimated": [
-            4.017691681564735,
-            0.4641995777325576,
-            -44.35508189220781
+            3.8880075026301206,
+            0.13379585631170307,
+            -43.8359895934497
         ],
-        "maximum_lyapunov_estimated": 4.017691681564735,
+        "maximum_lyapunov_estimated": 3.8880075026301206,
         "parameters": {
             "a": 38,
             "b": 2.666,
             "c": 80
         },
         "period": 0.39179,
-        "pesin_entropy": 4.481891259297293
+        "pesin_entropy": 4.021803358941824,
+        "multiscale_entropy": 0.846453868214798
     },
     "RabinovichFabrikant": {
         "citation": "Rabinovich, Mikhail I.; Fabrikant, A. L. (1979). Stochastic Self-Modulation of Waves in Nonequilibrium Media. Sov. Phys. JETP.",
-        "correlation_dimension": 2.034143325220048,
+        "correlation_dimension": 2.0781334886735414,
         "dt": 0.0005045,
         "initial_conditions": [
             -1.8207276,
             0.83440917,
             0.2078248
         ],
-        "kaplan_yorke_dimension": 2.344787840321537,
+        "kaplan_yorke_dimension": 2.36076141745315,
         "lyapunov_spectrum_estimated": [
-            0.21794784998541988,
-            -0.000892784098171977,
-            -0.6568700689021242
+            0.24233580922074083,
+            1.7068504600119996e-05,
+            -0.6717710576786404
         ],
-        "maximum_lyapunov_estimated": 0.21794784998541988,
+        "maximum_lyapunov_estimated": 0.24233580922074083,
         "parameters": {
             "a": 1.1,
             "g": 0.87
         },
         "period": 2.3356,
-        "pesin_entropy": 0.21794784998541988
+        "pesin_entropy": 0.24239107527154555,
+        "multiscale_entropy": 0.9189339042839536
     },
     "RayleighBenard": {
         "citation": "TBD",
-        "correlation_dimension": 1.9896130763869881,
+        "correlation_dimension": 1.9218207098924294,
         "description": "A low dimensional model of a convection cell. The Lorenz equations are also a low-dimensional model of R-B convection.",
         "dt": 0.0001122,
         "initial_conditions": [
@@ -2623,107 +2705,111 @@
             -13.32018,
             26.879362
         ],
-        "kaplan_yorke_dimension": 2.1175042858174784,
+        "kaplan_yorke_dimension": 2.1059475747031655,
         "lyapunov_spectrum_estimated": [
-            1.8300719662202463,
-            0.48902671197908365,
-            -19.295403901424237
+            1.7098267053321798,
+            0.3076248958606731,
+            -19.04195798211122
         ],
-        "maximum_lyapunov_estimated": 1.8300719662202463,
+        "maximum_lyapunov_estimated": 1.7098267053321798,
         "parameters": {
             "a": 30,
             "b": 5,
             "r": 18
         },
         "period": 0.91967,
-        "pesin_entropy": 2.31909867819933
+        "pesin_entropy": 2.0174516011928527,
+        "multiscale_entropy": 0.9190517908569512
     },
     "RikitakeDynamo": {
         "citation": "Rikitake, T., Oscillations of a system of disk dynamos, Mathematical Proceedings of the Cambridge Philosophical Society, 1958.",
-        "correlation_dimension": 1.9363434907048738,
+        "correlation_dimension": 1.9056463792003642,
         "dt": 0.0007077,
         "initial_conditions": [
             -0.7791562791136255,
             -0.6302244598741468,
             2.671200187214492
         ],
-        "kaplan_yorke_dimension": 2.064568021534762,
+        "kaplan_yorke_dimension": 2.0672834652602137,
         "lyapunov_spectrum_estimated": [
-            0.13803667272123038,
-            0.00032533622575367624,
-            -2.1552616142595387
+            0.14571192786308473,
+            0.0007222098218782572,
+            -2.1743990404663296
         ],
-        "maximum_lyapunov_estimated": 0.13803667272123038,
+        "maximum_lyapunov_estimated": 0.14571192786308473,
         "parameters": {
             "a": 1.0,
             "mu": 1.0
         },
         "period": 5.8975,
-        "pesin_entropy": 0.13836200894698406
+        "pesin_entropy": 0.14655639292019562,
+        "multiscale_entropy": 0.9664471212975273
     },
     "Rossler": {
         "citation": "Rossler, O. E. (1976), An Equation for Continuous Chaos, Physics Letters, 57A (5): 3972013398,",
-        "correlation_dimension": 1.7281954283619687,
+        "correlation_dimension": 1.796820702938341,
         "dt": 0.0007563,
         "initial_conditions": [
             6.5134412,
             0.4772013,
             0.34164294
         ],
-        "kaplan_yorke_dimension": 2.016159103266072,
+        "kaplan_yorke_dimension": 2.0146095059018845,
         "lyapunov_spectrum_estimated": [
-            0.0685223824404672,
-            0.02841852476308361,
-            -5.765580072115927
+            0.0763301393780693,
+            0.007522476799147231,
+            -5.741024338716747
         ],
-        "maximum_lyapunov_estimated": 0.0685223824404672,
+        "maximum_lyapunov_estimated": 0.07633013937806932,
         "parameters": {
             "a": 0.2,
             "b": 0.2,
             "c": 5.7
         },
         "period": 5.9086,
-        "pesin_entropy": 0.09694090720355081
+        "pesin_entropy": 0.08385261617721652,
+        "multiscale_entropy": 0.605878349292794
     },
     "Rucklidge": {
         "citation": "Rucklidge, A.M., Chaos in models of double convection, Journal of Fluid Mechanics, 1992, 237, 209-229.",
-        "correlation_dimension": 1.8984618238913733,
+        "correlation_dimension": 1.9824460344125072,
         "dt": 0.0007408,
         "initial_conditions": [
             1.9257158,
             3.1923835,
             5.7829655
         ],
-        "kaplan_yorke_dimension": 2.0675586864973705,
+        "kaplan_yorke_dimension": 2.055660980653234,
         "lyapunov_spectrum_estimated": [
-            0.18923281891961585,
-            0.030010289711614575,
-            -3.2566715567797235
+            0.18286378999435815,
+            -0.0039065765687848,
+            -3.2151284307504713
         ],
-        "maximum_lyapunov_estimated": 0.18923281891961585,
+        "maximum_lyapunov_estimated": 0.18286378999435815,
         "parameters": {
             "a": 2.0,
             "b": 6.7
         },
         "period": 6.0721,
-        "pesin_entropy": 0.21924310863123042
+        "pesin_entropy": 0.18286397807774446,
+        "multiscale_entropy": 0.6441822675461503
     },
     "Sakarya": {
         "citation": "Li, Chunbiao, et al (2015). A novel four-wing strange attractor born in bistability. IEICE Electronics Express 12.4.",
-        "correlation_dimension": 2.0419982079036165,
+        "correlation_dimension": 2.055704010721625,
         "dt": 0.0004486,
         "initial_conditions": [
             -2.8976045,
             3.8877978,
             3.07465
         ],
-        "kaplan_yorke_dimension": 2.2663142935834766,
+        "kaplan_yorke_dimension": 2.245095314885476,
         "lyapunov_spectrum_estimated": [
-            0.30476669511148585,
-            0.047062762570489414,
-            -1.2888611717753382
+            0.3080921246264039,
+            0.00035292037656675234,
+            -1.2584697568737606
         ],
-        "maximum_lyapunov_estimated": 0.30476669511148585,
+        "maximum_lyapunov_estimated": 0.3080921246264039,
         "parameters": {
             "a": -1.0,
             "b": 1.0,
@@ -2735,24 +2821,25 @@
             "s": 1.0
         },
         "period": 4.9844,
-        "pesin_entropy": 0.35182945768197527
+        "pesin_entropy": 0.3084450450029706,
+        "multiscale_entropy": 0.6082767822064958
     },
     "SaltonSea": {
         "citation": "Upadhyay, Bairagi, Kundu, Chattopadhyay, 2007",
-        "correlation_dimension": 1.7528177750283784,
+        "correlation_dimension": 1.699295461860061,
         "dt": 0.0002728,
         "initial_conditions": [
             231.92548,
             89.511944,
             56.753804
         ],
-        "kaplan_yorke_dimension": 2.0979368074025633,
+        "kaplan_yorke_dimension": 2.0843843542474496,
         "lyapunov_spectrum_estimated": [
-            0.44518560826474196,
-            0.02602781718783836,
-            -4.678178002996844
+            0.3914445015077359,
+            -0.0037578848522063194,
+            -4.592867667006148
         ],
-        "maximum_lyapunov_estimated": 0.44518560826474196,
+        "maximum_lyapunov_estimated": 0.3914445015077359,
         "parameters": {
             "a": 15,
             "d": 8.3,
@@ -2764,11 +2851,12 @@
             "th": 10.0
         },
         "period": 0.96738,
-        "pesin_entropy": 0.4712134254525803
+        "pesin_entropy": 0.39160860195935765,
+        "multiscale_entropy": 0.9335269725171643
     },
     "SanUmSrisuchinwong": {
         "citation": "San-Um, Srisuchinwong. J. Comp 2012",
-        "correlation_dimension": 2.0674980455260537,
+        "correlation_dimension": 2.067524991580239,
         "description": "Also referred to as the Wimol-Banlue system",
         "dt": 0.001941,
         "initial_conditions": [
@@ -2776,18 +2864,19 @@
             1.0901873,
             2.4479814
         ],
-        "kaplan_yorke_dimension": 2.1996711801882927,
+        "kaplan_yorke_dimension": 2.194219372064799,
         "lyapunov_spectrum_estimated": [
-            0.22834009265639088,
-            0.015300741579092813,
-            -1.2388350556599639
+            0.23913890446639047,
+            -0.0002916165416126154,
+            -1.2296759041605134
         ],
-        "maximum_lyapunov_estimated": 0.22834009265639088,
+        "maximum_lyapunov_estimated": 0.23913890446639052,
         "parameters": {
             "a": 2
         },
         "period": 7.4654,
-        "pesin_entropy": 0.2436408342354837
+        "pesin_entropy": 0.23946267672516214,
+        "multiscale_entropy": 0.9947542017597873
     },
     "ScrollDelay": {
         "citation": "R.D. Driver, Ordinary and Delay Differential Equations (Springer, New York, 1977).",
@@ -2831,106 +2920,111 @@
     },
     "ShimizuMorioka": {
         "citation": "Shimizu, Morioka. Phys Lett A. 1980: 201-204",
-        "correlation_dimension": 1.6976476012267865,
+        "correlation_dimension": 1.7168454070369197,
         "dt": 0.002215,
         "initial_conditions": [
             0.016838697,
             0.03489384,
             0.35346848
         ],
-        "kaplan_yorke_dimension": 2.0315571818464067,
+        "kaplan_yorke_dimension": 2.0312187919639926,
         "lyapunov_spectrum_estimated": [
-            0.0401904687173968,
-            0.00396060426171218,
-            -1.4103541702322864
+            0.044032234819090736,
+            -1.3942528300804223e-05,
+            -1.409991553164768
         ],
-        "maximum_lyapunov_estimated": 0.0401904687173968,
+        "maximum_lyapunov_estimated": 0.044032234819090736,
         "parameters": {
             "a": 0.85,
             "b": 0.5
         },
         "period": 12.038,
-        "pesin_entropy": 0.04415107297910898
+        "pesin_entropy": 0.044239420179671494,
+        "multiscale_entropy": 0.7156563118943259
     },
     "SprottA": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.9742444438201123,
+        "correlation_dimension": 1.9642234277909487,
         "dt": 0.01299,
         "initial_conditions": [
             1.54131864,
             1.43079727,
             -1.52555412
         ],
-        "kaplan_yorke_dimension": 7.561647461898436,
+        "kaplan_yorke_dimension": 60.66528307527488,
         "lyapunov_spectrum_estimated": [
-            0.026375841526423093,
-            0.012153959623930555,
-            -0.005554845745953054
+            0.029259920155059096,
+            0.004990159457687409,
+            -0.0015561317158397701
         ],
-        "maximum_lyapunov_estimated": 0.026375841526423093,
+        "maximum_lyapunov_estimated": 0.029259920155059096,
         "parameters": {},
         "period": 6.3728461538461545,
-        "pesin_entropy": 0.03852980115035365
+        "pesin_entropy": 0.0343008088722448,
+        "multiscale_entropy": 0.5748267225365974
     },
     "SprottB": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 2.064304807409677,
+        "correlation_dimension": 1.9347401711496346,
         "dt": 0.0008119,
         "initial_conditions": [
             1.6878282,
             1.4848132,
             -0.53706628
         ],
-        "kaplan_yorke_dimension": 2.195712524339404,
+        "kaplan_yorke_dimension": 2.1852994894688953,
         "lyapunov_spectrum_estimated": [
-            0.2240370592414272,
-            0.019460768438020606,
-            -1.2304473522249435
+            0.21987503866971636,
+            0.005187437926969091,
+            -1.2145826242115807
         ],
-        "maximum_lyapunov_estimated": 0.2240370592414272,
+        "maximum_lyapunov_estimated": 0.2198750386697164,
         "parameters": {},
         "period": 11.050142857142857,
-        "pesin_entropy": 0.2434978276794478
+        "pesin_entropy": 0.2250624765966855,
+        "multiscale_entropy": 0.8826029903839796
     },
     "SprottC": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.916285613086138,
+        "correlation_dimension": 1.903676120558973,
         "dt": 0.001084,
         "initial_conditions": [
             -0.47199823,
             -0.27198066,
             1.9418244
         ],
-        "kaplan_yorke_dimension": 2.161688940022674,
+        "kaplan_yorke_dimension": 2.1529236029587073,
         "lyapunov_spectrum_estimated": [
-            0.1803401168019924,
-            0.007784156974971207,
-            -1.1759726908891368
+            0.17898394736414464,
+            -0.0007304674803429964,
+            -1.1644550651924115
         ],
-        "maximum_lyapunov_estimated": 0.1803401168019924,
+        "maximum_lyapunov_estimated": 0.17898394736414458,
         "parameters": {},
         "period": 8.8852,
-        "pesin_entropy": 0.1881242737769636
+        "pesin_entropy": 0.17933456833596748,
+        "multiscale_entropy": 1.14839462464542
     },
     "SprottD": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.9598934577437266,
+        "correlation_dimension": 1.950013918317399,
         "dt": 0.001769,
         "initial_conditions": [
             -1.3396906,
             -0.21238338,
             0.32982163
         ],
-        "kaplan_yorke_dimension": 2.067858856646991,
+        "kaplan_yorke_dimension": 2.0807565309303526,
         "lyapunov_spectrum_estimated": [
-            0.08189495584930204,
-            0.006767280431185831,
-            -1.299944694334755
+            0.11415315682442645,
+            0.001787998513315278,
+            -1.4601870646976078
         ],
-        "maximum_lyapunov_estimated": 0.08189495584930204,
+        "maximum_lyapunov_estimated": 0.11415315682442646,
         "parameters": {},
         "period": 4.8333,
-        "pesin_entropy": 0.08866223628048786
+        "pesin_entropy": 0.11594526886491094,
+        "multiscale_entropy": 1.0030259093693934
     },
     "SprottDelay": {
         "citation": "Sprott, J. C (2007). A simple chaotic delay differential equation. Physics Letters A 366.4-5: 397-402.",
@@ -2975,135 +3069,141 @@
     },
     "SprottE": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.5331262575223452,
+        "correlation_dimension": 1.5319512189227282,
         "dt": 0.0008543,
         "initial_conditions": [
             0.6173759,
             0.66599285,
             -1.6575023
         ],
-        "kaplan_yorke_dimension": 2.0941882403840655,
+        "kaplan_yorke_dimension": 2.0894640654250147,
         "lyapunov_spectrum_estimated": [
-            0.10359402857858058,
-            -0.0005476661507420974,
-            -1.103729760106193
+            0.09834470642927143,
+            -0.00031069798260046597,
+            -1.0953799295090543
         ],
-        "maximum_lyapunov_estimated": 0.10359402857858058,
+        "maximum_lyapunov_estimated": 0.09834470642927143,
         "parameters": {},
         "period": 7.6275,
-        "pesin_entropy": 0.10359402857858058
+        "pesin_entropy": 0.09866310814686535,
+        "multiscale_entropy": 0.8387888716672988
     },
     "SprottF": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 2.248950661699668,
+        "correlation_dimension": 2.248574151957115,
         "dt": 0.001655,
         "initial_conditions": [
             -0.98941275,
             -1.4191706,
             0.85797204
         ],
-        "kaplan_yorke_dimension": 2.2511228758216264,
+        "kaplan_yorke_dimension": 2.2516153966506316,
         "lyapunov_spectrum_estimated": [
-            0.12552813995705447,
-            0.028857841065800457,
-            -0.6021056232434963
+            0.13246006583273318,
+            0.0192716855937824,
+            -0.603011686855317
         ],
-        "maximum_lyapunov_estimated": 0.12552813995705447,
+        "maximum_lyapunov_estimated": 0.13246006583273318,
         "parameters": {
             "a": 0.5
         },
         "period": 19.244,
-        "pesin_entropy": 0.15438598102285495
+        "pesin_entropy": 0.1517317514265156,
+        "multiscale_entropy": 0.7674306147320477
     },
     "SprottG": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.436681429890026,
+        "correlation_dimension": 1.4356008167477212,
         "dt": 0.00216,
         "initial_conditions": [
             -0.77182478,
             -0.74756595,
             1.3073285
         ],
-        "kaplan_yorke_dimension": 2.0713186302953543,
+        "kaplan_yorke_dimension": 2.0519020031307744,
         "lyapunov_spectrum_estimated": [
-            0.04034078062552115,
-            0.00483377905485132,
-            -0.6309872733943198
+            0.03349131570257798,
+            -0.0012749369106980868,
+            -0.6182204265060449
         ],
-        "maximum_lyapunov_estimated": 0.04034078062552115,
+        "maximum_lyapunov_estimated": 0.03349131570257799,
         "parameters": {
             "a": 0.4
         },
         "period": 8.7097,
-        "pesin_entropy": 0.04517455968037247
+        "pesin_entropy": 0.03403484153064641,
+        "multiscale_entropy": 0.6185493944257671
     },
     "SprottH": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 2.2146132592282646,
+        "correlation_dimension": 2.1841850324956043,
         "dt": 0.001416,
         "initial_conditions": [
             -1.360042,
             0.62585352,
             -1.2788196
         ],
-        "kaplan_yorke_dimension": 2.252156277471384,
+        "kaplan_yorke_dimension": 2.2414973487697853,
         "lyapunov_spectrum_estimated": [
-            0.12059084856448071,
-            0.0309112194466555,
-            -0.5964694398356464
+            0.13871794302385684,
+            0.003501431527456669,
+            -0.5889065665901029
         ],
-        "maximum_lyapunov_estimated": 0.12059084856448071,
+        "maximum_lyapunov_estimated": 0.13871794302385682,
         "parameters": {
             "a": 0.5
         },
         "period": 20.229,
-        "pesin_entropy": 0.15150206801113622
+        "pesin_entropy": 0.14221937455131348,
+        "multiscale_entropy": 0.6325364503922819
     },
     "SprottI": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.5872029586513505,
+        "correlation_dimension": 1.5880853049819768,
         "dt": 0.003104,
         "initial_conditions": [
             -0.060099389,
             -0.49558355,
             0.023159035
         ],
-        "kaplan_yorke_dimension": 2.0199947667280105,
+        "kaplan_yorke_dimension": 2.019844528960972,
         "lyapunov_spectrum_estimated": [
-            0.016967009889564996,
-            0.0006216128930428014,
-            -1.0273420089235228
+            0.020459651934364873,
+            9.478591964272237e-06,
+            -1.031514712617076
         ],
-        "maximum_lyapunov_estimated": 0.016967009889564996,
+        "maximum_lyapunov_estimated": 0.020459651934364873,
         "parameters": {
             "a": 0.2
         },
         "period": 10.93,
-        "pesin_entropy": 0.017588622782607796
+        "pesin_entropy": 0.02077411702709478,
+        "multiscale_entropy": 0.5893805046352655
     },
     "SprottJ": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.7813776562297718,
+        "correlation_dimension": 1.7631890086601887,
         "dt": 0.001209,
         "initial_conditions": [
             4.4786928,
             2.2977432,
             6.5847115
         ],
-        "kaplan_yorke_dimension": 2.0238040067270786,
+        "kaplan_yorke_dimension": 2.0221468017281006,
         "lyapunov_spectrum_estimated": [
-            0.04282156228295154,
-            0.0053473371784503575,
-            -2.0591089942715994
+            0.04451808076432957,
+            0.0010621228852282804,
+            -2.055842238064512
         ],
-        "maximum_lyapunov_estimated": 0.04282156228295154,
+        "maximum_lyapunov_estimated": 0.04451808076432957,
         "parameters": {},
         "period": 4.836,
-        "pesin_entropy": 0.0481688994614019
+        "pesin_entropy": 0.04588958821017871,
+        "multiscale_entropy": 0.6352974298685767
     },
     "SprottJerk": {
         "citation": "Sprott, J. C. Simplest dissipative chaotic flow. Physics Letters A (1997).",
-        "correlation_dimension": 1.1460123690031176,
+        "correlation_dimension": 1.1444423838257205,
         "description": "Numerical integration of this attractor is extremely sensitive to the initial conditions",
         "dt": 0.002408,
         "initial_conditions": [
@@ -3111,89 +3211,93 @@
             0.59383201,
             0.45127217
         ],
-        "kaplan_yorke_dimension": 2.0313325808200817,
+        "kaplan_yorke_dimension": 2.031190248069004,
         "lyapunov_spectrum_estimated": [
-            0.05560486639516013,
-            0.011221101035694268,
-            -2.1353182790748546
+            0.06738258231535933,
+            -0.0007831911114099333,
+            -2.1347047232043663
         ],
-        "maximum_lyapunov_estimated": 0.05560486639516013,
+        "maximum_lyapunov_estimated": 0.06738258231535932,
         "parameters": {
             "mu": 2.017
         },
         "period": 11.921,
-        "pesin_entropy": 0.0668259674308544
+        "pesin_entropy": 0.06776939078007471,
+        "multiscale_entropy": 0.5314887786603959
     },
     "SprottK": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.830543461331808,
+        "correlation_dimension": 1.817781482577807,
         "dt": 0.001177,
         "initial_conditions": [
             -1.3165015,
             -1.5429951,
             0.664053
         ],
-        "kaplan_yorke_dimension": 2.0326186188088657,
+        "kaplan_yorke_dimension": 2.0417036451446204,
         "lyapunov_spectrum_estimated": [
-            0.04281472536380626,
-            -0.013497833702653022,
-            -0.8804951424381066
+            0.03778259119323125,
+            -0.0005109461395399151,
+            -0.8934722146671759
         ],
-        "maximum_lyapunov_estimated": 0.04281472536380626,
+        "maximum_lyapunov_estimated": 0.03778259119323125,
         "parameters": {
             "a": 0.3
         },
         "period": 7.006,
-        "pesin_entropy": 0.04281472536380626
+        "pesin_entropy": 0.03788160511007809,
+        "multiscale_entropy": 0.6562812206790845
     },
     "SprottL": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.405846178350737,
+        "correlation_dimension": 1.410583582611956,
         "dt": 0.0008475,
         "initial_conditions": [
             4.3611557,
             13.705573,
             -2.6835659
         ],
-        "kaplan_yorke_dimension": 2.0342044086185505,
+        "kaplan_yorke_dimension": 2.0329815956000377,
         "lyapunov_spectrum_estimated": [
-            0.03520195532700283,
-            0.0008291076777121052,
-            -1.013583890860391
+            0.03407149258791976,
+            -0.000391471796353918,
+            -1.012962157697122
         ],
-        "maximum_lyapunov_estimated": 0.03520195532700283,
+        "maximum_lyapunov_estimated": 0.03407149258791976,
         "parameters": {
             "a": 0.9,
             "b": 3.9
         },
         "period": 6.7262,
-        "pesin_entropy": 0.03603106300471493
+        "pesin_entropy": 0.0343958205328805,
+        "multiscale_entropy": 0.5605870039438788
     },
     "SprottM": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.564456312839193,
+        "correlation_dimension": 1.5501956414464297,
         "dt": 0.002017,
         "initial_conditions": [
             1.6024402,
             -1.5983203,
             -2.6236374
         ],
-        "kaplan_yorke_dimension": 2.048380023999223,
+        "kaplan_yorke_dimension": 2.04996202872584,
         "lyapunov_spectrum_estimated": [
-            0.059015558763315996,
-            -0.0034913501029248404,
-            -1.0373237814216933
+            0.05230117379497565,
+            -0.00033063791832836577,
+            -1.0391447706177515
         ],
-        "maximum_lyapunov_estimated": 0.059015558763315996,
+        "maximum_lyapunov_estimated": 0.05230117379497564,
         "parameters": {
             "a": 1.7
         },
         "period": 5.3644,
-        "pesin_entropy": 0.059015558763315996
+        "pesin_entropy": 0.05234518101225785,
+        "multiscale_entropy": 0.7481178461456197
     },
     "SprottMore": {
         "citation": "Sprott, J. C. (2020). Do We Need More Chaos Examples? Chaos Theory and Applications 2(2),1-3, 2020.",
-        "correlation_dimension": 2.2864036904092826,
+        "correlation_dimension": 2.234865750080784,
         "description": "A multifractal, nearly 3D attractor",
         "dt": 0.001769,
         "initial_conditions": [
@@ -3201,150 +3305,157 @@
             -0.21238338,
             0.32982163
         ],
-        "kaplan_yorke_dimension": 3.0665656034553654,
+        "kaplan_yorke_dimension": 2.999952495039482,
         "lyapunov_spectrum_estimated": [
-            0.3514121055022692,
-            -0.004961044693920098,
-            -0.320630532897039
+            0.32499834596046606,
+            -0.0001641583999746131,
+            -0.31918544080126926
         ],
-        "maximum_lyapunov_estimated": 0.3514121055022692,
+        "maximum_lyapunov_estimated": 0.3249983459604661,
         "parameters": {},
         "period": 6.62095890410959,
-        "pesin_entropy": 0.3514121055022692
+        "pesin_entropy": 0.32515558132375566,
+        "multiscale_entropy": 0.6370154977546665
     },
     "SprottN": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.780931092561905,
+        "correlation_dimension": 1.7798181024992923,
         "dt": 0.001213,
         "initial_conditions": [
             -8.3258705,
             7.3033716,
             3.2798909
         ],
-        "kaplan_yorke_dimension": 2.0293478308213406,
+        "kaplan_yorke_dimension": 2.028951405806632,
         "lyapunov_spectrum_estimated": [
-            0.05494910053601794,
-            0.003768489981490211,
-            -2.0708793299472923
+            0.06095861449194353,
+            6.560209716837452e-05,
+            -2.101648044064128
         ],
-        "maximum_lyapunov_estimated": 0.05494910053601794,
+        "maximum_lyapunov_estimated": 0.060958614491943536,
         "parameters": {},
         "period": 4.8135,
-        "pesin_entropy": 0.05871759051750815
+        "pesin_entropy": 0.061478272616693266,
+        "multiscale_entropy": 0.6385218945868028
     },
     "SprottO": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.6697115983566726,
+        "correlation_dimension": 1.710108209511237,
         "dt": 0.001951,
         "initial_conditions": [
             0.20549455,
             0.022792985,
             0.93636949
         ],
-        "kaplan_yorke_dimension": 2.2490082879042737,
+        "kaplan_yorke_dimension": 2.2474645346215256,
         "lyapunov_spectrum_estimated": [
-            0.06655658343192339,
-            0.012214485765699265,
-            -0.3164763600859588
+            0.06685684927644238,
+            0.011533284505120292,
+            -0.3165440349833235
         ],
-        "maximum_lyapunov_estimated": 0.06655658343192339,
+        "maximum_lyapunov_estimated": 0.06685684927644238,
         "parameters": {
             "a": 2.7
         },
         "period": 9.755,
-        "pesin_entropy": 0.07877106919762265
+        "pesin_entropy": 0.07839013378156268,
+        "multiscale_entropy": 0.4161154943097029
     },
     "SprottP": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 2.058639773439663,
+        "correlation_dimension": 1.9850786402587843,
         "dt": 0.001549,
         "initial_conditions": [
             0.83420675,
             0.14915817,
             0.44028635
         ],
-        "kaplan_yorke_dimension": 2.2469585539565724,
+        "kaplan_yorke_dimension": 2.2122245136720187,
         "lyapunov_spectrum_estimated": [
-            0.11073431387588253,
-            0.010292384242088833,
-            -0.493262581748199
+            0.1026165705645786,
+            0.00025136328640969387,
+            -0.4843551814513015
         ],
-        "maximum_lyapunov_estimated": 0.11073431387588253,
+        "maximum_lyapunov_estimated": 0.10261657056457861,
         "parameters": {
             "a": 2.7
         },
         "period": 5.3414,
-        "pesin_entropy": 0.12102669811797137
+        "pesin_entropy": 0.10329419803150507,
+        "multiscale_entropy": 0.8486396469370624
     },
     "SprottQ": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.8569377917107737,
+        "correlation_dimension": 1.831711145721785,
         "dt": 0.001618,
         "initial_conditions": [
             2.978102,
             -0.065260683,
             -2.8031286
         ],
-        "kaplan_yorke_dimension": 2.2274985162834637,
+        "kaplan_yorke_dimension": 2.2246852931286063,
         "lyapunov_spectrum_estimated": [
-            0.13508646016434006,
-            0.004666647188057904,
-            -0.6162185677571862
+            0.13698250147166127,
+            0.0010386716745898255,
+            -0.6140516336902575
         ],
-        "maximum_lyapunov_estimated": 0.13508646016434006,
+        "maximum_lyapunov_estimated": 0.13698250147166127,
         "parameters": {
             "a": 3.1,
             "b": 0.5
         },
         "period": 4.8443,
-        "pesin_entropy": 0.13975310735239796
+        "pesin_entropy": 0.13852213114060488,
+        "multiscale_entropy": 0.8105158145249107
     },
     "SprottR": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.8289077518284587,
+        "correlation_dimension": 1.831336989240481,
         "dt": 0.001585,
         "initial_conditions": [
             -1.6914909,
             -1.9783678,
             1.9807775
         ],
-        "kaplan_yorke_dimension": 2.076270240661735,
+        "kaplan_yorke_dimension": 2.071744469374985,
         "lyapunov_spectrum_estimated": [
-            0.07968992074841667,
-            0.004278661617268512,
-            -1.0836816818004342
+            0.07608481335025485,
+            0.0013697096816499383,
+            -1.0784000269941107
         ],
-        "maximum_lyapunov_estimated": 0.07968992074841667,
+        "maximum_lyapunov_estimated": 0.07608481335025485,
         "parameters": {
             "a": 0.9,
             "b": 0.4
         },
         "period": 7.0133,
-        "pesin_entropy": 0.08396858236568519
+        "pesin_entropy": 0.07840404228136309,
+        "multiscale_entropy": 0.5877166245477188
     },
     "SprottS": {
         "citation": "Sprott, J. C. Some simple chaotic flows. Physical Review E (1994).",
-        "correlation_dimension": 1.9187410465195636,
+        "correlation_dimension": 1.909825606415139,
         "dt": 0.0013,
         "initial_conditions": [
             0.12635702,
             0.12260693,
             1.2215429
         ],
-        "kaplan_yorke_dimension": 2.1781973770686083,
+        "kaplan_yorke_dimension": 2.182390107009358,
         "lyapunov_spectrum_estimated": [
-            0.18967535060346036,
-            0.016720831336476845,
-            -1.1883501553945832
+            0.2149312025337423,
+            0.0030194370306177213,
+            -1.1945344436340624
         ],
-        "maximum_lyapunov_estimated": 0.18967535060346036,
+        "maximum_lyapunov_estimated": 0.2149312025337423,
         "parameters": {},
         "period": 3.3505,
-        "pesin_entropy": 0.2063961819399372
+        "pesin_entropy": 0.21876911249150574,
+        "multiscale_entropy": 0.6690400524585065
     },
     "SprottTorus": {
         "citation": "Sprott Physics Letters A 2014",
-        "correlation_dimension": 1.068896618766853,
+        "correlation_dimension": 1.0564310259305965,
         "description": "Depending on the initial conditions, this is a torus or a complex attractor. The IC (0.1, 0.1, 0.1) give the torus.",
         "dt": 0.0006259,
         "initial_conditions": [
@@ -3352,20 +3463,21 @@
             -0.18017646,
             0.58539724
         ],
-        "kaplan_yorke_dimension": 2.5028897860525756,
+        "kaplan_yorke_dimension": 2.759693065535405,
         "lyapunov_spectrum_estimated": [
-            0.2633567221117143,
-            -0.0493998264281215,
-            -0.4195115503709367
+            0.29656066211909027,
+            0.0005468818242604863,
+            -0.3910853761095065
         ],
-        "maximum_lyapunov_estimated": 0.2633567221117143,
+        "maximum_lyapunov_estimated": 0.29656066211909027,
         "parameters": {},
         "period": 13.607,
-        "pesin_entropy": 0.2633567221117143
+        "pesin_entropy": 0.29710937347161515,
+        "multiscale_entropy": 0.9562901894463037
     },
     "StickSlipOscillator": {
         "citation": "Awrejcewicz, Jan, and M. M. Holicke (1999). Int J of Bifurcation and Chaos.",
-        "correlation_dimension": 1.5944884905662557,
+        "correlation_dimension": 1.7159805502964127,
         "description": "gamma controls the transition to chaos.",
         "dt": 0.0001,
         "initial_conditions": [
@@ -3373,13 +3485,13 @@
             -0.39125834,
             0
         ],
-        "kaplan_yorke_dimension": 2.8365569468743135,
+        "kaplan_yorke_dimension": 5.682155291949877,
         "lyapunov_spectrum_estimated": [
-            0.04376100882971698,
-            0.007033322538157221,
-            -0.06071831876796987
+            0.07073329226101453,
+            3.356854711815694e-05,
+            -0.02131392884593247
         ],
-        "maximum_lyapunov_estimated": 0.04376100882971698,
+        "maximum_lyapunov_estimated": 0.07073329226101452,
         "nonautonomous": true,
         "parameters": {
             "a": 1,
@@ -3393,10 +3505,11 @@
             "w": 2
         },
         "period": 1.6129,
-        "pesin_entropy": 0.0507943313678742,
+        "pesin_entropy": 0.07108101456222432,
         "unbounded_indices": [
             2
-        ]
+        ],
+        "multiscale_entropy": 0.9213029740441252
     },
     "SwingingAtwood": {
         "citation": "Tufillaro, Nicholas B.; Abbott, Tyler A.; Griffiths, David J. (1984). Swinging Atwood's Machine. American Journal of Physics. 52 (10): 895--903.",
@@ -3427,30 +3540,31 @@
     },
     "Thomas": {
         "citation": "Thomas, Rene (1999). Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, labyrinth chaos. Int. J. Bifurc. Chaos.",
-        "correlation_dimension": 1.580526392479563,
+        "correlation_dimension": 1.6488268116215494,
         "dt": 0.0002882,
         "initial_conditions": [
             2.199442,
             2.3634225,
             3.220197
         ],
-        "kaplan_yorke_dimension": 2.1442455455631126,
+        "kaplan_yorke_dimension": 2.1271136075295507,
         "lyapunov_spectrum_estimated": [
-            0.8189253759437483,
-            0.13227811901111658,
-            -6.5495765963425185
+            0.7589685797630259,
+            0.057355308262307496,
+            -6.421950974462397
         ],
-        "maximum_lyapunov_estimated": 0.8189253759437483,
+        "maximum_lyapunov_estimated": 0.7589685797630259,
         "parameters": {
             "a": 1.85,
             "b": 10
         },
         "period": 4.969,
-        "pesin_entropy": 0.9512034949548649
+        "pesin_entropy": 0.8163238880253334,
+        "multiscale_entropy": 0.9921951854111759
     },
     "ThomasLabyrinth": {
         "citation": "Thomas, Rene. Deterministic chaos seen in terms of feedback circuits: Analysis, synthesis, labyrinth chaos. Int. J. Bifurc. Chaos. (1999).",
-        "correlation_dimension": 2.2204238915359618,
+        "correlation_dimension": 2.150032278884401,
         "description": "Trajectories seemingly undergo Brownian motion on an infinite lattice, and only remain bounded when a is less than one.",
         "dt": 0.0003509,
         "initial_conditions": [
@@ -3458,31 +3572,32 @@
             1.0302034,
             -4.6883893
         ],
-        "kaplan_yorke_dimension": 2.4847867064242957,
+        "kaplan_yorke_dimension": 2.4720317677959973,
         "lyapunov_spectrum_estimated": [
-            1.3714613724823088,
-            0.04621483538197126,
-            -2.913291486585039
+            1.338784931894327,
+            0.004970451463443095,
+            -2.8467429841890293
         ],
-        "maximum_lyapunov_estimated": 1.3714613724823088,
+        "maximum_lyapunov_estimated": 1.338784931894327,
         "parameters": {
             "a": 0.5,
             "b": 10
         },
         "period": 6.05,
-        "pesin_entropy": 1.4176762078642802
+        "pesin_entropy": 1.3437553833577704,
+        "multiscale_entropy": 1.3049872431864915
     },
     "Torus": {
         "citation": "None.",
-        "correlation_dimension": 1.046936576974867,
-        "description": "A minimal quasiperiodic flow on a torus.",
+        "correlation_dimension": 1.0422059009112339,
+        "description": "A minimal quasiperiodic flow on a torus. All lyapunov exponents and related quantities are zero",
         "dt": 0.0003816,
         "initial_conditions": [
             -13.72884,
             1.9094726,
             0.72831447
         ],
-        "kaplan_yorke_dimension": 1.0,
+        "kaplan_yorke_dimension": 2.0,
         "lyapunov_spectrum_estimated": [
             0.0,
             0.0,
@@ -3495,11 +3610,12 @@
             "r": 1
         },
         "period": 6.36,
-        "pesin_entropy": 0.0
+        "pesin_entropy": 0.0,
+        "multiscale_entropy": 0.47330913201518593
     },
     "Tsucs2": {
         "citation": "Pan, Zhou, Li (2013). Synchronization of Three-Scroll Unified Chaotic System (TSUCS) and its hyper-chaotic system using active pinning control",
-        "correlation_dimension": 1.4548559260946927,
+        "correlation_dimension": 1.4738205303007272,
         "description": "A named attractor related to the DequanLi attractor",
         "dt": 3.936e-05,
         "initial_conditions": [
@@ -3507,13 +3623,13 @@
             1.12138,
             50.028988
         ],
-        "kaplan_yorke_dimension": 2.343429744048496,
+        "kaplan_yorke_dimension": 2.315349160163322,
         "lyapunov_spectrum_estimated": [
-            0.7216628272585501,
-            -0.32380143232824316,
-            -1.092650354534297
+            0.6414001783252772,
+            -0.22409536897391863,
+            -1.3233103558456687
         ],
-        "maximum_lyapunov_estimated": 0.7216628272585501,
+        "maximum_lyapunov_estimated": 0.6414001783252772,
         "parameters": {
             "a": 40,
             "c": 0.833,
@@ -3523,11 +3639,12 @@
             "k": 0
         },
         "period": 0.34526,
-        "pesin_entropy": 0.7216628272585501
+        "pesin_entropy": 0.6414001783252772,
+        "multiscale_entropy": 0.3913632586715302
     },
     "TurchinHanski": {
         "citation": "Turchin, Hanski. The American Naturalist 1997. Turchin, Hanski. Ecology 2000",
-        "correlation_dimension": 1.616090171868863,
+        "correlation_dimension": 1.6209562623031344,
         "description": " A chaotic three species food web. The species growth rate has been increased from the default parameters in the original paper, in order to ensure that the system exhibits sustained chaotic oscillations.",
         "dt": 0.0004074,
         "initial_conditions": [
@@ -3535,13 +3652,13 @@
             0.013649976,
             30363.85
         ],
-        "kaplan_yorke_dimension": 1.7009488179336976,
+        "kaplan_yorke_dimension": 1.2053069221786739,
         "lyapunov_spectrum_estimated": [
-            0.12328748039043003,
-            -0.1786892896145637,
-            -2.5745636681665918
+            0.03719830596656144,
+            -0.181183885924572,
+            -2.522759887828014
         ],
-        "maximum_lyapunov_estimated": 0.12328748039043003,
+        "maximum_lyapunov_estimated": 0.03719830596656144,
         "nonautonomous": true,
         "parameters": {
             "a": 8,
@@ -3553,34 +3670,36 @@
             "s": 1.25
         },
         "period": 4.40529411764706,
-        "pesin_entropy": 0.12328748039043003,
+        "pesin_entropy": 0.03719830596656144,
         "unbounded_indices": [
             2
-        ]
+        ],
+        "multiscale_entropy": 0.4989636261373046
     },
     "VallisElNino": {
         "citation": "Vallis GK. Conceptual models of El Nio and the southern oscillation. J Geophys Res 1988",
-        "correlation_dimension": 1.3173798160325667,
+        "correlation_dimension": 1.3112426349362432,
         "dt": 0.0003048,
         "initial_conditions": [
             -6.99286331487343,
             0.023254276622294345,
             -0.1658177563067799
         ],
-        "kaplan_yorke_dimension": 2.1223674123653042,
+        "kaplan_yorke_dimension": 2.1205065379188333,
         "lyapunov_spectrum_estimated": [
-            0.6271778433056046,
-            0.06821338013502296,
-            -5.645929015863226
+            0.6561566154431996,
+            0.022689184568283626,
+            -5.6332694618503885
         ],
-        "maximum_lyapunov_estimated": 0.6271778433056046,
+        "maximum_lyapunov_estimated": 0.6561566154431996,
         "parameters": {
             "b": 102,
             "c": 3,
             "p": 0
         },
         "period": 2.2087,
-        "pesin_entropy": 0.6953912234406275
+        "pesin_entropy": 0.6788458000114831,
+        "multiscale_entropy": 0.9058707360850027
     },
     "VossDelay": {
         "citation": "Voss (2002). Real-time anticipation of chaotic states of an electronic circuit.",
@@ -3623,7 +3742,7 @@
     },
     "WangSun": {
         "citation": "Wang, Z., Sun, Y., van Wyk, B. J., Qi, G. & van Wyk, M. A (2009). A 3-D four-wing attractor and its analysis,\u201d Brazilian J. Phys. 39, 547\u2013553.",
-        "correlation_dimension": 1.7487733112868236,
+        "correlation_dimension": 1.7810104871604908,
         "description": "A four-scroll chaotic attractor",
         "dt": 0.001294,
         "initial_conditions": [
@@ -3631,13 +3750,13 @@
             0.73876479,
             -0.0049284531
         ],
-        "kaplan_yorke_dimension": 2.055629273655145,
+        "kaplan_yorke_dimension": 2.0595560098996604,
         "lyapunov_spectrum_estimated": [
-            0.08214538088762345,
-            -0.007439484104952211,
-            -1.3190979947964558
+            0.07990874520682271,
+            -0.001043918775422804,
+            -1.3240808432405
         ],
-        "maximum_lyapunov_estimated": 0.08214538088762345,
+        "maximum_lyapunov_estimated": 0.07990874520682273,
         "parameters": {
             "a": 0.2,
             "b": -0.01,
@@ -3647,11 +3766,12 @@
             "q": 1.0
         },
         "period": 26.958,
-        "pesin_entropy": 0.08214538088762345
+        "pesin_entropy": 0.07994326076367073,
+        "multiscale_entropy": 0.9045422097501858
     },
     "WindmiReduced": {
         "citation": "Smith, Thiffeault, Horton. J Geophys Res. 2000. Horton, Weigel, Sprott. Chaos 2001.",
-        "correlation_dimension": 0.9753270937278067,
+        "correlation_dimension": 0.9743571353772181,
         "description": "A simplified form of the Windmi model of the Earth's magnetosphere. The parameter vsw controls the onset of chaos.",
         "dt": 0.000944,
         "initial_conditions": [
@@ -3659,13 +3779,13 @@
             6.2678923,
             41.969547
         ],
-        "kaplan_yorke_dimension": 2.0859330282766297,
+        "kaplan_yorke_dimension": 2.0947817139683895,
         "lyapunov_spectrum_estimated": [
-            0.14366454422587097,
-            0.003003871313527696,
-            -1.6005451223695135
+            0.15595238514031914,
+            9.695760899839663e-05,
+            -1.6450480911820564
         ],
-        "maximum_lyapunov_estimated": 0.14366454422587097,
+        "maximum_lyapunov_estimated": 0.15595238514031914,
         "parameters": {
             "a1": 0.247,
             "b1": 10.8,
@@ -3675,24 +3795,25 @@
             "vsw": 5
         },
         "period": 4.6733,
-        "pesin_entropy": 0.14666841553939866
+        "pesin_entropy": 0.15635149449218705,
+        "multiscale_entropy": 0.5896070173085494
     },
     "YuWang": {
         "citation": "Yu,  Wang. Eng Techn & Applied Science Research 2012.",
-        "correlation_dimension": 1.8519254222900599,
+        "correlation_dimension": 1.8558772226523095,
         "dt": 9.089e-05,
         "initial_conditions": [
             -0.21422356,
             -0.17935495,
             14.105516
         ],
-        "kaplan_yorke_dimension": 2.165528440202843,
+        "kaplan_yorke_dimension": 2.1703721122420614,
         "lyapunov_spectrum_estimated": [
-            2.4007035039178533,
-            -0.18902148155953774,
-            -13.932776217482747
+            2.459880656234634,
+            -0.07297917814211805,
+            -14.00993065520751
         ],
-        "maximum_lyapunov_estimated": 2.4007035039178533,
+        "maximum_lyapunov_estimated": 2.459880656234634,
         "parameters": {
             "a": 10,
             "b": 40,
@@ -3700,24 +3821,25 @@
             "d": 2.5
         },
         "period": 1.3366,
-        "pesin_entropy": 2.4007035039178533
+        "pesin_entropy": 2.459880656234634,
+        "multiscale_entropy": 0.6340382196367295
     },
     "YuWang2": {
         "citation": "Yu,  Wang. Eng Techn & Applied Science Research 2012.",
-        "correlation_dimension": 1.5210735884870252,
+        "correlation_dimension": 1.5232465346725725,
         "dt": 0.0001068,
         "initial_conditions": [
             0.12581483,
             1.2467348,
             18.358568
         ],
-        "kaplan_yorke_dimension": 2.062482758067868,
+        "kaplan_yorke_dimension": 2.0619881661890873,
         "lyapunov_spectrum_estimated": [
-            0.8004715922970711,
-            -0.033844187489535285,
-            -13.093988388882662
+            0.802715215563475,
+            0.007966964664720393,
+            -13.078014115524866
         ],
-        "maximum_lyapunov_estimated": 0.8004715922970711,
+        "maximum_lyapunov_estimated": 0.802715215563475,
         "parameters": {
             "a": 10,
             "b": 30,
@@ -3725,24 +3847,25 @@
             "d": 2.5
         },
         "period": 0.39265,
-        "pesin_entropy": 0.8004715922970711
+        "pesin_entropy": 0.8106827804626555,
+        "multiscale_entropy": 0.9335570471768684
     },
     "ZhouChen": {
         "citation": "Zhou, Chen. Int J Bifurcat Chaos, 2004",
-        "correlation_dimension": 1.740922189491188,
+        "correlation_dimension": 1.6212203970681585,
         "dt": 4.901e-05,
         "initial_conditions": [
             -0.60390203,
             0.012111953,
             0.00083277923
         ],
-        "kaplan_yorke_dimension": 2.0758728910823505,
+        "kaplan_yorke_dimension": 2.045920730005392,
         "lyapunov_spectrum_estimated": [
-            0.7855541770357781,
-            0.09896952484569546,
-            -11.87975176167028
+            0.5917259125455694,
+            0.005203946388490041,
+            -12.999237688229242
         ],
-        "maximum_lyapunov_estimated": 0.7855541770357781,
+        "maximum_lyapunov_estimated": 0.5917259125455694,
         "parameters": {
             "a": 2.97,
             "b": 0.15,
@@ -3751,6 +3874,7 @@
             "e": -8.78
         },
         "period": 0.87518,
-        "pesin_entropy": 0.8845237018814736
+        "pesin_entropy": 0.5969734164748293,
+        "multiscale_entropy": 0.7337896982114851
     }
 }

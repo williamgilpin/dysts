@@ -7,17 +7,14 @@ from dysts.utils import *
 from dysts.base import *
 from dysts.lyap import *
 
-print("test", flush=True)
-
 # We will make a local copy of the internal database
-OUTPUT_FILE = "./chaotic_attractors3.json"
+OUTPUT_FILE = "./chaotic_attractorsQQ.json"
 INPUT_FILE = dysts.data_path
 # INPUT_FILE = OUTPUT_FILE
 RECALCULATE = False
 pts_per_trajectory = 3000 # number of timesteps to use to find the jacobian
 divide_dt = 10 # factor by which to decrease dt, in order to improve calculation
 
-# double
 points_to_sample = 20 # number of initial conditions to sample and average when computing values
 
 with open(INPUT_FILE, "r") as file:
@@ -42,7 +39,7 @@ for i, item in enumerate(get_attractor_list()):
     
     model = getattr(dysts.flows, item)()
     
-    ## skip delay models
+    ## skip delay models (require external lyapunov calculation)
     if hasattr(model, "delay"):
         if model.delay:
             continue
@@ -79,7 +76,7 @@ for i, item in enumerate(get_attractor_list()):
                     print("Bad starting point; ignoring this")
                     pass
             if entropy_flag:
-                all_estimates_mmse.append(mse_mv(sol))
+                all_estimates_mmse.append(mse_mv(sol[:pts_per_trajectory]))
 
     if lyap_flag:
         

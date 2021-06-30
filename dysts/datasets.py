@@ -127,23 +127,63 @@ def load_file(filename):
     dataset = TimeSeriesDataset(data_path)
     return dataset
 
-def load_continuous(subsets="train", univariate=True, granularity="fine"):
+# def load_continuous(subsets="train", univariate=True, granularity="fine"):
+#     """
+#     Load dynamics from continuous dynamical systems
+    
+#     Args:
+#         subsets ("train" | "val" | "test" | "test_val"): Which dataset to draw.
+#         univariate (bool): Whether to use one coordinate, or all for each system.
+#         granularity ("course" | "fine"): Whether to use fine or coarsely-spaced samples
+    
+#     Returns:
+#         dataset (TimeSeriesDataset): A collection of time series dataset
+#     """
+#     period = {"train": "10", "test": "2", "val": "2"}[subsets]
+#     granval = {"coarse": "15", "fine": "100"}[granularity]
+#     split_point = 5/6*period
+#     # self.trim_series(split_point, -1)
+#     if univariate:
+#         dataset = load_file(f"{subsets}_univariate__pts_per_period_{granval}__periods_{period}.json")
+#     else:
+#         dataset = load_file(f"{subsets}_multivariate__pts_per_period_{granval}__periods_{period}.json")
+#     return dataset
+
+def load_dataset(subsets="train", univariate=True, granularity="fine"):
     """
-    Load dynamics from continuous dynamical systems
+    Load dynamics from continuous dynamical systems. 
     
     Args:
-        subsets ("train" | "val" | test"): Which dataset to draw.
+        subsets ("train" | "train_val" | "test" | "test_val" | "all"): Which dataset to draw.
+            Train and train val correspond to the same time series split 5/6 of the way through,
+            while "test" and "test_val" both represent a trajectory emanating from a different
+            initial condition, split 5/6 of the way though.
         univariate (bool): Whether to use one coordinate, or all for each system.
         granularity ("course" | "fine"): Whether to use fine or coarsely-spaced samples
     
+    Returns:
+        dataset (TimeSeriesDataset): A collection of time series dataset
     """
-    period = {"train": "10", "test": "2", "val": "2"}[subsets]
-    granval = {"coarse": "15", "fine": "100"}[granularity]
+    period = 12
+    granval = {"coarse": 15, "fine": 100}[granularity]
+    
+    dataset_name = subsets.split("_")[0]
+    
     if univariate:
-        dataset = load_file(f"{subsets}_univariate__pts_per_period_{granval}__periods_{period}.json")
+        dataset = load_file(f"{dataset_name}_univariate__pts_per_period_{granval}__periods_{period}.json")
     else:
-        dataset = load_file(f"{subsets}_multivariate__pts_per_period_{granval}__periods_{period}.json")
+        dataset = load_file(f"{dataset_name}_multivariate__pts_per_period_{granval}__periods_{period}.json")
+    
+    split_point = int(5/6 * period) * granval
+    if subsets == "train":
+        dataset.trim_series(0, split_point)
+    if subsets == "test":
+        dataset.trim_series(0, split_point)
+    if "val" in subsets:
+        dataset.trim_series(split_point, -1)        
+
     return dataset
+
 
 def load_discrete(subsets="all"):
     """Load dynamics from discrete dynamical systems
