@@ -46,7 +46,7 @@ The key dependencies are
 + Python >3.0
 + numpy
 
-These optional dependencies are needed for various specific tasks included in this repo, such as benchmarking experiments and estimation of invariant properties of each dynamical system.
+These optional dependencies are needed to reproduce some portions of this repository, such as benchmarking experiments and estimation of invariant properties of each dynamical system.
 
 + numba (speeds up generation of trajectories)
 + nolds (used for calculating the correlation dimension)
@@ -54,6 +54,7 @@ These optional dependencies are needed for various specific tasks included in th
 + darts (used for benchmarks)
 + sktime (used for benchmarks)
 + tsfresh (used for statistical quantity extraction)
+
 
 
 ## Contributing

@@ -2,11 +2,11 @@
 
 A dataset nutrition label reports metadata and relevant summary statistics for all datasets. The notebook ['nutrition_label.ipynb'](nutrition_label.ipynb) includes examples for retrieving metadata from each dynamical system, as well as computing relevant summary statistics.
 
-Here we address the questions included in the 
+Here we address the questions included in the appendix of [Gebru et al.](https://arxiv.org/abs/1803.09010)
 
 ### Motivation
 
-**Purpose,** This dataset was created for the purpose of providing a generative benchmark for time series mining applications, in which arbitrary synthetic data can be generated using a deterministic process.
+**Purpose** This dataset was created for the purpose of providing a generative benchmark for time series mining applications, in which arbitrary synthetic data can be generated using a deterministic process.
 
 **Creator and Funding.** This repository was created by William Gilpin, with support from the NSF-Simons Center for Quantitative Biology at Harvard University, as well as the University of Texas at Austin. No special funding was solicited for this particular project.
 
@@ -22,11 +22,57 @@ Here we address the questions included in the
 
 **Instance Relationships.** Each instance corresponds to a different dynamical system.
 
-**Data Splits.** No splits are pre-specified, because (in principle) arbitrary amounts of training, validation, and testing data can be generated for each dynamical system. Splits can either be performed by holding out some timepoints, or (for multivariate systems) by splitting the set of dynamical variables.
+**Data Splits.** No splits are baked-in, because (in principle) arbitrary amounts of training, validation, and testing data can be generated for each dynamical system. Splits can either be performed by holding out some timepoints, or (for multivariate systems) by splitting the set of dynamical variables. For the purpose of benchmarking experiments, splits corresponding to $10$ periods of training data, and $2$ periods of unseen prediction/validation data, were used for both the train and test datasets (the test dataset corresponds to an unseen initial condition). For the fine granularity time series, this corresponds to splits of 1000/200 for both the train and test initial conditions. For the coarse granularity time series, this corresponds to a split of 150/30.
 
 **Errors and Noise.** If any errors or redundancies are identified, we encourage users to submit an issue via GitHub. Noise can be added to the trajectories either by adding random values to each observed timepoint (ie measurement noise), or performing a stochastic simulation (ie stochastic dynamics)
 
 **External dependencies.** The dataset is self-contained.
 
+**Experiments.** Please see the remainder of the preprint for a description of all initial benchmarking experiments. Currently we have forecasting benchmarks, data-driven model inference, and sampling of new trajectories in order to accelerate training or transfer learning.
 
+### Preprocessing
+
+**Cleaning.** Dynamical systems may be numerically integrated with arbitrary precision, and their dynamics can be recorded at arbitrarily small intervals. In order to report all systems consistently, we use time series surrogate testing to identify the highest significant frequency in the power spectrum of each system's dynamics. We then set the numerical integration timestep to be proportional to this timescale. We then re-integrate, and use surrogates to identify the dominant significant frequency in each system's dynamics. We use this timescale to determine the sampling rate. This process ensures overall that all systems exhibit dynamical variation over comparable timescales, and that the integration timestep is sufficiently small to accurately resolve the dynamics.
+
+For each univariate time series, the first ordinal component of the system's dynamics is included.
+
+xxx to be continued xx
+
+**Raw data.** New time series data can be generated as needed via the `make_trajectory()` method of each dynamical system.
+
+**Preprocessing Software.** All analysis software is included in the repository.
+
+**Motivation.** To our knowledge, dataset processing is consistent with the underlying motivation of the dataset.
+
+### Distribution
+
+**Distribution.** The dataset is distributed on GitHub.
+
+**First Distribution.** A private fork is distributed with the paper for review in order to maintain anonymity for certain venues. The updated repository will be distributed with the final paper.
+
+**License.** We include an Apache 2.0 License in the project repository.
+
+**Fees.** None.
+
+### Legal
+
+**People.** No individuals are included in this dataset.
+
+**Protected Subjects.** No ethically-protected subjects are included in this dataset.
+
+**Institutional Approval.** No institutional approval is required for this dataset
+
+**Consent.** No individual data is included in this dataset.
+
+**Harm.** No individual data is included in this dataset.
+
+**Disadvantages.** No individual data is included in this dataset.
+
+**Privacy.** None of the data contains personal information.
+
+**GDPR.** To our knowledge, this dataset complies with GDPR and equivalent foreign standards.
+
+**Sensitivity.** To our knowledge, this dataset contains no sensitive information
+
+**Inappropriate.** This dataset contains no inappropriate or offensive content.
 
