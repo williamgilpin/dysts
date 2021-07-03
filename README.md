@@ -84,7 +84,7 @@ If you know of any systems should be included, please feel free to submit an iss
 
 ## Ethics & Reporting
 
-Dataset datasheets and metadata are reported using standard dataset documentation guidelines; please see our preprint for a dataset datasheet. We note that all datasets included here are mathematical in nature, and do not contain human or clinical observations.
+Dataset datasheets and metadata are reported using the dataset documentation guidelines described in [Gebru et al 2018](https://arxiv.org/abs/1803.09010); please see our preprint for a full dataset datasheet and other information. We note that all datasets included here are mathematical in nature, and do not contain human or clinical observations. If any users become aware of unintended harms that may arise due to the use of this data, we encourage reporting them by submitting on issue on this repository.
 
 
 ## Development to-do list
