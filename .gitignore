@@ -8,6 +8,7 @@ __pycache__/
 
 # Ignore personal and development files
 private*
+ucr_univariate_ts/
 
 # PyTorch checkpoints
 *.pth.tar
