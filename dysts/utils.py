@@ -389,13 +389,16 @@ def generate_ic_ensemble(
     initial conditions
     
     Args:
-        model : function defining the numerical derivative
+        model (callable_): function defining the numerical derivative
         tpts (ndarray): the timesteps over which to run the simulation
         n_samples (int): the number of different initial conditons
-        frac_perturb_param : float, the amount to perturb the ic by
+        frac_perturb_param (float): the amount to perturb the ic by
         frac_transient (float): the fraction of time for the time series to settle onto the attractor
-        ic_range : a starting value for the initial conditions
+        ic_range (list): a starting value for the initial conditions
         random_state (int): the seed for the random number generator
+        
+    Returns:
+        all_samples (array): A set of initial conditions
     """
     np.random.seed(random_state)
     ntpts = len(tpts0)
