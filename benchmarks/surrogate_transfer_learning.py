@@ -31,8 +31,8 @@ SEQUENCE_LENGTH = 100
 BATCH_SUBSAMPLE = 5000
 attractor_list = np.random.choice(attractor_list, 40)
 
-cwd = os.getcwd()
-# cwd = os.path.dirname(os.path.realpath(__file__))
+# cwd = os.getcwd()
+cwd = os.path.dirname(os.path.realpath(__file__))
 output_path = cwd + "/results/transfer_learning.json"
 print("Saving data to: ", output_path)
 
@@ -134,9 +134,8 @@ for name in dataset_names:
     
     print(name, score, flush=True)
     
-#     with open(output_path, 'w') as file:
-#         json.dump(all_scores, file, indent=4)
-    break
+    with open(output_path, 'w') as file:
+        json.dump(all_scores, file, indent=4)
     
     
 
