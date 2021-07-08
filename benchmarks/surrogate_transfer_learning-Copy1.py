@@ -28,15 +28,17 @@ np.random.seed(0)
 attractor_list = get_attractor_list()
 
 SEQUENCE_LENGTH = 100
-BATCH_SUBSAMPLE = 5000
-attractor_list = np.random.choice(attractor_list, 40)
+BATCH_SUBSAMPLE = 10000
+# BATCH_SUBSAMPLE = 5000
+# attractor_list = np.random.choice(attractor_list, 40)
+# attractor_list = np.random.choice(attractor_list, 80)
 
 # cwd = os.getcwd()
 cwd = os.path.dirname(os.path.realpath(__file__))
 output_path = cwd + "/results/transfer_learning.json"
 print("Saving data to: ", output_path)
 
-dataset_names = np.genfromtxt("./resources/ucr_ea_names.txt", dtype='str')
+dataset_names = np.genfromtxt(cwd + "/resources/ucr_ea_names.txt", dtype='str')
 
 try:
     with open(output_path, "r") as file:
@@ -44,7 +46,7 @@ try:
 except FileNotFoundError:
     all_scores = dict()
 
-for name in dataset_names:
+for data_ind, name in enumerate(dataset_names):
     
     if name in all_scores.keys():
         if "score_transfer" in all_scores[name].keys():
@@ -85,9 +87,6 @@ for name in dataset_names:
         if len(sol) < 10: # skip undersampled trajectories
             continue
         all_sols.append(standardize_ts(sol)[:, 0])
-#         if equation_ind > 5:
-#             print("stopped at index " + str(equation_ind))
-#             break
     all_sols = np.array(all_sols).T
     print("Finished computing surrogate ensemble.", flush=True)
     
@@ -101,22 +100,14 @@ for name in dataset_names:
     for epoch in range(200):  # loop over the dataset multiple times
         running_loss = 0.0
         for i, data in enumerate(train_dataloader, 0):
-            # get the inputs; data is a list of [inputs, labels]
             inputs, outputs = data
-
-            # zero the parameter gradients
             optimizer.zero_grad()
-
-            # forward + backward + optimize
             outputs = model(inputs)
             loss = criterion(inputs, outputs)
             loss.backward()
             optimizer.step()
-
-            # print statistics
             running_loss += loss.item()
     print("Finished training autoencoder.", flush=True)
-    
     
     X_train_nn = from_3d_numpy_to_nested(model.encoder(torch.tensor(X_train_np, dtype=torch.float32)).detach().numpy())
     X_test_nn = from_3d_numpy_to_nested(model.encoder(torch.tensor(X_test_np, dtype=torch.float32)).detach().numpy())

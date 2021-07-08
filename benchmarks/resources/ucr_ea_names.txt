@@ -15,9 +15,6 @@ CricketX
 CricketY
 CricketZ
 DiatomSizeReduction
-DodgerLoopDay
-DodgerLoopGame
-DodgerLoopWeekend
 ECG5000
 ECGFiveDays
 EOGHorizontalSignal

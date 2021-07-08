@@ -8,7 +8,10 @@ import numpy as np
 
 from .utils import *
 
-def sample_initial_conditions(model, points_to_sample, traj_length=1000, pts_per_period=30):
+
+def sample_initial_conditions(
+    model, points_to_sample, traj_length=1000, pts_per_period=30
+):
     """
     Generate a random sample of initial conditions from a dynamical system
     
@@ -22,14 +25,25 @@ def sample_initial_conditions(model, points_to_sample, traj_length=1000, pts_per
         sample_points (ndarray): The points with shape (points_to_sample, d)
     
     """
-    initial_sol = model.make_trajectory(traj_length, resample=True, 
-                                        pts_per_period=pts_per_period, postprocess=False)
-    sample_inds = np.random.choice(np.arange(initial_sol.shape[0]), points_to_sample, replace=False)
+    initial_sol = model.make_trajectory(
+        traj_length, resample=True, pts_per_period=pts_per_period, postprocess=False
+    )
+    sample_inds = np.random.choice(
+        np.arange(initial_sol.shape[0]), points_to_sample, replace=False
+    )
     sample_pts = initial_sol[sample_inds]
     return sample_pts
 
-def compute_timestep(model, total_length=40000, transient_fraction=0.2, num_iters=20,
-                     pts_per_period=1000, visualize=False, return_period=True):
+
+def compute_timestep(
+    model,
+    total_length=40000,
+    transient_fraction=0.2,
+    num_iters=20,
+    pts_per_period=1000,
+    visualize=False,
+    return_period=True,
+):
     """Given a dynamical system object, find the integration timestep based on the largest
     signficant frequency
     
@@ -50,7 +64,7 @@ def compute_timestep(model, total_length=40000, transient_fraction=0.2, num_iter
     """
 
     base_freq = 1 / pts_per_period
-    cutoff = int(transient_fraction*total_length)
+    cutoff = int(transient_fraction * total_length)
 
     step_history = [np.copy(model.dt)]
     for i in range(num_iters):
@@ -60,27 +74,29 @@ def compute_timestep(model, total_length=40000, transient_fraction=0.2, num_iter
             try:
                 all_freqs = find_significant_frequencies(comp, surrogate_method="rs")
                 all_freqs.append(np.percentile(all_freqs, 98))
-                #all_freqs.append(np.max(all_freqs))
+                # all_freqs.append(np.max(all_freqs))
             except:
                 pass
         freq = np.median(all_freqs)
         period = base_freq / freq
         model.dt = model.dt * period
-        
+
         step_history.append(model.dt)
-        if i % 5 == 0: 
+        if i % 5 == 0:
             print(f"Completed step {i} of {num_iters}")
     dt = model.dt
 
     if visualize:
         plt.plot(step_history)
-    
+
     if return_period:
         sol = model.make_trajectory(total_length, standardize=True)[cutoff:]
         all_freqs = list()
         for comp in sol.T:
             try:
-                freqs, amps = find_significant_frequencies(comp, surrogate_method="rs", return_amplitudes=True)
+                freqs, amps = find_significant_frequencies(
+                    comp, surrogate_method="rs", return_amplitudes=True
+                )
                 all_freqs.append(freqs[np.argmax(np.abs(amps))])
             except:
                 pass
@@ -91,8 +107,9 @@ def compute_timestep(model, total_length=40000, transient_fraction=0.2, num_iter
         return dt
 
 
-def find_lyapunov_exponents(model, traj_length, pts_per_period=500, 
-                            tol=1e-8, min_tpts=10):
+def find_lyapunov_exponents(
+    model, traj_length, pts_per_period=500, tol=1e-8, min_tpts=10
+):
     """
     Given a dynamical system, compute its spectrum of Lyapunov exponents
 
@@ -121,32 +138,32 @@ def find_lyapunov_exponents(model, traj_length, pts_per_period=500,
     all_lyap = list()
     for i in range(traj_length):
         yval = traj[i]
-        #rhsy = lambda x: np.array(model.rhs(x, tpts[i]))
-        
+        # rhsy = lambda x: np.array(model.rhs(x, tpts[i]))
+
         rhsy = lambda x: np.array(model.rhs(x, tpts[i]))
         jacval = jac_fd(rhsy, yval)
-        
+
         # If postprocessing is applied to a trajectory,
         # boost the jacobian to the new coordinates
         if hasattr(model, "_postprocessing"):
-#             print("using different formulation")
+            #             print("using different formulation")
             y0 = np.copy(yval)
-            y2h = lambda y : model._postprocessing(*y)
-            
-            rhsh = lambda y: jac_fd(y2h, y) @ rhsy(y) # dh/dy * dy/dt = dh/dt
-            dydh = np.linalg.inv(jac_fd(y2h, y0)) # dy/dh
+            y2h = lambda y: model._postprocessing(*y)
+
+            rhsh = lambda y: jac_fd(y2h, y) @ rhsy(y)  # dh/dy * dy/dt = dh/dt
+            dydh = np.linalg.inv(jac_fd(y2h, y0))  # dy/dh
             ## Alternate version if good second-order fd is ever available
             # dydh = jac_fd(y2h, y0, m=2, eps=1e-2) @ rhsy(y0) + jac_fd(y2h, y0) @ jac_fd(rhsy, y0))
-            
+
             jacval = jac_fd(rhsh, y0, eps=1e-3) @ dydh
-            
+
         u_n = np.matmul(np.identity(d) + jacval * dt, u)
         q, r = np.linalg.qr(u_n)
         lyap_estimate = np.log(abs(r.diagonal()))
         all_lyap.append(lyap_estimate)
         u = q  # post-iteration update axes
-        
-#         ## early stopping
+
+        #         ## early stopping
         if (np.min(np.abs(lyap_estimate)) < tol) and (i > min_tpts):
             traj_length = i
             print("stopped early.")
@@ -155,22 +172,29 @@ def find_lyapunov_exponents(model, traj_length, pts_per_period=500,
     final_lyap = np.sum(all_lyap, axis=0) / (dt * traj_length)
     return np.sort(final_lyap)[::-1]
 
+
 def kaplan_yorke_dimension(spectrum0):
     """Calculate the Kaplan-Yorke dimension, given a list of 
     Lyapunov exponents"""
     spectrum = np.sort(spectrum0)[::-1]
     d = len(spectrum)
     cspec = np.cumsum(spectrum)
-    j = np.max(np.where(cspec >= 0 ))
+    j = np.max(np.where(cspec >= 0))
     if j > d - 2:
         j = d - 2
-        warnings.warn("Cumulative sum of Lyapunov exponents never crosses zero. System may be ill-posed or undersampled.")
+        warnings.warn(
+            "Cumulative sum of Lyapunov exponents never crosses zero. System may be ill-posed or undersampled."
+        )
     dky = 1 + j + cspec[j] / np.abs(spectrum[j + 1])
 
     return dky
 
+
 import neurokit2
+
 from dysts.utils import standardize_ts
+
+
 def mse_mv(traj):
     """
     Generate an estimate of the multivariate multiscale entropy
@@ -185,10 +209,11 @@ def mse_mv(traj):
     if len(traj.shape) == 1:
         mmse = neurokit2.complexity.entropy_multiscale(sol, dimension=2, **mmse_opts)
         return mmse
-    
+
     traj = standardize_ts(traj)
     all_mse = list()
     for sol_coord in traj.T:
-        all_mse.append(neurokit2.complexity.entropy_multiscale(sol_coord, dimension=2, 
-                                                               **mmse_opts))
+        all_mse.append(
+            neurokit2.complexity.entropy_multiscale(sol_coord, dimension=2, **mmse_opts)
+        )
     return np.median(all_mse)
