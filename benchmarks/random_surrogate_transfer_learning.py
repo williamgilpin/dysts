@@ -61,7 +61,7 @@ print("Finished computing surrogate ensemble.", flush=True)
 for data_ind, name in enumerate(dataset_names):
     
     if name in all_scores.keys():
-        if "score_transfer" in all_scores[name].keys():
+        if "score_random" in all_scores[name].keys():
             print("Skipped " + name, flush=True)
             continue
     print("Evaluating " + name, flush=True)
@@ -109,7 +109,7 @@ for data_ind, name in enumerate(dataset_names):
 
     score = model.score(X_test_featurized, y_test)
     
-    all_scores[name]["score_transfer"] = model.score(X_test_featurized, y_test)
+    all_scores[name]["score_random"] = model.score(X_test_featurized, y_test)
     
     print(name, score, flush=True)
     

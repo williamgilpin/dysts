@@ -1,0 +1,272 @@
+{
+    "ACSF1": {
+        "score_transfer": 0.8
+    },
+    "Adiac": {
+        "score_transfer": 0.659846547314578
+    },
+    "ArrowHead": {
+        "score_transfer": 0.7485714285714286
+    },
+    "BME": {
+        "score_transfer": 0.94
+    },
+    "Beef": {
+        "score_transfer": 0.9333333333333333
+    },
+    "BeetleFly": {
+        "score_transfer": 0.75
+    },
+    "BirdChicken": {
+        "score_transfer": 0.9
+    },
+    "CBF": {
+        "score_transfer": 0.34
+    },
+    "Car": {
+        "score_transfer": 0.85
+    },
+    "ChlorineConcentration": {
+        "score_transfer": 0.6276041666666666
+    },
+    "CinCECGTorso": {
+        "score_transfer": 0.8333333333333334
+    },
+    "Coffee": {
+        "score_transfer": 0.9285714285714286
+    },
+    "Computers": {
+        "score_transfer": 0.728
+    },
+    "CricketX": {
+        "score_transfer": 0.6256410256410256
+    },
+    "CricketY": {
+        "score_transfer": 0.6820512820512821
+    },
+    "CricketZ": {
+        "score_transfer": 0.6948717948717948
+    },
+    "DiatomSizeReduction": {
+        "score_transfer": 0.9477124183006536
+    },
+    "ECG5000": {
+        "score_transfer": 0.9406666666666667
+    },
+    "ECGFiveDays": {
+        "score_transfer": 0.4959349593495935
+    },
+    "EOGHorizontalSignal": {
+        "score_transfer": 0.5607734806629834
+    },
+    "EOGVerticalSignal": {
+        "score_transfer": 0.43646408839779005
+    },
+    "Earthquakes": {
+        "score_transfer": 0.7482014388489209
+    },
+    "EthanolLevel": {
+        "score_transfer": 0.562
+    },
+    "FaceAll": {
+        "score_transfer": 0.934319526627219
+    },
+    "FaceFour": {
+        "score_transfer": 0.875
+    },
+    "FacesUCR": {
+        "score_transfer": 0.0624390243902439
+    },
+    "FiftyWords": {
+        "score_transfer": 0.6681318681318681
+    },
+    "Fish": {
+        "score_transfer": 0.8914285714285715
+    },
+    "FordA": {
+        "score_transfer": 0.9401515151515152
+    },
+    "FordB": {
+        "score_transfer": 0.8111111111111111
+    },
+    "FreezerRegularTrain": {
+        "score_transfer": 0.9975438596491228
+    },
+    "FreezerSmallTrain": {
+        "score_transfer": 0.8249122807017544
+    },
+    "Fungi": {
+        "score_transfer": 0.8763440860215054
+    },
+    "GunPoint": {
+        "score_transfer": 0.9533333333333334
+    },
+    "GunPointAgeSpan": {
+        "score_transfer": 0.9651898734177216
+    },
+    "GunPointMaleVersusFemale": {
+        "score_transfer": 0.990506329113924
+    },
+    "GunPointOldVersusYoung": {
+        "score_transfer": 0.9650793650793651
+    },
+    "Ham": {
+        "score_transfer": 0.6666666666666666
+    },
+    "HandOutlines": {
+        "score_transfer": 0.8864864864864865
+    },
+    "Haptics": {
+        "score_transfer": 0.5064935064935064
+    },
+    "Herring": {
+        "score_transfer": 0.59375
+    },
+    "HouseTwenty": {
+        "score_transfer": 0.9411764705882353
+    },
+    "InlineSkate": {
+        "score_transfer": 0.3563636363636364
+    },
+    "InsectEPGRegularTrain": {
+        "score_transfer": 0.9477911646586346
+    },
+    "InsectEPGSmallTrain": {
+        "score_transfer": 0.8714859437751004
+    },
+    "InsectWingbeatSound": {
+        "score_transfer": 0.6484848484848484
+    },
+    "LargeKitchenAppliances": {
+        "score_transfer": 0.7253333333333334
+    },
+    "Lightning2": {
+        "score_transfer": 0.7213114754098361
+    },
+    "Lightning7": {
+        "score_transfer": 0.136986301369863
+    },
+    "Mallat": {
+        "score_transfer": 0.9219616204690831
+    },
+    "Meat": {
+        "score_transfer": 0.8833333333333333
+    },
+    "MixedShapesRegularTrain": {
+        "score_transfer": 0.9538144329896907
+    },
+    "MixedShapesSmallTrain": {
+        "score_transfer": 0.8923711340206185
+    },
+    "NonInvasiveFetalECGThorax1": {
+        "score_transfer": 0.8997455470737914
+    },
+    "NonInvasiveFetalECGThorax2": {
+        "score_transfer": 0.9078880407124682
+    },
+    "OSULeaf": {
+        "score_transfer": 0.8181818181818182
+    },
+    "OliveOil": {
+        "score_transfer": 0.8
+    },
+    "Phoneme": {
+        "score_transfer": 0.2790084388185654
+    },
+    "PigAirwayPressure": {
+        "score_transfer": 0.08653846153846154
+    },
+    "PigArtPressure": {
+        "score_transfer": 0.5240384615384616
+    },
+    "PigCVP": {
+        "score_transfer": 0.42788461538461536
+    },
+    "Plane": {
+        "score_transfer": 1.0
+    },
+    "PowerCons": {
+        "score_transfer": 0.9333333333333333
+    },
+    "RefrigerationDevices": {
+        "score_transfer": 0.544
+    },
+    "Rock": {
+        "score_transfer": 0.88
+    },
+    "ScreenType": {
+        "score_transfer": 0.528
+    },
+    "SemgHandGenderCh2": {
+        "score_transfer": 0.915
+    },
+    "SemgHandMovementCh2": {
+        "score_transfer": 0.54
+    },
+    "SemgHandSubjectCh2": {
+        "score_transfer": 0.8911111111111111
+    },
+    "ShapeletSim": {
+        "score_transfer": 0.5166666666666667
+    },
+    "ShapesAll": {
+        "score_transfer": 0.8016666666666666
+    },
+    "SmallKitchenAppliances": {
+        "score_transfer": 0.33066666666666666
+    },
+    "StarLightCurves": {
+        "score_transfer": 0.9751092763477416
+    },
+    "Strawberry": {
+        "score_transfer": 0.972972972972973
+    },
+    "SwedishLeaf": {
+        "score_transfer": 0.912
+    },
+    "Symbols": {
+        "score_transfer": 0.9618090452261306
+    },
+    "ToeSegmentation1": {
+        "score_transfer": 0.8245614035087719
+    },
+    "ToeSegmentation2": {
+        "score_transfer": 0.8384615384615385
+    },
+    "Trace": {
+        "score_transfer": 1.0
+    },
+    "TwoPatterns": {
+        "score_transfer": 0.99375
+    },
+    "UMD": {
+        "score_transfer": 0.9930555555555556
+    },
+    "UWaveGestureLibraryAll": {
+        "score_transfer": 0.9514237855946399
+    },
+    "UWaveGestureLibraryX": {
+        "score_transfer": 0.8143495254048018
+    },
+    "UWaveGestureLibraryY": {
+        "score_transfer": 0.6917922948073701
+    },
+    "Wafer": {
+        "score_transfer": 0.9977287475665152
+    },
+    "Wine": {
+        "score_transfer": 0.8888888888888888
+    },
+    "WordSynonyms": {
+        "score_transfer": 0.5815047021943573
+    },
+    "Worms": {
+        "score_transfer": 0.6623376623376623
+    },
+    "WormsTwoClass": {
+        "score_transfer": 0.7792207792207793
+    },
+    "Yoga": {
+        "score_transfer": 0.7956666666666666
+    }
+}
