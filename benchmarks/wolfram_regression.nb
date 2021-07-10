@@ -1,0 +1,157 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      5385,        149]
+NotebookOptionsPosition[      4098,        120]
+NotebookOutlinePosition[      4491,        136]
+CellTagsIndexPosition[      4448,        133]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Get", "[", 
+   RowBox[{"FindFile", "[", "\"\<JSONTools`\>\"", "]"}], "]"}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+  "filePath", "=", 
+   "\"\</Users/williamgilpin/program_repos/dysts/benchmarks/resources/symb_\
+train_test_data.json\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"allTrainTest", "=", 
+   RowBox[{"Import", "[", 
+    RowBox[{"filePath", ",", " ", "\"\<Text\>\""}], "]"}]}], ";"}]}], "Input",\
+
+ CellChangeTimes->{{3.834900440518516*^9, 3.834900493966309*^9}, {
+   3.834900538314331*^9, 3.8349005592431393`*^9}, 3.834900709272444*^9, {
+   3.834900739740782*^9, 3.83490077345163*^9}},
+ CellLabel->"In[26]:=",ExpressionUUID->"4fde8949-a377-4e66-a5e3-0919ca71a9a1"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ImportString", "[", 
+  RowBox[{"allTrainTest", ",", "\"\<RawJSON\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.834900806187603*^9, 3.834900842607545*^9}},
+ CellLabel->"In[33]:=",ExpressionUUID->"963e3894-2807-4a36-b4a8-81bbed302a25"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Import", "jsonarraymissingsep", 
+   "\"Expecting end of array or a value separator.\"", 2, 33, 21, 
+   21542546141385855879, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.8349008254079943`*^9, 3.834900843158985*^9}},
+ CellLabel->
+  "During evaluation of \
+In[33]:=",ExpressionUUID->"6c20febd-789b-41f1-bc31-72e31e267194"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Import", "jsonhintposandchar", 
+   "\"An error occurred near character \
+'\\!\\(\\*RowBox[{\\\"\\\\\\\"n\\\\\\\"\\\"}]\\)', at line \
+\\!\\(\\*RowBox[{\\\"293660\\\"}]\\):\\!\\(\\*RowBox[{\\\"20\\\"}]\\)\"", 2, 
+   33, 22, 21542546141385855879, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.8349008254079943`*^9, 3.8349008431658087`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[33]:=",ExpressionUUID->"ebd1e7f7-a6a6-48a5-9eff-2c30e8300672"],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{
+  3.83490077890764*^9, {3.834900811976108*^9, 3.834900843168861*^9}},
+ CellLabel->"Out[33]=",ExpressionUUID->"47b0b654-ebd4-4ea6-8329-d538cd8155b8"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"ImportString", "[", 
+    RowBox[{"filePath", ",", "\"\<JSON\>\""}], "]"}], "//.", 
+   RowBox[{
+    RowBox[{"lst", ":", 
+     RowBox[{"{", "__Rule", "}"}]}], "\[RuleDelayed]", 
+    RowBox[{"Association", "[", "lst", "]"}]}]}], "\n"}]], "Input",
+ CellChangeTimes->{{3.834900535334488*^9, 3.834900548170966*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"9d020d32-e025-48ad-88f5-5eb961b22145"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Import", "jsonhintposandchar", 
+   "\"An error occurred near character \
+'\\!\\(\\*RowBox[{\\\"\\\\\\\"U\\\\\\\"\\\"}]\\)', at line \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\):\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"", 2, 5, 7, 
+   21542546141385855879, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.834900548777392*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"1eb329fc-98b8-424b-8c0e-37953ae3a061"],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{3.834900548794084*^9},
+ CellLabel->"Out[5]=",ExpressionUUID->"73f56d8f-e740-4dcb-9ad5-eacd7538fb07"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["allTrainTest"], "Input",
+ CellLabel->"In[8]:=",ExpressionUUID->"7f1a8424-3856-49b3-82ac-aa28fa6d3d85"],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{3.83490068817518*^9},
+ CellLabel->"Out[8]=",ExpressionUUID->"8b8439c6-17b9-4b92-901f-8eaf64a13965"]
+}, Open  ]]
+},
+WindowSize->{808, 911},
+WindowMargins->{{Automatic, -49}, {Automatic, 6}},
+FrontEndVersion->"12.1 for Mac OS X x86 (64-bit) (June 19, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"8d210811-9e90-47be-8fc1-47bae69782e4"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 742, 18, 136, "Input",ExpressionUUID->"4fde8949-a377-4e66-a5e3-0919ca71a9a1"],
+Cell[CellGroupData[{
+Cell[1325, 42, 258, 4, 30, "Input",ExpressionUUID->"963e3894-2807-4a36-b4a8-81bbed302a25"],
+Cell[1586, 48, 380, 9, 24, "Message",ExpressionUUID->"6c20febd-789b-41f1-bc31-72e31e267194"],
+Cell[1969, 59, 502, 11, 24, "Message",ExpressionUUID->"ebd1e7f7-a6a6-48a5-9eff-2c30e8300672"],
+Cell[2474, 72, 203, 3, 34, "Output",ExpressionUUID->"47b0b654-ebd4-4ea6-8329-d538cd8155b8"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2714, 80, 434, 10, 52, "Input",ExpressionUUID->"9d020d32-e025-48ad-88f5-5eb961b22145"],
+Cell[3151, 92, 465, 11, 24, "Message",ExpressionUUID->"1eb329fc-98b8-424b-8c0e-37953ae3a061"],
+Cell[3619, 105, 154, 2, 34, "Output",ExpressionUUID->"73f56d8f-e740-4dcb-9ad5-eacd7538fb07"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3810, 112, 116, 1, 30, "Input",ExpressionUUID->"7f1a8424-3856-49b3-82ac-aa28fa6d3d85"],
+Cell[3929, 115, 153, 2, 34, "Output",ExpressionUUID->"8b8439c6-17b9-4b92-901f-8eaf64a13965"]
+}, Open  ]]
+}
+]
+*)
+
