@@ -1,0 +1,452 @@
+{
+    "ACSF1": {
+        "score_transfer": 0.8,
+        "score_tsfresh": 0.6475924912028757,
+        "score_random": 0.8056262072867589
+    },
+    "Adiac": {
+        "score_transfer": 0.659846547314578,
+        "score_tsfresh": 0.436255387005363,
+        "score_random": 0.5953462243984646
+    },
+    "ArrowHead": {
+        "score_transfer": 0.7485714285714286,
+        "score_tsfresh": 0.6017456272459456,
+        "score_random": 0.7041467289580071
+    },
+    "BME": {
+        "score_transfer": 0.94,
+        "score_tsfresh": 0.9025832480387099,
+        "score_random": 0.839220158572886
+    },
+    "Beef": {
+        "score_transfer": 0.9333333333333333,
+        "score_tsfresh": 0.6659308539966752,
+        "score_random": 0.8241450668963423
+    },
+    "BeetleFly": {
+        "score_transfer": 0.75,
+        "score_tsfresh": 0.8197487499384971,
+        "score_random": 0.7174392036923433
+    },
+    "BirdChicken": {
+        "score_transfer": 0.9,
+        "score_tsfresh": 0.8228473661640633,
+        "score_random": 0.7017878909311309
+    },
+    "CBF": {
+        "score_transfer": 0.34,
+        "score_tsfresh": 0.9335111443647298,
+        "score_random": 0.30614776321779513
+    },
+    "Car": {
+        "score_transfer": 0.85,
+        "score_tsfresh": 0.6695060165760887,
+        "score_random": 0.7190823302625345
+    },
+    "ChlorineConcentration": {
+        "score_transfer": 0.6276041666666666,
+        "score_tsfresh": 0.5079415614692672,
+        "score_random": 0.6477185858824538
+    },
+    "CinCECGTorso": {
+        "score_transfer": 0.8333333333333334,
+        "score_tsfresh": 0.7768639403904388,
+        "score_random": 0.6952500137692746
+    },
+    "Coffee": {
+        "score_transfer": 0.9285714285714286,
+        "score_tsfresh": 0.9690568274958502,
+        "score_random": 0.9012613058549017
+    },
+    "Computers": {
+        "score_transfer": 0.728,
+        "score_tsfresh": 0.6727202283791818,
+        "score_random": 0.6698895189115078
+    },
+    "CricketX": {
+        "score_transfer": 0.6256410256410256,
+        "score_tsfresh": 0.5633843432766342,
+        "score_random": 0.6089114968430136
+    },
+    "CricketY": {
+        "score_transfer": 0.6820512820512821,
+        "score_tsfresh": 0.588623099984029,
+        "score_random": 0.6382153370779768
+    },
+    "CricketZ": {
+        "score_transfer": 0.6948717948717948,
+        "score_tsfresh": 0.6481828290555983,
+        "score_random": 0.6469620665789219
+    },
+    "DiatomSizeReduction": {
+        "score_transfer": 0.9477124183006536,
+        "score_tsfresh": 0.9095593231854042,
+        "score_random": 0.8511439229226849
+    },
+    "ECG5000": {
+        "score_transfer": 0.9406666666666667,
+        "score_tsfresh": 0.8732605803432062,
+        "score_random": 0.8824666634766055
+    },
+    "ECGFiveDays": {
+        "score_transfer": 0.4959349593495935,
+        "score_tsfresh": 0.8735176744119438,
+        "score_random": 0.4724242201824369
+    },
+    "EOGHorizontalSignal": {
+        "score_transfer": 0.5607734806629834,
+        "score_tsfresh": 0.3566817304448309,
+        "score_random": 0.47916759527361463
+    },
+    "EOGVerticalSignal": {
+        "score_transfer": 0.43646408839779005,
+        "score_tsfresh": 0.3949739403658597,
+        "score_random": 0.4586790356986809
+    },
+    "Earthquakes": {
+        "score_transfer": 0.7482014388489209,
+        "score_tsfresh": 0.7140833327650106,
+        "score_random": 0.6726158739641701
+    },
+    "EthanolLevel": {
+        "score_transfer": 0.562,
+        "score_tsfresh": 0.45161127439743265,
+        "score_random": 0.5494933517650687
+    },
+    "FaceAll": {
+        "score_transfer": 0.934319526627219,
+        "score_tsfresh": 0.8694196868805786,
+        "score_random": 0.870301610203396
+    },
+    "FaceFour": {
+        "score_transfer": 0.875,
+        "score_tsfresh": 0.7278343697133934,
+        "score_random": 0.7832793745088186
+    },
+    "FacesUCR": {
+        "score_transfer": 0.0624390243902439,
+        "score_tsfresh": 0.7652975673574147,
+        "score_random": 0.06519421839541566
+    },
+    "FiftyWords": {
+        "score_transfer": 0.6681318681318681,
+        "score_tsfresh": 0.4793831088608525,
+        "score_random": 0.5508944254889999
+    },
+    "Fish": {
+        "score_transfer": 0.8914285714285715,
+        "score_tsfresh": 0.8457609081527335,
+        "score_random": 0.8259084397474112
+    },
+    "FordA": {
+        "score_transfer": 0.9401515151515152,
+        "score_tsfresh": 0.923745419775708,
+        "score_random": 0.9330592997422879
+    },
+    "FordB": {
+        "score_transfer": 0.8111111111111111,
+        "score_tsfresh": 0.7767195941631849,
+        "score_random": 0.7519209891636306
+    },
+    "FreezerRegularTrain": {
+        "score_transfer": 0.9975438596491228,
+        "score_tsfresh": 0.9518686681795643,
+        "score_random": 0.8814366727333054
+    },
+    "FreezerSmallTrain": {
+        "score_transfer": 0.8249122807017544,
+        "score_tsfresh": 0.7337296178054291,
+        "score_random": 0.7404631869443278
+    },
+    "Fungi": {
+        "score_transfer": 0.8763440860215054,
+        "score_tsfresh": 0.5492023061206465,
+        "score_random": 0.8218477470616682
+    },
+    "GunPoint": {
+        "score_transfer": 0.9533333333333334,
+        "score_tsfresh": 0.8828476022907034,
+        "score_random": 0.8838718498816449
+    },
+    "GunPointAgeSpan": {
+        "score_transfer": 0.9651898734177216,
+        "score_tsfresh": 0.9129204538961384,
+        "score_random": 0.921453813153499
+    },
+    "GunPointMaleVersusFemale": {
+        "score_transfer": 0.990506329113924,
+        "score_tsfresh": 0.938317869738888,
+        "score_random": 0.9072893971182185
+    },
+    "GunPointOldVersusYoung": {
+        "score_transfer": 0.9650793650793651,
+        "score_tsfresh": 0.8921607420517275,
+        "score_random": 0.8409605847467835
+    },
+    "Ham": {
+        "score_transfer": 0.6666666666666666,
+        "score_tsfresh": 0.658281322423096,
+        "score_random": 0.5986962445865952
+    },
+    "HandOutlines": {
+        "score_transfer": 0.8864864864864865,
+        "score_tsfresh": 0.824787950444325,
+        "score_random": 0.8454830433003525
+    },
+    "Haptics": {
+        "score_transfer": 0.5064935064935064,
+        "score_tsfresh": 0.44381030492387846,
+        "score_random": 0.45189526760081156
+    },
+    "Herring": {
+        "score_transfer": 0.59375,
+        "score_tsfresh": 0.5583740628878212,
+        "score_random": 0.513277021132497
+    },
+    "HouseTwenty": {
+        "score_transfer": 0.9411764705882353,
+        "score_tsfresh": 0.9275197857969202,
+        "score_random": 0.8381762595402649
+    },
+    "InlineSkate": {
+        "score_transfer": 0.3563636363636364,
+        "score_tsfresh": 0.3276809419792354,
+        "score_random": 0.36808308313265675
+    },
+    "InsectEPGRegularTrain": {
+        "score_transfer": 0.9477911646586346,
+        "score_tsfresh": 0.9573927827317675,
+        "score_random": 0.8496475571396689
+    },
+    "InsectEPGSmallTrain": {
+        "score_transfer": 0.8714859437751004,
+        "score_tsfresh": 0.7766974640221063,
+        "score_random": 0.8608127768182753
+    },
+    "InsectWingbeatSound": {
+        "score_transfer": 0.6484848484848484,
+        "score_tsfresh": 0.5485740077203288,
+        "score_random": 0.6231548795559422
+    },
+    "LargeKitchenAppliances": {
+        "score_transfer": 0.7253333333333334,
+        "score_tsfresh": 0.743839615909096,
+        "score_random": 0.29533429127964955
+    },
+    "Lightning2": {
+        "score_transfer": 0.7213114754098361,
+        "score_tsfresh": 0.7133849193244428,
+        "score_random": 0.690833935686171
+    },
+    "Lightning7": {
+        "score_transfer": 0.136986301369863,
+        "score_tsfresh": 0.6303212099329264,
+        "score_random": 0.12963599594873568
+    },
+    "Mallat": {
+        "score_transfer": 0.9219616204690831,
+        "score_tsfresh": 0.8691517282773681,
+        "score_random": 0.8794922724080247
+    },
+    "Meat": {
+        "score_transfer": 0.8833333333333333,
+        "score_tsfresh": 0.8333378129247162,
+        "score_random": 0.8068110381018616
+    },
+    "MixedShapesRegularTrain": {
+        "score_transfer": 0.9538144329896907,
+        "score_tsfresh": 0.8676991528405812,
+        "score_random": 0.8581524563284855
+    },
+    "MixedShapesSmallTrain": {
+        "score_transfer": 0.8923711340206185,
+        "score_tsfresh": 0.8154005408178264,
+        "score_random": 0.8464796806068059
+    },
+    "NonInvasiveFetalECGThorax1": {
+        "score_transfer": 0.8997455470737914,
+        "score_tsfresh": 0.8364829652971782,
+        "score_random": 0.7694563122015474
+    },
+    "NonInvasiveFetalECGThorax2": {
+        "score_transfer": 0.9078880407124682,
+        "score_tsfresh": 0.8498265177555009,
+        "score_random": 0.8432750440150528
+    },
+    "OSULeaf": {
+        "score_transfer": 0.8181818181818182,
+        "score_tsfresh": 0.7709184551355525,
+        "score_random": 0.7773004741894208
+    },
+    "OliveOil": {
+        "score_transfer": 0.8,
+        "score_tsfresh": 0.7495723214001387,
+        "score_random": 0.7971216494570351
+    },
+    "Phoneme": {
+        "score_transfer": 0.2790084388185654,
+        "score_tsfresh": 0.22635259519724243,
+        "score_random": 0.27463117718209423
+    },
+    "PigAirwayPressure": {
+        "score_transfer": 0.08653846153846154,
+        "score_tsfresh": 0.08233711317073297,
+        "score_random": 0.0704925589881338
+    },
+    "PigArtPressure": {
+        "score_transfer": 0.5240384615384616,
+        "score_tsfresh": 0.4135917627916281,
+        "score_random": 0.44275148094310507
+    },
+    "PigCVP": {
+        "score_transfer": 0.42788461538461536,
+        "score_tsfresh": 0.2989977861200989,
+        "score_random": 0.4213525542403797
+    },
+    "Plane": {
+        "score_transfer": 1.0,
+        "score_tsfresh": 0.9270202786337736,
+        "score_random": 0.9219492663333396
+    },
+    "PowerCons": {
+        "score_transfer": 0.9333333333333333,
+        "score_tsfresh": 0.8679936813207108,
+        "score_random": 0.9038517908396115
+    },
+    "RefrigerationDevices": {
+        "score_transfer": 0.544,
+        "score_tsfresh": 0.5838789506158806,
+        "score_random": 0.4853925530657825
+    },
+    "Rock": {
+        "score_transfer": 0.88,
+        "score_tsfresh": 0.854702722472118,
+        "score_random": 0.8080962611686355
+    },
+    "ScreenType": {
+        "score_transfer": 0.528,
+        "score_tsfresh": 0.44599946832389764,
+        "score_random": 0.48717000085116396
+    },
+    "SemgHandGenderCh2": {
+        "score_transfer": 0.915,
+        "score_tsfresh": 0.8412294139946374,
+        "score_random": 0.792868606007954
+    },
+    "SemgHandMovementCh2": {
+        "score_transfer": 0.54,
+        "score_tsfresh": 0.4995346762811717,
+        "score_random": 0.47050462686850314
+    },
+    "SemgHandSubjectCh2": {
+        "score_transfer": 0.8911111111111111,
+        "score_tsfresh": 0.7914292899386097,
+        "score_random": 0.8104041102021496
+    },
+    "ShapeletSim": {
+        "score_transfer": 0.5166666666666667,
+        "score_tsfresh": 0.9572647590331615,
+        "score_random": 0.4389096064726169
+    },
+    "ShapesAll": {
+        "score_transfer": 0.8016666666666666,
+        "score_tsfresh": 0.6491661704203313,
+        "score_random": 0.8126547526999103
+    },
+    "SmallKitchenAppliances": {
+        "score_transfer": 0.33066666666666666,
+        "score_tsfresh": 0.7485449083754127,
+        "score_random": 0.30129215136084125
+    },
+    "StarLightCurves": {
+        "score_transfer": 0.9751092763477416,
+        "score_tsfresh": 0.926361726105132,
+        "score_random": 0.9063781323087564
+    },
+    "Strawberry": {
+        "score_transfer": 0.972972972972973,
+        "score_tsfresh": 0.9299238970622747,
+        "score_random": 0.89165422694355
+    },
+    "SwedishLeaf": {
+        "score_transfer": 0.912,
+        "score_tsfresh": 0.8341413179498183,
+        "score_random": 0.8242156914941502
+    },
+    "Symbols": {
+        "score_transfer": 0.9618090452261306,
+        "score_tsfresh": 0.8863410065361134,
+        "score_random": 0.8672858684849264
+    },
+    "ToeSegmentation1": {
+        "score_transfer": 0.8245614035087719,
+        "score_tsfresh": 0.7532215288325756,
+        "score_random": 0.7760790652997229
+    },
+    "ToeSegmentation2": {
+        "score_transfer": 0.8384615384615385,
+        "score_tsfresh": 0.8201889317333622,
+        "score_random": 0.7291721110732785
+    },
+    "Trace": {
+        "score_transfer": 1.0,
+        "score_tsfresh": 0.9428787511265245,
+        "score_random": 0.8374375539266677
+    },
+    "TwoPatterns": {
+        "score_transfer": 0.99375,
+        "score_tsfresh": 0.973209923476981,
+        "score_random": 0.9754065251430711
+    },
+    "UMD": {
+        "score_transfer": 0.9930555555555556,
+        "score_tsfresh": 0.9099800048233728,
+        "score_random": 0.8930370320410468
+    },
+    "UWaveGestureLibraryAll": {
+        "score_transfer": 0.9514237855946399,
+        "score_tsfresh": 0.8942918464452597,
+        "score_random": 0.8868760667623528
+    },
+    "UWaveGestureLibraryX": {
+        "score_transfer": 0.8143495254048018,
+        "score_tsfresh": 0.7594859887298427,
+        "score_random": 0.7070862659611117
+    },
+    "UWaveGestureLibraryY": {
+        "score_transfer": 0.6917922948073701,
+        "score_tsfresh": 0.3624912274276904,
+        "score_random": 0.6524505861551718
+    },
+    "Wafer": {
+        "score_transfer": 0.9977287475665152,
+        "score_tsfresh": 0.946983917104735,
+        "score_random": 0.9036987783595383
+    },
+    "Wine": {
+        "score_transfer": 0.8888888888888888,
+        "score_tsfresh": 0.6463272826830103,
+        "score_random": 0.777451730360091
+    },
+    "WordSynonyms": {
+        "score_transfer": 0.5815047021943573,
+        "score_tsfresh": 0.4902430184126659,
+        "score_random": 0.5338216308957903
+    },
+    "Worms": {
+        "score_transfer": 0.6623376623376623,
+        "score_tsfresh": 0.62324070448165,
+        "score_random": 0.6803750694415819
+    },
+    "WormsTwoClass": {
+        "score_transfer": 0.7792207792207793,
+        "score_tsfresh": 0.7044147983735168,
+        "score_random": 0.6598977023082544
+    },
+    "Yoga": {
+        "score_transfer": 0.7956666666666666,
+        "score_tsfresh": 0.8072149117139897,
+        "score_random": 0.6761301256358276
+    }
+}

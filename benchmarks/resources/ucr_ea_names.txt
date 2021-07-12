@@ -82,7 +82,6 @@ UMD
 UWaveGestureLibraryAll
 UWaveGestureLibraryX
 UWaveGestureLibraryY
-UWaveGestureLibraryZ
 Wafer
 Wine
 WordSynonyms
