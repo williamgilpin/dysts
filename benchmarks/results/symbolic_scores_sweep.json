@@ -1,0 +1,1050 @@
+{
+    "Aizawa": {
+        "SINDY-fourier": 0.38829348506842404,
+        "SINDY-fourier-time": 0.009932039305567741,
+        "SINDY-poly": 0.13149124553119468,
+        "SINDY-poly-time": 0.006206745281815529,
+        "pySR": 4.751206925663237e-06,
+        "pySR-time": 1387.8075009994209
+    },
+    "AnishchenkoAstakhov": {
+        "SINDY-fourier": 0.7641425052105002,
+        "SINDY-fourier-time": 0.01458217203617096,
+        "SINDY-poly": 0.3043060018934841,
+        "SINDY-poly-time": 0.0070790741592645645,
+        "pySR": 2.8758455859654487e-07,
+        "pySR-time": 1286.3688100464642
+    },
+    "Arneodo": {
+        "SINDY-fourier": 0.917729662881455,
+        "SINDY-fourier-time": 0.013027064502239227,
+        "SINDY-poly": 0.0435073628763319,
+        "SINDY-poly-time": 0.008142339065670967,
+        "pySR": 0.0,
+        "pySR-time": 1495.6005443502218
+    },
+    "ArnoldBeltramiChildress": {
+        "SINDY-fourier": 1.6685079533106468,
+        "SINDY-fourier-time": 0.06275331042706966,
+        "SINDY-poly": 1.7349742423521215,
+        "SINDY-poly-time": 0.45648918487131596,
+        "pySR": 1.3392804553695482e-07,
+        "pySR-time": 2154.610184883699
+    },
+    "ArnoldWeb": {
+        "SINDY-fourier": 2.0,
+        "SINDY-fourier-time": 0.039133972000854556,
+        "SINDY-poly": 2.0,
+        "SINDY-poly-time": 0.515161593000812,
+        "pySR": 0.03027250599234629,
+        "pySR-time": 2246.6915683650004
+    },
+    "BeerRNN": {
+        "SINDY-fourier": 2.0,
+        "SINDY-fourier-time": 0.010224459001619834,
+        "SINDY-poly": 2.0,
+        "SINDY-poly-time": 0.010215651000180515,
+        "pySR": 0.7530568077990399,
+        "pySR-time": 1991.467724315
+    },
+    "BelousovZhabotinsky": {
+        "SINDY-fourier": 0.7762899994905782,
+        "SINDY-fourier-time": 0.010117919999174774,
+        "SINDY-poly": 0.3093139109215778,
+        "SINDY-poly-time": 0.007300297998881433,
+        "pySR": 0.3711887530175954,
+        "pySR-time": 1741.048345631003
+    },
+    "BickleyJet": {
+        "SINDY-fourier": 2.0,
+        "SINDY-fourier-time": 0.008187329000065802,
+        "SINDY-poly": 2.0,
+        "SINDY-poly-time": 0.006691840997518739,
+        "pySR": 0.1595082084306435,
+        "pySR-time": 1760.277491203
+    },
+    "Blasius": {
+        "SINDY-fourier": 1.1539475910335508,
+        "SINDY-fourier-time": 0.034743884578347206,
+        "SINDY-poly": 0.3058481726896454,
+        "SINDY-poly-time": 0.38237573951482773,
+        "pySR": 0.1723364958029252,
+        "pySR-time": 1810.0681611578912
+    },
+    "BlinkingRotlet": {
+        "SINDY-fourier": 1.6884446554279218,
+        "SINDY-fourier-time": 0.015048274770379066,
+        "SINDY-poly": 1.602000769232338,
+        "SINDY-poly-time": 0.010866569355130196,
+        "pySR": 1.1699132237902188,
+        "pySR-time": 1258.8394888993353
+    },
+    "BlinkingVortex": {
+        "SINDY-fourier": 1.6078487579324,
+        "SINDY-fourier-time": 0.01656930334866047,
+        "SINDY-poly": 1.5835166091846,
+        "SINDY-poly-time": 0.012864317744970322,
+        "pySR": null,
+        "pySR-time": 1678.1963505949825
+    },
+    "Bouali": {
+        "SINDY-fourier": 1.0400654234278806,
+        "SINDY-fourier-time": 0.013714287430047989,
+        "SINDY-poly": 0.37102052207918185,
+        "SINDY-poly-time": 0.01583891361951828,
+        "pySR": 7.675346762035229e-06,
+        "pySR-time": 1270.1726458650082
+    },
+    "Bouali2": {
+        "SINDY-fourier": 0.8644892801396327,
+        "SINDY-fourier-time": 0.015215035527944565,
+        "SINDY-poly": 0.3616758874452352,
+        "SINDY-poly-time": 0.041012998670339584,
+        "pySR": 2.499969062734582e-07,
+        "pySR-time": 1225.0892333369702
+    },
+    "BurkeShaw": {
+        "SINDY-fourier": 0.9564517403559254,
+        "SINDY-fourier-time": 0.014005249366164207,
+        "SINDY-poly": 0.4392479481685452,
+        "SINDY-poly-time": 0.013849150389432907,
+        "pySR": 4.500010125048387e-06,
+        "pySR-time": 1162.9303302690387
+    },
+    "CaTwoPlus": {
+        "SINDY-fourier": 0.1827227777069048,
+        "SINDY-fourier-time": 0.010938277468085289,
+        "SINDY-poly": 0.257091777106097,
+        "SINDY-poly-time": 0.013416951522231102,
+        "pySR": 0.892039475277842,
+        "pySR-time": 1412.1773045063019
+    },
+    "CaTwoPlusQuasiperiodic": {
+        "SINDY-fourier": 0.25531411893196654,
+        "SINDY-fourier-time": 0.012839553877711296,
+        "SINDY-poly": 0.31591002468670304,
+        "SINDY-poly-time": 0.009319858625531197,
+        "pySR": 0.2270540440186594,
+        "pySR-time": 1630.6672383509576
+    },
+    "CellCycle": {
+        "SINDY-fourier": 2.0,
+        "SINDY-fourier-time": 0.01399812288582325,
+        "SINDY-poly": 2.0,
+        "SINDY-poly-time": 0.012283330783247948,
+        "pySR": 1.4868492980750103,
+        "pySR-time": 2809.745711768046
+    },
+    "CellularNeuralNetwork": {
+        "SINDY-fourier": 0.13710776738103983,
+        "SINDY-fourier-time": 0.012039663270115852,
+        "SINDY-poly": 0.46744340280114033,
+        "SINDY-poly-time": 0.015391871333122253,
+        "pySR": 0.5410193372080411,
+        "pySR-time": 1507.5145835727453
+    },
+    "Chen": {
+        "SINDY-fourier": 1.3930434245531798,
+        "SINDY-fourier-time": 0.01477113924920559,
+        "SINDY-poly": 0.09897415309158739,
+        "SINDY-poly-time": 0.01265408843755722,
+        "pySR": 2.2857140236802795e-07,
+        "pySR-time": 1264.5897314287722
+    },
+    "ChenLee": {
+        "SINDY-fourier": 1.470817377259918,
+        "SINDY-fourier-time": 0.013590648770332336,
+        "SINDY-poly": 0.8485044339871295,
+        "SINDY-poly-time": 0.015010679140686989,
+        "pySR": 1.954547876001905e-07,
+        "pySR-time": 1248.2333380542696
+    },
+    "Chua": {
+        "SINDY-fourier": 0.07777267005647538,
+        "SINDY-fourier-time": 0.01219046488404274,
+        "SINDY-poly": 0.03180106099298316,
+        "SINDY-poly-time": 0.013205207884311676,
+        "pySR": 0.0,
+        "pySR-time": 1256.1852817125618
+    },
+    "CircadianRhythm": {
+        "SINDY-fourier": 1.4706472291796653,
+        "SINDY-fourier-time": 0.02965766005218029,
+        "SINDY-poly": 0.5363362070723671,
+        "SINDY-poly-time": 0.01828191801905632,
+        "pySR": 0.12871233774618654,
+        "pySR-time": 2608.3624107111245
+    },
+    "CoevolvingPredatorPrey": {
+        "SINDY-fourier": 2.0,
+        "SINDY-fourier-time": 0.00888894684612751,
+        "SINDY-poly": 2.0,
+        "SINDY-poly-time": 0.008548503741621971,
+        "pySR": 1.5651280989655563,
+        "pySR-time": 1434.3096593096852
+    },
+    "Colpitts": {
+        "SINDY-fourier": 0.2566891142716277,
+        "SINDY-fourier-time": 0.014051584526896477,
+        "SINDY-poly": 0.8279484590779184,
+        "SINDY-poly-time": 0.011470811441540718,
+        "pySR": 0.3624550177088031,
+        "pySR-time": 1485.7216312829405
+    },
+    "Coullet": {
+        "SINDY-fourier": 0.05081092024690809,
+        "SINDY-fourier-time": 0.012630710378289223,
+        "SINDY-poly": 0.03544676398075268,
+        "SINDY-poly-time": 0.011619267985224724,
+        "pySR": 0.0,
+        "pySR-time": 1225.1072597950697
+    },
+    "Dadras": {
+        "SINDY-fourier": 1.455524486439066,
+        "SINDY-fourier-time": 0.015654778108000755,
+        "SINDY-poly": 0.9258163154788985,
+        "SINDY-poly-time": 0.011217718943953514,
+        "pySR": 1.0770713069874317e-05,
+        "pySR-time": 1249.907906871289
+    },
+    "DequanLi": {
+        "SINDY-fourier": 1.5799815473430787,
+        "SINDY-fourier-time": 0.013119615614414215,
+        "SINDY-poly": 0.14727339536848216,
+        "SINDY-poly-time": 0.012422151863574982,
+        "pySR": 1.205439969935509e-06,
+        "pySR-time": 1594.7407049555331
+    },
+    "DoubleGyre": {
+        "SINDY-fourier": 1.6058687916572614,
+        "SINDY-fourier-time": 0.01283075287938118,
+        "SINDY-poly": 0.7580684042934837,
+        "SINDY-poly-time": 0.011082949116826057,
+        "pySR": 0.6233657249197395,
+        "pySR-time": 1311.6355399731547
+    },
+    "DoublePendulum": {
+        "SINDY-fourier": 1.3086302360033804,
+        "SINDY-fourier-time": 0.021485334262251854,
+        "SINDY-poly": 1.15306717075089,
+        "SINDY-poly-time": 0.015491891652345657,
+        "pySR": 0.3909524947283502,
+        "pySR-time": 2869.9238652326167
+    },
+    "Duffing": {
+        "SINDY-fourier": 1.0350652434155159,
+        "SINDY-fourier-time": 0.016541877761483192,
+        "SINDY-poly": 1.384093787249271,
+        "SINDY-poly-time": 0.010486405342817307,
+        "pySR": 0.3061835624899009,
+        "pySR-time": 1185.1605405174196
+    },
+    "ExcitableCell": {
+        "SINDY-fourier": 1.8303092049131968,
+        "SINDY-fourier-time": 0.026453084996319376,
+        "SINDY-poly": 1.3949240533275116,
+        "SINDY-poly-time": 0.666219442995498,
+        "pySR": 1.0445484447344588,
+        "pySR-time": 1756.8824731819986
+    },
+    "Finance": {
+        "SINDY-fourier": 0.38234688365101166,
+        "SINDY-fourier-time": 0.012932875004480593,
+        "SINDY-poly": 0.35774614144961125,
+        "SINDY-poly-time": 0.01621442099713022,
+        "pySR": 5.708203795058882e-07,
+        "pySR-time": 1405.186873894003
+    },
+    "FluidTrampoline": {
+        "SINDY-fourier": 1.6162857436507723,
+        "SINDY-fourier-time": 0.016648871001962107,
+        "SINDY-poly": 1.4888344479693254,
+        "SINDY-poly-time": 0.011087440994742792,
+        "pySR": 0.6484358595099687,
+        "pySR-time": 1436.8595188819963
+    },
+    "ForcedBrusselator": {
+        "SINDY-fourier": 2.0,
+        "SINDY-fourier-time": 0.01119630299945129,
+        "SINDY-poly": 0.9510645623305197,
+        "SINDY-poly-time": 0.016565072000958025,
+        "pySR": 0.38861362951717154,
+        "pySR-time": 1441.5803918829988
+    },
+    "ForcedFitzHughNagumo": {
+        "SINDY-fourier": 2.0,
+        "SINDY-fourier-time": 0.01086440599465277,
+        "SINDY-poly": 2.0,
+        "SINDY-poly-time": 0.011670838001009542,
+        "pySR": 0.5848010798323768,
+        "pySR-time": 1460.622026103003
+    },
+    "ForcedVanDerPol": {
+        "SINDY-fourier": 1.4691322607119106,
+        "SINDY-fourier-time": 0.016712409997126088,
+        "SINDY-poly": 1.6252689802996185,
+        "SINDY-poly-time": 0.015639017001376487,
+        "pySR": 0.904671244622687,
+        "pySR-time": 1370.582178038996
+    },
+    "GenesioTesi": {
+        "SINDY-fourier": 0.027745178413595774,
+        "SINDY-fourier-time": 0.011523724999278784,
+        "SINDY-poly": 0.03525874561347214,
+        "SINDY-poly-time": 0.011564533997443505,
+        "pySR": 0.0,
+        "pySR-time": 1296.149882937003
+    },
+    "GuckenheimerHolmes": {
+        "SINDY-fourier": 1.3618631066764746,
+        "SINDY-fourier-time": 0.018874136003432795,
+        "SINDY-poly": 0.29936567752091026,
+        "SINDY-poly-time": 0.014240793003409635,
+        "pySR": 0.348507354446829,
+        "pySR-time": 1655.1870260310025
+    },
+    "Hadley": {
+        "SINDY-fourier": 0.41084038168714326,
+        "SINDY-fourier-time": 0.014547705999575555,
+        "SINDY-poly": 0.11372656381208868,
+        "SINDY-poly-time": 0.013119444003677927,
+        "pySR": 2.9245828690320878e-05,
+        "pySR-time": 1482.2700152899997
+    },
+    "Halvorsen": {
+        "SINDY-fourier": 1.5300676158568267,
+        "SINDY-fourier-time": 0.01342161600041436,
+        "SINDY-poly": 0.2962942418805894,
+        "SINDY-poly-time": 0.01563890800025547,
+        "pySR": 3.0670986975839926e-05,
+        "pySR-time": 1621.1298703000066
+    },
+    "HastingsPowell": {
+        "SINDY-fourier": 2.0,
+        "SINDY-fourier-time": 0.009225645000697114,
+        "SINDY-poly": 2.0,
+        "SINDY-poly-time": 0.008604880997154396,
+        "pySR": 1.108789500172451,
+        "pySR-time": 1550.4897144990027
+    },
+    "HenonHeiles": {
+        "SINDY-fourier": 0.2917332787979584,
+        "SINDY-fourier-time": 0.013132072999724187,
+        "SINDY-poly": 0.04500238928718775,
+        "SINDY-poly-time": 0.016895202003070153,
+        "pySR": 1.9654772489620758e-07,
+        "pySR-time": 2009.0499652539947
+    },
+    "HindmarshRose": {
+        "SINDY-fourier": 0.5134715326508869,
+        "SINDY-fourier-time": 0.01309048300026916,
+        "SINDY-poly": 0.3950590332978947,
+        "SINDY-poly-time": 0.011993113002972677,
+        "pySR": 1.7138986600954642e-06,
+        "pySR-time": 1352.028036620999
+    },
+    "Hopfield": {
+        "SINDY-fourier": 0.5663963037458211,
+        "SINDY-fourier-time": 0.02224180399934994,
+        "SINDY-poly": 0.6689441138395725,
+        "SINDY-poly-time": 0.021729817002778873,
+        "pySR": 0.9776171980012958,
+        "pySR-time": 2810.365481049994
+    },
+    "HyperBao": {
+        "SINDY-fourier": 1.545729389215984,
+        "SINDY-fourier-time": 0.019544675989891402,
+        "SINDY-poly": 0.13728224951436555,
+        "SINDY-poly-time": 0.018550155000411905,
+        "pySR": 1.9086970537403273e-07,
+        "pySR-time": 2051.9226113460027
+    },
+    "HyperCai": {
+        "SINDY-fourier": 1.4118364547691225,
+        "SINDY-fourier-time": 0.019580751992180012,
+        "SINDY-poly": 0.13995255299082845,
+        "SINDY-poly-time": 0.018385679009952582,
+        "pySR": 4.848400355424438e-06,
+        "pySR-time": 2295.353975477992
+    },
+    "HyperJha": {
+        "SINDY-fourier": 1.4818929326523986,
+        "SINDY-fourier-time": 0.019844087000819854,
+        "SINDY-poly": 0.22662747408188622,
+        "SINDY-poly-time": 0.01717918799840845,
+        "pySR": 2.235199938101114e-06,
+        "pySR-time": 2056.763913518007
+    },
+    "HyperLorenz": {
+        "SINDY-fourier": 1.452166101256531,
+        "SINDY-fourier-time": 0.019068820402026176,
+        "SINDY-poly": 0.34419774860845376,
+        "SINDY-poly-time": 0.01555713452398777,
+        "pySR": 6.500029561684173e-07,
+        "pySR-time": 1885.7753346897662
+    },
+    "HyperLu": {
+        "SINDY-fourier": 1.48293204949141,
+        "SINDY-fourier-time": 0.01897081546485424,
+        "SINDY-poly": 0.2816796464147976,
+        "SINDY-poly-time": 0.0184645913541317,
+        "pySR": 0.0,
+        "pySR-time": 1639.7284464202821
+    },
+    "HyperPang": {
+        "SINDY-fourier": 1.4188963357510858,
+        "SINDY-fourier-time": 0.01570728048682213,
+        "SINDY-poly": 0.3500674497173986,
+        "SINDY-poly-time": 0.01257785502821207,
+        "pySR": 0.0,
+        "pySR-time": 2271.85302889999
+    },
+    "HyperQi": {
+        "SINDY-fourier": 1.543957280580389,
+        "SINDY-fourier-time": 0.05583370849490166,
+        "SINDY-poly": 0.18659289348304275,
+        "SINDY-poly-time": 0.3104595020413399,
+        "pySR": 4.262350418825731e-06,
+        "pySR-time": 1826.53468141146
+    },
+    "HyperRossler": {
+        "SINDY-fourier": 1.3107936928327675,
+        "SINDY-fourier-time": 0.020658312365412712,
+        "SINDY-poly": 0.06964468896462835,
+        "SINDY-poly-time": 0.018193040043115616,
+        "pySR": 1.0892064670768761e-07,
+        "pySR-time": 1607.6427125129849
+    },
+    "HyperWang": {
+        "SINDY-fourier": 1.420851797628774,
+        "SINDY-fourier-time": 0.018987370654940605,
+        "SINDY-poly": 0.14077130544257696,
+        "SINDY-poly-time": 0.016478920355439186,
+        "pySR": 9.081800102468759e-08,
+        "pySR-time": 1716.624512726441
+    },
+    "HyperXu": {
+        "SINDY-fourier": 1.295560293453467,
+        "SINDY-fourier-time": 0.01993667148053646,
+        "SINDY-poly": 0.26644712764402756,
+        "SINDY-poly-time": 0.01580950804054737,
+        "pySR": 3.9333175620257254e-07,
+        "pySR-time": 1763.7313300780952
+    },
+    "HyperYan": {
+        "SINDY-fourier": 1.372924970841547,
+        "SINDY-fourier-time": 0.019786903634667397,
+        "SINDY-poly": 0.40726717324331296,
+        "SINDY-poly-time": 0.014981294050812721,
+        "pySR": 0.301068331471281,
+        "pySR-time": 2067.684689776972
+    },
+    "HyperYangChen": {
+        "SINDY-fourier": 1.5110502989028616,
+        "SINDY-fourier-time": 0.02015412412583828,
+        "SINDY-poly": 0.26801092867493426,
+        "SINDY-poly-time": 0.02059294283390045,
+        "pySR": 3.034721342064415e-07,
+        "pySR-time": 1711.0243069734424
+    },
+    "IkedaDelay": {
+        "SINDY-fourier": 1.966798917347972,
+        "SINDY-fourier-time": 0.08487283624708652,
+        "SINDY-poly": 1.9465568240265088,
+        "SINDY-poly-time": 0.03831158205866814,
+        "pySR": 3.047070552325634e-07,
+        "pySR-time": 453.0856928527355
+    },
+    "IsothermalChemical": {
+        "SINDY-fourier": 0.10401862612534629,
+        "SINDY-fourier-time": 0.014513706788420677,
+        "SINDY-poly": 0.13219311810078427,
+        "SINDY-poly-time": 0.012449350208044052,
+        "pySR": 0.18167067288615504,
+        "pySR-time": 1522.6403447948396
+    },
+    "ItikBanksTumor": {
+        "SINDY-fourier": 2.0,
+        "SINDY-fourier-time": 0.04120169021189213,
+        "SINDY-poly": 1.651465735817078,
+        "SINDY-poly-time": 0.013216616585850716,
+        "pySR": 1.4895966335581798,
+        "pySR-time": 1397.2193207629025
+    },
+    "JerkCircuit": {
+        "SINDY-fourier": 0.8572328710955238,
+        "SINDY-fourier-time": 0.016569824889302254,
+        "SINDY-poly": 0.8077837895134782,
+        "SINDY-poly-time": 0.011441979557275772,
+        "pySR": 0.0,
+        "pySR-time": 1313.3283589389175
+    },
+    "KawczynskiStrizhak": {
+        "SINDY-fourier": 0.36358972043844334,
+        "SINDY-fourier-time": 0.013521019369363785,
+        "SINDY-poly": 0.2249276386913353,
+        "SINDY-poly-time": 0.012360922992229462,
+        "pySR": 1.4085386659812744e-05,
+        "pySR-time": 1520.6127675361931
+    },
+    "Laser": {
+        "SINDY-fourier": 0.7887911782901714,
+        "SINDY-fourier-time": 0.016727447509765625,
+        "SINDY-poly": 0.39316008582580847,
+        "SINDY-poly-time": 0.01143944077193737,
+        "pySR": 1.222172346737455e-16,
+        "pySR-time": 1335.2270012255758
+    },
+    "LiuChen": {
+        "SINDY-fourier": 1.9306262526721085,
+        "SINDY-fourier-time": 0.014434022828936577,
+        "SINDY-poly": 1.58219516286547,
+        "SINDY-poly-time": 0.012126980349421501,
+        "pySR": 0.0,
+        "pySR-time": 1306.329711470753
+    },
+    "Lorenz": {
+        "SINDY-fourier": 1.472865097123936,
+        "SINDY-fourier-time": 0.013768544420599937,
+        "SINDY-poly": 0.40884582871237707,
+        "SINDY-poly-time": 0.01525973156094551,
+        "pySR": 4.0602924634840606e-16,
+        "pySR-time": 1550.3249589689076
+    },
+    "Lorenz84": {
+        "SINDY-fourier": 1.286960152890682,
+        "SINDY-fourier-time": 0.01570817455649376,
+        "SINDY-poly": 1.288966190322931,
+        "SINDY-poly-time": 0.011158483102917671,
+        "pySR": 5.5228917930876926e-05,
+        "pySR-time": 1824.6176354717463
+    },
+    "Lorenz96": {
+        "SINDY-fourier": 1.4231492589487158,
+        "SINDY-fourier-time": 0.021015312522649765,
+        "SINDY-poly": 0.9540621669736158,
+        "SINDY-poly-time": 0.015746809542179108,
+        "pySR": 6.138723927287607e-06,
+        "pySR-time": 2096.0706843808293
+    },
+    "LorenzBounded": {
+        "SINDY-fourier": 1.4929649691990472,
+        "SINDY-fourier-time": 0.014386188238859177,
+        "SINDY-poly": 0.2503175959867594,
+        "SINDY-poly-time": 0.013376278802752495,
+        "pySR": 0.24134782214364406,
+        "pySR-time": 1831.0284565780312
+    },
+    "LorenzCoupled": {
+        "SINDY-fourier": 1.3317396436229312,
+        "SINDY-fourier-time": 0.03614778071641922,
+        "SINDY-poly": 0.30714409134709214,
+        "SINDY-poly-time": 0.020059342496097088,
+        "pySR": 9.803900114827398e-07,
+        "pySR-time": 3113.2897339472547
+    },
+    "LorenzStenflo": {
+        "SINDY-fourier": 1.3590836350159845,
+        "SINDY-fourier-time": 0.015995080582797527,
+        "SINDY-poly": 0.4244333518162558,
+        "SINDY-poly-time": 0.011325518600642681,
+        "pySR": 3.295006595255643e-06,
+        "pySR-time": 2145.8154470091686
+    },
+    "LuChen": {
+        "SINDY-fourier": 1.374053469101168,
+        "SINDY-fourier-time": 0.012104947119951248,
+        "SINDY-poly": 0.9928209679460652,
+        "SINDY-poly-time": 0.008394675329327583,
+        "pySR": 1.1640868474622024e-06,
+        "pySR-time": 1564.9456589780748
+    },
+    "LuChenCheng": {
+        "SINDY-fourier": 1.4057890958316628,
+        "SINDY-fourier-time": 0.06507192831486464,
+        "SINDY-poly": 0.3206811954682659,
+        "SINDY-poly-time": 0.46420453395694494,
+        "pySR": 0.0,
+        "pySR-time": 1447.9960095854476
+    },
+    "MacArthur": {
+        "SINDY-fourier": 1.424744320789065,
+        "SINDY-fourier-time": 0.02699012029916048,
+        "SINDY-poly": 1.482825346693311,
+        "SINDY-poly-time": 0.06355232931673527,
+        "pySR": 1.1584528609026306,
+        "pySR-time": 4844.80809173733
+    },
+    "MackeyGlass": {
+        "SINDY-fourier": 1.994177246181476,
+        "SINDY-fourier-time": 0.0539608309045434,
+        "SINDY-poly": 1.977846363771964,
+        "SINDY-poly-time": 0.03173995763063431,
+        "pySR": 1.198545587274728,
+        "pySR-time": 424.13566604070365
+    },
+    "MooreSpiegel": {
+        "SINDY-fourier": 1.4041946340682467,
+        "SINDY-fourier-time": 0.009898338466882706,
+        "SINDY-poly": 0.6969546335598515,
+        "SINDY-poly-time": 0.013270274735987186,
+        "pySR": 0.0,
+        "pySR-time": 1240.1621159277856
+    },
+    "MultiChua": {
+        "SINDY-fourier": 1.257878989896986,
+        "SINDY-fourier-time": 0.011275719851255417,
+        "SINDY-poly": 0.03644117671576305,
+        "SINDY-poly-time": 0.00978640653192997,
+        "pySR": 0.0,
+        "pySR-time": 1386.2298492249101
+    },
+    "NewtonLiepnik": {
+        "SINDY-fourier": 0.7150374484343928,
+        "SINDY-fourier-time": 0.0073829153552651405,
+        "SINDY-poly": 0.3833465228526351,
+        "SINDY-poly-time": 0.01314433291554451,
+        "pySR": 0.5835304553095962,
+        "pySR-time": 1349.6909582233056
+    },
+    "NoseHoover": {
+        "SINDY-fourier": 0.373702206147546,
+        "SINDY-fourier-time": 0.010034481063485146,
+        "SINDY-poly": 0.22372621278826826,
+        "SINDY-poly-time": 0.012140111066401005,
+        "pySR": 0.0,
+        "pySR-time": 1227.312190335244
+    },
+    "NuclearQuadrupole": {
+        "SINDY-fourier": 0.18879992572829646,
+        "SINDY-fourier-time": 0.01261675264686346,
+        "SINDY-poly": 0.41128363980479515,
+        "SINDY-poly-time": 0.012878346256911755,
+        "pySR": 0.20384413072289262,
+        "pySR-time": 1903.734073922038
+    },
+    "OscillatingFlow": {
+        "SINDY-fourier": 1.388487222921393,
+        "SINDY-fourier-time": 0.008580121211707592,
+        "SINDY-poly": 1.3835625476857527,
+        "SINDY-poly-time": 0.010060131549835205,
+        "pySR": 1.1540211400255057e-05,
+        "pySR-time": 1238.3628961518407
+    },
+    "PanXuZhou": {
+        "SINDY-fourier": 1.485426972475883,
+        "SINDY-fourier-time": 0.010444067418575287,
+        "SINDY-poly": 0.37296099300531,
+        "SINDY-poly-time": 0.014806048013269901,
+        "pySR": 5.999998201014833e-07,
+        "pySR-time": 1246.8728269021958
+    },
+    "PehlivanWei": {
+        "SINDY-fourier": 1.1356892638313931,
+        "SINDY-fourier-time": 0.08331895060837269,
+        "SINDY-poly": 0.36459011180598444,
+        "SINDY-poly-time": 0.43627459555864334,
+        "pySR": 1.7040469847569583e-07,
+        "pySR-time": 1287.3572685252875
+    },
+    "PiecewiseCircuit": {
+        "SINDY-fourier": 1.924195720469861,
+        "SINDY-fourier-time": 0.1370660997927189,
+        "SINDY-poly": 1.9425036739665833,
+        "SINDY-poly-time": 0.059309935197234154,
+        "pySR": 0.09943592219421173,
+        "pySR-time": 457.8901337981224
+    },
+    "Qi": {
+        "SINDY-fourier": 0.8924991181588702,
+        "SINDY-fourier-time": 0.016131779178977013,
+        "SINDY-poly": 0.31055643595267657,
+        "SINDY-poly-time": 0.011697236448526382,
+        "pySR": 3.790601146487651e-07,
+        "pySR-time": 1735.6575056351721
+    },
+    "QiChen": {
+        "SINDY-fourier": 1.418874372307307,
+        "SINDY-fourier-time": 0.00870863813906908,
+        "SINDY-poly": 0.4264588468816062,
+        "SINDY-poly-time": 0.012017152272164822,
+        "pySR": 2.8724956396327637e-06,
+        "pySR-time": 1093.4695859588683
+    },
+    "RabinovichFabrikant": {
+        "SINDY-fourier": 0.3692942405186865,
+        "SINDY-fourier-time": 0.010534328408539295,
+        "SINDY-poly": 0.1565329586472624,
+        "SINDY-poly-time": 0.009119738824665546,
+        "pySR": 0.44035564400789295,
+        "pySR-time": 1423.060698623769
+    },
+    "RayleighBenard": {
+        "SINDY-fourier": 1.4417216982654322,
+        "SINDY-fourier-time": 0.010671960189938545,
+        "SINDY-poly": 0.30108257148160367,
+        "SINDY-poly-time": 0.012274746783077717,
+        "pySR": 6.925115827888358e-06,
+        "pySR-time": 1312.7221008976921
+    },
+    "RikitakeDynamo": {
+        "SINDY-fourier": 0.6772961607880064,
+        "SINDY-fourier-time": 0.012457839213311672,
+        "SINDY-poly": 0.2973426486736649,
+        "SINDY-poly-time": 0.010937620885670185,
+        "pySR": 4.2256989975797925e-07,
+        "pySR-time": 1279.477822558023
+    },
+    "Rossler": {
+        "SINDY-fourier": 1.3519631126610916,
+        "SINDY-fourier-time": 0.009975564666092396,
+        "SINDY-poly": 0.06485436120386773,
+        "SINDY-poly-time": 0.008629115298390388,
+        "pySR": 0.0,
+        "pySR-time": 1090.9708607830107
+    },
+    "Rucklidge": {
+        "SINDY-fourier": 1.1945412317694948,
+        "SINDY-fourier-time": 0.00976627878844738,
+        "SINDY-poly": 0.16020902133003134,
+        "SINDY-poly-time": 0.011894124560058117,
+        "pySR": 1.5720634381824501e-06,
+        "pySR-time": 1555.3321986002848
+    },
+    "Sakarya": {
+        "SINDY-fourier": 1.4754193005430194,
+        "SINDY-fourier-time": 0.009308350272476673,
+        "SINDY-poly": 0.468193372571017,
+        "SINDY-poly-time": 0.012084555812180042,
+        "pySR": 2.420724567684137e-07,
+        "pySR-time": 1135.519961034879
+    },
+    "SaltonSea": {
+        "SINDY-fourier": 1.4846663207064228,
+        "SINDY-fourier-time": 0.010728839784860611,
+        "SINDY-poly": 0.5978645193853817,
+        "SINDY-poly-time": 0.0113867511972785,
+        "pySR": 0.15357282281285076,
+        "pySR-time": 1765.4521078271791
+    },
+    "SanUmSrisuchinwong": {
+        "SINDY-fourier": 0.8320818255142891,
+        "SINDY-fourier-time": 0.01156150083988905,
+        "SINDY-poly": 0.392067027260501,
+        "SINDY-poly-time": 0.010085567831993103,
+        "pySR": 4.9388514262419154e-17,
+        "pySR-time": 1176.5254590604454
+    },
+    "ScrollDelay": {
+        "SINDY-fourier": 1.9843711920711409,
+        "SINDY-fourier-time": 0.0636788010597229,
+        "SINDY-poly": 1.986791016017891,
+        "SINDY-poly-time": 0.027842381037771702,
+        "pySR": 4.61602562556767e-06,
+        "pySR-time": 393.5314408969134
+    },
+    "ShimizuMorioka": {
+        "SINDY-fourier": 0.16394804639834476,
+        "SINDY-fourier-time": 0.006782718002796173,
+        "SINDY-poly": 0.12963592000035876,
+        "SINDY-poly-time": 0.011677541770040989,
+        "pySR": 0.0,
+        "pySR-time": 1518.017956148833
+    },
+    "SprottA": {
+        "SINDY-fourier": 0.3333663595518708,
+        "SINDY-fourier-time": 0.011893260292708874,
+        "SINDY-poly": 0.30503279716729076,
+        "SINDY-poly-time": 0.0097859101369977,
+        "pySR": 0.0,
+        "pySR-time": 1115.959436823614
+    },
+    "SprottB": {
+        "SINDY-fourier": 0.6333889643132425,
+        "SINDY-fourier-time": 0.009534299373626709,
+        "SINDY-poly": 0.2910247572851386,
+        "SINDY-poly-time": 0.010791013948619366,
+        "pySR": 0.0,
+        "pySR-time": 1187.8426656937227
+    },
+    "SprottC": {
+        "SINDY-fourier": 0.29016209017084404,
+        "SINDY-fourier-time": 0.010685927234590054,
+        "SINDY-poly": 0.29411429504710457,
+        "SINDY-poly-time": 0.008229359984397888,
+        "pySR": 0.0,
+        "pySR-time": 1243.591246202588
+    },
+    "SprottD": {
+        "SINDY-fourier": 0.19101460040631518,
+        "SINDY-fourier-time": 0.011138775385916233,
+        "SINDY-poly": 0.10009883423198802,
+        "SINDY-poly-time": 0.011806624010205269,
+        "pySR": 0.0,
+        "pySR-time": 1194.66404755041
+    },
+    "SprottDelay": {
+        "SINDY-fourier": 1.9943528104625527,
+        "SINDY-fourier-time": 0.06681665312498808,
+        "SINDY-poly": 1.9938848580074162,
+        "SINDY-poly-time": 0.02535471972078085,
+        "pySR": 2.897127242814057e-17,
+        "pySR-time": 354.8868048880249
+    },
+    "SprottE": {
+        "SINDY-fourier": 0.5941403631480688,
+        "SINDY-fourier-time": 0.009712301194667816,
+        "SINDY-poly": 0.32133606517229407,
+        "SINDY-poly-time": 0.011606487445533276,
+        "pySR": 0.0,
+        "pySR-time": 1116.8486228995025
+    },
+    "SprottF": {
+        "SINDY-fourier": 0.6385354329399523,
+        "SINDY-fourier-time": 0.07020488381385803,
+        "SINDY-poly": 0.7149291085553745,
+        "SINDY-poly-time": 0.4792206697165966,
+        "pySR": 0.0,
+        "pySR-time": 1553.250302966684
+    },
+    "SprottG": {
+        "SINDY-fourier": 0.23800146496730515,
+        "SINDY-fourier-time": 0.01287045143544674,
+        "SINDY-poly": 0.12915381160432762,
+        "SINDY-poly-time": 0.009844895452260971,
+        "pySR": 1.7330312465829508e-07,
+        "pySR-time": 1483.8955358024687
+    },
+    "SprottH": {
+        "SINDY-fourier": 0.7874453878618928,
+        "SINDY-fourier-time": 0.014126935973763466,
+        "SINDY-poly": 0.7364415571886788,
+        "SINDY-poly-time": 0.00978155992925167,
+        "pySR": 2.411782173955346e-07,
+        "pySR-time": 1499.6294421497732
+    },
+    "SprottI": {
+        "SINDY-fourier": 2.0,
+        "SINDY-fourier-time": 0.04451296851038933,
+        "SINDY-poly": 0.10761981916991625,
+        "SINDY-poly-time": 0.01333705522119999,
+        "pySR": 0.0,
+        "pySR-time": 1498.22067213431
+    },
+    "SprottJ": {
+        "SINDY-fourier": 1.4182516148058488,
+        "SINDY-fourier-time": 0.014907332137227058,
+        "SINDY-poly": 0.055146395353860574,
+        "SINDY-poly-time": 0.01324465498328209,
+        "pySR": 0.0,
+        "pySR-time": 1291.7646019961685
+    },
+    "SprottJerk": {
+        "SINDY-fourier": 0.1978219461442816,
+        "SINDY-fourier-time": 0.013005370274186134,
+        "SINDY-poly": 0.1469794072402471,
+        "SINDY-poly-time": 0.013957716524600983,
+        "pySR": 0.0,
+        "pySR-time": 1398.030271532014
+    },
+    "SprottK": {
+        "SINDY-fourier": 0.19093272371518913,
+        "SINDY-fourier-time": 0.013137755915522575,
+        "SINDY-poly": 0.057877789379543125,
+        "SINDY-poly-time": 0.01141464151442051,
+        "pySR": 0.0,
+        "pySR-time": 1285.2296865135431
+    },
+    "SprottL": {
+        "SINDY-fourier": 1.3993929602101582,
+        "SINDY-fourier-time": 0.016930105164647102,
+        "SINDY-poly": 0.31763746078941074,
+        "SINDY-poly-time": 0.012902667745947838,
+        "pySR": 1.56353092708576e-06,
+        "pySR-time": 1329.9349413104355
+    },
+    "SprottM": {
+        "SINDY-fourier": 0.1850454648512633,
+        "SINDY-fourier-time": 0.014168085530400276,
+        "SINDY-poly": 0.08758884354252307,
+        "SINDY-poly-time": 0.011180484667420387,
+        "pySR": 3.451996284139921e-06,
+        "pySR-time": 1438.6566999163479
+    },
+    "SprottMore": {
+        "SINDY-fourier": 0.3019518131270574,
+        "SINDY-fourier-time": 0.01647154428064823,
+        "SINDY-poly": 0.48484236756560656,
+        "SINDY-poly-time": 0.010151324793696404,
+        "pySR": 0.02698362999063748,
+        "pySR-time": 1342.3457324299961
+    },
+    "SprottN": {
+        "SINDY-fourier": 1.3633523336699145,
+        "SINDY-fourier-time": 0.01580202765762806,
+        "SINDY-poly": 0.05688505240196,
+        "SINDY-poly-time": 0.012598441913723946,
+        "pySR": 0.0,
+        "pySR-time": 1281.3462616670877
+    },
+    "SprottO": {
+        "SINDY-fourier": 0.317023860136415,
+        "SINDY-fourier-time": 0.012661302462220192,
+        "SINDY-poly": 0.11888867832752326,
+        "SINDY-poly-time": 0.014396926388144493,
+        "pySR": 0.0,
+        "pySR-time": 1343.6964120473713
+    },
+    "SprottP": {
+        "SINDY-fourier": 0.05488429617364734,
+        "SINDY-fourier-time": 0.011591564863920212,
+        "SINDY-poly": 0.0425322491739138,
+        "SINDY-poly-time": 0.014987919479608536,
+        "pySR": 0.0,
+        "pySR-time": 1279.9859498608857
+    },
+    "SprottQ": {
+        "SINDY-fourier": 1.243627540697736,
+        "SINDY-fourier-time": 0.025937171652913094,
+        "SINDY-poly": 0.05252858541611337,
+        "SINDY-poly-time": 0.012651510536670685,
+        "pySR": 0.0,
+        "pySR-time": 1230.094970567152
+    },
+    "SprottR": {
+        "SINDY-fourier": 1.3329357444587038,
+        "SINDY-fourier-time": 0.015459626913070679,
+        "SINDY-poly": 0.1285333781084319,
+        "SINDY-poly-time": 0.010334281250834465,
+        "pySR": 9.027028285096749e-08,
+        "pySR-time": 1177.2584924008697
+    },
+    "SprottS": {
+        "SINDY-fourier": 0.12545854801394163,
+        "SINDY-fourier-time": 0.013520900160074234,
+        "SINDY-poly": 0.03969555062363963,
+        "SINDY-poly-time": 0.010532272979617119,
+        "pySR": 7.602885747068437e-07,
+        "pySR-time": 1187.4818003866822
+    },
+    "SprottTorus": {
+        "SINDY-fourier": 0.6464734981465184,
+        "SINDY-fourier-time": 0.013682415708899498,
+        "SINDY-poly": 0.8211694028325972,
+        "SINDY-poly-time": 0.015706174075603485,
+        "pySR": 5.9468523345274e-07,
+        "pySR-time": 1348.2129275761545
+    },
+    "StickSlipOscillator": {
+        "SINDY-fourier": 0.18804978920428111,
+        "SINDY-fourier-time": 0.013212699443101883,
+        "SINDY-poly": 0.21795785695012534,
+        "SINDY-poly-time": 0.011932086199522018,
+        "pySR": 0.0837936798788477,
+        "pySR-time": 1439.648818295449
+    },
+    "SwingingAtwood": {
+        "SINDY-fourier": 1.0969705622361707,
+        "SINDY-fourier-time": 0.014120740815997124,
+        "SINDY-poly": 0.3711945300438868,
+        "SINDY-poly-time": 0.015409847721457481,
+        "pySR": 5.17499732218707e-07,
+        "pySR-time": 1767.0867037288845
+    },
+    "Thomas": {
+        "SINDY-fourier": 1.1107682816935525,
+        "SINDY-fourier-time": 0.012075762264430523,
+        "SINDY-poly": 1.8042286072247535,
+        "SINDY-poly-time": 0.01016802154481411,
+        "pySR": 1.4861608575206903e-06,
+        "pySR-time": 1342.3079261584207
+    },
+    "ThomasLabyrinth": {
+        "SINDY-fourier": 1.055312937380875,
+        "SINDY-fourier-time": 0.012422765605151653,
+        "SINDY-poly": 1.9187783041465765,
+        "SINDY-poly-time": 0.009339319542050362,
+        "pySR": 3.087966105101116e-06,
+        "pySR-time": 1334.2600171845406
+    },
+    "Torus": {
+        "SINDY-fourier": 1.9775704334977566,
+        "SINDY-fourier-time": 0.00817320216447115,
+        "SINDY-poly": 1.957785824861495,
+        "SINDY-poly-time": 0.011370069347321987,
+        "pySR": null,
+        "pySR-time": 1198.0508401524276
+    },
+    "Tsucs2": {
+        "SINDY-fourier": 1.5826054989143707,
+        "SINDY-fourier-time": 0.009084805846214294,
+        "SINDY-poly": 0.2955182172921249,
+        "SINDY-poly-time": 0.011496034450829029,
+        "pySR": 1.5278186134583377e-06,
+        "pySR-time": 1350.0995707297698
+    },
+    "TurchinHanski": {
+        "SINDY-fourier": 0.9894658798073799,
+        "SINDY-fourier-time": 0.010457406751811504,
+        "SINDY-poly": 0.7971679365743618,
+        "SINDY-poly-time": 0.011377080343663692,
+        "pySR": 0.6778427732778347,
+        "pySR-time": 1395.1363236419857
+    },
+    "VallisElNino": {
+        "SINDY-fourier": 0.9186154978387883,
+        "SINDY-fourier-time": 0.010038970038294792,
+        "SINDY-poly": 0.4031057484686786,
+        "SINDY-poly-time": 0.013034181669354439,
+        "pySR": 5.411325398201173e-07,
+        "pySR-time": 1288.8741857688874
+    },
+    "VossDelay": {
+        "SINDY-fourier": 1.869633680208304,
+        "SINDY-fourier-time": 0.05796802695840597,
+        "SINDY-poly": 1.6265904139789977,
+        "SINDY-poly-time": 0.030374741181731224,
+        "pySR": 0.04406119067988416,
+        "pySR-time": 526.3099526818842
+    },
+    "WangSun": {
+        "SINDY-fourier": 2.0,
+        "SINDY-fourier-time": 0.008599423803389072,
+        "SINDY-poly": 1.1250766120509983,
+        "SINDY-poly-time": 0.011500275693833828,
+        "pySR": 0.0,
+        "pySR-time": 1208.6522502414882
+    },
+    "WindmiReduced": {
+        "SINDY-fourier": 0.6907142157209037,
+        "SINDY-fourier-time": 0.014130735769867897,
+        "SINDY-poly": 0.8807446376356838,
+        "SINDY-poly-time": 0.04482710640877485,
+        "pySR": 2.079038060696042e-06,
+        "pySR-time": 1560.1640322236344
+    },
+    "YuWang": {
+        "SINDY-fourier": 1.06547559562704,
+        "SINDY-fourier-time": 0.011153110302984715,
+        "SINDY-poly": 0.8911558538258278,
+        "SINDY-poly-time": 0.010293885134160519,
+        "pySR": 1.0000000507795411e-07,
+        "pySR-time": 1294.967132916674
+    },
+    "YuWang2": {
+        "SINDY-fourier": 0.8943888825121872,
+        "SINDY-fourier-time": 0.009378341026604176,
+        "SINDY-poly": 0.2847009242983172,
+        "SINDY-poly-time": 0.00998722668737173,
+        "pySR": 8.953337194758925e-07,
+        "pySR-time": 1325.0182728786021
+    },
+    "ZhouChen": {
+        "SINDY-fourier": 1.3560895112465006,
+        "SINDY-fourier-time": 0.04849601164460182,
+        "SINDY-poly": 0.6750924152725385,
+        "SINDY-poly-time": 0.47876020334661007,
+        "pySR": 2.262178223765696e-06,
+        "pySR-time": 1745.6436053961515
+    }
+}

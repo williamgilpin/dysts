@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import json
 import pandas as pd
@@ -24,7 +24,7 @@ cwd = os.path.dirname(os.path.realpath(__file__))
 # dataname = os.path.splitext(os.path.basename(os.path.split(input_path)[-1]))[0]
 output_path = cwd + "/results/symbolic_scores_sweep.json"
 
-n_train = 150
+
 operator_list = [
             "cos",
             "exp",
@@ -33,7 +33,7 @@ operator_list = [
             "tanh",
             "inv(x) = 1/x",
         ]
-# standard base operators +, −, ×, ÷,sin, cos, exp, log, x
+
 pysr_opts = {
     "populations" : 3,  # number of workers, defaults to 20
     "niterations" : 5,
@@ -46,7 +46,7 @@ pysr_opts = {
 
 
 # get data
-with open("./resources/symb_train_test_data.json", "r") as file:
+with open(cwd + "/resources/symb_train_test_data.json", "r") as file:
     all_train_test = json.load(file)
 
 try:
@@ -71,6 +71,7 @@ for i, equation_name in enumerate(get_attractor_list()):
     t_train = np.array(all_train_test[equation_name]["t_train"])
     t_test = np.array(all_train_test[equation_name]["t_test"])
     
+#     n_train = 150
 #     np.random.seed(0)
 #     ic_train, ic_test = sample_initial_conditions(model, 2, traj_length=1000, pts_per_period=30)
 
@@ -109,7 +110,7 @@ for i, equation_name in enumerate(get_attractor_list()):
     
     all_scores = list()
     for i in range(ndim):
-        model = DeepSymbolicRegressor("./resources/config.json")
+        model = DeepSymbolicRegressor(cwd +"/resources/config.json")
         model.fit(X_train, y_train[:, i]) # Should solve in ~10 seconds
         y_test_pred = model.predict(X_test)
         all_scores.append(metric_calc(y_test[:, i], y_test_pred))

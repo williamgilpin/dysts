@@ -21,7 +21,6 @@ class TimeSeriesDataset:
             with open(datapath, "r") as file:
                 self.dataset = json.load(file)
         
-        
         self.rank = np.max(np.array([len(np.squeeze(np.array(self.dataset[item]["values"])).shape) for item in self.dataset]))
         self.is_multivariate = self.rank > 1
         
@@ -149,7 +148,7 @@ def load_file(filename):
 #         dataset = load_file(f"{subsets}_multivariate__pts_per_period_{granval}__periods_{period}.json")
 #     return dataset
 
-def load_dataset(subsets="train", univariate=True, granularity="fine"):
+def load_dataset(subsets="train", univariate=True, granularity="fine", data_format="object"):
     """
     Load dynamics from continuous dynamical systems. 
     
@@ -160,6 +159,7 @@ def load_dataset(subsets="train", univariate=True, granularity="fine"):
             initial condition, split 5/6 of the way though.
         univariate (bool): Whether to use one coordinate, or all for each system.
         granularity ("course" | "fine"): Whether to use fine or coarsely-spaced samples
+        dataa_format ("object" | "numpy" | "pandas"): The format to return
     
     Returns:
         dataset (TimeSeriesDataset): A collection of time series dataset
@@ -180,10 +180,17 @@ def load_dataset(subsets="train", univariate=True, granularity="fine"):
     if subsets == "test":
         dataset.trim_series(0, split_point)
     if "val" in subsets:
-        dataset.trim_series(split_point, -1)        
-
-    return dataset
-
+        dataset.trim_series(split_point, -1)
+        
+    if data_format == "object":
+        return dataset
+    if data_format == "pandas":
+        return dataset.to_pandas()
+    if data_format == "numpy":
+        return dataset.to_array()
+    else:
+        raise ValueError("Return format not recognized.")
+        return None
 
 def load_discrete(subsets="all"):
     """Load dynamics from discrete dynamical systems
