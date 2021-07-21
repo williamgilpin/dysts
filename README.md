@@ -13,7 +13,6 @@ model = Lorenz()
 sol = model.make_trajectory(1000)
 ```
 
-
 Load a precomputed collection of time series
 
 ```python
