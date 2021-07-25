@@ -27,6 +27,8 @@ data_path_discrete = pkg_resources.resource_filename('dysts', 'data/discrete_map
 import numpy as np
 
 from .utils import integrate_dyn, standardize_ts
+import importlib
+flows = importlib.import_module("dysts.flows", package=".flows")
 
 try:
     from numba import jit, njit
@@ -125,7 +127,7 @@ class DynSys(BaseDyn):
         return self.rhs(X, t)
     
     def make_trajectory(self, n, method="Radau", resample=False, pts_per_period=100,
-                       return_times=False, standardize=False, postprocess=True):
+                       return_times=False, standardize=False, postprocess=True, noise=0.0):
         """
         Generate a fixed-length trajectory with default timestep, parameters, and initial conditions
         
@@ -140,6 +142,8 @@ class DynSys(BaseDyn):
                 was computed
             postprocess (bool): Whether to apply coordinate conversions and other domain-specific 
                 rescalings to the integration coordinates
+            noise (float): The amount of stochasticity in the integrated dynamics. This would correspond
+                to Brownian motion in the absence of any forcing.
                 
             
         """
@@ -155,11 +159,11 @@ class DynSys(BaseDyn):
         m = len(np.array(self.ic).shape)
         if m < 1: m = 1
         if m == 1:
-            sol = integrate_dyn(self, self.ic, tpts, first_step=self.dt, method=method).T
+            sol = integrate_dyn(self, self.ic, tpts, first_step=self.dt, method=method, noise=noise).T
         else:
             sol = list()
             for ic in self.ic:
-                sol.append(integrate_dyn(self, ic, tpts, first_step=self.dt, method=method))
+                sol.append(integrate_dyn(self, ic, tpts, first_step=self.dt, method=method, noise=noise))
             sol = np.transpose(np.array(sol), (0, 2, 1))
 
         if hasattr(self, "_postprocessing") and postprocess:
@@ -387,3 +391,31 @@ def get_attractor_list(model_type="continuous"):
         data = json.load(file)
     attractor_list = sorted(list(data.keys()))
     return attractor_list
+
+def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, **kwargs):
+    """
+    Integrate multiple dynamical systems with identical settings
+    
+    Args:
+        n (int): The number of timepoints to integrate
+        subset (list): A list of system names. Defaults to all systems
+        use_multiprocessing (bool): Not yet implemented.
+        kwargs (dict): Integration options passed to each system's make_trajectory() method
+    
+    Returns:
+        all_sols (dict): A dictionary containing trajectories for each system
+    
+    """
+    if not subset:
+        subset = get_attractor_list()
+    
+    if use_multiprocessing:
+        warnings.warn("Multiprocessing not implemented; this will be included in a future version.")
+    
+    all_sols = dict()
+    for equation_name in subset:
+        eq = getattr(flows, equation_name)()
+        sol = eq.make_trajectory(n, **kwargs)
+        all_sols[equation_name] = sol
+        
+    return all_sols

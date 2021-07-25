@@ -148,7 +148,7 @@ def load_file(filename):
 #         dataset = load_file(f"{subsets}_multivariate__pts_per_period_{granval}__periods_{period}.json")
 #     return dataset
 
-def load_dataset(subsets="train", univariate=True, granularity="fine", data_format="object"):
+def load_dataset(subsets="train", univariate=True, granularity="fine", data_format="object", **kwargs):
     """
     Load dynamics from continuous dynamical systems. 
     
@@ -159,7 +159,8 @@ def load_dataset(subsets="train", univariate=True, granularity="fine", data_form
             initial condition, split 5/6 of the way though.
         univariate (bool): Whether to use one coordinate, or all for each system.
         granularity ("course" | "fine"): Whether to use fine or coarsely-spaced samples
-        dataa_format ("object" | "numpy" | "pandas"): The format to return
+        data_format ("object" | "numpy" | "pandas"): The format to return
+        kwargs (dict): keyword arguments passed to the data formatter
     
     Returns:
         dataset (TimeSeriesDataset): A collection of time series dataset
@@ -185,9 +186,9 @@ def load_dataset(subsets="train", univariate=True, granularity="fine", data_form
     if data_format == "object":
         return dataset
     if data_format == "pandas":
-        return dataset.to_pandas()
+        return dataset.to_pandas(**kwargs)
     if data_format == "numpy":
-        return dataset.to_array()
+        return dataset.to_array(**kwargs)
     else:
         raise ValueError("Return format not recognized.")
         return None
