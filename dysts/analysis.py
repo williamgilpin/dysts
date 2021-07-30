@@ -5,8 +5,11 @@ Functions that act on DynSys or DynMap objects
 """
 
 import numpy as np
+import neurokit2 # Used for computing multiscale entropy
 
 from .utils import *
+from .utils import standardize_ts
+
 
 
 def sample_initial_conditions(
@@ -122,7 +125,7 @@ def find_lyapunov_exponents(
     Returns:
         final_lyap (ndarray): A list of computed Lyapunov exponents
         
-    Reference:
+    References:
         Christiansen & Rugh (1997). Computing Lyapunov spectra with continuous 
             Gram-Schmidt orthonormalization
 
@@ -190,20 +193,16 @@ def kaplan_yorke_dimension(spectrum0):
     return dky
 
 
-import neurokit2
-
-from dysts.utils import standardize_ts
 
 
 def mse_mv(traj):
     """
-    Generate an estimate of the multivariate multiscale entropy
-    
-    The current version computes the entropy separately for each channel and
-    then averages. It therefore represents an upper bound on the true 
+    Generate an estimate of the multivariate multiscale entropy. The current version computes 
+    the entropy separately for each channel and then averages. It therefore represents an upper bound on the true 
     multivariate multiscale entropy
     
-    DEV: Implement algorithm from Ahmed and Mandic PRE 2011
+    Todo: 
+        Implement algorithm from Ahmed and Mandic PRE 2011
     """
     mmse_opts = {"composite": True, "refined": False, "fuzzy": True}
     if len(traj.shape) == 1:

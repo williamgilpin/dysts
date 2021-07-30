@@ -112,6 +112,8 @@ for equation_ind, equation_name in enumerate(get_attractor_list()):
             sample_probs = mse_back**4
             sample_probs /= np.sum(sample_probs)
             ic_indices = np.random.choice(np.arange(len(y_train_backtest)), n_ic, p=sample_probs, replace=True)
+            
+            ## Random sampling as a control condition
             # ic_indices = np.random.choice(np.arange(len(y_train_backtest)), n_ic)
             # ic_indices = np.argsort(mse_back)[-n_ic:]
 

@@ -1,20 +1,10 @@
+"""
+Helper utilities for working with time series arrays.
+This module is intended to have no dependencies on the rest of
+the package
 
-# try:
-#     import jax.numpy as np
-#     from jax import jit
-#     has_jax = True
-# except:
-#     import numpy as np
-#     has_jax = False
-# from functools import partial
 
-# try:
-#     import jax.numpy as np
-#     has_jax = True
-# except ModuleNotFoundError:
-#     import numpy as np
-#     has_jax = False
-#     warnings.warn("JAX not found, falling back to numpy.")
+"""
 import numpy as np
 from numpy.fft import rfft, irfft
 
@@ -116,7 +106,7 @@ def pad_to_shape(arr, target_shape):
         arr (ndarray): The array to pad.
         target_shape (iterable): The desired shape.
     
-    Returns
+    Returns:
         arr (ndarray): The padded array,
     """
     rank_difference = len(target_shape) - len(arr.shape)
@@ -204,7 +194,7 @@ def parabolic(f, x):
 
     Returns:
         (vx, vy): the vertex coordinates of  a parabola passing through x 
-            and its nneighbors
+            and its neighbors
     """
     xv = 1/2. * (f[x-1] - f[x+1]) / (f[x-1] - 2 * f[x] + f[x+1]) + x
     yv = f[x] - 1/4. * (f[x-1] - f[x+1]) * (xv - x)
@@ -228,10 +218,17 @@ def parabolic_polyfit(f, x, n):
 def freq_from_autocorr(sig, fs=1):
     """
     Estimate frequency using autocorrelation
-    https://gist.github.com/endolith/255291
     
-    sig : a univariate signal
-    fs : the sampling frequency
+    Args:
+        sig (ndarray): A univariate signal
+        fs (int): The sampling frequency
+        
+    Returns:
+        out (float): The dominant frequency
+    
+    References:
+        Modified from the following
+        https://gist.github.com/endolith/255291
     """
     # Calculate autocorrelation and throw away the negative lags
     corr = np.correlate(sig, sig, mode='full')
@@ -247,17 +244,24 @@ def freq_from_autocorr(sig, fs=1):
     # Should use a weighting function to de-emphasize the peaks at longer lags.
     peak = np.argmax(corr[start:]) + start
     px, py = parabolic(corr, peak)
-
-    return fs / px
+    out = fs / px
+    return out
 
 from numpy.fft import rfft
 def freq_from_fft(sig, fs=1):
     """
-    Estimate frequency from peak of FFT
-    https://gist.github.com/endolith/255291
+    Estimate frequency of a signal from the peak of the power spectrum
     
-    sig (array): a univariate signal
-    fs (int): the sampling frequency
+    Args:
+        sig (ndarray): A univariate signal
+        fs (int): The sampling frequency
+        
+    Returns:
+        out (float): The dominant frequency
+    
+    References:
+        Modified from the following
+        https://gist.github.com/endolith/255291
     """
     # Compute Fourier transform of windowed signal
     windowed = sig * blackmanharris(len(sig))
@@ -277,11 +281,15 @@ def resample_timepoints(model, ic, tpts, pts_per_period=100):
     integration points, determine a new set of timepoints that
     scales to the periodicity of the model
     
-    model (callable): the right hand side of a set of ODEs
-    ic (list): the initial conditions
-    tpts (array): the timepoints over which to integrate
-    pts_per_period (int): the number of timepoints to sample in
-        each period
+    Args:
+        model (callable): the right hand side of a set of ODEs
+        ic (list): the initial conditions
+        tpts (array): the timepoints over which to integrate
+        pts_per_period (int): the number of timepoints to sample in
+            each period
+            
+    Returns:
+        new_timepoints (ndarray): The resampled timepoints
     """
     dt = (tpts[1] - tpts[0])
     samp = integrate_dyn(model, ic, tpts)[0]
@@ -294,9 +302,15 @@ def resample_timepoints(model, ic, tpts, pts_per_period=100):
 def make_surrogate(data, method="rp"):
     """
     
-    Parameters
-    ----------
-    method (str): "rs" or rp"
+    Args:
+        data (ndarray): A one-dimensional time series
+        method (str): "rs" or rp"
+        
+    Returns:
+        surr_data (ndarray): A single random surrogate time series
+        
+    Todo:
+        Add ensemble function
     
     """
     if method == "rp":
@@ -317,20 +331,16 @@ def find_significant_frequencies(sig, window=True, fs=1, n_samples=100,
     Find power spectral frequencies that are significant in a signal, by comparing
     the appearance of a peak with its appearance in randomly-shuffled surrogates
     
-    Parameters
-    ----------
-    window : bool
-        whether to window the signal before taking the FFT
-    thresh : float
-        the number of standard deviations above mean to be significant
-    fs (int): the sampling frequency
-    n_samples (int): the number of surrogates to create
-    show (bool): whether to show the psd of the signal and the surrogate
+    Args:
+        window (bool): Whether to window the signal before taking the FFT
+        thresh (float): The number of standard deviations above mean to be significant
+        fs (int): the sampling frequency
+        n_samples (int): the number of surrogates to create
+        show (bool): whether to show the psd of the signal and the surrogate
     
-    Returns
-    -------
-    freqs (ndarray): The frequencies overrated in the dataset
-    amps (ndarray): the amplitudes of the PSD at the identified frequencies
+    Returns:
+        freqs (ndarray): The frequencies overrated in the dataset
+        amps (ndarray): the amplitudes of the PSD at the identified frequencies
 
     """
     n = len(sig)
