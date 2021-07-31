@@ -1,0 +1,777 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dysts API Reference &#8212; dysts 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="dysts-api-reference">
+<h1>dysts API Reference<a class="headerlink" href="#dysts-api-reference" title="Permalink to this headline">¶</a></h1>
+<p>The API reference for</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="module-dysts.base">
+<span id="base-classes"></span><h2>Base Classes<a class="headerlink" href="#module-dysts.base" title="Permalink to this headline">¶</a></h2>
+<p>Dynamical systems in Python</p>
+<p>(M, T, D) or (T, D) convention for outputs</p>
+<p>Requirements:
++ numpy
++ scipy
++ sdeint (for integration with noise)
++ numba (optional, for faster integration)</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dysts.base.BaseDyn">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dysts.base.</span></span><span class="sig-name descname"><span class="pre">BaseDyn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">entries</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.BaseDyn" title="Permalink to this definition">¶</a></dt>
+<dd><p>A base class for dynamical systems</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dysts.base.BaseDyn.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#dysts.base.BaseDyn.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dysts.base.BaseDyn.params">
+<span class="sig-name descname"><span class="pre">params</span></span><a class="headerlink" href="#dysts.base.BaseDyn.params" title="Permalink to this definition">¶</a></dt>
+<dd><p>The parameters of the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dysts.base.BaseDyn.random_state">
+<span class="sig-name descname"><span class="pre">random_state</span></span><a class="headerlink" href="#dysts.base.BaseDyn.random_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The seed for the random number generator. Defaults to None</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="simple">
+<dt>Development:</dt><dd><p>Add a function to look up additional metadata, if requested</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.base.BaseDyn.bound_trajectory">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">bound_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.BaseDyn.bound_trajectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bound a trajectory within a periodic domain</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dysts.base.DynMap">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dysts.base.</span></span><span class="sig-name descname"><span class="pre">DynMap</span></span><a class="headerlink" href="#dysts.base.DynMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dynamical system base class, which loads and assigns parameter
+values from a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params</strong> (<em>list</em>) – parameter values for the differential equations</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.base.DynMap.make_trajectory">
+<span class="sig-name descname"><span class="pre">make_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_times</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.DynMap.make_trajectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a fixed-length trajectory with default timestep,
+parameters, and initial condition(s)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – the length of each trajectory</p></li>
+<li><p><strong>inverse</strong> (<em>bool</em>) – whether to reverse a trajectory</p></li>
+<li><p><strong>standardize</strong> (<em>bool</em>) – Standardize the output time series.</p></li>
+<li><p><strong>return_times</strong> (<em>bool</em>) – Whether to return the timepoints at which the solution
+was computed</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.base.DynMap.rhs">
+<span class="sig-name descname"><span class="pre">rhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.DynMap.rhs" title="Permalink to this definition">¶</a></dt>
+<dd><p>The right hand side of a dynamical map</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.base.DynMap.rhs_inv">
+<span class="sig-name descname"><span class="pre">rhs_inv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Xp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.DynMap.rhs_inv" title="Permalink to this definition">¶</a></dt>
+<dd><p>The inverse of the right hand side of a dynamical map</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dysts.base.DynSys">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dysts.base.</span></span><span class="sig-name descname"><span class="pre">DynSys</span></span><a class="headerlink" href="#dysts.base.DynSys" title="Permalink to this definition">¶</a></dt>
+<dd><p>A continuous dynamical system base class, which loads and assigns parameter
+values from a file</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.base.DynSys.make_trajectory">
+<span class="sig-name descname"><span class="pre">make_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Radau'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pts_per_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_times</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">postprocess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.DynSys.make_trajectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a fixed-length trajectory with default timestep, parameters, and initial conditions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – the total number of trajectory points</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – the integration method</p></li>
+<li><p><strong>resample</strong> (<em>bool</em>) – whether to resample trajectories to have matching dominant
+Fourier components</p></li>
+<li><p><strong>pts_per_period</strong> (<em>int</em>) – if resampling, the number of points per period</p></li>
+<li><p><strong>standardize</strong> (<em>bool</em>) – Standardize the output time series.</p></li>
+<li><p><strong>return_times</strong> (<em>bool</em>) – Whether to return the timepoints at which the solution
+was computed</p></li>
+<li><p><strong>postprocess</strong> (<em>bool</em>) – Whether to apply coordinate conversions and other domain-specific
+rescalings to the integration coordinates</p></li>
+<li><p><strong>noise</strong> (<em>float</em>) – The amount of stochasticity in the integrated dynamics. This would correspond
+to Brownian motion in the absence of any forcing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A T x D trajectory
+tpts, sol (ndarray): T x 1 timepoint array, and T x D trajectory</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sol (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.base.DynSys.rhs">
+<span class="sig-name descname"><span class="pre">rhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.DynSys.rhs" title="Permalink to this definition">¶</a></dt>
+<dd><p>The right hand side of a dynamical equation</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dysts.base.DynSysDelay">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dysts.base.</span></span><span class="sig-name descname"><span class="pre">DynSysDelay</span></span><a class="headerlink" href="#dysts.base.DynSysDelay" title="Permalink to this definition">¶</a></dt>
+<dd><p>A delayed differential equation object. Defaults to using Euler integration scheme
+The delay timescale is assumed to be the “tau” field. The embedding dimension is set
+by default to ten, but delay equations are infinite dimensional.
+Uses a double-ended queue for memory efficiency</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.base.DynSysDelay.make_trajectory">
+<span class="sig-name descname"><span class="pre">make_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Euler'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pts_per_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_times</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">postprocess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.DynSysDelay.make_trajectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a fixed-length trajectory with default timestep,
+parameters, and initial conditions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – the total number of trajectory points</p></li>
+<li><p><strong>d</strong> (<em>int</em>) – the number of embedding dimensions to return</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – Not used. Currently Euler is the only option here</p></li>
+<li><p><strong>noise</strong> (<em>float</em>) – The amplitude of brownian forcing</p></li>
+<li><p><strong>resample</strong> (<em>bool</em>) – whether to resample trajectories to have matching dominant
+Fourier components</p></li>
+<li><p><strong>pts_per_period</strong> (<em>int</em>) – if resampling, the number of points per period</p></li>
+<li><p><strong>standardize</strong> (<em>bool</em>) – Standardize the output time series.</p></li>
+<li><p><strong>return_times</strong> (<em>bool</em>) – Whether to return the timepoints at which the solution
+was computed</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.base.DynSysDelay.rhs">
+<span class="sig-name descname"><span class="pre">rhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.DynSysDelay.rhs" title="Permalink to this definition">¶</a></dt>
+<dd><p>The right hand side of a dynamical equation</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.base.get_attractor_list">
+<span class="sig-prename descclassname"><span class="pre">dysts.base.</span></span><span class="sig-name descname"><span class="pre">get_attractor_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'continuous'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.get_attractor_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the names of all models in the package</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model_type</strong> (<em>str</em>) – “continuous” (default) or “discrete”</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The names of all attractors in database</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>attractor_list (list of str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.base.make_trajectory_ensemble">
+<span class="sig-prename descclassname"><span class="pre">dysts.base.</span></span><span class="sig-name descname"><span class="pre">make_trajectory_ensemble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_multiprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.make_trajectory_ensemble" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integrate multiple dynamical systems with identical settings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – The number of timepoints to integrate</p></li>
+<li><p><strong>subset</strong> (<em>list</em>) – A list of system names. Defaults to all systems</p></li>
+<li><p><strong>use_multiprocessing</strong> (<em>bool</em>) – Not yet implemented.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Integration options passed to each system’s make_trajectory() method</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary containing trajectories for each system</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>all_sols (dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dysts.datasets">
+<span id="datasets"></span><h2>Datasets<a class="headerlink" href="#module-dysts.datasets" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dysts.datasets.TimeSeriesDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dysts.datasets.</span></span><span class="sig-name descname"><span class="pre">TimeSeriesDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datapath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.TimeSeriesDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>A data structure for handling time series. Reads and writes from JSON</p>
+<p>Assumes that all time series have the same number of timepoints. In the case
+of multivariate series with different numbers of features / dimensions, pads the
+missing dimensionality</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.datasets.TimeSeriesDataset.get_rowvalues">
+<span class="sig-name descname"><span class="pre">get_rowvalues</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.TimeSeriesDataset.get_rowvalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the value of a field from each row</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.datasets.TimeSeriesDataset.to_array">
+<span class="sig-name descname"><span class="pre">to_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.TimeSeriesDataset.to_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the values of a time series as a matrix of shape (B, T, D) or (B, T)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.datasets.TimeSeriesDataset.to_pandas">
+<span class="sig-name descname"><span class="pre">to_pandas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'constant'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.TimeSeriesDataset.to_pandas" title="Permalink to this definition">¶</a></dt>
+<dd><p>data (dict): A dictionary with index given by top-level keys</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>standardize</strong> (<em>bool</em>) – whether to standardize each dataset before flattening</p></li>
+<li><p><strong>filling</strong> (<em>str</em>) – For multivariate time series of varying demensionality, values to pad
+in empty columns.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a 2D dataset consisting of indexed time series</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>data_pd (pd.DataFrame)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dysts.datasets.TimeSeriesDataset.trim_series">
+<span class="sig-name descname"><span class="pre">trim_series</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.TimeSeriesDataset.trim_series" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trims a time series in-place. This is not reversible without re-initializing</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.datasets.load_dataset">
+<span class="sig-prename descclassname"><span class="pre">dysts.datasets.</span></span><span class="sig-name descname"><span class="pre">load_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">univariate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fine'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.load_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load dynamics from continuous dynamical systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subsets</strong> (<em>&quot;train&quot;</em><em> | </em><em>&quot;train_val&quot;</em><em> | </em><em>&quot;test&quot;</em><em> | </em><em>&quot;test_val&quot;</em><em> | </em><em>&quot;all&quot;</em>) – Which dataset to draw.
+Train and train val correspond to the same time series split 5/6 of the way through,
+while “test” and “test_val” both represent a trajectory emanating from a different
+initial condition, split 5/6 of the way though.</p></li>
+<li><p><strong>univariate</strong> (<em>bool</em>) – Whether to use one coordinate, or all for each system.</p></li>
+<li><p><strong>granularity</strong> (<em>&quot;course&quot;</em><em> | </em><em>&quot;fine&quot;</em>) – Whether to use fine or coarsely-spaced samples</p></li>
+<li><p><strong>data_format</strong> (<em>&quot;object&quot;</em><em> | </em><em>&quot;numpy&quot;</em><em> | </em><em>&quot;pandas&quot;</em>) – The format to return</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – keyword arguments passed to the data formatter</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A collection of time series dataset</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dataset (<a class="reference internal" href="#dysts.datasets.TimeSeriesDataset" title="dysts.datasets.TimeSeriesDataset">TimeSeriesDataset</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.datasets.load_discrete">
+<span class="sig-prename descclassname"><span class="pre">dysts.datasets.</span></span><span class="sig-name descname"><span class="pre">load_discrete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.load_discrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load dynamics from discrete dynamical systems</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dysts.utils">
+<span id="utilities"></span><h2>Utilities<a class="headerlink" href="#module-dysts.utils" title="Permalink to this headline">¶</a></h2>
+<p>Helper utilities for working with time series arrays.
+This module is intended to have no dependencies on the rest of
+the package</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.cartesian_to_polar">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">cartesian_to_polar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.cartesian_to_polar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert 2D cartesian coordinates to polar coordinates</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.find_characteristic_timescale">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">find_characteristic_timescale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.find_characteristic_timescale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the k leading characteristic timescales in a time series
+using the power spectrum..</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.find_psd">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">find_psd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.find_psd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the power spectrum of a signal</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.find_significant_frequencies">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">find_significant_frequencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">significance_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surrogate_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_amplitudes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.find_significant_frequencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find power spectral frequencies that are significant in a signal, by comparing
+the appearance of a peak with its appearance in randomly-shuffled surrogates</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window</strong> (<em>bool</em>) – Whether to window the signal before taking the FFT</p></li>
+<li><p><strong>thresh</strong> (<em>float</em>) – The number of standard deviations above mean to be significant</p></li>
+<li><p><strong>fs</strong> (<em>int</em>) – the sampling frequency</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – the number of surrogates to create</p></li>
+<li><p><strong>show</strong> (<em>bool</em>) – whether to show the psd of the signal and the surrogate</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The frequencies overrated in the dataset
+amps (ndarray): the amplitudes of the PSD at the identified frequencies</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>freqs (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.find_slope">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">find_slope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.find_slope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given two vectors or arrays, compute the best fit slope using an analytic
+formula. For arrays is computed along the last axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>ndarray</em>) – (N,) or (M, N)</p></li>
+<li><p><strong>y</strong> (<em>ndarray</em>) – (N,) or (M, N)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the values of the slope for each of the last dimensions</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>b (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.freq_from_autocorr">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">freq_from_autocorr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.freq_from_autocorr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate frequency using autocorrelation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sig</strong> (<em>ndarray</em>) – A univariate signal</p></li>
+<li><p><strong>fs</strong> (<em>int</em>) – The sampling frequency</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The dominant frequency</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>out (float)</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>Modified from the following
+<a class="reference external" href="https://gist.github.com/endolith/255291">https://gist.github.com/endolith/255291</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.freq_from_fft">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">freq_from_fft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.freq_from_fft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate frequency of a signal from the peak of the power spectrum</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sig</strong> (<em>ndarray</em>) – A univariate signal</p></li>
+<li><p><strong>fs</strong> (<em>int</em>) – The sampling frequency</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The dominant frequency</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>out (float)</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>Modified from the following
+<a class="reference external" href="https://gist.github.com/endolith/255291">https://gist.github.com/endolith/255291</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.generate_ic_ensemble">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">generate_ic_ensemble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tpts0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frac_perturb_param</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frac_transient</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ic_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.generate_ic_ensemble" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an ensemble of trajectories with random initial conditions, labelled by different
+initial conditions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a href="#id1"><span class="problematic" id="id2">callable_</span></a>) – function defining the numerical derivative</p></li>
+<li><p><strong>tpts</strong> (<em>ndarray</em>) – the timesteps over which to run the simulation</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – the number of different initial conditons</p></li>
+<li><p><strong>frac_perturb_param</strong> (<em>float</em>) – the amount to perturb the ic by</p></li>
+<li><p><strong>frac_transient</strong> (<em>float</em>) – the fraction of time for the time series to settle onto the attractor</p></li>
+<li><p><strong>ic_range</strong> (<em>list</em>) – a starting value for the initial conditions</p></li>
+<li><p><strong>random_state</strong> (<em>int</em>) – the seed for the random number generator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A set of initial conditions</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>all_samples (array)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.integrate_dyn">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">integrate_dyn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tvals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.integrate_dyn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given the RHS of a dynamical system, integrate the system
+noise &gt; 0 requires the Python library sdeint (assumes Brownian noise)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> (<em>callable</em>) – The right hand side of a system of ODEs.</p></li>
+<li><p><strong>ic</strong> (<em>ndarray</em>) – the initial conditions</p></li>
+<li><p><strong>noise_amp</strong> (<em>float</em>) – The amplitude of the Langevin forcing term.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Arguments passed to scipy.integrate.solve_ivp.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.jac_fd">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">jac_fd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'central'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.jac_fd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate numerical jacobian of a function with respect to a reference value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>callable</em>) – a vector-valued function</p></li>
+<li><p><strong>y0</strong> (<em>ndarray</em>) – a point around which to take the gradient</p></li>
+<li><p><strong>eps</strong> (<em>float</em>) – the step size for the finite difference calculation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a numerical estimate of the Jacobian about that point</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>jac (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.make_epsilon_ball">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">make_epsilon_ball</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.make_epsilon_ball" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uniformly sample a fixed-radius ball of points around a given point via
+using Muller’s method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pt</strong> (<em>ndarray</em>) – The center of the sampling</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – The number of points to sample</p></li>
+<li><p><strong>eps</strong> (<em>float</em>) – The radius of the ball</p></li>
+<li><p><strong>random_state</strong> (<em>int</em>) – Initialize the random number generator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The set of randomly-sampled points</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>out (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.make_surrogate">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">make_surrogate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rp'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.make_surrogate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>ndarray</em>) – A one-dimensional time series</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – “rs” or rp”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A single random surrogate time series</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>surr_data (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.pad_axis">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">pad_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.pad_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pad <cite>axis</cite> of <cite>arr</cite> with a constant <cite>padding</cite> to a desired shape</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.pad_to_shape">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">pad_to_shape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_shape</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.pad_to_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given an array, and a target shape, pad the dimensions in order to reach the desired shape
+Currently, if the rank of the array is lower than the target shape, singleton
+dimensions are appended to the rank</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>ndarray</em>) – The array to pad.</p></li>
+<li><p><strong>target_shape</strong> (<em>iterable</em>) – The desired shape.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The padded array,</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>arr (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.polar_to_cartesian">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">polar_to_cartesian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">th</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.polar_to_cartesian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert polar coordinates to 2D Cartesian coordinates</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.utils.standardize_ts">
+<span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">standardize_ts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.standardize_ts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standardize an array along dimension -2
+For a T x D array, this corresponds to dimension T, while for (B, T, D)
+this also corresponds to dimension T
+For dimensions with zero variance, divide by one instead of zero</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dysts.analysis">
+<span id="analysis"></span><h2>Analysis<a class="headerlink" href="#module-dysts.analysis" title="Permalink to this headline">¶</a></h2>
+<p>Functions that act on DynSys or DynMap objects</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.analysis.compute_timestep">
+<span class="sig-prename descclassname"><span class="pre">dysts.analysis.</span></span><span class="sig-name descname"><span class="pre">compute_timestep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transient_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_iters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pts_per_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visualize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.analysis.compute_timestep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a dynamical system object, find the integration timestep based on the largest
+signficant frequency</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference internal" href="#dysts.base.DynSys" title="dysts.base.DynSys"><em>DynSys</em></a>) – A dynamical systems object.</p></li>
+<li><p><strong>total_length</strong> (<em>int</em>) – The total trajectory length to use to determine timescales.</p></li>
+<li><p><strong>transient_fraction</strong> (<em>float</em>) – The fraction of a trajectory to discard as transient</p></li>
+<li><p><strong>num_iters</strong> (<em>int</em>) – The number of refinements to the timestep</p></li>
+<li><p><strong>pts_per_period</strong> (<em>int</em>) – The target integration timestep relative to the signal.</p></li>
+<li><p><strong>visualize</strong> (<em>bool</em>) – Whether to plot timestep versus time, in order to identify problems
+with the procedure</p></li>
+<li><p><strong>return_period</strong> (<em>bool</em>) – Whether to calculate and retunr the dominant timescale in the signal</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>dt (float): The best integration timestep
+period (float, optional): The dominant timescale in the signal</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.analysis.find_lyapunov_exponents">
+<span class="sig-prename descclassname"><span class="pre">dysts.analysis.</span></span><span class="sig-name descname"><span class="pre">find_lyapunov_exponents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pts_per_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_tpts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.analysis.find_lyapunov_exponents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a dynamical system, compute its spectrum of Lyapunov exponents</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>callable</em>) – the right hand side of a differential equation, in format func(X, t)</p></li>
+<li><p><strong>traj_length</strong> (<em>int</em>) – the length of each trajectory used to calulate Lyapunov
+exponents</p></li>
+<li><p><strong>pts_per_period</strong> (<em>int</em>) – the sampling density of the trajectory</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of computed Lyapunov exponents</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>final_lyap (ndarray)</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<dl class="simple">
+<dt>Christiansen &amp; Rugh (1997). Computing Lyapunov spectra with continuous</dt><dd><p>Gram-Schmidt orthonormalization</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.analysis.kaplan_yorke_dimension">
+<span class="sig-prename descclassname"><span class="pre">dysts.analysis.</span></span><span class="sig-name descname"><span class="pre">kaplan_yorke_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spectrum0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.analysis.kaplan_yorke_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the Kaplan-Yorke dimension, given a list of
+Lyapunov exponents</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.analysis.mse_mv">
+<span class="sig-prename descclassname"><span class="pre">dysts.analysis.</span></span><span class="sig-name descname"><span class="pre">mse_mv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.analysis.mse_mv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an estimate of the multivariate multiscale entropy. The current version computes
+the entropy separately for each channel and then averages. It therefore represents an upper bound on the true
+multivariate multiscale entropy</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dysts.analysis.sample_initial_conditions">
+<span class="sig-prename descclassname"><span class="pre">dysts.analysis.</span></span><span class="sig-name descname"><span class="pre">sample_initial_conditions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points_to_sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pts_per_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.analysis.sample_initial_conditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a random sample of initial conditions from a dynamical system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>callable</em>) – the right hand side of a differential equation, in format func(X, t)</p></li>
+<li><p><strong>points_to_sample</strong> (<em>int</em>) – the number of random initial conditions to sample</p></li>
+<li><p><strong>traj_length</strong> (<em>int</em>) – the total length of the reference trajectory from which points are drawn</p></li>
+<li><p><strong>pts_per_period</strong> (<em>int</em>) – the sampling density of the trajectory</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The points with shape (points_to_sample, d)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sample_points (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">dysts</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, William Gilpin.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
