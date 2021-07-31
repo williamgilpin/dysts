@@ -30,7 +30,7 @@ model.ic = [0, 0, 0.2]
 sol = model.make_trajectory(1000)
 ```
 
-Additional functionality and examples can be found in [`the demonstrations notebook.`](demos.ipynb)
+Additional functionality and examples can be found in [`the demonstrations notebook.`](demos.ipynb). The full API documentation [can be found here](http://www.wgilpin.com/dysts/spbuild/html/index.html).
 
 ## Installation
 
