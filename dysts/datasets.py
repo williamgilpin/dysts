@@ -148,6 +148,14 @@ def load_file(filename):
 #         dataset = load_file(f"{subsets}_multivariate__pts_per_period_{granval}__periods_{period}.json")
 #     return dataset
 
+def load_dataset_sr(subsets="train", univariate=True, granularity="fine", data_format="object", **kwargs):
+    """
+    Load a datasets for symbolic regression
+    """
+    dataset = load_file("benchmarks/resources/symb_train_test_data.json")
+    
+
+
 def load_dataset(subsets="train", univariate=True, granularity="fine", data_format="object", **kwargs):
     """
     Load dynamics from continuous dynamical systems. 
@@ -163,7 +171,7 @@ def load_dataset(subsets="train", univariate=True, granularity="fine", data_form
         kwargs (dict): keyword arguments passed to the data formatter
     
     Returns:
-        dataset (TimeSeriesDataset): A collection of time series dataset
+        dataset (TimeSeriesDataset): A collection of time series datasets
     """
     period = 12
     granval = {"coarse": 15, "fine": 100}[granularity]

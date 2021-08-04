@@ -49,14 +49,22 @@ def signif(x, figs=6):
 
 def standardize_ts(a, scale=1.0):
     """Standardize an array along dimension -2
-    For a T x D array, this corresponds to dimension T, while for (B, T, D)
-    this also corresponds to dimension T
     For dimensions with zero variance, divide by one instead of zero
+    
+    Args:
+        a (ndarray): a matrix containing a time series or batch of time series
+            with shape (T, D) or (B, T, D)
+        scale (float): the number of standard deviations by which to scale
+    
+    Returns:
+        ts_scaled (ndarray): A standardized time series with the same shape as 
+            the input
     """
 #     if len(a.shape) == 1: a = a[:, None]
     stds = np.std(a, axis=-2, keepdims=True)
     stds[stds==0] = 1
-    return (a - np.mean(a, axis=-2, keepdims=True))/(scale*stds)
+    ts_scaled = (a - np.mean(a, axis=-2, keepdims=True))/(scale*stds)
+    return ts_scaled
 
 def integrate_dyn(f, ic, tvals, noise=0, **kwargs):
     """
@@ -68,6 +76,9 @@ def integrate_dyn(f, ic, tvals, noise=0, **kwargs):
         ic (ndarray): the initial conditions
         noise_amp (float): The amplitude of the Langevin forcing term.
         kwargs (dict): Arguments passed to scipy.integrate.solve_ivp.
+        
+    Returns:
+        sol (ndarray): The integrated trajectory
     """
     ic = np.array(ic)
     if noise > 0:
@@ -136,9 +147,11 @@ from scipy.signal import periodogram
 def group_consecutives(vals, step=1):
     """
     Return list of consecutive lists of numbers from vals (number list).
-    Adapted from here
-    https://stackoverflow.com/questions/7352684/
-    how-to-find-the-groups-of-consecutive-elements-from-an-array-in-numpy 
+    
+    References:
+        Modified from the following
+        https://stackoverflow.com/questions/7352684/
+        how-to-find-the-groups-of-consecutive-elements-from-an-array-in-numpy 
     """
     run = list()
     result = [run]
