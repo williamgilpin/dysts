@@ -28,11 +28,10 @@ from dysts.flows import Lorenz
 #         assert True
 
 
-class TestModels(unittest.TestCase):
+class TestDatasets(unittest.TestCase):
     """
     Tests models
     """
-
     def test_trajectory(self):
         """
         Test generating a trajectory

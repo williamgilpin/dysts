@@ -16,11 +16,14 @@ from functools import partial
 
 import json
 
-from sdeint import itoint
-
+try:
+    from sdeint import itoint
+except ImportError:
+    _has_sdeint = False
+else:
+    _has_sdeint = True
 
 import pkg_resources
-
 
 # @njit
 def polar_to_cartesian(r, th):
@@ -82,6 +85,8 @@ def integrate_dyn(f, ic, tvals, noise=0, **kwargs):
     """
     ic = np.array(ic)
     if noise > 0:
+        if not _has_sdeint:
+            raise ImportError("Please install the package sdeint in order to integrate with noise.")
         gw = lambda y, t: noise * np.diag(ic)
         fw = lambda y, t: np.array(f(y, t))
         sol = itoint(fw, gw, np.array(ic), tvals).T

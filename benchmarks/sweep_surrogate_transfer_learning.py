@@ -50,8 +50,8 @@ except FileNotFoundError:
     
 # "Beef" or "EOGHorizontalSignal"
 # all_scores[name] = dict()
-X_train, y_train = sktime.datasets.load_UCR_UEA_dataset("Beef", split="train", return_X_y=True)
-X_test, y_test = sktime.datasets.load_UCR_UEA_dataset("Beef", split="test", return_X_y=True)
+X_train, y_train = sktime.datasets.load_UCR_UEA_dataset("EOGHorizontalSignal", split="train", return_X_y=True)
+X_test, y_test = sktime.datasets.load_UCR_UEA_dataset("EOGHorizontalSignal", split="test", return_X_y=True)
 X_train_np = from_nested_to_3d_numpy(X_train)
 X_test_np = from_nested_to_3d_numpy(X_test)
 X_train_np -= np.mean(X_train_np, axis=-1, keepdims=True)

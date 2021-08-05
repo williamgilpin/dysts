@@ -1,8 +1,5 @@
 #!/usr/bin/python
 
-## Define a model that predicts a time series, given its previous values
-
-
 import pandas as pd
 from scipy.signal import savgol_filter
 import json
@@ -50,13 +47,12 @@ traj_len =  150
 show_progress = False
 
 print(f"{n_ic} points sampled per iteration, with trajectory length {traj_len}, for a total of {n_iters} iterations of length {epoch_count}")
-print(n_ic * traj_len * n_iters* epoch_count)
-print(full_epoch_count * 1000)
+print(n_ic * traj_len * n_iters * epoch_count)
+print(1000 * full_epoch_count) # 1000 timepoints in an epoch
 
 
 for equation_ind, equation_name in enumerate(get_attractor_list()):
-#     if equation_ind < 30 + 1:
-#         continue
+
     np.random.seed(0)
     
     print(f"{equation_name} {equation_ind}", flush=True)
