@@ -56,9 +56,9 @@ These optional dependencies are needed to reproduce some portions of this reposi
 
 ## Contributing
 
-**New systems.** If you know of any systems should be included, please feel free to submit an issue or pull request. The biggest bottleneck when adding new models is a lack of known parameter values and initial conditions, and so please provide a reference or code that contains all parameter values necessary to reproduce the claimed dynamics. Because there are an infinite number of chaotic systems, we favor including systems that have appeared in published work.
+**New systems.** If you know of any systems should be included, please feel free to submit an issue or pull request. The biggest bottleneck when adding new models is a lack of known parameter values and initial conditions, and so please provide a reference or code that contains all parameter values necessary to reproduce the claimed dynamics. Because there are an infinite number of chaotic systems, we currently are only including systems that have appeared in published work.
 
-**Development and Maintainence.** We are extremely grateful for any help or advice. See the to-do list below for some of the high-priority fixes.
+**Development and Maintainence.** We are extremely grateful for any help or advice. See the to-do list below for some of the ongoing work.
 
 ## Contents
 
@@ -90,18 +90,17 @@ Dataset datasheets and metadata are reported using the dataset documentation gui
 
 A partial list of potential improvements in future versions
 
-
 + Speed up the delay equation implementation
++ + It might be faster to roll our own implementation of DD23
 + Improve calculations of Lyapunov exponents for delay systems
-+ Implement multivariate multiscale entropy and calculate for all attractors
-+ Improve vectorization for multiple initial conditions for continuous time models
++ Implement multivariate multiscale entropy and re-calculate for all attractors
 + Add a method for parallel integrating multiple systems at once, based on a list of names and a set of shared settings
 + + Can use multiprocessing for a few systems, but greater speedups might be possible by compiling all right hand sides into a single function acting on a large vector.
-+ Add a separate jacobian database file, and add an attribute that can be used to check if an analytical one exists. This will speed up numerical integration, as well as potentially aid in calculating Lyapunov exponents, etc.
++ + Can also use this same utility to integrate multiple initial conditions for the same model
++ Add a separate jacobian database file, and add an attribute that can be used to check if an analytical one exists. This will speed up numerical integration, as well as potentially aid in calculating Lyapunov exponents.
 + Align the initial phases, potentially by picking default starting initial conditions that lie on the attractor, but which are as close as possible to the origin
-+ Add a `dimension` field with the number of dynamical variables
 + Expand and finalize the discrete `dysts.maps` module
-+ + Maps are deterministic but not differentiable, which may require significant refactoring of the analysis tools.
++ + Maps are deterministic but not differentiable, and so not all analysis methods will work on them. Will probably need a decorator to declare whether utilities work on flows, maps, or both
 
 
 
