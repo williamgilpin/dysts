@@ -28,9 +28,9 @@ from dysts.flows import Lorenz
 #         assert True
 
 
-class TestDatasets(unittest.TestCase):
+class TestModels(unittest.TestCase):
     """
-    Tests models
+    Testsintegration and models
     """
     def test_trajectory(self):
         """
@@ -39,6 +39,22 @@ class TestDatasets(unittest.TestCase):
         model = Lorenz()
         sol = model.make_trajectory(100)
         assert sol.shape == (1000, 3), "Generated time series has the wrong shape"
+        
+    def test_trajectory_noise(self):
+        """
+        Test generating a trajectory with stochasticity
+        """
+        model = Lorenz()
+        sol = model.make_trajectory(100, noise=0.01)
+        assert sol.shape == (1000, 3), "Generated time series has the wrong shape"
+        
+#     def test_trajectory_ensemble(self):
+#         """
+#         Test generating a trajectory with stochasticity
+#         """
+#         model = Lorenz()
+#         sol = model.make_trajectory(100, noise=0.01)
+#         assert sol.shape == (1000, 3), "Generated time series has the wrong shape"
 
 if __name__ == "__main__":
     unittest.main()
