@@ -2,6 +2,7 @@
 
 Simulate hundreds of chaotic systems.
 
+![An embedding of all chaotic systems in the collection](dysts/data/fig_github.png)
 
 ## Basic Usage
 
