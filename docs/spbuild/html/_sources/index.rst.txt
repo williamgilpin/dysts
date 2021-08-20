@@ -7,7 +7,7 @@
 dysts API Reference
 ##################
 
-The API reference for 
+The API reference for the dysts .. _repository: https://github.com/williamgilpin/dysts
 
 .. toctree::
    :maxdepth: 2

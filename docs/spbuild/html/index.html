@@ -33,7 +33,7 @@
             
   <div class="section" id="dysts-api-reference">
 <h1>dysts API Reference<a class="headerlink" href="#dysts-api-reference" title="Permalink to this headline">¶</a></h1>
-<p>The API reference for</p>
+<p>The API reference for the dysts .. _repository: <a class="reference external" href="https://github.com/williamgilpin/dysts">https://github.com/williamgilpin/dysts</a></p>
 <div class="toctree-wrapper compound">
 </div>
 <div class="section" id="module-dysts.base">
@@ -265,8 +265,47 @@ was computed</p></li>
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dysts.datasets.</span></span><span class="sig-name descname"><span class="pre">TimeSeriesDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datapath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.TimeSeriesDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>A data structure for handling time series. Reads and writes from JSON</p>
 <p>Assumes that all time series have the same number of timepoints. In the case
-of multivariate series with different numbers of features / dimensions, pads the
-missing dimensionality</p>
+of multivariate series with different numbers of features / dimensions, the
+missing dimensionality is padded</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>datapath</strong> (<em>string</em><em>, </em><em>optional</em>) – The path to the dataset. Defaults to creating
+an empty dataset object</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dysts.datasets.TimeSeriesDataset.rank">
+<span class="sig-name descname"><span class="pre">rank</span></span><a class="headerlink" href="#dysts.datasets.TimeSeriesDataset.rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>The original length of each time series</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dysts.datasets.TimeSeriesDataset.is_multivariate">
+<span class="sig-name descname"><span class="pre">is_multivariate</span></span><a class="headerlink" href="#dysts.datasets.TimeSeriesDataset.is_multivariate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the time series dataset is multivariate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dysts.datasets.TimeSeriesDataset.names">
+<span class="sig-name descname"><span class="pre">names</span></span><a class="headerlink" href="#dysts.datasets.TimeSeriesDataset.names" title="Permalink to this definition">¶</a></dt>
+<dd><p>The names of the systems in the dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="dysts.datasets.TimeSeriesDataset.get_rowvalues">
 <span class="sig-name descname"><span class="pre">get_rowvalues</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.TimeSeriesDataset.get_rowvalues" title="Permalink to this definition">¶</a></dt>
@@ -282,7 +321,8 @@ missing dimensionality</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dysts.datasets.TimeSeriesDataset.to_pandas">
 <span class="sig-name descname"><span class="pre">to_pandas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'constant'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.TimeSeriesDataset.to_pandas" title="Permalink to this definition">¶</a></dt>
-<dd><p>data (dict): A dictionary with index given by top-level keys</p>
+<dd><p>Convert a data dictionary to a DataFrame
+Draws values from self.data (dict), a dictionary with index given by top-level keys</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -326,18 +366,12 @@ initial condition, split 5/6 of the way though.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A collection of time series dataset</p>
+<dd class="field-even"><p>A collection of time series datasets</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>dataset (<a class="reference internal" href="#dysts.datasets.TimeSeriesDataset" title="dysts.datasets.TimeSeriesDataset">TimeSeriesDataset</a>)</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="dysts.datasets.load_discrete">
-<span class="sig-prename descclassname"><span class="pre">dysts.datasets.</span></span><span class="sig-name descname"><span class="pre">load_discrete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.load_discrete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load dynamics from discrete dynamical systems</p>
 </dd></dl>
 
 </div>
@@ -493,9 +527,16 @@ noise &gt; 0 requires the Python library sdeint (assumes Brownian noise)</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>f</strong> (<em>callable</em>) – The right hand side of a system of ODEs.</p></li>
 <li><p><strong>ic</strong> (<em>ndarray</em>) – the initial conditions</p></li>
-<li><p><strong>noise_amp</strong> (<em>float</em>) – The amplitude of the Langevin forcing term.</p></li>
+<li><p><strong>noise_amp</strong> (<em>float</em><em> or </em><em>iterable</em>) – The amplitude of the Langevin forcing term. If a
+vector is passed, this will be different for each dynamical variable</p></li>
 <li><p><strong>kwargs</strong> (<em>dict</em>) – Arguments passed to scipy.integrate.solve_ivp.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The integrated trajectory</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sol (ndarray)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -601,9 +642,26 @@ dimensions are appended to the rank</p>
 <dt class="sig sig-object py" id="dysts.utils.standardize_ts">
 <span class="sig-prename descclassname"><span class="pre">dysts.utils.</span></span><span class="sig-name descname"><span class="pre">standardize_ts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.utils.standardize_ts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Standardize an array along dimension -2
-For a T x D array, this corresponds to dimension T, while for (B, T, D)
-this also corresponds to dimension T
 For dimensions with zero variance, divide by one instead of zero</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>ndarray</em>) – a matrix containing a time series or batch of time series
+with shape (T, D) or (B, T, D)</p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – the number of standard deviations by which to scale</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A standardized time series with the same shape as</dt><dd><p>the input</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ts_scaled (ndarray)</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

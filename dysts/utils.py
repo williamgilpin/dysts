@@ -77,14 +77,27 @@ def integrate_dyn(f, ic, tvals, noise=0, **kwargs):
     Args:
         f (callable): The right hand side of a system of ODEs.
         ic (ndarray): the initial conditions
-        noise_amp (float): The amplitude of the Langevin forcing term.
+        noise_amp (float or iterable): The amplitude of the Langevin forcing term. If a 
+            vector is passed, this will be different for each dynamical variable
         kwargs (dict): Arguments passed to scipy.integrate.solve_ivp.
         
     Returns:
         sol (ndarray): The integrated trajectory
     """
     ic = np.array(ic)
-    if noise > 0:
+    
+    if np.isscalar(noise):
+        if noise > 0:
+            noise_flag = True
+        else:
+            noise_flag = False
+    else:
+        if np.sum(np.abs(noise)) > 0:
+            noise_flag = True
+        else:
+            noise_flag = False
+
+    if noise_flag:
         if not _has_sdeint:
             raise ImportError("Please install the package sdeint in order to integrate with noise.")
         gw = lambda y, t: noise * np.diag(ic)
