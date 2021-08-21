@@ -192,14 +192,14 @@ class DynSys(BaseDyn):
             m = 1
         if m == 1:
             sol = integrate_dyn(
-                self, self.ic, tpts, first_step=self.dt, method=method, noise=noise
+                self, self.ic, tpts, dtval=self.dt, method=method, noise=noise
             ).T
         else:
             sol = list()
             for ic in self.ic:
                 sol.append(
                     integrate_dyn(
-                        self, ic, tpts, first_step=self.dt, method=method, noise=noise
+                        self, ic, tpts, dtval=self.dt, method=method, noise=noise
                     )
                 )
             sol = np.transpose(np.array(sol), (0, 2, 1))

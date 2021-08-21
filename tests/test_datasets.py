@@ -15,6 +15,7 @@ import sys
 sys.path.insert(1, os.path.join(WORKING_DIR, "dysts"))
 from dysts.flows import Lorenz
 
+from dysts.datasets import load_dataset
 
 # class TestUtilities(unittest.TestCase):
 #     """
@@ -31,13 +32,19 @@ class TestDatasets(unittest.TestCase):
     """
     Tests models
     """
-    def test_trajectory(self):
+    def test_univariate(self):
         """
-        Test generating a trajectory
+        Test univariate data loader
         """
-        model = Lorenz()
-        sol = model.make_trajectory(100)
-        assert sol.shape == (1000, 3), "Generated time series has the wrong shape"
+        data = load_dataset(data_format="numpy", standardize=True)
+        assert data.shape == (131, 1000), "Imported time series collection has the wrong shape"
+        
+    def test_multivariate(self):
+        """
+        Test multivariate data loader
+        """
+        data = load_dataset(subsets="train", univariate=False, standardize=False)
+        assert data.dataset["Rossler"]["values"].shape == (1000, 3), "Imported time series collection has the wrong shape"
 
 if __name__ == "__main__":
     unittest.main()

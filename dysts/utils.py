@@ -10,7 +10,7 @@ from numpy.fft import rfft, irfft
 
 import warnings
 from scipy.integrate import odeint, solve_ivp
-from scipy.signal import blackmanharris, fftconvolve
+from scipy.signal import blackmanharris, fftconvolve, resample
 from collections import deque
 from functools import partial
 
@@ -69,7 +69,7 @@ def standardize_ts(a, scale=1.0):
     ts_scaled = (a - np.mean(a, axis=-2, keepdims=True))/(scale*stds)
     return ts_scaled
 
-def integrate_dyn(f, ic, tvals, noise=0, **kwargs):
+def integrate_dyn(f, ic, tvals, noise=0, dtval=None, **kwargs):
     """
     Given the RHS of a dynamical system, integrate the system
     noise > 0 requires the Python library sdeint (assumes Brownian noise)
@@ -79,6 +79,8 @@ def integrate_dyn(f, ic, tvals, noise=0, **kwargs):
         ic (ndarray): the initial conditions
         noise_amp (float or iterable): The amplitude of the Langevin forcing term. If a 
             vector is passed, this will be different for each dynamical variable
+        dtval (float): The starting integration timestep. This will be the exact timestep for 
+            fixed-step integrators, or stochastic integration.
         kwargs (dict): Arguments passed to scipy.integrate.solve_ivp.
         
     Returns:
@@ -102,11 +104,13 @@ def integrate_dyn(f, ic, tvals, noise=0, **kwargs):
             raise ImportError("Please install the package sdeint in order to integrate with noise.")
         gw = lambda y, t: noise * np.diag(ic)
         fw = lambda y, t: np.array(f(y, t))
-        sol = itoint(fw, gw, np.array(ic), tvals).T
+        tvals_fine = np.linspace(np.min(tvals), np.max(tvals), int(np.ptp(tvals)/dtval))
+        sol_fine = itoint(fw, gw, np.array(ic), tvals_fine).T
+        sol = np.vstack([resample(item, len(tvals)) for item in sol_fine])
     else:
         #dt = np.median(np.diff(tvals))
         fc = lambda t, y : f(y, t)
-        sol0 = solve_ivp(fc, [tvals[0], tvals[-1]], ic, t_eval=tvals, **kwargs)
+        sol0 = solve_ivp(fc, [tvals[0], tvals[-1]], ic, t_eval=tvals, first_step=dtval, **kwargs)
         sol = sol0.y
         #sol = odeint(f, np.array(ic), tvals).T
 

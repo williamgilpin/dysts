@@ -39,10 +39,15 @@ Install locally from GitHub
 
     pip install pip install git+git://github.com/williamgilpin/dysts
 
+Test that things are working
+
+    python -m unittest
+
 The key dependencies are
 
 + Python >3.0
 + numpy
++ scipy
 
 These optional dependencies are needed to reproduce some portions of this repository, such as benchmarking experiments and estimation of invariant properties of each dynamical system:
 
@@ -102,6 +107,7 @@ A partial list of potential improvements in future versions
 + Align the initial phases, potentially by picking default starting initial conditions that lie on the attractor, but which are as close as possible to the origin
 + Expand and finalize the discrete `dysts.maps` module
 + + Maps are deterministic but not differentiable, and so not all analysis methods will work on them. Will probably need a decorator to declare whether utilities work on flows, maps, or both
-
++ Switch stochastic integration to a newer package, like `torchsde` or `sdepy`
++ + Currently both have some issues with dependencies
 
 

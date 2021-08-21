@@ -14,6 +14,7 @@ import sys
 
 sys.path.insert(1, os.path.join(WORKING_DIR, "dysts"))
 from dysts.flows import Lorenz
+from dysts.base import make_trajectory_ensemble
 
 
 # class TestUtilities(unittest.TestCase):
@@ -30,7 +31,7 @@ from dysts.flows import Lorenz
 
 class TestModels(unittest.TestCase):
     """
-    Testsintegration and models
+    Tests integration and models
     """
     def test_trajectory(self):
         """
@@ -38,7 +39,7 @@ class TestModels(unittest.TestCase):
         """
         model = Lorenz()
         sol = model.make_trajectory(100)
-        assert sol.shape == (1000, 3), "Generated time series has the wrong shape"
+        assert sol.shape == (100, 3), "Generated time series has the wrong shape"
         
     def test_trajectory_noise(self):
         """
@@ -46,15 +47,15 @@ class TestModels(unittest.TestCase):
         """
         model = Lorenz()
         sol = model.make_trajectory(100, noise=0.01)
-        assert sol.shape == (1000, 3), "Generated time series has the wrong shape"
+        assert sol.shape == (100, 3), "Generated time series has the wrong shape"
         
-#     def test_trajectory_ensemble(self):
-#         """
-#         Test generating a trajectory with stochasticity
-#         """
-#         model = Lorenz()
-#         sol = model.make_trajectory(100, noise=0.01)
-#         assert sol.shape == (1000, 3), "Generated time series has the wrong shape"
-
+    def test_ensemble(self):
+        """
+        Test all systems in the database
+        """
+        model = Lorenz()
+        all_trajectories = make_trajectory_ensemble(5, method="Radau", resample=True)
+        assert len(all_trajectories.keys()) >= 131
+        
 if __name__ == "__main__":
     unittest.main()

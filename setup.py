@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(name = 'dysts',
       packages=['dysts'],
       # packages=find_packages(),
-      install_requires = ["numpy"],
+      install_requires = ["numpy", "scipy"],
       extras_require = {
         "tsfresh": ["tsfresh"],
         "nolds": ["nolds"],
