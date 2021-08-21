@@ -44,7 +44,7 @@ The key dependencies are
 + Python >3.0
 + numpy
 
-These optional dependencies are needed to reproduce some portions of this repository, such as benchmarking experiments and estimation of invariant properties of each dynamical system.
+These optional dependencies are needed to reproduce some portions of this repository, such as benchmarking experiments and estimation of invariant properties of each dynamical system:
 
 + numba (speeds up generation of trajectories)
 + nolds (used for calculating the correlation dimension)
@@ -84,7 +84,7 @@ These optional dependencies are needed to reproduce some portions of this reposi
 
 ## Ethics & Reporting
 
-Dataset datasheets and metadata are reported using the dataset documentation guidelines described in [Gebru et al 2018](https://arxiv.org/abs/1803.09010); please see our preprint for a full dataset datasheet and other information. We note that all datasets included here are mathematical in nature, and do not contain human or clinical observations. If any users become aware of unintended harms that may arise due to the use of this data, we encourage reporting them by submitting on issue on this repository.
+Dataset datasheets and metadata are reported using the dataset documentation guidelines described in [Gebru et al 2018](https://arxiv.org/abs/1803.09010); please see our preprint for a full dataset datasheet and other information. We note that all datasets included here are mathematical in nature, and do not contain human or clinical observations. If any users become aware of unintended harms that may arise due to the use of this data, we encourage reporting them by submitting an issue on this repository.
 
 
 ## Development to-do list
@@ -92,7 +92,7 @@ Dataset datasheets and metadata are reported using the dataset documentation gui
 A partial list of potential improvements in future versions
 
 + Speed up the delay equation implementation
-+ + It might be faster to roll our own implementation of DD23
++ + We need to roll our own implementation of DDE23 in the `utils` module.
 + Improve calculations of Lyapunov exponents for delay systems
 + Implement multivariate multiscale entropy and re-calculate for all attractors
 + Add a method for parallel integrating multiple systems at once, based on a list of names and a set of shared settings
