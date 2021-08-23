@@ -190,10 +190,11 @@ def load_dataset(
     Load dynamics from continuous dynamical systems. 
     
     Args:
-        subsets ("train" | "train_val" | "test" | "test_val" | "all"): Which dataset to draw.
+        subsets ("train" | "train_val" | "test" | "test_val" | "train_all" | "test_all"): Which dataset to draw.
             Train and train val correspond to the same time series split 5/6 of the way through,
             while "test" and "test_val" both represent a trajectory emanating from a different
-            initial condition, split 5/6 of the way though.
+            initial condition, split 5/6 of the way though. "train_all" and "test_all" return full trajectories
+            without splits
         univariate (bool): Whether to use one coordinate, or all for each system.
         granularity ("course" | "fine"): Whether to use fine or coarsely-spaced samples
         data_format ("object" | "numpy" | "pandas"): The format to return
@@ -215,7 +216,8 @@ def load_dataset(
         dataset = load_file(
             f"{dataset_name}_multivariate__pts_per_period_{granval}__periods_{period}.json"
         )
-
+    
+    
     split_point = int(5 / 6 * period) * granval
     if subsets == "train":
         dataset.trim_series(0, split_point)
