@@ -68,13 +68,13 @@ These optional dependencies are needed to reproduce some portions of this reposi
 
 ## Contents
 
-+ Code to generate benchmark forecasting and training experiments are included in [`benchmarks`](dysts/benchmarks)
-+ Pre-computed time series with training and test partitions are included in [`data`](dysts/dysts/data)
-+ The raw definitions metadata for all chaotic systems are included in the database file [`chaotic_attractors`](dysts/dysts/data/chaotic_attractors.json). The Python implementations of differential equations can be found in [`the flows module`](dysts/dysts/flows.py)
++ Code to generate benchmark forecasting and training experiments are included in [`benchmarks`](dysts/benchmarks/)
++ Pre-computed time series with training and test partitions are included in [`data`](dysts/dysts/data/)
++ The raw definitions metadata for all chaotic systems are included in the database file [`chaotic_attractors`](dysts//data/chaotic_attractors.json). The Python implementations of differential equations can be found in [`the flows module`](dysts/flows.py)
 
 ## Benchmarks
 
-The benchmarks reported in our preprint can be found in [`benchmarks`](dysts/benchmarks). An overview of the contents of the directory can be found in [`BENCHMARKS.md`](dysts/BENCHMARKS.md), while individual task areas are summarized in corresponding Jupyter Notebooks within the top level of the directory.
+The benchmarks reported in our preprint can be found in [`benchmarks`](dysts/benchmarks/). An overview of the contents of the directory can be found in [`BENCHMARKS.md`](dysts/benchmarks/BENCHMARKS.md), while individual task areas are summarized in corresponding Jupyter Notebooks within the top level of the directory.
 
 ## Implementation Notes
 
