@@ -3225,7 +3225,7 @@
     },
     "RayleighBenard": {
         "bifurcation_parameter": null,
-        "citation": "TBD",
+        "citation": "Yanagita, Kaneko (1995). Rayleigh-Bénard convection patterns, chaos, spatiotemporal chaos and turbulence. Physica D: Nonlinear Phenomena 82.3 (1995): 288-313.",
         "correlation_dimension": 1.9218207098924294,
         "delay": false,
         "description": "A reduced-order model of a convective cell.",

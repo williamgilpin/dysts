@@ -184,7 +184,9 @@ def load_file(filename):
 
 
 def load_dataset(
-    subsets="train", univariate=True, granularity="fine", data_format="object", **kwargs
+    subsets="train", univariate=True, granularity="fine", data_format="object", noise=False, 
+    split_fraction=5/6,
+    **kwargs
 ):
     """
     Load dynamics from continuous dynamical systems. 
@@ -198,6 +200,8 @@ def load_dataset(
         univariate (bool): Whether to use one coordinate, or all for each system.
         granularity ("course" | "fine"): Whether to use fine or coarsely-spaced samples
         data_format ("object" | "numpy" | "pandas"): The format to return
+        noise (bool): Whether to include stochastic forcing
+        split_fraction (float): The fraction of the time series to hold out as a test/val partition
         kwargs (dict): keyword arguments passed to the data formatter
     
     Returns:
@@ -209,16 +213,17 @@ def load_dataset(
     dataset_name = subsets.split("_")[0]
 
     if univariate:
-        dataset = load_file(
-            f"{dataset_name}_univariate__pts_per_period_{granval}__periods_{period}.json"
-        )
+        data_path = f"{dataset_name}_univariate__pts_per_period_{granval}__periods_{period}.json"
     else:
-        dataset = load_file(
-            f"{dataset_name}_multivariate__pts_per_period_{granval}__periods_{period}.json"
-        )
+        data_path = f"{dataset_name}_multivariate__pts_per_period_{granval}__periods_{period}.json"
     
+    if noise:
+        name_parts = list(os.path.splitext(data_path))
+        data_path = "".join(name_parts[:-1] + ["_noise"] + [name_parts[-1]])
     
-    split_point = int(5 / 6 * period) * granval
+    dataset = load_file(data_path)
+    
+    split_point = int(split_fraction * period) * granval
     if subsets == "train":
         dataset.trim_series(0, split_point)
     if subsets == "test":
