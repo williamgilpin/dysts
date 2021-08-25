@@ -87,30 +87,30 @@ for i, equation_name in enumerate(get_attractor_list()[::-1][67:]):
     ndim = min([X_test.shape[-1], y_test.shape[-1]])
     
     ## SINDY-poly
-#    t0 = time.perf_counter()
-#    sym_model = ps.SINDy()
-#    sym_model.fit(X_train, t=t_train)
-#    y_test_pred = sym_model.predict(X_test)
-#    all_scores = list()
-#    for i in range(ndim):
-#        all_scores.append(metric_calc(y_test[:, i], y_test_pred[:, i]))
-#    curr_scores[equation_name]["SINDY-poly"] = np.median(all_scores)
-#    t1 = time.perf_counter()
-#    elapsed = t1 - t0
-#    curr_scores[equation_name]["SINDY-poly-time"] = elapsed
+   t0 = time.perf_counter()
+   sym_model = ps.SINDy()
+   sym_model.fit(X_train, t=t_train)
+   y_test_pred = sym_model.predict(X_test)
+   all_scores = list()
+   for i in range(ndim):
+       all_scores.append(metric_calc(y_test[:, i], y_test_pred[:, i]))
+   curr_scores[equation_name]["SINDY-poly"] = np.median(all_scores)
+   t1 = time.perf_counter()
+   elapsed = t1 - t0
+   curr_scores[equation_name]["SINDY-poly-time"] = elapsed
 
     ## SINDY-fourier basis
-#    t0 = time.perf_counter()
-#    sym_model = ps.SINDy(feature_library=ps.FourierLibrary(n_frequencies=10))
-#    sym_model.fit(X_train, t=t_train)
-#    y_test_pred = sym_model.predict(X_test)
-#    all_scores = list()
-#    for i in range(ndim):
-#        all_scores.append(metric_calc(y_test[:, i], y_test_pred[:, i]))
-#    curr_scores[equation_name]["SINDY-fourier"] = np.median(all_scores)
-#    t1 = time.perf_counter()
-#    elapsed = t1 - t0
-#    curr_scores[equation_name]["SINDY-fourier-time"] = elapsed
+   t0 = time.perf_counter()
+   sym_model = ps.SINDy(feature_library=ps.FourierLibrary(n_frequencies=10))
+   sym_model.fit(X_train, t=t_train)
+   y_test_pred = sym_model.predict(X_test)
+   all_scores = list()
+   for i in range(ndim):
+       all_scores.append(metric_calc(y_test[:, i], y_test_pred[:, i]))
+   curr_scores[equation_name]["SINDY-fourier"] = np.median(all_scores)
+   t1 = time.perf_counter()
+   elapsed = t1 - t0
+   curr_scores[equation_name]["SINDY-fourier-time"] = elapsed
     
     ## DSR
     t0 = time.perf_counter()
@@ -134,24 +134,24 @@ for i, equation_name in enumerate(get_attractor_list()[::-1][67:]):
     curr_scores[equation_name]["DSR-time"] = elapsed
 
     ## pySR
-#    t0 = time.perf_counter() 
-#    all_scores = list()
-#    for i in range(ndim):
-#        try:
-#            models = pysr(X_train, y_train[:, i], **pysr_opts)
-#            y_test_pred = best_callable(models)(X_test)
-#            all_scores.append(metric_calc(y_test[:, i], y_test_pred))
-#            print("iter complete", flush=True)
-#        except:
-#            print("bad iteration", flush=True)
-#    try:
-#        final_score = np.median(all_scores)
-#    except:
-#        final_score = None
-#    curr_scores[equation_name]["pySR"] = final_score
-#    t1 = time.perf_counter()
-#    elapsed = t1 - t0
-#    curr_scores[equation_name]["pySR-time"] = elapsed 
+   t0 = time.perf_counter() 
+   all_scores = list()
+   for i in range(ndim):
+       try:
+           models = pysr(X_train, y_train[:, i], **pysr_opts)
+           y_test_pred = best_callable(models)(X_test)
+           all_scores.append(metric_calc(y_test[:, i], y_test_pred))
+           print("iter complete", flush=True)
+       except:
+           print("bad iteration", flush=True)
+   try:
+       final_score = np.median(all_scores)
+   except:
+       final_score = None
+   curr_scores[equation_name]["pySR"] = final_score
+   t1 = time.perf_counter()
+   elapsed = t1 - t0
+   curr_scores[equation_name]["pySR-time"] = elapsed 
 
     print(equation_name, final_score, flush=True)
 
