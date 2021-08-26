@@ -64,6 +64,8 @@ for equation_ind, equation_name in enumerate(get_attractor_list()):
     y_train_ts = TimeSeries.from_dataframe(pd.DataFrame(y_train))
     results[equation_name]["true_value"] = y_test.tolist()
 
+
+    ## Baseline forecast
     try:
         del model
     except:
@@ -79,15 +81,17 @@ for equation_ind, equation_name in enumerate(get_attractor_list()):
     score = mean_absolute_percentage_error(y_test, y_val_pred, symmetric=True)
     base_elapsed = base_t1 - base_t0
     print(score, base_elapsed)
-    plt.figure()
-    plt.plot(y_test)
-    plt.plot(y_val_pred)
+    # plt.figure()
+    # plt.plot(y_test)
+    # plt.plot(y_val_pred)
     
     results[equation_name]["base_value"] = y_val_pred.tolist()
     results[equation_name]["base_time"] = base_elapsed
     results[equation_name]["base_score"] = score
 
     pred_backtest = model.historical_forecasts(y_train_ts, retrain=False, start=(1 + model.input_chunk_length)).values()
+    
+    # Importance sampling experiment
     model = RNNModel(**hyperparams)
     comp_t0 = time.perf_counter()
     for i in range(n_iters):
@@ -123,8 +127,8 @@ for equation_ind, equation_name in enumerate(get_attractor_list()):
     y_val_pred = np.squeeze(y_val_pred.values())
     score = mean_absolute_percentage_error(y_test, y_val_pred, symmetric=True)
     print(score, comp_elapsed)
-    plt.plot(y_val_pred)
-    plt.show()
+    # plt.plot(y_val_pred)
+    # plt.show()
 
     results[equation_name]["importance_values"] = y_val_pred.tolist()
     results[equation_name]["importance_time"] = comp_elapsed
@@ -134,7 +138,7 @@ for equation_ind, equation_name in enumerate(get_attractor_list()):
         json.dump(results, f, indent=4)
 
 
-
+## Random timepoint baseline
 for equation_ind, equation_name in enumerate(get_attractor_list()):
     np.random.seed(0)
     
@@ -175,4 +179,4 @@ for equation_ind, equation_name in enumerate(get_attractor_list()):
     results[equation_name]["random_score"] = score
     
     with open(output_path, 'w') as f:
-        json.dump(results, f, indent=4)   
+        json.dump(results, f, indent=4, sort_keys=True)   
