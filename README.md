@@ -1,13 +1,12 @@
 # dysts
 
-Simulate over a hundred chaotic systems.
+Analyze more than a hundred chaotic systems.
 
 ![An embedding of all chaotic systems in the collection](dysts/data/fig_github.png)
 
 ## Basic Usage
 
 Import a model and run a simulation with default initial conditions and parameter values
-
 ```python
 from dysts.flows import Lorenz
 model = Lorenz()
@@ -15,7 +14,6 @@ sol = model.make_trajectory(1000)
 ```
 
 Modify a model's parameter values and re-integrate
-
 ```python
 model = Lorenz()
 model.gamma = 1
@@ -23,12 +21,17 @@ model.ic = [0, 0, 0.2]
 sol = model.make_trajectory(1000)
 ```
 
-Load a precomputed collection of time series
-
+Integrate new trajectories from all 131 chaotic systems with a custom granularity
 ```python
-from dysts.datasets import load_continuous
+from dysts.base import make_trajectory_ensemble
+all_out = make_trajectory_ensemble(100, resample=True, pts_per_period=75)
+```
 
-series_train = load_continuous(split="train").to_array(standardize=True)
+Load a precomputed collection of time series from all 131 chaotic systems
+```python
+from dysts.datasets import load_dataset
+
+data = load_dataset(subsets="train", data_format="numpy", standardize=True)
 ```
 
 Additional functionality and examples can be found in [`the demonstrations notebook.`](demos.ipynb). The full API documentation [can be found here](http://www.wgilpin.com/dysts/spbuild/html/index.html).
@@ -39,7 +42,7 @@ Install locally from GitHub
 
     pip install pip install git+git://github.com/williamgilpin/dysts
 
-Test that things are working
+Test that everything is working
 
     python -m unittest
 
