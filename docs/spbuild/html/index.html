@@ -142,6 +142,31 @@ was computed</p></li>
 <dd><p>A continuous dynamical system base class, which loads and assigns parameter
 values from a file</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="dysts.base.DynSys.load_trajectory">
+<span class="sig-name descname"><span class="pre">load_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fine'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_times</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.DynSys.load_trajectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a precomputed trajectory for the dynamical system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subsets</strong> (<em>&quot;train&quot;</em><em> |  </em><em>&quot;test&quot;</em>) – Which dataset (initial conditions) to load</p></li>
+<li><p><strong>granularity</strong> (<em>&quot;course&quot;</em><em> | </em><em>&quot;fine&quot;</em>) – Whether to load fine or coarsely-spaced samples</p></li>
+<li><p><strong>noise</strong> (<em>bool</em>) – Whether to include stochastic forcing</p></li>
+<li><p><strong>standardize</strong> (<em>bool</em>) – Standardize the output time series.</p></li>
+<li><p><strong>return_times</strong> (<em>bool</em>) – Whether to return the timepoints at which the solution
+was computed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A T x D trajectory
+tpts, sol (ndarray): T x 1 timepoint array, and T x D trajectory</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sol (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="dysts.base.DynSys.make_trajectory">
 <span class="sig-name descname"><span class="pre">make_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Radau'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pts_per_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_times</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">postprocess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.base.DynSys.make_trajectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a fixed-length trajectory with default timestep, parameters, and initial conditions</p>
@@ -350,7 +375,7 @@ in empty columns.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dysts.datasets.load_dataset">
-<span class="sig-prename descclassname"><span class="pre">dysts.datasets.</span></span><span class="sig-name descname"><span class="pre">load_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">univariate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fine'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.load_dataset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dysts.datasets.</span></span><span class="sig-name descname"><span class="pre">load_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">univariate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">granularity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fine'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8333333333333334</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dysts.datasets.load_dataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load dynamics from continuous dynamical systems.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -363,6 +388,8 @@ without splits</p></li>
 <li><p><strong>univariate</strong> (<em>bool</em>) – Whether to use one coordinate, or all for each system.</p></li>
 <li><p><strong>granularity</strong> (<em>&quot;course&quot;</em><em> | </em><em>&quot;fine&quot;</em>) – Whether to use fine or coarsely-spaced samples</p></li>
 <li><p><strong>data_format</strong> (<em>&quot;object&quot;</em><em> | </em><em>&quot;numpy&quot;</em><em> | </em><em>&quot;pandas&quot;</em>) – The format to return</p></li>
+<li><p><strong>noise</strong> (<em>bool</em>) – Whether to include stochastic forcing</p></li>
+<li><p><strong>split_fraction</strong> (<em>float</em>) – The fraction of the time series to hold out as a test/val partition</p></li>
 <li><p><strong>kwargs</strong> (<em>dict</em>) – keyword arguments passed to the data formatter</p></li>
 </ul>
 </dd>
