@@ -142,6 +142,53 @@ class DynSys(BaseDyn):
         """Wrapper around right hand side"""
         return self.rhs(X, t)
 
+    def load_trajectory(
+        self,
+        subsets="train", 
+        granularity="fine", 
+        return_times=False,
+        standardize=False,
+        noise=False
+    ):
+        """
+        Load a precomputed trajectory for the dynamical system
+        
+        Args:
+            subsets ("train" |  "test"): Which dataset (initial conditions) to load
+            granularity ("course" | "fine"): Whether to load fine or coarsely-spaced samples
+            noise (bool): Whether to include stochastic forcing
+            standardize (bool): Standardize the output time series.
+            return_times (bool): Whether to return the timepoints at which the solution 
+                was computed
+                
+        Returns:
+            sol (ndarray): A T x D trajectory
+            tpts, sol (ndarray): T x 1 timepoint array, and T x D trajectory
+        
+        """
+        period = 12
+        granval = {"coarse": 15, "fine": 100}[granularity]
+        dataset_name = subsets.split("_")[0]
+        data_path = f"{dataset_name}_multivariate__pts_per_period_{granval}__periods_{period}.json"
+        if noise:
+            name_parts = list(os.path.splitext(data_path))
+            data_path = "".join(name_parts[:-1] + ["_noise"] + [name_parts[-1]])
+            
+        cwd = os.path.dirname(os.path.realpath(__file__))
+        data_path = os.path.join(cwd, "data", data_path)
+        with open(data_path, "r") as file:
+            dataset = json.load(file)
+            
+        tpts, sol = np.array(dataset[self.name]['time']), np.array(dataset[self.name]['values'])
+        
+        if standardize:
+            sol = standardize_ts(sol)
+
+        if return_times:
+            return tpts, sol
+        else:
+            return sol
+    
     def make_trajectory(
         self,
         n,

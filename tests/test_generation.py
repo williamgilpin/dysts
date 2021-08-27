@@ -57,5 +57,21 @@ class TestModels(unittest.TestCase):
         all_trajectories = make_trajectory_ensemble(5, method="Radau", resample=True)
         assert len(all_trajectories.keys()) >= 131
         
+    def test_precomputed(self):
+        """
+        Test loading a precomputed time series for a single system
+        """
+        eq = Lorenz()
+        tpts, sol = eq.load_trajectory(
+            subsets="test", 
+            noise=False, 
+            granularity="fine", 
+            standardize=True, 
+            return_times=True
+        )
+        assert sol.shape == (1200, 3), "Generated time series has the wrong shape"
+        assert tpts.shape == (1200,), "Time indices have the wrong shape"
+        
+        
 if __name__ == "__main__":
     unittest.main()

@@ -9,8 +9,10 @@ Analyze more than a hundred chaotic systems.
 Import a model and run a simulation with default initial conditions and parameter values
 ```python
 from dysts.flows import Lorenz
+
 model = Lorenz()
 sol = model.make_trajectory(1000)
+# plt.plot(sol[:, 0], sol[:, 1])
 ```
 
 Modify a model's parameter values and re-integrate
@@ -19,11 +21,20 @@ model = Lorenz()
 model.gamma = 1
 model.ic = [0, 0, 0.2]
 sol = model.make_trajectory(1000)
+# plt.plot(sol[:, 0], sol[:, 1])
+```
+
+Load a precomputed trajectory for the model
+```python
+eq = Lorenz()
+sol = eq.load_trajectory(subsets="test", noise=False, granularity="fine")
+# plt.plot(sol[:, 0], sol[:, 1])
 ```
 
 Integrate new trajectories from all 131 chaotic systems with a custom granularity
 ```python
 from dysts.base import make_trajectory_ensemble
+
 all_out = make_trajectory_ensemble(100, resample=True, pts_per_period=75)
 ```
 
