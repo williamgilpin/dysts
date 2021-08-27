@@ -78,17 +78,17 @@ These optional dependencies are needed to reproduce some portions of this reposi
 
 **New systems.** If you know of any systems should be included, please feel free to submit an issue or pull request. The biggest bottleneck when adding new models is a lack of known parameter values and initial conditions, and so please provide a reference or code that contains all parameter values necessary to reproduce the claimed dynamics. Because there are an infinite number of chaotic systems, we currently are only including systems that have appeared in published work.
 
-**Development and Maintainence.** We are extremely grateful for any help or advice. See the to-do list below for some of the ongoing work.
+**Development and Maintainence.** We are very grateful for any suggestions or contributions. See the to-do list below for some of the ongoing work.
+
+## Benchmarks
+
+The benchmarks reported in our preprint can be found in [`benchmarks`](benchmarks/). An overview of the contents of the directory can be found in [`BENCHMARKS.md`](benchmarks/BENCHMARKS.md), while individual task areas are summarized in corresponding Jupyter Notebooks within the top level of the directory.
 
 ## Contents
 
 + Code to generate benchmark forecasting and training experiments are included in [`benchmarks`](benchmarks/)
 + Pre-computed time series with training and test partitions are included in [`data`](dysts/data/)
 + The raw definitions metadata for all chaotic systems are included in the database file [`chaotic_attractors`](dysts/data/chaotic_attractors.json). The Python implementations of differential equations can be found in [`the flows module`](dysts/flows.py)
-
-## Benchmarks
-
-The benchmarks reported in our preprint can be found in [`benchmarks`](benchmarks/). An overview of the contents of the directory can be found in [`BENCHMARKS.md`](benchmarks/BENCHMARKS.md), while individual task areas are summarized in corresponding Jupyter Notebooks within the top level of the directory.
 
 ## Implementation Notes
 
