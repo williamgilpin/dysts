@@ -17,18 +17,6 @@ from dysts.flows import Lorenz
 from dysts.base import make_trajectory_ensemble
 
 
-# class TestUtilities(unittest.TestCase):
-#     """
-#     Tests helper utilities
-#     """
-#     def test_fourier(self):
-#         """
-#         Test discrete fourier analysis
-#         """
-#         data_test = np.ones((1000, 3))
-#         assert True
-
-
 class TestModels(unittest.TestCase):
     """
     Tests integration and models

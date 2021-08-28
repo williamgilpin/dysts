@@ -113,35 +113,7 @@ class BaseDyn:
     def bound_trajectory(traj):
         """Bound a trajectory within a periodic domain"""
         return np.mod(traj, 2 * np.pi)
-
-
-from scipy.integrate import solve_ivp
-
-
-class DynSys(BaseDyn):
-    """
-    A continuous dynamical system base class, which loads and assigns parameter
-    values from a file
-    """
-
-    def __init__(self):
-        self.data_path = data_path_continuous
-        super().__init__()
-        self.dt = self._load_data()["dt"]
-        self.period = self._load_data()["period"]
-
-    def rhs(self, X, t):
-        """The right hand side of a dynamical equation"""
-        param_list = [
-            getattr(self, param_name) for param_name in self.get_param_names()
-        ]
-        out = self._rhs(*X.T, t, *param_list)
-        return out
-
-    def __call__(self, X, t):
-        """Wrapper around right hand side"""
-        return self.rhs(X, t)
-
+    
     def load_trajectory(
         self,
         subsets="train", 
@@ -188,6 +160,34 @@ class DynSys(BaseDyn):
             return tpts, sol
         else:
             return sol
+
+
+from scipy.integrate import solve_ivp
+
+
+class DynSys(BaseDyn):
+    """
+    A continuous dynamical system base class, which loads and assigns parameter
+    values from a file
+    """
+
+    def __init__(self):
+        self.data_path = data_path_continuous
+        super().__init__()
+        self.dt = self._load_data()["dt"]
+        self.period = self._load_data()["period"]
+
+    def rhs(self, X, t):
+        """The right hand side of a dynamical equation"""
+        param_list = [
+            getattr(self, param_name) for param_name in self.get_param_names()
+        ]
+        out = self._rhs(*X.T, t, *param_list)
+        return out
+
+    def __call__(self, X, t):
+        """Wrapper around right hand side"""
+        return self.rhs(X, t)
     
     def make_trajectory(
         self,

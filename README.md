@@ -49,30 +49,36 @@ Additional functionality and examples can be found in [`the demonstrations noteb
 
 ## Installation
 
-Install locally from GitHub
+Download and install the project repository from GitHub
 
-    pip install pip install git+git://github.com/williamgilpin/dysts
+    git clone https://github.com/williamgilpin/dysts
+    cd dysts
+    pip install -I . 
 
 Test that everything is working
 
     python -m unittest
+
+Alternatively, to use this as a regular package without downloading the full repository, install directly from GitHub
+
+    pip install git+git://github.com/williamgilpin/dysts
 
 The key dependencies are
 
 + Python 3+
 + numpy
 + scipy
++ pandas
++ sdeint (optional, but required for stochastic dynamics)
++ numba (optional, but speeds up generation of trajectories)
 
-These optional dependencies are needed to reproduce some portions of this repository, such as benchmarking experiments and estimation of invariant properties of each dynamical system:
+These additional optional dependencies are needed to reproduce some portions of this repository, such as benchmarking experiments and estimation of invariant properties of each dynamical system:
 
-+ numba (speeds up generation of trajectories)
 + nolds (used for calculating the correlation dimension)
-+ sdeint (used for adding noise to dynamics)
 + darts (used for forecasting benchmarks)
 + sktime (used for classification benchmarks)
 + tsfresh (used for statistical quantity extraction)
 + pytorch (used for neural network benchmarks)
-
 
 ## Contributing
 
