@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Datasets too large for GitHub
+results_test_univariate__pts_per_period_100__periods_12_granularity_sweep.json
+results_test_univariate__pts_per_period_100__periods_12_noise_sweep.json
+
 # C extensions
 *.so
 

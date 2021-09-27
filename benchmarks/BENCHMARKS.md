@@ -7,7 +7,8 @@ Summaries of the different benchmark experiments. To re-run experiments reported
 See `figure_forecasting_benchmarks_figures.ipynb` for an overview
 
 + `find_hyperparameters.py` computes hyperparameters across all forecasting models separately for each dynamical system
-+ `compute_benchmarks.py` uses the best hyperparameters to train and score a models on the test data.
++ `compute_benchmarks_no_noise.py` uses the best hyperparameters to train and score a models on the test data.
++ `compute_benchmarks_noise_coarse.py` and `compute_benchmarks_noise_fine.py` repeat the forecasting experiments in the presence of random noise.
 
 # Importance sampling 
 
@@ -15,7 +16,7 @@ See `figure_importance_sampling.ipynb` for an overview
 
 + `importance_sampling.py` uses importance sampling to improve training on an LSTM forecasting model
 
-# Tranfer learning
+# Transfer learning
 
 See `figure_transfer_learning.ipynb` for an overview
 
@@ -30,3 +31,9 @@ See `figure_transfer_learning.ipynb` for an overview
 See `figure_symbolic_regression_benchmark.ipynb` for an overview
 
 + `symbolic_regression_benchmarks.py` calculates all of the benchmarks
+
+# Neural ODE
+
+See `neural_ode_example.ipynb` for an overview
+
++ `node_benchmarks.py` calculates all of the benchmarks
