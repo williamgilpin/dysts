@@ -49,7 +49,11 @@ Additional functionality and examples can be found in [`the demonstrations noteb
 
 ## Installation
 
-Download and install the project repository from GitHub
+Install from PyPI
+
+    pip install dysts
+
+To obtain the latest version, including new features and bug fixes, download and install the project repository directly from GitHub
 
     git clone https://github.com/williamgilpin/dysts
     cd dysts
