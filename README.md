@@ -47,6 +47,12 @@ data = load_dataset(subsets="train", data_format="numpy", standardize=True)
 
 Additional functionality and examples can be found in [`the demonstrations notebook.`](demos.ipynb). The full API documentation [can be found here](http://www.wgilpin.com/dysts/spbuild/html/index.html).
 
+## Reference
+
+For additional details, please see the preprint. If using this code for published work, please consider citing the paper.
+
+    William Gilpin. "Chaos as an interpretable benchmark for forecasting and data-driven modelling" 2021. Advances in Neural Information Processing Systems (NeurIPS) 2021 https://arxiv.org/abs/2110.05266
+
 ## Installation
 
 Install from PyPI
