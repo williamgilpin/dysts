@@ -51,7 +51,7 @@ Additional functionality and examples can be found in [`the demonstrations noteb
 
 For additional details, please see the preprint. If using this code for published work, please consider citing the paper.
 
-    William Gilpin. "Chaos as an interpretable benchmark for forecasting and data-driven modelling" 2021. Advances in Neural Information Processing Systems (NeurIPS) 2021 https://arxiv.org/abs/2110.05266
+> William Gilpin. "Chaos as an interpretable benchmark for forecasting and data-driven modelling" Advances in Neural Information Processing Systems (NeurIPS) 2021 https://arxiv.org/abs/2110.05266
 
 ## Installation
 
