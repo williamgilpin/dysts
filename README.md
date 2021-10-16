@@ -19,7 +19,7 @@ Modify a model's parameter values and re-integrate
 ```python
 model = Lorenz()
 model.gamma = 1
-model.ic = [0, 0, 0.2]
+model.ic = [0.1, 0.0, 5]
 sol = model.make_trajectory(1000)
 # plt.plot(sol[:, 0], sol[:, 1])
 ```
