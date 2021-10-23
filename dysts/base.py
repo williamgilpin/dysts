@@ -193,7 +193,7 @@ class DynSys(BaseDyn):
         self,
         n,
         method="Radau",
-        resample=False,
+        resample=True,
         pts_per_period=100,
         return_times=False,
         standardize=False,
