@@ -1268,7 +1268,7 @@ class GenesioTesi(DynSys):
         zdot = -c * x - b * y - a * z + x ** 2
         return xdot, ydot, zdot
 
-class AtomsphericRegime(DynSys):
+class AtmosphericRegime(DynSys):
     @staticjit
     def _rhs(
         x, y, z, t, alpha, beta, mu1, mu2, omega, sigma

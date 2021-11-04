@@ -173,7 +173,7 @@
             4
         ]
     },
-    "AtomsphericRegime": {
+    "AtmosphericRegime": {
         "bifurcation_parameter": null,
         "citation": "Tuwankotta (2006). Chaos in a coupled oscillators system with widely spaced frequencies and energy-preserving non-linearity",
         "correlation_dimension": 1.0906156314277713,
@@ -183,9 +183,9 @@
         "embedding_dimension": 3,
         "hamiltonian": false,
         "initial_conditions": [
-            2.3334951679608325,
-            0.07120959426415537,
-            -1.2952753434322928
+            0.026544189906947246, 
+            0.20580772677536016, 
+            0.43758119702219506
         ],
         "kaplan_yorke_dimension": 2.1859596374283137,
         "lyapunov_spectrum_estimated": null,

@@ -17,16 +17,23 @@ from dysts.flows import Lorenz
 
 from dysts.datasets import load_dataset
 
-# class TestUtilities(unittest.TestCase):
-#     """
-#     Tests helper utilities
-#     """
+from dysts.base import get_attractor_list
+class TestUtilities(unittest.TestCase):
+    """
+    Tests helper utilities
+    """
 #     def test_fourier(self):
 #         """
 #         Test discrete fourier analysis
 #         """
 #         data_test = np.ones((1000, 3))
 #         assert True
+        
+    def test_attractor_list(self):
+        """
+        Test fetching list of attractors
+        """
+        assert len(get_attractor_list()) > 130
         
 class TestDatasets(unittest.TestCase):
     """
