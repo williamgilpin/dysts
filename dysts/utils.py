@@ -364,7 +364,9 @@ def find_significant_frequencies(sig, window=True, fs=1, n_samples=100,
                                  show=False, return_amplitudes=False):
     """
     Find power spectral frequencies that are significant in a signal, by comparing
-    the appearance of a peak with its appearance in randomly-shuffled surrogates
+    the appearance of a peak with its appearance in randomly-shuffled surrogates.
+
+    If no significant freqencies are detected, the significance floor is lowered
     
     Args:
         window (bool): Whether to window the signal before taking the FFT
@@ -402,8 +404,11 @@ def find_significant_frequencies(sig, window=True, fs=1, n_samples=100,
 #     sel_inds = psd_sig > surrogate_floor
     
     frac_exceed = np.sum((psd_sig > all_surr_psd), axis=0)/all_surr_psd.shape[0]
+
     sel_inds = (frac_exceed >= significance_threshold)
-    
+    while len(sel_inds) == 0 and significance_threshold > 0:
+        significance_threshold -= 0.01
+        sel_inds = (frac_exceed >= significance_threshold)
     
     freq_inds = np.arange(len(psd_sig))[sel_inds]
     amps = psd_sig[sel_inds]

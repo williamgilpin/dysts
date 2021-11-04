@@ -2,6 +2,8 @@
 
 Summaries of the different benchmark experiments. To re-run experiments reported in our manuscript, open the corresponding Jupyter Notebook file for a step-by-step guide
 
+These benchmarks were run with the package versions included in `requirements.txt`
+
 # Forecasting
 
 See `figure_forecasting_benchmarks_figures.ipynb` for an overview

@@ -53,6 +53,8 @@ For additional details, please see the preprint. If using this code for publishe
 
 > William Gilpin. "Chaos as an interpretable benchmark for forecasting and data-driven modelling" Advances in Neural Information Processing Systems (NeurIPS) 2021 https://arxiv.org/abs/2110.05266
 
+We are very grateful for any suggestions or contributions. See [`CONTRIBUTING.md`](CONTRIBUTING.md)
+
 ## Installation
 
 Install from PyPI
@@ -90,11 +92,6 @@ These additional optional dependencies are needed to reproduce some portions of 
 + tsfresh (used for statistical quantity extraction)
 + pytorch (used for neural network benchmarks)
 
-## Contributing
-
-**New systems.** If you know of any systems should be included, please feel free to submit an issue or pull request. The biggest bottleneck when adding new models is a lack of known parameter values and initial conditions, and so please provide a reference or code that contains all parameter values necessary to reproduce the claimed dynamics. Because there are an infinite number of chaotic systems, we currently are only including systems that have appeared in published work.
-
-**Development and Maintainence.** We are very grateful for any suggestions or contributions. See the to-do list below for some of the ongoing work.
 
 ## Benchmarks
 
@@ -122,23 +119,5 @@ The benchmarks reported in our preprint can be found in [`benchmarks`](benchmark
 ## Ethics & Reporting
 
 Dataset datasheets and metadata are reported using the dataset documentation guidelines described in [Gebru et al 2018](https://arxiv.org/abs/1803.09010); please see our preprint for a full dataset datasheet and other information. We note that all datasets included here are mathematical in nature, and do not contain human or clinical observations. If any users become aware of unintended harms that may arise due to the use of this data, we encourage reporting them by submitting an issue on this repository.
-
-
-## Development to-do list
-
-A partial list of potential improvements in future versions
-
-+ Speed up the delay equation implementation
-+ + We need to roll our own implementation of DDE23 in the `utils` module.
-+ Improve calculations of Lyapunov exponents for delay systems
-+ Implement multivariate multiscale entropy and re-calculate for all attractors
-+ Add a method for parallel integrating multiple systems at once, based on a list of names and a set of shared settings
-+ + Can use multiprocessing for a few systems, but greater speedups might be possible by compiling all right hand sides into a single function acting on a large vector.
-+ + Can also use this same utility to integrate multiple initial conditions for the same model
-+ Add a separate jacobian database file, and add an attribute that can be used to check if an analytical one exists. This will speed up numerical integration, as well as potentially aid in calculating Lyapunov exponents.
-+ Align the initial phases, potentially by picking default starting initial conditions that lie on the attractor, but which are as close as possible to the origin
-+ Expand and finalize the discrete `dysts.maps` module
-+ + Maps are deterministic but not differentiable, and so not all analysis methods will work on them. Will probably need a decorator to declare whether utilities work on flows, maps, or both
-+ Switch stochastic integration to a newer package, like `torchsde` or `sdepy`
 
 
