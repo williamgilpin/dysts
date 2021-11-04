@@ -37,7 +37,8 @@ class TestDatasets(unittest.TestCase):
         Test univariate data loader
         """
         data = load_dataset(data_format="numpy", standardize=True)
-        assert data.shape == (131, 1000), "Imported time series collection has the wrong shape"
+        assert data.shape[0] > 131, "Imported time series collection has the wrong shape"
+        assert data.shape[-1] == 1000, "Imported time series collection has the wrong shape"
         
     def test_multivariate(self):
         """

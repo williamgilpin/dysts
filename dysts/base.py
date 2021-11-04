@@ -55,6 +55,25 @@ staticjit = lambda func: staticmethod(
     njit(func)
 )  # Compose staticmethod and jit decorators
 
+data_default = {'bifurcation_parameter': None,
+                'citation': None,
+                 'correlation_dimension': None,
+                 'delay': False,
+                 'description': None,
+                 'dt': 0.001,
+                 'embedding_dimension': 3,
+                 'hamiltonian': False,
+                 'initial_conditions': [0.1, 0.1, 0.1],
+                 'kaplan_yorke_dimension': None,
+                 'lyapunov_spectrum_estimated': None,
+                 'maximum_lyapunov_estimated': None,
+                 'multiscale_entropy': None,
+                 'nonautonomous': False,
+                 'parameters': {},
+                 'period': 10,
+                 'pesin_entropy': None,
+                 'unbounded_indices': []
+               }
 
 @dataclass(init=False)
 class BaseDyn:
@@ -93,7 +112,15 @@ class BaseDyn:
 
         for key in self._load_data().keys():
             setattr(self, key, self._load_data()[key])
-
+    
+    def update_params(self):
+        """
+        Update all instance attributes to match the values stored in the 
+        `params` field
+        """
+        for key in self.params.keys():
+            setattr(self, key, self.params[key])
+    
     def get_param_names(self):
         return sorted(self.params.keys())
 
@@ -107,7 +134,8 @@ class BaseDyn:
             return data[self.name]
         except KeyError:
             print(f"No metadata available for {self.name}")
-            return {"parameters": None}
+            #return {"parameters": None}
+            return data_default
 
     @staticmethod
     def bound_trajectory(traj):

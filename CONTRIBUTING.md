@@ -18,6 +18,22 @@ The biggest bottleneck when adding new models is a lack of known parameter value
             ydot = x * (rho - z) - y
             zdot = x * y - beta * z
             return xdot, ydot, zdot
+            
+If you also know the jacobian matrix, please include a function for that as well
+
+    class Lorenz(DynSys):
+        @staticjit
+        def _rhs(x, y, z, t, beta, rho, sigma):
+            xdot = sigma * (y - x)
+            ydot = x * (rho - z) - y
+            zdot = x * y - beta * z
+            return xdot, ydot, zdot
+        @staticjit
+        def _jac(x, y, z, t, beta, rho, sigma):
+            row1 = [-sigma, sigma, 0]
+            row2 = [rho - z, -1, -x]
+            row3 = [y, x, -beta]
+            return [row1, row2, row3]
 
 We list parameters and arguments by name (instead of using keyword arguments) in order to simplify compiling with `numba`
 

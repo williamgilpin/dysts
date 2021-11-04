@@ -173,6 +173,37 @@
             4
         ]
     },
+    "AtomsphericRegime": {
+        "bifurcation_parameter": null,
+        "citation": "Tuwankotta (2006). Chaos in a coupled oscillators system with widely spaced frequencies and energy-preserving non-linearity",
+        "correlation_dimension": 1.0906156314277713,
+        "delay": false,
+        "description": "A model of regime transition in atmospheric flows. Contains widely-separated timescales due a quadratic term, which itself arises from a conservation law.",
+        "dt": 0.01773980357826076,
+        "embedding_dimension": 3,
+        "hamiltonian": false,
+        "initial_conditions": [
+            2.3334951679608325,
+            0.07120959426415537,
+            -1.2952753434322928
+        ],
+        "kaplan_yorke_dimension": 2.1859596374283137,
+        "lyapunov_spectrum_estimated": null,
+        "maximum_lyapunov_estimated": 0.29807113997986867,
+        "multiscale_entropy": 0.4278776303819699,
+        "nonautonomous": false,
+        "parameters": {
+            "alpha": -2.0,
+            "beta": -5.0,
+            "mu1": 0.05,
+            "mu2": -0.01,
+            "omega": 3.0,
+            "sigma": 1.1
+        },
+        "period": 89.59496756697331,
+        "pesin_entropy": 0.3055574134566322,
+        "unbounded_indices": []
+    },
     "BeerRNN": {
         "bifurcation_parameter": null,
         "citation": "Beer, R. D. (1995). On the dynamics of small continuous-time recurrent neural networks. Adapt. Behav., 3(4), 4692013509.",
@@ -756,8 +787,8 @@
         "bifurcation_parameter": null,
         "citation": "Chen HK, Lee CI (2004). Anti-control of chaos in rigid body motion. Chaos, Solitons & Fractals",
         "correlation_dimension": 1.2279387897055603,
-        "description": "A rigid body with feedback anti-control.",
         "delay": false,
+        "description": "A rigid body with feedback anti-control.",
         "dt": 0.0001963,
         "embedding_dimension": 3,
         "hamiltonian": false,
@@ -1759,7 +1790,7 @@
     },
     "HyperJha": {
         "bifurcation_parameter": null,
-        "citation": "Jürgen Meier (2003). Presentation of Attractors with Cinema.",
+        "citation": "J\u00fcrgen Meier (2003). Presentation of Attractors with Cinema.",
         "correlation_dimension": 2.295404578145075,
         "delay": false,
         "description": "A hyperchaotic system.",
@@ -1794,7 +1825,7 @@
     },
     "HyperLorenz": {
         "bifurcation_parameter": null,
-        "citation": "Jürgen Meier (2003). Presentation of Attractors with Cinema.",
+        "citation": "J\u00fcrgen Meier (2003). Presentation of Attractors with Cinema.",
         "correlation_dimension": 2.3256965997358985,
         "delay": false,
         "description": "A hyperchaotic variant of the Lorenz attractor.",
@@ -1829,7 +1860,7 @@
     },
     "HyperLu": {
         "bifurcation_parameter": null,
-        "citation": "Jürgen Meier (2003). Presentation of Attractors with Cinema.",
+        "citation": "J\u00fcrgen Meier (2003). Presentation of Attractors with Cinema.",
         "correlation_dimension": 2.343735648584751,
         "delay": false,
         "description": "A hyperchaotic variant of the Lu attractor.",
@@ -1864,7 +1895,7 @@
     },
     "HyperPang": {
         "bifurcation_parameter": null,
-        "citation": "Jürgen Meier (2003). Presentation of Attractors with Cinema.",
+        "citation": "J\u00fcrgen Meier (2003). Presentation of Attractors with Cinema.",
         "correlation_dimension": 2.409444534598458,
         "delay": false,
         "description": "A hyperchaotic system.",
@@ -2043,7 +2074,7 @@
     },
     "HyperYan": {
         "bifurcation_parameter": null,
-        "citation": "Jürgen Meier (2003). Presentation of Attractors with Cinema.",
+        "citation": "J\u00fcrgen Meier (2003). Presentation of Attractors with Cinema.",
         "correlation_dimension": 1.7169092247689766,
         "delay": false,
         "description": "A hyperchaotic system.",
@@ -2078,7 +2109,7 @@
     },
     "HyperYangChen": {
         "bifurcation_parameter": null,
-        "citation": "Jürgen Meier (2003). Presentation of Attractors with Cinema.",
+        "citation": "J\u00fcrgen Meier (2003). Presentation of Attractors with Cinema.",
         "correlation_dimension": 2.4394788306107964,
         "delay": false,
         "description": "A hyperchaotic system.",
@@ -3225,7 +3256,7 @@
     },
     "RayleighBenard": {
         "bifurcation_parameter": null,
-        "citation": "Yanagita, Kaneko (1995). Rayleigh-Bénard convection patterns, chaos, spatiotemporal chaos and turbulence. Physica D: Nonlinear Phenomena 82.3 (1995): 288-313.",
+        "citation": "Yanagita, Kaneko (1995). Rayleigh-B\u00e9nard convection patterns, chaos, spatiotemporal chaos and turbulence. Physica D: Nonlinear Phenomena 82.3 (1995): 288-313.",
         "correlation_dimension": 1.9218207098924294,
         "delay": false,
         "description": "A reduced-order model of a convective cell.",

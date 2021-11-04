@@ -15,6 +15,7 @@ import numpy as np
 from .base import DynSys, DynSysDelay, staticjit
 
 
+
 class Lorenz(DynSys):
     @staticjit
     def _rhs(x, y, z, t, beta, rho, sigma):
@@ -22,6 +23,12 @@ class Lorenz(DynSys):
         ydot = x * (rho - z) - y
         zdot = x * y - beta * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, beta, rho, sigma):
+        row1 = [-sigma, sigma, 0]
+        row2 = [rho - z, -1, -x]
+        row3 = [y, x, -beta]
+        return [row1, row2, row3]
 
 
 class LorenzBounded(DynSys):
@@ -1261,7 +1268,16 @@ class GenesioTesi(DynSys):
         zdot = -c * x - b * y - a * z + x ** 2
         return xdot, ydot, zdot
 
-
+class AtomsphericRegime(DynSys):
+    @staticjit
+    def _rhs(
+        x, y, z, t, alpha, beta, mu1, mu2, omega, sigma
+    ):
+        xdot = mu1 * x + sigma * x * y
+        ydot = mu2 * y + (omega + alpha * y + beta * z) * z - sigma * x ** 2
+        zdot = mu2 * z - (omega + alpha * y + beta * z) * y
+        return xdot, ydot, zdot
+    
 class Hadley(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, f, g):

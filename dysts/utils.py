@@ -50,6 +50,14 @@ def signif(x, figs=6):
     figs = int(figs - np.ceil(np.log10(abs(x))))
     return round(x, figs)
 
+def dict_loudassign(d, key, val):
+    """
+    Assign a key val pair in a dict, and print the result
+    """
+    print(key + ": " + str(val), flush=True)
+    d[key] = val
+    return d
+
 def standardize_ts(a, scale=1.0):
     """Standardize an array along dimension -2
     For dimensions with zero variance, divide by one instead of zero
