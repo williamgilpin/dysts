@@ -272,11 +272,15 @@ class DynSys(BaseDyn):
         else:
             sol = list()
             for ic in self.ic:
-                sol.append(
-                    integrate_dyn(
-                        self, ic, tpts, dtval=self.dt, method=method, noise=noise
-                    )
+                traj = integrate_dyn(
+                    self, ic, tpts, dtval=self.dt, method=method, noise=noise
                 )
+                check_complete = (traj.shape[-1] == len(tpts))
+                if check_complete: 
+                    sol.append(traj)
+                else:
+                    warnings.warn(f"Integration did not complete for initial condition {ic}, skipping this point")
+                    pass
             sol = np.transpose(np.array(sol), (0, 2, 1))
 
         if hasattr(self, "_postprocessing") and postprocess:
