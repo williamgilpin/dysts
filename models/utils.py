@@ -29,7 +29,7 @@ def eval_simple(model):
 
     metric_func = getattr(darts.metrics.metrics, 'mse')
     score = metric_func(true_y, pred_y)
-    print('MSE', score)
+    print('MSE on simple sequence 0 ... 1000 ', score)
     if score > 10:
         warnings.warn(f'Predicting very simple sequence, check if training/predicting is correct. '
                       f'MSE is {score}, anything above 100 is a likely error for the sequence 1000 ... 1200')
