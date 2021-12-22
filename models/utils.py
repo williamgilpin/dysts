@@ -1,5 +1,4 @@
 import collections
-import json
 import os
 import warnings
 
@@ -8,6 +7,7 @@ import numpy as np
 import pandas as pd
 from darts import TimeSeries
 
+from benchmarks.results.read_results import ResultsObject
 from dysts.datasets import load_file
 
 
@@ -57,8 +57,12 @@ def eval_all_dyn_syst(model):
         'smape'
     ]
     equation_data = load_file(input_path)
-    model_name = 'LiESN_DEBUG_DEFAULT'
+    model_name = 'RC-CHAOS-ESN_DEBUG_DEFAULT'
     failed_combinations = collections.defaultdict(list)
+    METRIC = 'smape'
+    results_path = os.getcwd() + '/benchmarks/results/results_test_univariate__pts_per_period_100__periods_12.json'
+    results = ResultsObject(path=results_path)
+    results.sort_results(print_out=False, metric=METRIC)
     for equation_name in equation_data.dataset:
 
         train_data = np.copy(np.array(equation_data.dataset[equation_name]["values"]))
@@ -82,6 +86,9 @@ def eval_all_dyn_syst(model):
             metric_func = getattr(darts.metrics.metrics, metric_name)
             score = metric_func(true_y, pred_y)
             print(metric_name, score)
+            if metric_name == METRIC:
+                results.update_results(equation_name, model_name, score)
+
         # TODO: print ranking relative to others for that dynamical system
-        print()
     print('Failed combinations', failed_combinations)
+    results.get_average_rank(model_name, print_out=True)
