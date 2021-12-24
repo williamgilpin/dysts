@@ -1,20 +1,41 @@
-import collections
-import json
-import os
 from typing import Union, Sequence, Optional
-import warnings
 
-import darts
+import echotorch
 import numpy as np
 import pandas as pd
 import torch
 from darts import TimeSeries
+from darts.models import RegressionModel
 from darts.models.forecasting.forecasting_model import GlobalForecastingModel
 from echotorch.utils import MatrixGenerator
+from torch.autograd import Variable
+from torch.utils.data import TensorDataset, DataLoader
 
-from dysts.datasets import load_file
 from echotorch.nn import LiESN
 
+from models.utils import eval_simple, eval_all_dyn_syst
+from rc_chaos.Methods.RUN import getModel, get_args_dict
+
+
+class LiESNRegressor(LiESN):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def fit(self, u, y=None, **kwargs):
+        super().forward(torch.Tensor(u), torch.Tensor([[y]]))
+        #super().forward(u, y)
+        self.finalize()
+
+    def predict(self, u, **kwargs):
+        return super().forward(u)
+
+class LiESNRegressorFitter(RegressionModel):
+    def __init__(self, lags=1, **kwargs):
+        super().__init__(lags = lags)
+        if len(kwargs) == 0:
+            self.model = get_default('regressor')
+        else:
+            self.model = LiESNRegressor(**kwargs)
 
 # TODO: inherit from base classes of RNNModel
 # currently only using GlobalForecastingModel as we need gridsearch for it
@@ -32,6 +53,23 @@ class LiESNFitter(LiESN, GlobalForecastingModel):
         data = torch.Tensor(np.array(series.all_values()))
         input = data[:-1]
         target = data[1:]
+        #
+
+        train_dataset = TensorDataset(input, target) # create your datset
+        trainloader = DataLoader(train_dataset, batch_size=1, shuffle=False, num_workers=2) # create your dataloader
+        for data in trainloader:
+
+            inputs, targets = data
+            inputs, targets = Variable(inputs), Variable(targets)
+
+            #if use_cuda:
+            # inputs, targets = inputs.cuda(), targets.cuda()
+            #esn.cuda()
+
+            self(inputs, targets)
+        self.finalize()
+        return
+        #
         self(input, target)
 
         # TODO: more sohpisticated ways of lag, e.g. see
@@ -58,12 +96,31 @@ class LiESNFitter(LiESN, GlobalForecastingModel):
         # only passing n (len of y_val) and continuing on from trained vals (in compute_benchmarks.py)
         if series is None:
             series = self.training_series
-
         data = torch.Tensor(np.array(series.all_values()))
-        return self(data)
+        #
+        input = data[:-1].squeeze(-1)
+        target = data[1:].squeeze(-1)
+
+        train_dataset = TensorDataset(input, target) # create your datset
+        testloader = DataLoader(train_dataset, batch_size=1, shuffle=False, num_workers=2) # create your dataloader
+
+        dataiter = iter(testloader)
+        test_u, test_y = dataiter.next()
+        test_u, test_y = Variable(test_u), Variable(test_y)
+        y_predicted_test = self(test_u)
+        #if use_cuda: test_u, test_y = test_u.cuda(), test_y.cuda()
+        print(u"Test MSE: {}".format(echotorch.utils.mse(y_predicted_test.data, test_y.data)))
+        return y_predicted_test
+        #
+        out = self(data)
+        print('_____S', out.shape)
+        ret =  TimeSeries.from_dataframe(pd.DataFrame(out))    # TODO gets casted to values and then TimeSeries again...
+        print('___R', ret.values().shape)
+        return ret#[:n] # only return first n values
+        # TODO: likely error here, also get warnings
 
 
-def get_default():
+def get_default(type='normal'):
     # Hyperparameters
     n_train_samples = 1
     n_test_samples = 1
@@ -72,94 +129,37 @@ def get_default():
     input_dim = 1
     n_hidden = 100
 
-    return LiESNFitter(
-        input_dim=input_dim,
-        hidden_dim=n_hidden,
-        output_dim=1,
-        spectral_radius=spectral_radius,
-        learning_algo='inv',
-        leaky_rate=leaky_rate,
-        w_generator=MatrixGenerator(),
-        win_generator=MatrixGenerator(),
-        wbias_generator=MatrixGenerator()
-    )
+    if type == 'normal':
+        return LiESNFitter(
+            input_dim=input_dim,
+            hidden_dim=n_hidden,
+            output_dim=1,
+            spectral_radius=spectral_radius,
+            learning_algo='inv',
+            leaky_rate=leaky_rate,
+            w_generator=MatrixGenerator(),
+            win_generator=MatrixGenerator(),
+            wbias_generator=MatrixGenerator()
+        )
+    elif type == 'regressor':
+        return LiESNRegressor(
+            input_dim=input_dim,
+            hidden_dim=n_hidden,
+            output_dim=1,
+            spectral_radius=spectral_radius,
+            learning_algo='inv',
+            leaky_rate=leaky_rate,
+            w_generator=MatrixGenerator(),
+            win_generator=MatrixGenerator(),
+            wbias_generator=MatrixGenerator()
+        )
 
 
 def main():
-    cwd = os.path.dirname(os.path.realpath(__file__))
-    # cwd = os.getcwd()
-    input_path = os.path.dirname(cwd) + "/dysts/data/test_univariate__pts_per_period_100__periods_12.json"
-
-    dataname = os.path.splitext(os.path.basename(os.path.split(input_path)[-1]))[0]
-    output_path = cwd + "/results/results_" + dataname + ".json"
-    dataname = dataname.replace("test", "train")
-    hyperparameter_path = cwd + "/hyperparameters/hyperparameters_" + dataname + ".json"
-
-    metric_list = [
-        'coefficient_of_variation',
-        'mae',
-        'mape',
-        'marre',
-        # 'mase', # requires scaling with train partition; difficult to report accurately
-        'mse',
-        # 'ope', # runs into issues with zero handling
-        'r2_score',
-        'rmse',
-        # 'rmsle', # requires positive only time series
-        'smape'
-    ]
-
-    equation_data = load_file(input_path)
-
-    try:
-        with open(output_path, "r") as file:
-            all_results = json.load(file)
-    except FileNotFoundError:
-        all_results = dict()
-
-    model_name = 'LiESN_DEBUG_DEFAULT'
-    failed_combinations = collections.defaultdict(list)
-    for equation_name in equation_data.dataset:
-
-        train_data = np.copy(np.array(equation_data.dataset[equation_name]["values"]))
-
-        if equation_name not in all_results.keys():
-            all_results[equation_name] = dict()
-        all_results[equation_name][model_name] = dict()
-
-        split_point = int(5 / 6 * len(train_data))
-        y_train, y_val = train_data[:split_point], train_data[split_point:]
-        y_train_ts, y_test_ts = TimeSeries.from_dataframe(pd.DataFrame(train_data)).split_before(split_point)
-        print('-----', equation_name, y_train_ts.values().shape)
-
-        model = get_default()
-
-        try:
-            model.fit(y_train_ts)
-            y_val_pred = model.predict(len(y_val))
-        except Exception as e:
-            warnings.warn(f'Could not evaluate {equation_name} for {model_name} {e.args}')
-            failed_combinations[model_name].append(equation_name)
-            continue
-        # TODO  if on GPU: y_val_pred.values()
-        # pred_y = TimeSeries.from_dataframe(pd.DataFrame(np.squeeze(y_val_pred.values())))
-        # true_y = TimeSeries.from_dataframe(pd.DataFrame(np.squeeze(y_val)[:-1]))
-
-        # all_results[equation_name][model_name]["prediction"] = np.squeeze(y_val_pred.values()).tolist()
-
-        pred_y = TimeSeries.from_dataframe(pd.DataFrame(np.squeeze(y_val_pred)))
-        true_y = TimeSeries.from_dataframe(pd.DataFrame(np.squeeze(y_val)[:-1]))
-
-        all_results[equation_name][model_name]["prediction"] = np.squeeze(y_val_pred).tolist()
-
-        for metric_name in metric_list:
-            metric_func = getattr(darts.metrics.metrics, metric_name)
-            score = metric_func(true_y, pred_y)
-            print(metric_name, score)
-            all_results[equation_name][model_name][metric_name] = score
-        print()
-
-    print(failed_combinations)
+    eval_simple(get_default())
+    eval_all_dyn_syst(get_default())
+    #eval_simple(getModel(get_args_dict()))
+    #eval_all_dyn_syst(getModel(get_args_dict()))
 
 
 if __name__ == '__main__':
