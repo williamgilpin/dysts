@@ -1,12 +1,12 @@
 ## Main installation
 
-git checkout reservoir_computing
-git submodule init
-git submodule update
+    git checkout reservoir_computing
+    git submodule init
+    git submodule update
 
 To run the experiments and get the rank over all dynamical systems, run: 
 
-python rc_chaos/Methods/Models/esn/esn_rc_dyst_copy.py 
+    python rc_chaos/Methods/Models/esn/esn_rc_dyst_copy.py 
 
 
 
