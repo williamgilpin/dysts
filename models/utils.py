@@ -11,7 +11,7 @@ from darts import TimeSeries
 
 from benchmarks.results.read_results import ResultsObject
 from dysts.datasets import load_file
-
+'''
 def set_seed(seed):
     seed %= 4294967294
     random.seed(seed)
@@ -22,7 +22,7 @@ def set_seed(seed):
     # does not set tensorflow
     # import tensorflow as tf
     # tf.set_random_seed(seed)
-
+'''
 def eval_simple(model):
     train_data = np.arange(1200)
     split_point = int(5 / 6 * len(train_data))
@@ -64,7 +64,7 @@ def eval_single_dyn_syst(model, dataset):
         'smape'
     ]
     equation_name = load_file(input_path).dataset[dataset]
-    model_name = model.name
+    model_name = model.model_name
     failed_combinations = collections.defaultdict(list)
     METRIC = 'smape'
     results_path = os.getcwd() + '/benchmarks/results/results_test_univariate__pts_per_period_100__periods_12.json'
@@ -120,7 +120,7 @@ def eval_all_dyn_syst(model):
         'smape'
     ]
     equation_data = load_file(input_path)
-    model_name = model.name
+    model_name = model.model_name
     failed_combinations = collections.defaultdict(list)
     METRIC = 'smape'
     results_path = os.getcwd() + '/benchmarks/results/results_test_univariate__pts_per_period_100__periods_12.json'
