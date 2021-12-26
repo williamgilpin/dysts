@@ -83,8 +83,9 @@ def eval_single_dyn_syst(model, dataset):
         print(metric_name, score)
         if metric_name == METRIC:
             value = score
-            results.update_results(dataset, model_name, score)
-    return value
+            rank = results.update_results(dataset, model_name, score)
+    return value, rank, model.W_h
+
 
 def eval_all_dyn_syst(model):
     cwd = os.path.dirname(os.path.realpath(__file__))

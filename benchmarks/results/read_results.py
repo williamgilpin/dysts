@@ -43,6 +43,7 @@ class ResultsObject():
 
         self.new_model_ranks[model_name].append((equation_name, i))
         self.scores[equation_name] = dyn_sys
+        return i
 
     def get_average_rank(self, model_name, print_out=True):
         n = len(self.new_model_ranks[model_name])
