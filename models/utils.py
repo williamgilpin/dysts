@@ -1,15 +1,27 @@
 import collections
 import os
+import random
 import warnings
 
 import darts
 import numpy as np
 import pandas as pd
+import torch
 from darts import TimeSeries
 
 from benchmarks.results.read_results import ResultsObject
 from dysts.datasets import load_file
 
+def set_seed(seed):
+    seed %= 4294967294
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():   # multi-gpu mode
+        torch.cuda.manual_seed_all(seed)
+    # does not set tensorflow
+    # import tensorflow as tf
+    # tf.set_random_seed(seed)
 
 def eval_simple(model):
     train_data = np.arange(1200)
@@ -52,7 +64,7 @@ def eval_single_dyn_syst(model, dataset):
         'smape'
     ]
     equation_name = load_file(input_path).dataset[dataset]
-    model_name = 'RC-CHAOS-ESN_DEBUG_DEFAULT'
+    model_name = model.name
     failed_combinations = collections.defaultdict(list)
     METRIC = 'smape'
     results_path = os.getcwd() + '/benchmarks/results/results_test_univariate__pts_per_period_100__periods_12.json'
@@ -108,7 +120,7 @@ def eval_all_dyn_syst(model):
         'smape'
     ]
     equation_data = load_file(input_path)
-    model_name = 'RC-CHAOS-ESN_DEBUG_DEFAULT'
+    model_name = model.name
     failed_combinations = collections.defaultdict(list)
     METRIC = 'smape'
     results_path = os.getcwd() + '/benchmarks/results/results_test_univariate__pts_per_period_100__periods_12.json'
