@@ -3,7 +3,6 @@ Helper utilities for working with time series arrays.
 This module is intended to have no dependencies on the rest of
 the package
 
-
 """
 import numpy as np
 from numpy.fft import rfft, irfft
@@ -222,6 +221,7 @@ def find_characteristic_timescale(y, k=1, window=True):
     # Merge adjacent peaks
     grouped_maxima = group_consecutives(max_indices)
     max_indices_grouped = np.array([np.mean(item) for item in grouped_maxima])
+    max_indices_grouped = max_indices_grouped[max_indices_grouped != 1]
     
     return np.squeeze(1/(np.median(np.diff(fvals))*max_indices_grouped[:k]))
 
