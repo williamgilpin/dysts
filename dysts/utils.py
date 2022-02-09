@@ -9,7 +9,7 @@ from numpy.fft import rfft, irfft
 
 import warnings
 from scipy.integrate import odeint, solve_ivp
-from scipy.signal import blackmanharris, fftconvolve, resample
+from scipy.signal import blackmanharris, fftconvolve, resample, periodogram
 from collections import deque
 from functools import partial
 
@@ -172,7 +172,6 @@ def integrate_weiner(f, noise_amp, ic, tvals):
     sol = integrate_dyn(f, ic, tvals, noise=noise_amp)
     return sol
 
-from scipy.signal import periodogram
 def group_consecutives(vals, step=1):
     """
     Return list of consecutive lists of numbers from vals (number list).
@@ -464,6 +463,7 @@ def generate_ic_ensemble(
     t_range = tpts0[-1] - tpts0[0]
     tpts = np.arange(tpts0[0], tpts0[0] + t_range * (1 + frac_transient), dt)
     all_samples = list()
+    ic = model.ic
     for i in range(n_samples):
         ic_perturb = 1 + frac_perturb_param * (2 * np.random.random(len(ic)) - 1)
         ic_prime = ic * ic_perturb
