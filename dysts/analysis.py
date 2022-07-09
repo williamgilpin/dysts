@@ -5,7 +5,12 @@ Functions that act on DynSys or DynMap objects
 """
 
 import numpy as np
-import neurokit2 # Used for computing multiscale entropy
+
+try:
+    import neurokit2 # Used for computing multiscale entropy
+except:
+    warnings.warn("Neurokit2 must be installed before computing multiscale entropy")
+    has_neurokit = False
 
 from .utils import *
 from .utils import standardize_ts
@@ -204,6 +209,10 @@ def mse_mv(traj):
     Todo: 
         Implement algorithm from Ahmed and Mandic PRE 2011
     """
+
+    if not has_neurokit:
+        raise Exception("NeuroKit not installed; multiscale entropy cannot be computed.")
+
     mmse_opts = {"composite": True, "refined": False, "fuzzy": True}
     if len(traj.shape) == 1:
         mmse = neurokit2.complexity.entropy_multiscale(sol, dimension=2, **mmse_opts)
