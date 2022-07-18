@@ -212,9 +212,6 @@ def find_characteristic_timescale(y, k=1, window=True):
     y = gaussian_filter1d(y, 3)
 
     fvals, psd = find_psd(y, window=window)
-    # y = y * blackmanharris(len(y))
-    # halflen = int(len(y)/2)
-    # fvals, psd = periodogram(y, fs=1)
     max_indices = np.argsort(psd)[::-1]
     
     # Merge adjacent peaks
