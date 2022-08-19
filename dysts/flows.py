@@ -1,5 +1,5 @@
 """
-Various low-dimensional dynamical systems in Python. 
+Various low-dimensional dynamical systems in Python.
 For flows that occur on unbounded intervals (eg non-autonomous systems),
 coordinates are transformed to a basis where the domain remains bounded
 
@@ -19,8 +19,8 @@ from .base import DynSys, DynSysDelay, staticjit
 class Lorenz(DynSys):
     @staticjit
     def _rhs(x, y, z, t, beta, rho, sigma):
-        xdot = sigma * (y - x)
-        ydot = x * (rho - z) - y
+        xdot = sigma * y - sigma * x
+        ydot = rho * x - x * z - y
         zdot = x * y - beta * z
         return xdot, ydot, zdot
     @staticjit
@@ -34,21 +34,20 @@ class Lorenz(DynSys):
 class LorenzBounded(DynSys):
     @staticjit
     def _rhs(x, y, z, t, beta, r, rho, sigma):
-        f = 1 - (x ** 2 + y ** 2 + z ** 2) / r ** 2
-        xdot = sigma * (y - x) * f
-        ydot = (x * (rho - z) - y) * f
-        zdot = (x * y - beta * z) * f
+        xdot = sigma * y - sigma * x - sigma/r**2 * y * x ** 2 - sigma/r**2 * y ** 3 - sigma/r**2 * y * z ** 2 + sigma/r**2 * x ** 3 + sigma/r**2 * x * y ** 2 + sigma/r**2 * x * z ** 2
+        ydot = rho * x - x * z - y - rho/r**2 * x ** 3 - rho/r**2 * x * y ** 2 - rho/r**2 * x * z ** 2 + 1/r**2 * z * x ** 3 + 1/r**2 * x * z * y ** 2 + 1/r**2 * x * z ** 3 + 1/r**2 * y * x ** 2 + 1/r**2 * y ** 3 + 1/r**2 * y * z ** 2
+        zdot = x * y - beta * z - 1/r**2 * y * x ** 3 - 1/r**2 * x * y ** 3 - 1/r**2 * x * y * z ** 2 + beta/r**2 * z * x ** 2 + beta/r**2 * z * y ** 2 + beta/r**2 * z ** 3
         return xdot, ydot, zdot
 
 
 class LorenzCoupled(DynSys):
     @staticjit
     def _rhs(x1, y1, z1, x2, y2, z2, t, beta, eps, rho, rho1, rho2, sigma):
-        x1dot = sigma * (y1 - x1)
-        y1dot = x1 * (rho1 - z1) - y1
+        x1dot = sigma * y1 - sigma * x1
+        y1dot = rho1 * x1 - x1 * z1 - y1
         z1dot = x1 * y1 - beta * z1
-        x2dot = sigma * (y2 - x2) + eps * (x1 - x2)
-        y2dot = x2 * (rho2 - z2) - y2
+        x2dot = sigma * y2 - sigma * x2 + eps * x1 - eps * x2
+        y2dot = rho2 * x2 - x2 * z2 - y2
         z2dot = x2 * y2 - beta * z2
         return x1dot, y1dot, z1dot, x2dot, y2dot, z2dot
 
@@ -77,7 +76,7 @@ class Rossler(DynSys):
     def _rhs(x, y, z, t, a, b, c):
         xdot = -y - z
         ydot = x + a * y
-        zdot = b + z * (x - c)
+        zdot = b + z * x - c * z
         return xdot, ydot, zdot
 
 
@@ -137,9 +136,9 @@ class SwingingAtwood(DynSys):
 class GuckenheimerHolmes(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, c, d, e, f):
-        xdot = a * x - b * y + c * z * x + d * z * (x ** 2 + y ** 2)
+        xdot = a * x - b * y + c * z * x + d * z * x ** 2 + d * z * y ** 2
         ydot = a * y + b * x + c * z * y
-        zdot = e - z ** 2 - f * (x ** 2 + y ** 2) - a * z ** 3
+        zdot = e - z ** 2 - f * x ** 2 - f * y ** 2 - a * z ** 3
         return xdot, ydot, zdot
 
 
@@ -149,16 +148,16 @@ class HenonHeiles(DynSys):
         xdot = px
         ydot = py
         pxdot = -x - 2 * lam * x * y
-        pydot = -y - lam * (x ** 2 - y ** 2)
+        pydot = -y - lam * x ** 2 + lam * y ** 2
         return xdot, ydot, pxdot, pydot
 
 
 class Halvorsen(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b):
-        xdot = -a * x - b * (y + z) - y ** 2
-        ydot = -a * y - b * (z + x) - z ** 2
-        zdot = -a * z - b * (x + y) - x ** 2
+        xdot = -a * x - b * y - b * z - y ** 2
+        ydot = -a * y - b * z - b * x - z ** 2
+        zdot = -a * z - b * x - b * y - x ** 2
         return xdot, ydot, zdot
 
 
@@ -416,9 +415,9 @@ class CoevolvingPredatorPrey(DynSys):
 class KawczynskiStrizhak(DynSys):
     @staticjit
     def _rhs(x, y, z, t, beta, gamma, kappa, mu):
-        xdot = gamma * (y - x ** 3 + 3 * mu * x)
+        xdot = gamma * y - gamma * x ** 3 + 3 * mu * gamma * x
         ydot = -2 * mu * x - y - z + beta
-        zdot = kappa * (x - z)
+        zdot = kappa * x - kappa * z
         return xdot, ydot, zdot
 
 
@@ -473,7 +472,7 @@ class IsothermalChemical(DynSys):
 class VallisElNino(DynSys):
     @staticmethod
     def _rhs(x, y, z, t, b, c, p):
-        xdot = b * y - c * (x + p)
+        xdot = b * y - c * x - c * p
         ydot = -y + x * z
         zdot = -z - x * y + 1
         return xdot, ydot, zdot
@@ -482,9 +481,9 @@ class VallisElNino(DynSys):
 class RabinovichFabrikant(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, g):
-        xdot = y * (z - 1 + x ** 2) + g * x
-        ydot = x * (3 * z + 1 - x ** 2) + g * y
-        zdot = -2 * z * (a + x * y)
+        xdot = y * z - y + y * x ** 2 + g * x
+        ydot = 3 * x * z + x - x ** 3 + g * y
+        zdot = -2 * a * z  - 2 * x * y * z
         return (xdot, ydot, zdot)
 
 
@@ -510,7 +509,7 @@ class RikitakeDynamo(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, mu):
         xdot = -mu * x + y * z
-        ydot = -mu * y + x * (z - a)
+        ydot = -mu * y - a * x + x * z
         zdot = 1 - x * y
         return xdot, ydot, zdot
 
@@ -520,12 +519,8 @@ class NuclearQuadrupole(DynSys):
     def _rhs(q1, q2, p1, p2, t, a, b, d):
         q1dot = a * p1
         q2dot = a * p2
-        p1dot = (
-            -(a * q1)
-            + (3 * b * (q1 ** 2 - q2 ** 2)) / np.sqrt(2)
-            - d * q1 * (q1 ** 2 + q2 ** 2)
-        )
-        p2dot = -(q2 * (a + 3 * np.sqrt(2) * b * q1 + d * (q1 ** 2 + q2 ** 2)))
+        p1dot = - a * q1 + 3 / np.sqrt(2) * b * q1 ** 2 - 3 / np.sqrt(2) * b * q2 ** 2 - d * q1 ** 3 - d * q1 * q2 ** 2
+        p2dot = -a * q2 - 3 * np.sqrt(2) * b * q1 * q2 - d * q2 * q1 ** 2 - d * q2 ** 3
         return q1dot, q2dot, p1dot, p2dot
 
 
@@ -678,8 +673,8 @@ class SprottM(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a):
         xdot = -z
-        ydot = -(x ** 2) - y
-        zdot = a * (1 + x) + y
+        ydot = -x ** 2 - y
+        zdot = a + a * x + y
         return xdot, ydot, zdot
 
 
@@ -784,7 +779,7 @@ class LiuChen(Sakarya):
 class RayleighBenard(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, r):
-        xdot = a * (y - x)
+        xdot = a * y - a * x
         ydot = r * y - x * z
         zdot = x * y - b * z
         return xdot, ydot, zdot
@@ -802,9 +797,9 @@ class Finance(DynSys):
 class Bouali2(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, bb, c, g, m, y0):
-        xdot = a * x * (y0 - y) - b * z
-        ydot = -g * y * (1 - x ** 2)
-        zdot = -m * x * (1.5 - bb * z) - c * z
+        xdot = a * y0 * x - a * x * y - b * z
+        ydot = -g * y + g * y * x ** 2
+        zdot = -1.5 * m * x + m * bb * x * z - c * z
         return xdot, ydot, zdot
 
 
@@ -824,7 +819,7 @@ class LuChenCheng(DynSys):
 class LuChen(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, c):
-        xdot = a * (y - x)
+        xdot = a * y - a * x
         ydot = -x * z + c * y
         zdot = x * y - b * z
         return xdot, ydot, zdot
@@ -833,7 +828,7 @@ class LuChen(DynSys):
 class QiChen(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, c):
-        xdot = a * (y - x) + y * z
+        xdot = a * y - a * x + y * z
         ydot = c * x + y - x * z
         zdot = x * y - b * z
         return xdot, ydot, zdot
@@ -851,7 +846,7 @@ class ZhouChen(DynSys):
 class BurkeShaw(DynSys):
     @staticjit
     def _rhs(x, y, z, t, e, n):
-        xdot = -n * (x + y)
+        xdot = -n * x - n * y
         ydot = y - n * x * z
         zdot = n * x * y + e
         return xdot, ydot, zdot
@@ -860,7 +855,7 @@ class BurkeShaw(DynSys):
 class Chen(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, c):
-        xdot = a * (y - x)
+        xdot = a * y - a * x
         ydot = (c - a) * x - x * z + c * y
         zdot = x * y - b * z
         return xdot, ydot, zdot
@@ -871,7 +866,7 @@ class ChenLee(DynSys):
     def _rhs(x, y, z, t, a, b, c):
         xdot = a * x - y * z
         ydot = b * y + x * z
-        zdot = c * z + x * y / 3
+        zdot = c * z + 0.3333333333333333333333333 * x * y
         return xdot, ydot, zdot
 
 
@@ -914,7 +909,7 @@ class SanUmSrisuchinwong(DynSys):
 class DequanLi(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, c, d, eps, f, k):
-        xdot = a * (y - x) + d * x * z
+        xdot = a * y - a * x + d * x * z
         ydot = k * x + f * y - x * z
         zdot = c * z + x * y - eps * x ** 2
         return xdot, ydot, zdot
@@ -966,7 +961,7 @@ class HyperRossler(DynSys):
 class HyperLorenz(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a, b, c, d):
-        xdot = a * (y - x) + w
+        xdot = a * y - a * x + w
         ydot = -x * z + c * x - y
         zdot = -b * z + x * y
         wdot = d * w - x * z
@@ -976,7 +971,7 @@ class HyperLorenz(DynSys):
 class HyperCai(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a, b, c, d, e):
-        xdot = a * (y - x)
+        xdot = a * y - a * x
         ydot = b * x + c * y - x * z + w
         zdot = -d * z + y ** 2
         wdot = -e * x
@@ -986,7 +981,7 @@ class HyperCai(DynSys):
 class HyperBao(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a, b, c, d, e):
-        xdot = a * (y - x) + w
+        xdot = a * y - a * x + w
         ydot = c * y - x * z
         zdot = x * y - b * z
         wdot = e * x + d * y * z
@@ -996,7 +991,7 @@ class HyperBao(DynSys):
 class HyperJha(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a, b, c, d):
-        xdot = a * (y - x) + w
+        xdot = a * y - a * x + w
         ydot = -x * z + b * x - y
         zdot = x * y - c * z
         wdot = -x * z + d * w
@@ -1006,8 +1001,8 @@ class HyperJha(DynSys):
 class HyperQi(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a, b, c, d, e, f):
-        xdot = a * (y - x) + y * z
-        ydot = b * (x + y) - x * z
+        xdot = a * y - a * x + y * z
+        ydot = b * x + b * y - x * z
         zdot = -c * z - e * w + x * y
         wdot = -d * w + f * z + x * y
         return xdot, ydot, zdot, wdot
@@ -1016,8 +1011,8 @@ class HyperQi(DynSys):
 class Qi(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a, b, c, d):
-        xdot = a * (y - x) + y * z * w
-        ydot = b * (x + y) - x * z * w
+        xdot = a * y - a * x + y * z * w
+        ydot = b * x + b * y - x * z * w
         zdot = -c * z + x * y * w
         wdot = -d * w + x * y * z
         return xdot, ydot, zdot, wdot
@@ -1026,8 +1021,8 @@ class Qi(DynSys):
 class LorenzStenflo(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a, b, c, d):
-        xdot = a * (y - x) + d * w
-        ydot = x * (c - z) - y
+        xdot = a * y - a * x + d * w
+        ydot = c * x - x * z - y
         zdot = x * y - b * z
         wdot = -x - a * w
         return xdot, ydot, zdot, wdot
@@ -1036,7 +1031,7 @@ class LorenzStenflo(DynSys):
 class HyperYangChen(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a=30, b=3, c=35, d=8):
-        xdot = a * (y - x)
+        xdot = a * y - a * x
         ydot = c * x - x * z + w
         zdot = -b * z + x * y
         wdot = -d * x
@@ -1046,7 +1041,7 @@ class HyperYangChen(DynSys):
 class HyperYan(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a=37, b=3, c=26, d=38):
-        xdot = a * (y - x)
+        xdot = a * y - a * x
         ydot = (c - a) * x - x * z + c * y
         zdot = -b * z + x * y - y * z + x * z - w
         wdot = -d * w + y * z - x * z
@@ -1056,7 +1051,7 @@ class HyperYan(DynSys):
 class HyperXu(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a=10, b=40, c=2.5, d=2, e=16):
-        xdot = a * (y - x) + w
+        xdot = a * y - a * x + w
         ydot = b * x + e * x * z
         zdot = -c * z - x * y
         wdot = x * z - d * y
@@ -1066,7 +1061,7 @@ class HyperXu(DynSys):
 class HyperWang(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a=10, b=40, c=2.5, d=10.6, e=4):
-        xdot = a * (y - x)
+        xdot = a * y - a * x
         ydot = -x * z + b * x + w
         zdot = -c * z + e * x ** 2
         wdot = -d * x
@@ -1076,17 +1071,17 @@ class HyperWang(DynSys):
 class HyperPang(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a=36, b=3, c=20, d=2):
-        xdot = a * (y - x)
+        xdot = a * y - a * x
         ydot = -x * z + c * y + w
         zdot = x * y - b * z
-        wdot = -d * (x + y)
+        wdot = -d * x - d * y
         return xdot, ydot, zdot, wdot
 
 
 class HyperLu(DynSys):
     @staticjit
     def _rhs(x, y, z, w, t, a=36, b=3, c=20, d=1.3):
-        xdot = a * (y - x) + w
+        xdot = a * y - a * x + w
         ydot = -x * z + c * y
         zdot = x * y - b * z
         wdot = d * w + x * z
@@ -1235,9 +1230,9 @@ class FluidTrampoline(DynSys):
 class Aizawa(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, c, d, e, f):
-        xdot = (z - b) * x - d * y
-        ydot = d * x + (z - b) * y
-        zdot = c + a * z - z ** 3 / 3 - (x ** 2 + y ** 2) * (1 + e * z) + f * z * x ** 3
+        xdot = x * z - b * x - d * y
+        ydot = d * x + y * z - b * y
+        zdot = c + a * z - 0.333333333333333333 * z ** 3 - x ** 2 - y ** 2 - e * z * x ** 2 - e * z * y ** 2 + f * z * x ** 3
         return xdot, ydot, zdot
 
 
@@ -1268,20 +1263,22 @@ class GenesioTesi(DynSys):
         zdot = -c * x - b * y - a * z + x ** 2
         return xdot, ydot, zdot
 
+
 class AtmosphericRegime(DynSys):
     @staticjit
     def _rhs(
         x, y, z, t, alpha, beta, mu1, mu2, omega, sigma
     ):
         xdot = mu1 * x + sigma * x * y
-        ydot = mu2 * y + (omega + alpha * y + beta * z) * z - sigma * x ** 2
-        zdot = mu2 * z - (omega + alpha * y + beta * z) * y
+        ydot = mu2 * y + omega * z + alpha * y * z + beta * z ** 2 - sigma * x ** 2
+        zdot = mu2 * z - omega * y - alpha * y ** 2 - beta * y * z
         return xdot, ydot, zdot
-    
+
+
 class Hadley(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, f, g):
-        xdot = -(y ** 2) - z ** 2 - a * x + a * f
+        xdot = -y ** 2 - z ** 2 - a * x + a * f
         ydot = x * y - b * x * z - y + g
         zdot = b * x * y + x * z - z
         return xdot, ydot, zdot
@@ -1336,7 +1333,7 @@ class Colpitts(DynSys):
 class Laser(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, c, d, h, k):
-        xdot = a * (y - x) + b * y * z ** 2
+        xdot = a * y - a * x + b * y * z ** 2
         ydot = c * x + d * x * z ** 2
         zdot = h * z + k * x ** 2
         return xdot, ydot, zdot

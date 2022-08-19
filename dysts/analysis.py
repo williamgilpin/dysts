@@ -22,16 +22,16 @@ def sample_initial_conditions(
 ):
     """
     Generate a random sample of initial conditions from a dynamical system
-    
+
     Args:
         model (callable): the right hand side of a differential equation, in format func(X, t)
         points_to_sample (int): the number of random initial conditions to sample
         traj_length (int): the total length of the reference trajectory from which points are drawn
         pts_per_period (int): the sampling density of the trajectory
-        
+
     Returns:
         sample_points (ndarray): The points with shape (points_to_sample, d)
-    
+
     """
     initial_sol = model.make_trajectory(
         traj_length, resample=True, pts_per_period=pts_per_period, postprocess=False
@@ -54,7 +54,7 @@ def compute_timestep(
 ):
     """Given a dynamical system object, find the integration timestep based on the largest
     signficant frequency
-    
+
     Args:
         model (DynSys): A dynamical systems object.
         total_length (int): The total trajectory length to use to determine timescales.
@@ -64,11 +64,11 @@ def compute_timestep(
         visualize (bool): Whether to plot timestep versus time, in order to identify problems
             with the procedure
         return_period (bool): Whether to calculate and retunr the dominant timescale in the signal
-            
+
     Returns
         dt (float): The best integration timestep
         period (float, optional): The dominant timescale in the signal
-    
+
     """
 
     base_freq = 1 / pts_per_period
@@ -129,9 +129,9 @@ def find_lyapunov_exponents(
 
     Returns:
         final_lyap (ndarray): A list of computed Lyapunov exponents
-        
+
     References:
-        Christiansen & Rugh (1997). Computing Lyapunov spectra with continuous 
+        Christiansen & Rugh (1997). Computing Lyapunov spectra with continuous
             Gram-Schmidt orthonormalization
 
 
@@ -182,7 +182,7 @@ def find_lyapunov_exponents(
 
 
 def kaplan_yorke_dimension(spectrum0):
-    """Calculate the Kaplan-Yorke dimension, given a list of 
+    """Calculate the Kaplan-Yorke dimension, given a list of
     Lyapunov exponents"""
     spectrum = np.sort(spectrum0)[::-1]
     d = len(spectrum)
@@ -202,11 +202,11 @@ def kaplan_yorke_dimension(spectrum0):
 
 def mse_mv(traj):
     """
-    Generate an estimate of the multivariate multiscale entropy. The current version computes 
-    the entropy separately for each channel and then averages. It therefore represents an upper bound on the true 
+    Generate an estimate of the multivariate multiscale entropy. The current version computes
+    the entropy separately for each channel and then averages. It therefore represents an upper bound on the true
     multivariate multiscale entropy
-    
-    Todo: 
+
+    Todo:
         Implement algorithm from Ahmed and Mandic PRE 2011
     """
 
