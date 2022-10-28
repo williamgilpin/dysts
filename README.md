@@ -118,6 +118,6 @@ The benchmarks reported in our preprint can be found in [`benchmarks`](benchmark
 
 ## Ethics & Reporting
 
-Dataset datasheets and metadata are reported using the dataset documentation guidelines described in [Gebru et al 2018](https://arxiv.org/abs/1803.09010); please see our preprint for a full dataset datasheet and other information. We note that all datasets included here are mathematical in nature, and do not contain human or clinical observations. If any users become aware of unintended harms that may arise due to the use of this data, we encourage reporting them by submitting an issue on this repository.
+Dataset datasheets and metadata are reported using the dataset documentation guidelines described in [Gebru et al 2018](https://arxiv.org/abs/1803.09010); please see our preprint for a full dataset datasheet and other information. We note that all datasets included here are mathematical in nature, and do not contain human or clinical observations. If any users become aware of unintended ethics or trademark issues that may arise due to the use of this data, we encourage reporting them by submitting an issue on this repository.
 
 
