@@ -1313,10 +1313,10 @@ class ForcedFitzHughNagumo(DynSys):
 class HindmarshRose(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, c, d, s, tx, tz):
-        xdot = -tx * x + y - a * x ** 3 + b * x ** 2 + z
+        xdot = -x + 1 / tx * y - a / tx * x ** 3 + b / tx * x ** 2 + 1 / tx * z
         ydot = -a * x ** 3 - (d - b) * x ** 2 + z
-        zdot = -s * x - z + c
-        return xdot / tx, ydot, zdot / tz
+        zdot = -s / tz * x - 1 / tz * z + c / tz
+        return xdot, ydot, zdot
 
 
 class Colpitts(DynSys):
