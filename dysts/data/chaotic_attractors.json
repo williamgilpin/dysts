@@ -4294,7 +4294,7 @@
         "citation": "Tufillaro, Nicholas B.; Abbott, Tyler A.; Griffiths, David J. (1984). Swinging Atwood's Machine. American Journal of Physics. 52 (10): 895--903.",
         "correlation_dimension": 1.8299454879703774,
         "delay": false,
-        "description": "A mechanical system consisting of two swinging weights connected by ropes and pulleys. This is cnly chaotic when m2 is sufficiently larger than m1, and there are nonzero initial momenta",
+        "description": "A mechanical system consisting of two swinging weights connected by ropes and pulleys. This is only chaotic when m2 is sufficiently larger than m1, and there are nonzero initial momenta",
         "dt": 0.00010288,
         "embedding_dimension": 4,
         "hamiltonian": true,
