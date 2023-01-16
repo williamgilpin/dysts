@@ -98,10 +98,16 @@ for equation_name in equation_data.dataset:
         except:
             model = getattr(darts.models, model_name)(**all_hyperparameters[equation_name][model_name])
         
-        ## Fit the forecasting model on the given data, and then predict the validation
-        ## set and store the predictions in the results dictionary.
+        ## Fit the forecasting model on the given data
         model.fit(y_train_ts)
-        y_val_pred = model.predict(len(y_val)).values().squeeze()
+
+        ## Attempt to predict the validation data. If it fails, then the model returns
+        ## a None value for the prediction.
+        try:
+                y_val_pred = model.predict(len(y_val)).values().squeeze()
+        except:
+                print(f"Failed to predict {equation_name} {model_name}")
+                y_val_pred = np.array([None] * len(y_val))
         all_results[equation_name][model_name]["prediction"] = y_val_pred.tolist()
 
         ## Attempt to compute several time series distance metrics. If it fails due
