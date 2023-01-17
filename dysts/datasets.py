@@ -38,19 +38,19 @@ class TimeSeriesDataset:
     
     """
 
-    # def __init__(self, datapath=None, data=None):
-    #     if datapath is not None:
-    #         with open(datapath, "r") as file:
-    #             self.dataset = json.load(file)
-    #     if data is not None:
-    #         self.dataset = data
-
-    def __init__(self, datapath=None):
-        if not datapath:
-            pass
-        else:
+    def __init__(self, datapath=None, data=None):
+        if datapath is not None:
             with open(datapath, "r") as file:
                 self.dataset = json.load(file)
+        if data is not None:
+            self.dataset = data
+
+    # def __init__(self, datapath=None):
+    #     if not datapath:
+    #         pass
+    #     else:
+    #         with open(datapath, "r") as file:
+    #             self.dataset = json.load(file)
 
         self.rank = np.max(
             np.array(
