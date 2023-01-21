@@ -11,6 +11,7 @@ dysts/data/train_multivariate__pts_per_period_100__periods_60.json
 train_multivariate__pts_per_period_100__periods_60.json
 test_multivariate__pts_per_period_100__periods_60.json
 *__periods_60*
+all_outputs.json
 
 # C extensions
 *.so
