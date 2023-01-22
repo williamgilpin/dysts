@@ -1,9 +1,8 @@
-import json
 import warnings
+import os, json, gzip
 import numpy as np
-import os
-import pkg_resources
 import pandas as pd
+import pkg_resources
 
 try:
     from tsfresh import extract_features
@@ -40,17 +39,18 @@ class TimeSeriesDataset:
 
     def __init__(self, datapath=None, data=None):
         if datapath is not None:
-            with open(datapath, "r") as file:
-                self.dataset = json.load(file)
+            ext = os.path.splitext(datapath)[1]
+            if ext == ".json":
+                with open(datapath, "r") as file:
+                    self.dataset = json.load(file)
+            elif ext == ".gz":
+                with gzip.open(datapath, 'rt', encoding="utf-8") as file:
+                    self.dataset = json.load(file)
+                #self.dataset = json.loads(gzip.open(datapath, mode='r').read())
+            else:
+                raise ValueError("Unrecognized file extension")
         if data is not None:
             self.dataset = data
-
-    # def __init__(self, datapath=None):
-    #     if not datapath:
-    #         pass
-    #     else:
-    #         with open(datapath, "r") as file:
-    #             self.dataset = json.load(file)
 
         self.rank = np.max(
             np.array(
@@ -184,6 +184,32 @@ def featurize_timeseries(dataset):
     return extracted_features
 
 
+def convert_json_to_gzip(fpath, encoding="utf-8"):
+    """
+    Convert a json file to a gzip file in a format that can be easily read by the
+    `dysts` package. By default, the gzip file will be saved with the same name and
+    in the same directory as the json file, but with a ".gz" extension.
+
+    Args:
+        fpath (str): Path to the json file to be converted
+        encoding (str): Encoding to use when writing the gzip file
+
+    Returns:
+        None
+    
+    """
+    if os.path.splitext(fpath)[1] == ".gz":
+        warnings.warn("File already gzipped, exiting without conversion")
+        return None
+    
+    with open(fpath, 'r') as file:
+        data = json.load(file)
+        
+    with gzip.open(fpath + ".gz", 'wt', encoding=encoding) as file:
+        json.dump(data, file, indent=4)
+
+
+
 def load_file(filename):
     """Locate and import from the module data directory"""
     base_path = pkg_resources.resource_filename("dysts", "data")
@@ -230,6 +256,9 @@ def load_dataset(
         name_parts = list(os.path.splitext(data_path))
         data_path = "".join(name_parts[:-1] + ["_noise"] + [name_parts[-1]])
     
+    ## append a .gz extension if it's not there
+    if os.path.splitext(data_path)[1] != ".gz":
+        data_path += ".gz"
     dataset = load_file(data_path)
     
     split_point = int(split_fraction * period) * granval
