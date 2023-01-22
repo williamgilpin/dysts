@@ -531,7 +531,6 @@ def find_slope(x, y):
     b /= n * (x * x).sum(axis=-1) - x.sum(axis=-1) * x.sum(axis=-1)
     return b
 
-    
 
 def make_epsilon_ball(pt, n, eps=1e-5, random_state=None):
     """

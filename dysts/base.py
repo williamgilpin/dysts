@@ -139,6 +139,11 @@ class BaseDyn:
             return data_default
 
     @staticmethod
+    def _rhs(X, t):
+        """The right-hand side of the dynamical system"""
+        return X
+
+    @staticmethod
     def bound_trajectory(traj):
         """Bound a trajectory within a periodic domain"""
         return np.mod(traj, 2 * np.pi)
@@ -199,6 +204,7 @@ class BaseDyn:
     def sample(self, *args,  **kwargs):
         """Sample a trajectory for the dynamical system via numerical integration"""
         return self.make_trajectory(*args, **kwargs)
+        
 
 
 from scipy.integrate import solve_ivp
