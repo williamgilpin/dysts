@@ -1,3 +1,526 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7c987df4a68cdf8fb6a729bcaba8db2e2bdc01db746cb15e91a4d17e5ea2d3cd
-size 14676
+{
+    "Aizawa": {
+        "SINDY-poly": 0.06574562276559735,
+        "SINDY-fourier": 0.19414674253417089
+    },
+    "AnishchenkoAstakhov": {
+        "SINDY-poly": 0.15215300094674228,
+        "SINDY-fourier": 0.38207125260524
+    },
+    "Arneodo": {
+        "SINDY-poly": 0.021753681438165827,
+        "SINDY-fourier": 0.4588648314407727
+    },
+    "ArnoldBeltramiChildress": {
+        "SINDY-poly": 0.8674871211760609,
+        "SINDY-fourier": 0.8342539766695506
+    },
+    "ArnoldWeb": {
+        "SINDY-poly": 1.0,
+        "SINDY-fourier": 1.0
+    },
+    "BeerRNN": {
+        "SINDY-poly": 1.0,
+        "SINDY-fourier": 1.0
+    },
+    "BelousovZhabotinsky": {
+        "SINDY-poly": 0.15465695545410643,
+        "SINDY-fourier": 0.38814499974528904
+    },
+    "BickleyJet": {
+        "SINDY-poly": 1.0,
+        "SINDY-fourier": 1.0
+    },
+    "Blasius": {
+        "SINDY-poly": 0.15292408634482252,
+        "SINDY-fourier": 0.5771103320055947
+    },
+    "BlinkingRotlet": {
+        "SINDY-poly": 0.8010003846161688,
+        "SINDY-fourier": 0.8442220018172685
+    },
+    "BlinkingVortex": {
+        "SINDY-poly": 0.7917583045923,
+        "SINDY-fourier": 0.8039243634464541
+    },
+    "Bouali": {
+        "SINDY-poly": 0.18551026103959084,
+        "SINDY-fourier": 0.5200327117139398
+    },
+    "Bouali2": {
+        "SINDY-poly": 0.1808379437226184,
+        "SINDY-fourier": 0.4322668123947891
+    },
+    "BurkeShaw": {
+        "SINDY-poly": 0.21962397408427306,
+        "SINDY-fourier": 0.47822587017796214
+    },
+    "CaTwoPlus": {
+        "SINDY-poly": 0.12854588855304466,
+        "SINDY-fourier": 0.0912822438178607
+    },
+    "CaTwoPlusQuasiperiodic": {
+        "SINDY-poly": 0.15795501234335313,
+        "SINDY-fourier": 0.12756541944198868
+    },
+    "CellCycle": {
+        "SINDY-poly": 1.0,
+        "SINDY-fourier": 1.0
+    },
+    "CellularNeuralNetwork": {
+        "SINDY-poly": 0.23372170140057003,
+        "SINDY-fourier": 0.06855388369232816
+    },
+    "Chen": {
+        "SINDY-poly": 0.0494870765457826,
+        "SINDY-fourier": 0.6965217122765897
+    },
+    "ChenLee": {
+        "SINDY-poly": 0.42425221699356164,
+        "SINDY-fourier": 0.7354086886299595
+    },
+    "Chua": {
+        "SINDY-poly": 0.015900530496492912,
+        "SINDY-fourier": 0.03882239742854717
+    },
+    "CircadianRhythm": {
+        "SINDY-poly": 0.26816810353618364,
+        "SINDY-fourier": 0.7353236145753195
+    },
+    "CoevolvingPredatorPrey": {
+        "SINDY-poly": 1.0,
+        "SINDY-fourier": 1.0
+    },
+    "Colpitts": {
+        "SINDY-poly": 0.4139742295391363,
+        "SINDY-fourier": 0.1283445571358137
+    },
+    "Coullet": {
+        "SINDY-poly": 0.017723381990376385,
+        "SINDY-fourier": 0.025405460123454137
+    },
+    "Dadras": {
+        "SINDY-poly": 0.46290815773944927,
+        "SINDY-fourier": 0.7277622432195343
+    },
+    "DequanLi": {
+        "SINDY-poly": 0.0736366976842606,
+        "SINDY-fourier": 0.7899907736715392
+    },
+    "DoubleGyre": {
+        "SINDY-poly": 0.37903420214674555,
+        "SINDY-fourier": 0.8029343957583012
+    },
+    "DoublePendulum": {
+        "SINDY-poly": 0.576533585375445,
+        "SINDY-fourier": 0.6543153182310693
+    },
+    "Duffing": {
+        "SINDY-poly": 0.6920468936246355,
+        "SINDY-fourier": 0.5175326217077579
+    },
+    "ExcitableCell": {
+        "SINDY-poly": 0.69746202666207,
+        "SINDY-fourier": 0.9215784475798614
+    },
+    "Finance": {
+        "SINDY-poly": 0.17887307072480577,
+        "SINDY-fourier": 0.19117344182550325
+    },
+    "FluidTrampoline": {
+        "SINDY-poly": 0.7444172239846627,
+        "SINDY-fourier": 0.8081431269206703
+    },
+    "ForcedBrusselator": {
+        "SINDY-poly": 0.47553228116526003,
+        "SINDY-fourier": 1.0
+    },
+    "ForcedFitzHughNagumo": {
+        "SINDY-poly": 1.0,
+        "SINDY-fourier": 1.0
+    },
+    "ForcedVanDerPol": {
+        "SINDY-poly": 0.8126344901498093,
+        "SINDY-fourier": 0.7345661303559975
+    },
+    "GenesioTesi": {
+        "SINDY-poly": 0.01762937280673607,
+        "SINDY-fourier": 0.01387258920679814
+    },
+    "GuckenheimerHolmes": {
+        "SINDY-poly": 0.1496828387604544,
+        "SINDY-fourier": 0.680931544405387
+    },
+    "Hadley": {
+        "SINDY-poly": 0.05686328190604421,
+        "SINDY-fourier": 0.2054195629385488
+    },
+    "Halvorsen": {
+        "SINDY-poly": 0.14814712094029428,
+        "SINDY-fourier": 0.7650338079284132
+    },
+    "HastingsPowell": {
+        "SINDY-poly": 1.0,
+        "SINDY-fourier": 1.0
+    },
+    "HenonHeiles": {
+        "SINDY-poly": 0.022501194643593896,
+        "SINDY-fourier": 0.1458666393989797
+    },
+    "HindmarshRose": {
+        "SINDY-poly": 0.19752951664894705,
+        "SINDY-fourier": 0.2566381297820418
+    },
+    "Hopfield": {
+        "SINDY-poly": 0.33447205691978626,
+        "SINDY-fourier": 0.28319815188799347
+    },
+    "HyperBao": {
+        "SINDY-poly": 0.06864112475717443,
+        "SINDY-fourier": 0.7728646946079918
+    },
+    "HyperCai": {
+        "SINDY-poly": 0.0699762764954184,
+        "SINDY-fourier": 0.705918227384561
+    },
+    "HyperJha": {
+        "SINDY-poly": 0.11331373704094254,
+        "SINDY-fourier": 0.7409464663261995
+    },
+    "HyperLorenz": {
+        "SINDY-poly": 0.1720988743042272,
+        "SINDY-fourier": 0.7260830506282656
+    },
+    "HyperLu": {
+        "SINDY-poly": 0.14083982320740662,
+        "SINDY-fourier": 0.7414660247457046
+    },
+    "HyperPang": {
+        "SINDY-poly": 0.17503372485867877,
+        "SINDY-fourier": 0.7094481678755429
+    },
+    "HyperQi": {
+        "SINDY-poly": 0.09329644674152025,
+        "SINDY-fourier": 0.7719786402901947
+    },
+    "HyperRossler": {
+        "SINDY-poly": 0.034822344482314124,
+        "SINDY-fourier": 0.6553968527821464
+    },
+    "HyperWang": {
+        "SINDY-poly": 0.07038565272128784,
+        "SINDY-fourier": 0.710425898814387
+    },
+    "HyperXu": {
+        "SINDY-poly": 0.13322356382201267,
+        "SINDY-fourier": 0.647780146662833
+    },
+    "HyperYan": {
+        "SINDY-poly": 0.2036335866216536,
+        "SINDY-fourier": 0.6864624854207737
+    },
+    "HyperYangChen": {
+        "SINDY-poly": 0.13400546433746519,
+        "SINDY-fourier": 0.7555251494514309
+    },
+    "IkedaDelay": {
+        "SINDY-poly": 0.9732784120132522,
+        "SINDY-fourier": 0.9833994586739856
+    },
+    "IsothermalChemical": {
+        "SINDY-poly": 0.06609655905039417,
+        "SINDY-fourier": 0.0520093130628136
+    },
+    "ItikBanksTumor": {
+        "SINDY-poly": 0.825732867908539,
+        "SINDY-fourier": 1.0
+    },
+    "JerkCircuit": {
+        "SINDY-poly": 0.40389189475673903,
+        "SINDY-fourier": 0.42861643554776196
+    },
+    "KawczynskiStrizhak": {
+        "SINDY-poly": 0.11246381934566801,
+        "SINDY-fourier": 0.1817948602162353
+    },
+    "Laser": {
+        "SINDY-poly": 0.19658004291290415,
+        "SINDY-fourier": 0.3943955891450838
+    },
+    "LiuChen": {
+        "SINDY-poly": 0.791097581432735,
+        "SINDY-fourier": 0.9653131273061577
+    },
+    "Lorenz": {
+        "SINDY-poly": 0.20442291435618942,
+        "SINDY-fourier": 0.736432548561968
+    },
+    "Lorenz84": {
+        "SINDY-poly": 0.6444830951614655,
+        "SINDY-fourier": 0.6434800764453908
+    },
+    "Lorenz96": {
+        "SINDY-poly": 0.47703108348680756,
+        "SINDY-fourier": 0.7115746294743583
+    },
+    "LorenzBounded": {
+        "SINDY-poly": 0.12515879799337895,
+        "SINDY-fourier": 0.7464824845995234
+    },
+    "LorenzCoupled": {
+        "SINDY-poly": 0.15357204567355692,
+        "SINDY-fourier": 0.6641253590580297
+    },
+    "LorenzStenflo": {
+        "SINDY-poly": 0.21221667590812807,
+        "SINDY-fourier": 0.6795418175079915
+    },
+    "LuChen": {
+        "SINDY-poly": 0.4964104839730444,
+        "SINDY-fourier": 0.6870267345505845
+    },
+    "LuChenCheng": {
+        "SINDY-poly": 0.16034059773413212,
+        "SINDY-fourier": 0.7028945479158314
+    },
+    "MacArthur": {
+        "SINDY-poly": 0.7414126733466555,
+        "SINDY-fourier": 0.7123721604011928
+    },
+    "MackeyGlass": {
+        "SINDY-poly": 0.9889231818860905,
+        "SINDY-fourier": 0.9970829007231898
+    },
+    "MooreSpiegel": {
+        "SINDY-poly": 0.348477316779925,
+        "SINDY-fourier": 0.7020973170341233
+    },
+    "MultiChua": {
+        "SINDY-poly": 0.018220588357882084,
+        "SINDY-fourier": 0.6289394949484933
+    },
+    "NewtonLiepnik": {
+        "SINDY-poly": 0.19167326142631752,
+        "SINDY-fourier": 0.35751872421719627
+    },
+    "NoseHoover": {
+        "SINDY-poly": 0.11186310639413412,
+        "SINDY-fourier": 0.18685110307377178
+    },
+    "NuclearQuadrupole": {
+        "SINDY-poly": 0.20564181990239752,
+        "SINDY-fourier": 0.09439996286414817
+    },
+    "OscillatingFlow": {
+        "SINDY-poly": 0.6917812738428764,
+        "SINDY-fourier": 0.6942436114606969
+    },
+    "PanXuZhou": {
+        "SINDY-poly": 0.1864804965026547,
+        "SINDY-fourier": 0.7427134862379412
+    },
+    "PehlivanWei": {
+        "SINDY-poly": 0.18229505590299183,
+        "SINDY-fourier": 0.5678446319156966
+    },
+    "PiecewiseCircuit": {
+        "SINDY-poly": 0.9712518369832775,
+        "SINDY-fourier": 0.9620978602349294
+    },
+    "Qi": {
+        "SINDY-poly": 0.15527821797633162,
+        "SINDY-fourier": 0.4462495591529279
+    },
+    "QiChen": {
+        "SINDY-poly": 0.21322942344076062,
+        "SINDY-fourier": 0.7094371861536534
+    },
+    "RabinovichFabrikant": {
+        "SINDY-poly": 0.07826647932363108,
+        "SINDY-fourier": 0.18464712025934302
+    },
+    "RayleighBenard": {
+        "SINDY-poly": 0.15054128574080208,
+        "SINDY-fourier": 0.7208608491327163
+    },
+    "RikitakeDynamo": {
+        "SINDY-poly": 0.14867132433683247,
+        "SINDY-fourier": 0.3386480803940032
+    },
+    "Rossler": {
+        "SINDY-poly": 0.03242718060193381,
+        "SINDY-fourier": 0.6759815563305464
+    },
+    "Rucklidge": {
+        "SINDY-poly": 0.08010451066501567,
+        "SINDY-fourier": 0.5972706158847471
+    },
+    "Sakarya": {
+        "SINDY-poly": 0.2340966862855085,
+        "SINDY-fourier": 0.7377096502715097
+    },
+    "SaltonSea": {
+        "SINDY-poly": 0.29893225969269027,
+        "SINDY-fourier": 0.7423331603532108
+    },
+    "SanUmSrisuchinwong": {
+        "SINDY-poly": 0.1960335136302504,
+        "SINDY-fourier": 0.4160409127571421
+    },
+    "ScrollDelay": {
+        "SINDY-poly": 0.9933955080089453,
+        "SINDY-fourier": 0.9921855960355701
+    },
+    "ShimizuMorioka": {
+        "SINDY-poly": 0.06481796000017921,
+        "SINDY-fourier": 0.08197402319917205
+    },
+    "SprottA": {
+        "SINDY-poly": 0.1525163985836454,
+        "SINDY-fourier": 0.16668317977593505
+    },
+    "SprottB": {
+        "SINDY-poly": 0.14551237864256922,
+        "SINDY-fourier": 0.31669448215662155
+    },
+    "SprottC": {
+        "SINDY-poly": 0.14705714752355223,
+        "SINDY-fourier": 0.14508104508542044
+    },
+    "SprottD": {
+        "SINDY-poly": 0.05004941711599369,
+        "SINDY-fourier": 0.09550730020315706
+    },
+    "SprottDelay": {
+        "SINDY-poly": 0.9969424290037577,
+        "SINDY-fourier": 0.9971764052312764
+    },
+    "SprottE": {
+        "SINDY-poly": 0.16066803258614673,
+        "SINDY-fourier": 0.2970701815740344
+    },
+    "SprottF": {
+        "SINDY-poly": 0.35746455427768753,
+        "SINDY-fourier": 0.319267716469976
+    },
+    "SprottG": {
+        "SINDY-poly": 0.06457690580216381,
+        "SINDY-fourier": 0.11900073248365237
+    },
+    "SprottH": {
+        "SINDY-poly": 0.3682207785943393,
+        "SINDY-fourier": 0.39372269393094617
+    },
+    "SprottI": {
+        "SINDY-poly": 0.05380990958495822,
+        "SINDY-fourier": 1.0
+    },
+    "SprottJ": {
+        "SINDY-poly": 0.027573197676929884,
+        "SINDY-fourier": 0.7091258074029245
+    },
+    "SprottJerk": {
+        "SINDY-poly": 0.07348970362012355,
+        "SINDY-fourier": 0.09891097307213982
+    },
+    "SprottK": {
+        "SINDY-poly": 0.02893889468977158,
+        "SINDY-fourier": 0.09546636185759481
+    },
+    "SprottL": {
+        "SINDY-poly": 0.158818730394706,
+        "SINDY-fourier": 0.6996964801050791
+    },
+    "SprottM": {
+        "SINDY-poly": 0.043794421771261645,
+        "SINDY-fourier": 0.09252273242563656
+    },
+    "SprottMore": {
+        "SINDY-poly": 0.2424211837828032,
+        "SINDY-fourier": 0.15097590656352844
+    },
+    "SprottN": {
+        "SINDY-poly": 0.0284425262009804,
+        "SINDY-fourier": 0.6816761668349574
+    },
+    "SprottO": {
+        "SINDY-poly": 0.0594443391637617,
+        "SINDY-fourier": 0.1585119300682076
+    },
+    "SprottP": {
+        "SINDY-poly": 0.021266124586956706,
+        "SINDY-fourier": 0.027442148086823187
+    },
+    "SprottQ": {
+        "SINDY-poly": 0.026264292708056806,
+        "SINDY-fourier": 0.6218137703488679
+    },
+    "SprottR": {
+        "SINDY-poly": 0.06426668905421591,
+        "SINDY-fourier": 0.666467872229352
+    },
+    "SprottS": {
+        "SINDY-poly": 0.019847775311820047,
+        "SINDY-fourier": 0.06272927400697098
+    },
+    "SprottTorus": {
+        "SINDY-poly": 0.4105847014162984,
+        "SINDY-fourier": 0.323236749073259
+    },
+    "StickSlipOscillator": {
+        "SINDY-poly": 0.10897892847506105,
+        "SINDY-fourier": 0.09402489460214017
+    },
+    "SwingingAtwood": {
+        "SINDY-poly": 0.18559726502190352,
+        "SINDY-fourier": 0.5475349464701433
+    },
+    "Thomas": {
+        "SINDY-poly": 0.9021143036123768,
+        "SINDY-fourier": 0.5553841408467765
+    },
+    "ThomasLabyrinth": {
+        "SINDY-poly": 0.9593891520732882,
+        "SINDY-fourier": 0.5276564686904375
+    },
+    "Torus": {
+        "SINDY-poly": 0.9788929124307475,
+        "SINDY-fourier": 0.9887852167488783
+    },
+    "Tsucs2": {
+        "SINDY-poly": 0.1477591086460666,
+        "SINDY-fourier": 0.7913027494571856
+    },
+    "TurchinHanski": {
+        "SINDY-poly": 0.3985839682871814,
+        "SINDY-fourier": 0.4947420262747945
+    },
+    "VallisElNino": {
+        "SINDY-poly": 0.2015528742343393,
+        "SINDY-fourier": 0.4617871463534376
+    },
+    "VossDelay": {
+        "SINDY-poly": 0.8132952069894981,
+        "SINDY-fourier": 0.9348137565447634
+    },
+    "WangSun": {
+        "SINDY-poly": 0.5625383060254991,
+        "SINDY-fourier": 1.0
+    },
+    "WindmiReduced": {
+        "SINDY-poly": 0.44037231881795946,
+        "SINDY-fourier": 0.3453571078604518
+    },
+    "YuWang": {
+        "SINDY-poly": 0.4455779269129113,
+        "SINDY-fourier": 0.5327377978135484
+    },
+    "YuWang2": {
+        "SINDY-poly": 0.14235046214914793,
+        "SINDY-fourier": 0.4471944412560697
+    },
+    "ZhouChen": {
+        "SINDY-poly": 0.33754620763626325,
+        "SINDY-fourier": 0.6780447556232487
+    }
+}
