@@ -10,6 +10,7 @@ dysts/data/test_multivariate__pts_per_period_100__periods_60.json*
 dysts/data/train_multivariate__pts_per_period_100__periods_60.json*
 train_multivariate__pts_per_period_100__periods_60.json*
 test_multivariate__pts_per_period_100__periods_60.json*
+large_multivariate__pts_per_period_100__periods_100.json
 *__periods_60*
 *__periods_100*
 all_outputs.json*

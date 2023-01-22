@@ -46,7 +46,6 @@ class TimeSeriesDataset:
             elif ext == ".gz":
                 with gzip.open(datapath, 'rt', encoding="utf-8") as file:
                     self.dataset = json.load(file)
-                #self.dataset = json.loads(gzip.open(datapath, mode='r').read())
             else:
                 raise ValueError("Unrecognized file extension")
         if data is not None:
