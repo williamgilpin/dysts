@@ -19,6 +19,7 @@ import collections
 
 import os
 import sys
+import gzip
 
 curr_path = sys.path[0]
 
@@ -169,14 +170,16 @@ class BaseDyn:
         period = 12
         granval = {"coarse": 15, "fine": 100}[granularity]
         dataset_name = subsets.split("_")[0]
-        data_path = f"{dataset_name}_multivariate__pts_per_period_{granval}__periods_{period}.json"
+        data_path = f"{dataset_name}_multivariate__pts_per_period_{granval}__periods_{period}.json.gz"
         if noise:
             name_parts = list(os.path.splitext(data_path))
             data_path = "".join(name_parts[:-1] + ["_noise"] + [name_parts[-1]])
             
         cwd = os.path.dirname(os.path.realpath(__file__))
         data_path = os.path.join(cwd, "data", data_path)
-        with open(data_path, "r") as file:
+        # with open(data_path, "r") as file:
+        #     dataset = json.load(file)
+        with gzip.open(data_path, 'rt', encoding="utf-8") as file:
             dataset = json.load(file)
             
         tpts, sol = np.array(dataset[self.name]['time']), np.array(dataset[self.name]['values'])
@@ -188,6 +191,14 @@ class BaseDyn:
             return tpts, sol
         else:
             return sol
+
+    def make_trajectory(self, *args, **kwargs):
+        """Make a trajectory for the dynamical system"""
+        raise NotImplementedError
+
+    def sample(self, *args,  **kwargs):
+        """Sample a trajectory for the dynamical system via numerical integration"""
+        return self.make_trajectory(*args, **kwargs)
 
 
 from scipy.integrate import solve_ivp

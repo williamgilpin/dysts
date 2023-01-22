@@ -4,14 +4,15 @@ __pycache__/
 *$py.class
 
 # Datasets too large for GitHub
-results_test_univariate__pts_per_period_100__periods_12_granularity_sweep.json
-results_test_univariate__pts_per_period_100__periods_12_noise_sweep.json
-dysts/data/test_multivariate__pts_per_period_100__periods_60.json
-dysts/data/train_multivariate__pts_per_period_100__periods_60.json
-train_multivariate__pts_per_period_100__periods_60.json
-test_multivariate__pts_per_period_100__periods_60.json
+results_test_univariate__pts_per_period_100__periods_12_granularity_sweep.json*
+results_test_univariate__pts_per_period_100__periods_12_noise_sweep.json*
+dysts/data/test_multivariate__pts_per_period_100__periods_60.json*
+dysts/data/train_multivariate__pts_per_period_100__periods_60.json*
+train_multivariate__pts_per_period_100__periods_60.json*
+test_multivariate__pts_per_period_100__periods_60.json*
 *__periods_60*
-all_outputs.json
+*__periods_100*
+all_outputs.json*
 
 # C extensions
 *.so
