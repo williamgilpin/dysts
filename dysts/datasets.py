@@ -68,6 +68,8 @@ class TimeSeriesDataset:
                     for item in self.dataset
                 ]
             )
+        else:
+            self.max_d = 1
 
         for key in self.dataset:
             self.dataset[key]["values"] = np.array(self.dataset[key]["values"])
@@ -166,6 +168,12 @@ class TimeSeriesDataset:
 def featurize_timeseries(dataset):
     """
     Extract features from a TimeSeriesDataset
+
+    Args:
+        dataset (TimeSeriesDataset): a dataset of time series
+
+    Returns:
+        extracted_features (pd.DataFrame): a dataframe of extracted features
     """
     if not _has_tsfresh:
         raise ImportError("Install the package tsfresh in order to use this function.")
