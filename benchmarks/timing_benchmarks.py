@@ -17,6 +17,9 @@ import darts.models
 
 import dysts.metrics
 
+from resources.node import NODEForecast
+from resources.esn import ESNForecast
+
 cwd = os.path.dirname(os.path.realpath(__file__))
 # cwd = os.getcwd()
 input_path = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json"
@@ -26,6 +29,9 @@ output_path = cwd + "/results/results_" + dataname + "_timing.json"
 dataname = dataname.replace("test", "train" )
 hyperparameter_path = cwd + "/hyperparameters/hyperparameters_multivariate_" + dataname + ".json"
 hyperparameter_path = cwd + "/hyperparameters/hyperparameters_multivariate_train_multivariate__pts_per_period_100__periods_12.json"
+equation_data = load_file(input_path)
+
+SEED = 0
 
 ## No GPU for fair comparison
 # import torch
@@ -49,7 +55,14 @@ hyperparameter_path = cwd + "/hyperparameters/hyperparameters_multivariate_train
 # model_static_dict = {"pl_trainer_kwargs" : pl_trainer_kwargs}
 model_static_dict = {}
 
-equation_data = load_file(input_path)
+
+
+
+input_path_train = os.path.dirname(cwd)  + "/dysts/data/train_multivariate__pts_per_period_100__periods_12.json"
+input_path_test = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json"
+
+equation_data_train = load_file(input_path_train)
+equation_data_test = load_file(input_path_test)
 
 with open(hyperparameter_path, "r") as file:
     all_hyperparameters = json.load(file)
@@ -60,6 +73,8 @@ try:
 except FileNotFoundError:
     all_results = dict()
     
+from dysts.metrics import smape
+score_func = smape
 
 for equation_name in equation_data.dataset:
     
@@ -93,7 +108,6 @@ for equation_name in equation_data.dataset:
         try:
             pc = dict()
             pc.update(all_hyperparameters[equation_name][model_name])
-            pc.update({"pl_trainer_kwargs": [gpu_params]})
             model = getattr(darts.models, model_name)(**pc)
         except:
             model = getattr(darts.models, model_name)(**all_hyperparameters[equation_name][model_name])
@@ -124,6 +138,12 @@ for equation_name in equation_data.dataset:
 
 
 
+    train_data = np.copy(np.array(equation_data_train.dataset[equation_name]["values"]))
+    split_point = int(5 / 6 * len(train_data))
+    y_train, y_val = train_data[:split_point], train_data[split_point:]
+
+    t_train, sol_train = np.arange(len(y_train)), y_train
+    t_test, sol_test = np.arange(len(y_val)), y_val
 
     ## Run node timing benchmarks
     tau_vals = np.array([2, 5, 15, 30, 60, 120])
@@ -167,6 +187,7 @@ for equation_name in equation_data.dataset:
 
 
     ## run esn benchmarks
+    leak_rates = np.arange(1, 12) * 0.1
     all_scores = list()
     for leak_rate in leak_rates:
         try:
