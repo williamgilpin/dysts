@@ -22,13 +22,12 @@ from resources.esn import ESNForecast
 
 cwd = os.path.dirname(os.path.realpath(__file__))
 # cwd = os.getcwd()
-input_path = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json"
+input_path = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json.gz"
 
 dataname = os.path.splitext(os.path.basename(os.path.split(input_path)[-1]))[0]
 output_path = cwd + "/results/results_" + dataname + "_timing.json"
 dataname = dataname.replace("test", "train" )
 hyperparameter_path = cwd + "/hyperparameters/hyperparameters_multivariate_" + dataname + ".json"
-hyperparameter_path = cwd + "/hyperparameters/hyperparameters_multivariate_train_multivariate__pts_per_period_100__periods_12.json"
 equation_data = load_file(input_path)
 
 SEED = 0
@@ -58,8 +57,8 @@ model_static_dict = {}
 
 
 
-input_path_train = os.path.dirname(cwd)  + "/dysts/data/train_multivariate__pts_per_period_100__periods_12.json"
-input_path_test = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json"
+input_path_train = os.path.dirname(cwd)  + "/dysts/data/train_multivariate__pts_per_period_100__periods_12.json.gz"
+input_path_test = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json.gz"
 
 equation_data_train = load_file(input_path_train)
 equation_data_test = load_file(input_path_test)
