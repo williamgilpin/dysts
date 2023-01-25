@@ -83,9 +83,6 @@ for equation_name in equation_data.dataset:
     split_point = int(5 / 6 * len(train_data))
     y_train, y_val = train_data[:split_point], train_data[split_point:]
     y_train_ts, y_test_ts = TimeSeries.from_values(train_data).split_before(split_point)
-    
-    all_results[equation_name]["values"] = np.squeeze(y_val)[:-1].tolist()
-    
 
     ## Run darts timing benchmarks
     for model_name in all_hyperparameters[equation_name].keys():
