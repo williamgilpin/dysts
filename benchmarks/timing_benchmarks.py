@@ -27,8 +27,9 @@ input_path = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_per
 dataname = os.path.splitext(os.path.basename(os.path.split(input_path)[-1]))[0]
 output_path = cwd + "/results/results_" + dataname + "_timing.json"
 dataname = dataname.replace("test", "train" )
-hyperparameter_path = cwd + "/hyperparameters/hyperparameters_multivariate__pts_per_period_100__periods_12.json"
+hyperparameter_path = cwd + "/hyperparameters/hyperparameters_multivariate_train_multivariate__pts_per_period_100__periods_12.json"
 equation_data = load_file(input_path)
+
 
 SEED = 0
 
