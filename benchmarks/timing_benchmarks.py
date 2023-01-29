@@ -79,6 +79,9 @@ for equation_name in equation_data.dataset:
 
     if equation_name not in all_results.keys():
         all_results[equation_name] = dict()
+    else:
+        print(f"Entry for {equation_name} found, skipping it.")
+        continue
     
     split_point = int(5 / 6 * len(train_data))
     y_train, y_val = train_data[:split_point], train_data[split_point:]
@@ -86,6 +89,7 @@ for equation_name in equation_data.dataset:
 
     ## Run darts timing benchmarks
     for model_name in all_hyperparameters[equation_name].keys():
+
         all_hyperparameters[equation_name][model_name].pop("pl_trainer_kwargs", None)
         if model_name in all_results[equation_name].keys():
             continue
@@ -127,9 +131,6 @@ for equation_name in equation_data.dataset:
         ## Update results dictionary with metrics, then save to JSON file.
         all_results[equation_name][model_name]["Train time"] = fit_time
         all_results[equation_name][model_name]["Inference time"] = predict_time
-        with open(output_path, 'w') as f:
-            json.dump(all_results, f, indent=4)   
-
 
 
     train_data = np.copy(np.array(equation_data_train.dataset[equation_name]["values"]))
@@ -202,6 +203,19 @@ for equation_name in equation_data.dataset:
     y_test, y_test_val = test_data[:split_point], test_data[split_point:]
 
     model = ESNForecast(test_data.shape[-1], leak_rate=leak_rate_opt, random_state=SEED)
+    time_start = time.perf_counter()
     model.fit(y_test)
+    time_end = time.perf_counter()
+    fit_time = str(time_end - time_start)
+
+    time_start = time.perf_counter()
     y_test_pred_val = model.predict(200)
-    score_val = score_func(y_test_val, y_test_pred_val)
+    time_end = time.perf_counter()
+    predict_time = str(time_end - time_start)
+
+    all_results[equation_name]["ESN"] = dict()
+    all_results[equation_name]["ESN"]["Train time"] = fit_time
+    all_results[equation_name]["ESN"]["Inference time"] = predict_time
+
+    with open(output_path, 'w') as f:
+        json.dump(all_results, f, indent=4)
