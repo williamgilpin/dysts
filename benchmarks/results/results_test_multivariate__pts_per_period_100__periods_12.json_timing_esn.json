@@ -1,0 +1,800 @@
+{
+    "Aizawa": {
+        "ESN": {
+            "Train time": "0.2606453727930784",
+            "Inference time": "0.036881232634186745"
+        }
+    },
+    "AnishchenkoAstakhov": {
+        "ESN": {
+            "Train time": "0.2595623768866062",
+            "Inference time": "0.03724103979766369"
+        }
+    },
+    "Arneodo": {
+        "ESN": {
+            "Train time": "0.25841807574033737",
+            "Inference time": "0.036970220506191254"
+        }
+    },
+    "ArnoldBeltramiChildress": {
+        "ESN": {
+            "Train time": "0.261182252317667",
+            "Inference time": "0.03706331364810467"
+        }
+    },
+    "ArnoldWeb": {
+        "ESN": {
+            "Train time": "0.26283675245940685",
+            "Inference time": "0.037166617810726166"
+        }
+    },
+    "AtmosphericRegime": {
+        "ESN": {
+            "Train time": "0.25796586461365223",
+            "Inference time": "0.03671906888484955"
+        }
+    },
+    "BeerRNN": {
+        "ESN": {
+            "Train time": "0.26084310561418533",
+            "Inference time": "0.0367903895676136"
+        }
+    },
+    "BelousovZhabotinsky": {
+        "ESN": {
+            "Train time": "0.258630083873868",
+            "Inference time": "0.036752309650182724"
+        }
+    },
+    "BickleyJet": {
+        "ESN": {
+            "Train time": "0.26601242274045944",
+            "Inference time": "0.036516616120934486"
+        }
+    },
+    "Blasius": {
+        "ESN": {
+            "Train time": "0.2616915665566921",
+            "Inference time": "0.03731880336999893"
+        }
+    },
+    "BlinkingRotlet": {
+        "ESN": {
+            "Train time": "0.2570431958884001",
+            "Inference time": "0.03708228841423988"
+        }
+    },
+    "BlinkingVortex": {
+        "ESN": {
+            "Train time": "0.26038043200969696",
+            "Inference time": "0.03715797886252403"
+        }
+    },
+    "Bouali": {
+        "ESN": {
+            "Train time": "0.2577205114066601",
+            "Inference time": "0.037051890045404434"
+        }
+    },
+    "Bouali2": {
+        "ESN": {
+            "Train time": "0.26551881432533264",
+            "Inference time": "0.037011416628956795"
+        }
+    },
+    "BurkeShaw": {
+        "ESN": {
+            "Train time": "0.26069263741374016",
+            "Inference time": "0.03712187148630619"
+        }
+    },
+    "CaTwoPlus": {
+        "ESN": {
+            "Train time": "0.26903238892555237",
+            "Inference time": "0.03668917901813984"
+        }
+    },
+    "CaTwoPlusQuasiperiodic": {
+        "ESN": {
+            "Train time": "0.25842568650841713",
+            "Inference time": "0.03686804510653019"
+        }
+    },
+    "CellCycle": {
+        "ESN": {
+            "Train time": "0.2621187102049589",
+            "Inference time": "0.037209076806902885"
+        }
+    },
+    "CellularNeuralNetwork": {
+        "ESN": {
+            "Train time": "0.26781428791582584",
+            "Inference time": "0.03714274242520332"
+        }
+    },
+    "Chen": {
+        "ESN": {
+            "Train time": "0.2612118758261204",
+            "Inference time": "0.03710734657943249"
+        }
+    },
+    "ChenLee": {
+        "ESN": {
+            "Train time": "0.25942965410649776",
+            "Inference time": "0.03629763238132"
+        }
+    },
+    "Chua": {
+        "ESN": {
+            "Train time": "0.2607241068035364",
+            "Inference time": "0.03652528114616871"
+        }
+    },
+    "CircadianRhythm": {
+        "ESN": {
+            "Train time": "0.26124870404601097",
+            "Inference time": "0.037039728835225105"
+        }
+    },
+    "CoevolvingPredatorPrey": {
+        "ESN": {
+            "Train time": "0.26167959347367287",
+            "Inference time": "0.03701328858733177"
+        }
+    },
+    "Colpitts": {
+        "ESN": {
+            "Train time": "0.26106625236570835",
+            "Inference time": "0.03697784245014191"
+        }
+    },
+    "Coullet": {
+        "ESN": {
+            "Train time": "0.26684480533003807",
+            "Inference time": "0.03656367398798466"
+        }
+    },
+    "Dadras": {
+        "ESN": {
+            "Train time": "0.2661146614700556",
+            "Inference time": "0.037693409249186516"
+        }
+    },
+    "DequanLi": {
+        "ESN": {
+            "Train time": "0.25727910175919533",
+            "Inference time": "0.03666207194328308"
+        }
+    },
+    "DoubleGyre": {
+        "ESN": {
+            "Train time": "0.2610520552843809",
+            "Inference time": "0.03708590008318424"
+        }
+    },
+    "DoublePendulum": {
+        "ESN": {
+            "Train time": "0.2633263114839792",
+            "Inference time": "0.03736138716340065"
+        }
+    },
+    "Duffing": {
+        "ESN": {
+            "Train time": "0.2615478876978159",
+            "Inference time": "0.03687240928411484"
+        }
+    },
+    "ExcitableCell": {
+        "ESN": {
+            "Train time": "0.2676661890000105",
+            "Inference time": "0.03726767189800739"
+        }
+    },
+    "Finance": {
+        "ESN": {
+            "Train time": "0.2605333384126425",
+            "Inference time": "0.03725269250571728"
+        }
+    },
+    "FluidTrampoline": {
+        "ESN": {
+            "Train time": "0.26252787932753563",
+            "Inference time": "0.03683917596936226"
+        }
+    },
+    "ForcedBrusselator": {
+        "ESN": {
+            "Train time": "0.2652393076568842",
+            "Inference time": "0.036995962262153625"
+        }
+    },
+    "ForcedFitzHughNagumo": {
+        "ESN": {
+            "Train time": "0.26771560311317444",
+            "Inference time": "0.03692510910332203"
+        }
+    },
+    "ForcedVanDerPol": {
+        "ESN": {
+            "Train time": "0.2605716437101364",
+            "Inference time": "0.03690974786877632"
+        }
+    },
+    "GenesioTesi": {
+        "ESN": {
+            "Train time": "0.2657125163823366",
+            "Inference time": "0.03704356960952282"
+        }
+    },
+    "GuckenheimerHolmes": {
+        "ESN": {
+            "Train time": "0.26001824252307415",
+            "Inference time": "0.03693166933953762"
+        }
+    },
+    "Hadley": {
+        "ESN": {
+            "Train time": "0.2668682411313057",
+            "Inference time": "0.03732404299080372"
+        }
+    },
+    "Halvorsen": {
+        "ESN": {
+            "Train time": "0.27115960977971554",
+            "Inference time": "0.03696339577436447"
+        }
+    },
+    "HastingsPowell": {
+        "ESN": {
+            "Train time": "0.2600704599171877",
+            "Inference time": "0.037397099658846855"
+        }
+    },
+    "HenonHeiles": {
+        "ESN": {
+            "Train time": "0.2683422639966011",
+            "Inference time": "0.03698199987411499"
+        }
+    },
+    "HindmarshRose": {
+        "ESN": {
+            "Train time": "0.2588255498558283",
+            "Inference time": "0.03680524788796902"
+        }
+    },
+    "Hopfield": {
+        "ESN": {
+            "Train time": "0.26288082264363766",
+            "Inference time": "0.03720719367265701"
+        }
+    },
+    "HyperBao": {
+        "ESN": {
+            "Train time": "0.26475460827350616",
+            "Inference time": "0.03707076609134674"
+        }
+    },
+    "HyperCai": {
+        "ESN": {
+            "Train time": "0.26275806315243244",
+            "Inference time": "0.036422839388251305"
+        }
+    },
+    "HyperJha": {
+        "ESN": {
+            "Train time": "0.261941809207201",
+            "Inference time": "0.036567552015185356"
+        }
+    },
+    "HyperLorenz": {
+        "ESN": {
+            "Train time": "0.2616449911147356",
+            "Inference time": "0.037306761369109154"
+        }
+    },
+    "HyperLu": {
+        "ESN": {
+            "Train time": "0.2617961950600147",
+            "Inference time": "0.036988453939557076"
+        }
+    },
+    "HyperPang": {
+        "ESN": {
+            "Train time": "0.2597903348505497",
+            "Inference time": "0.03709510341286659"
+        }
+    },
+    "HyperQi": {
+        "ESN": {
+            "Train time": "0.26048352755606174",
+            "Inference time": "0.03659464232623577"
+        }
+    },
+    "HyperRossler": {
+        "ESN": {
+            "Train time": "0.257838262245059",
+            "Inference time": "0.03640235960483551"
+        }
+    },
+    "HyperWang": {
+        "ESN": {
+            "Train time": "0.26263307966291904",
+            "Inference time": "0.03658763878047466"
+        }
+    },
+    "HyperXu": {
+        "ESN": {
+            "Train time": "0.2739781178534031",
+            "Inference time": "0.037451593205332756"
+        }
+    },
+    "HyperYan": {
+        "ESN": {
+            "Train time": "0.26521764881908894",
+            "Inference time": "0.03730176202952862"
+        }
+    },
+    "HyperYangChen": {
+        "ESN": {
+            "Train time": "0.26898476108908653",
+            "Inference time": "0.03626570291817188"
+        }
+    },
+    "IkedaDelay": {
+        "ESN": {
+            "Train time": "0.2653789911419153",
+            "Inference time": "0.03774532489478588"
+        }
+    },
+    "IsothermalChemical": {
+        "ESN": {
+            "Train time": "0.260431669652462",
+            "Inference time": "0.036887332797050476"
+        }
+    },
+    "ItikBanksTumor": {
+        "ESN": {
+            "Train time": "0.27701879665255547",
+            "Inference time": "0.036966901272535324"
+        }
+    },
+    "JerkCircuit": {
+        "ESN": {
+            "Train time": "0.26192403584718704",
+            "Inference time": "0.03700413182377815"
+        }
+    },
+    "KawczynskiStrizhak": {
+        "ESN": {
+            "Train time": "0.2730300948023796",
+            "Inference time": "0.03730478696525097"
+        }
+    },
+    "Laser": {
+        "ESN": {
+            "Train time": "0.26350136287510395",
+            "Inference time": "0.03709429129958153"
+        }
+    },
+    "LidDrivenCavityFlow": {
+        "ESN": {
+            "Train time": "0.2680066395550966",
+            "Inference time": "0.03693596459925175"
+        }
+    },
+    "LiuChen": {
+        "ESN": {
+            "Train time": "0.26583151146769524",
+            "Inference time": "0.03715985268354416"
+        }
+    },
+    "Lorenz": {
+        "ESN": {
+            "Train time": "0.2630521059036255",
+            "Inference time": "0.03709595464169979"
+        }
+    },
+    "Lorenz84": {
+        "ESN": {
+            "Train time": "0.2646447904407978",
+            "Inference time": "0.03762853518128395"
+        }
+    },
+    "Lorenz96": {
+        "ESN": {
+            "Train time": "0.2683168947696686",
+            "Inference time": "0.03712570108473301"
+        }
+    },
+    "LorenzBounded": {
+        "ESN": {
+            "Train time": "0.2599282432347536",
+            "Inference time": "0.036832258105278015"
+        }
+    },
+    "LorenzCoupled": {
+        "ESN": {
+            "Train time": "0.2632528133690357",
+            "Inference time": "0.03707040473818779"
+        }
+    },
+    "LorenzStenflo": {
+        "ESN": {
+            "Train time": "0.26248805597424507",
+            "Inference time": "0.03732411377131939"
+        }
+    },
+    "LuChen": {
+        "ESN": {
+            "Train time": "0.2654953096061945",
+            "Inference time": "0.03722546808421612"
+        }
+    },
+    "LuChenCheng": {
+        "ESN": {
+            "Train time": "0.26288745924830437",
+            "Inference time": "0.03688119165599346"
+        }
+    },
+    "MacArthur": {
+        "ESN": {
+            "Train time": "0.2634739503264427",
+            "Inference time": "0.037207234650850296"
+        }
+    },
+    "MackeyGlass": {
+        "ESN": {
+            "Train time": "0.26433609426021576",
+            "Inference time": "0.03743734396994114"
+        }
+    },
+    "MooreSpiegel": {
+        "ESN": {
+            "Train time": "0.2697793412953615",
+            "Inference time": "0.03671828284859657"
+        }
+    },
+    "MultiChua": {
+        "ESN": {
+            "Train time": "0.2700115069746971",
+            "Inference time": "0.03702756389975548"
+        }
+    },
+    "NewtonLiepnik": {
+        "ESN": {
+            "Train time": "0.2600238770246506",
+            "Inference time": "0.03741426207125187"
+        }
+    },
+    "NoseHoover": {
+        "ESN": {
+            "Train time": "0.26072447560727596",
+            "Inference time": "0.03718188405036926"
+        }
+    },
+    "NuclearQuadrupole": {
+        "ESN": {
+            "Train time": "0.2624137196689844",
+            "Inference time": "0.03745037876069546"
+        }
+    },
+    "OscillatingFlow": {
+        "ESN": {
+            "Train time": "0.2745358031243086",
+            "Inference time": "0.04074736870825291"
+        }
+    },
+    "PanXuZhou": {
+        "ESN": {
+            "Train time": "0.26354070007801056",
+            "Inference time": "0.03680024482309818"
+        }
+    },
+    "PehlivanWei": {
+        "ESN": {
+            "Train time": "0.27185344137251377",
+            "Inference time": "0.03757360018789768"
+        }
+    },
+    "PiecewiseCircuit": {
+        "ESN": {
+            "Train time": "0.2670702952891588",
+            "Inference time": "0.03792763501405716"
+        }
+    },
+    "Qi": {
+        "ESN": {
+            "Train time": "0.26213782094419",
+            "Inference time": "0.03766685537993908"
+        }
+    },
+    "QiChen": {
+        "ESN": {
+            "Train time": "0.27596497163176537",
+            "Inference time": "0.03691226616501808"
+        }
+    },
+    "RabinovichFabrikant": {
+        "ESN": {
+            "Train time": "0.26315717957913876",
+            "Inference time": "0.036744872108101845"
+        }
+    },
+    "RayleighBenard": {
+        "ESN": {
+            "Train time": "0.26284473203122616",
+            "Inference time": "0.03638106770813465"
+        }
+    },
+    "RikitakeDynamo": {
+        "ESN": {
+            "Train time": "0.2617854215204716",
+            "Inference time": "0.03717109374701977"
+        }
+    },
+    "Rossler": {
+        "ESN": {
+            "Train time": "0.2641282733529806",
+            "Inference time": "0.036839770153164864"
+        }
+    },
+    "Rucklidge": {
+        "ESN": {
+            "Train time": "0.26334718614816666",
+            "Inference time": "0.03717547096312046"
+        }
+    },
+    "Sakarya": {
+        "ESN": {
+            "Train time": "0.2796650603413582",
+            "Inference time": "0.03684318624436855"
+        }
+    },
+    "SaltonSea": {
+        "ESN": {
+            "Train time": "0.2622125130146742",
+            "Inference time": "0.03676988743245602"
+        }
+    },
+    "SanUmSrisuchinwong": {
+        "ESN": {
+            "Train time": "0.27159287221729755",
+            "Inference time": "0.036841532215476036"
+        }
+    },
+    "ScrollDelay": {
+        "ESN": {
+            "Train time": "0.26632679998874664",
+            "Inference time": "0.0374913364648819"
+        }
+    },
+    "ShimizuMorioka": {
+        "ESN": {
+            "Train time": "0.2597272899001837",
+            "Inference time": "0.03700590133666992"
+        }
+    },
+    "SprottA": {
+        "ESN": {
+            "Train time": "0.26213955506682396",
+            "Inference time": "0.03706757910549641"
+        }
+    },
+    "SprottB": {
+        "ESN": {
+            "Train time": "0.26542438194155693",
+            "Inference time": "0.03722324036061764"
+        }
+    },
+    "SprottC": {
+        "ESN": {
+            "Train time": "0.26336782425642014",
+            "Inference time": "0.03711157292127609"
+        }
+    },
+    "SprottD": {
+        "ESN": {
+            "Train time": "0.2631075456738472",
+            "Inference time": "0.03691188618540764"
+        }
+    },
+    "SprottDelay": {
+        "ESN": {
+            "Train time": "0.26125670596957207",
+            "Inference time": "0.03729837387800217"
+        }
+    },
+    "SprottE": {
+        "ESN": {
+            "Train time": "0.2638006992638111",
+            "Inference time": "0.03759780526161194"
+        }
+    },
+    "SprottF": {
+        "ESN": {
+            "Train time": "0.2621333636343479",
+            "Inference time": "0.03731355257332325"
+        }
+    },
+    "SprottG": {
+        "ESN": {
+            "Train time": "0.27655010111629963",
+            "Inference time": "0.03691679425537586"
+        }
+    },
+    "SprottH": {
+        "ESN": {
+            "Train time": "0.2644542194902897",
+            "Inference time": "0.03716776706278324"
+        }
+    },
+    "SprottI": {
+        "ESN": {
+            "Train time": "0.26286444813013077",
+            "Inference time": "0.03700919821858406"
+        }
+    },
+    "SprottJ": {
+        "ESN": {
+            "Train time": "0.26287118159234524",
+            "Inference time": "0.03691393882036209"
+        }
+    },
+    "SprottJerk": {
+        "ESN": {
+            "Train time": "0.2652899790555239",
+            "Inference time": "0.037341052666306496"
+        }
+    },
+    "SprottK": {
+        "ESN": {
+            "Train time": "0.26304162107408047",
+            "Inference time": "0.037000901997089386"
+        }
+    },
+    "SprottL": {
+        "ESN": {
+            "Train time": "0.26445508748292923",
+            "Inference time": "0.037079380825161934"
+        }
+    },
+    "SprottM": {
+        "ESN": {
+            "Train time": "0.2637923900038004",
+            "Inference time": "0.03743521310389042"
+        }
+    },
+    "SprottMore": {
+        "ESN": {
+            "Train time": "0.2857360914349556",
+            "Inference time": "0.03692752681672573"
+        }
+    },
+    "SprottN": {
+        "ESN": {
+            "Train time": "0.27072160691022873",
+            "Inference time": "0.03762737289071083"
+        }
+    },
+    "SprottO": {
+        "ESN": {
+            "Train time": "0.26333764381706715",
+            "Inference time": "0.03694525174796581"
+        }
+    },
+    "SprottP": {
+        "ESN": {
+            "Train time": "0.26441453769803047",
+            "Inference time": "0.037034930661320686"
+        }
+    },
+    "SprottQ": {
+        "ESN": {
+            "Train time": "0.26660059951245785",
+            "Inference time": "0.0366410780698061"
+        }
+    },
+    "SprottR": {
+        "ESN": {
+            "Train time": "0.26482602395117283",
+            "Inference time": "0.037506794556975365"
+        }
+    },
+    "SprottS": {
+        "ESN": {
+            "Train time": "0.2644010726362467",
+            "Inference time": "0.03748937323689461"
+        }
+    },
+    "SprottTorus": {
+        "ESN": {
+            "Train time": "0.2646917402744293",
+            "Inference time": "0.03709817864000797"
+        }
+    },
+    "StickSlipOscillator": {
+        "ESN": {
+            "Train time": "0.26357509940862656",
+            "Inference time": "0.03691527433693409"
+        }
+    },
+    "SwingingAtwood": {
+        "ESN": {
+            "Train time": "0.2691592201590538",
+            "Inference time": "0.03729584068059921"
+        }
+    },
+    "Thomas": {
+        "ESN": {
+            "Train time": "0.26512210816144943",
+            "Inference time": "0.0373899657279253"
+        }
+    },
+    "ThomasLabyrinth": {
+        "ESN": {
+            "Train time": "0.2819352950900793",
+            "Inference time": "0.03729318641126156"
+        }
+    },
+    "Torus": {
+        "ESN": {
+            "Train time": "0.26441157422959805",
+            "Inference time": "0.03749888204038143"
+        }
+    },
+    "Tsucs2": {
+        "ESN": {
+            "Train time": "0.2613746430724859",
+            "Inference time": "0.036619096994400024"
+        }
+    },
+    "TurchinHanski": {
+        "ESN": {
+            "Train time": "0.26274419762194157",
+            "Inference time": "0.036916397511959076"
+        }
+    },
+    "VallisElNino": {
+        "ESN": {
+            "Train time": "0.2643699161708355",
+            "Inference time": "0.036876872181892395"
+        }
+    },
+    "VossDelay": {
+        "ESN": {
+            "Train time": "0.2651692256331444",
+            "Inference time": "0.037591638043522835"
+        }
+    },
+    "WangSun": {
+        "ESN": {
+            "Train time": "0.2617612984031439",
+            "Inference time": "0.03680543042719364"
+        }
+    },
+    "WindmiReduced": {
+        "ESN": {
+            "Train time": "0.26255630142986774",
+            "Inference time": "0.03635929897427559"
+        }
+    },
+    "YuWang": {
+        "ESN": {
+            "Train time": "0.2660053689032793",
+            "Inference time": "0.03696978837251663"
+        }
+    },
+    "YuWang2": {
+        "ESN": {
+            "Train time": "0.2632821574807167",
+            "Inference time": "0.03668038360774517"
+        }
+    },
+    "ZhouChen": {
+        "ESN": {
+            "Train time": "0.2638183869421482",
+            "Inference time": "0.03650357201695442"
+        }
+    }
+}
