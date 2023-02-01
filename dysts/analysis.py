@@ -118,16 +118,18 @@ def compute_timestep(
 
 
 def find_lyapunov_exponents(
-    model, traj_length, pts_per_period=500, tol=1e-8, min_tpts=10
+    model, traj_length, pts_per_period=500, tol=1e-8, min_tpts=10, **kwargs
 ):
     """
-    Given a dynamical system, compute its spectrum of Lyapunov exponents
-
+    Given a dynamical system, compute its spectrum of Lyapunov exponents.
     Args:
-        model (callable): the right hand side of a differential equation, in format func(X, t)
+        model (callable): the right hand side of a differential equation, in format 
+            func(X, t)
         traj_length (int): the length of each trajectory used to calulate Lyapunov
             exponents
         pts_per_period (int): the sampling density of the trajectory
+        kwargs: additional keyword arguments to pass to the model's make_trajectory 
+            method
 
     Returns:
         final_lyap (ndarray): A list of computed Lyapunov exponents
@@ -136,11 +138,17 @@ def find_lyapunov_exponents(
         Christiansen & Rugh (1997). Computing Lyapunov spectra with continuous
             Gram-Schmidt orthonormalization
 
+    Example:
+        >>> import dysts
+        >>> model = dysts.Lorenz()
+        >>> lyap = dysts.find_lyapunov_exponents(model, 1000, pts_per_period=1000)
+        >>> print(lyap)
 
     """
     d = np.asarray(model.ic).shape[-1]
     tpts, traj = model.make_trajectory(
-        traj_length, pts_per_period=pts_per_period, resample=True, return_times=True
+        traj_length, pts_per_period=pts_per_period, resample=True, return_times=True,
+        **kwargs
     )
     dt = np.median(np.diff(tpts))
 
@@ -173,7 +181,7 @@ def find_lyapunov_exponents(
         all_lyap.append(lyap_estimate)
         u = q  # post-iteration update axes
 
-        #         ## early stopping
+        ## early stopping
         if (np.min(np.abs(lyap_estimate)) < tol) and (i > min_tpts):
             traj_length = i
             print("stopped early.")
