@@ -190,6 +190,87 @@ def find_lyapunov_exponents(
     final_lyap = np.sum(all_lyap, axis=0) / (dt * traj_length)
     return np.sort(final_lyap)[::-1]
 
+from scipy.stats import linregress
+def calculate_lyapunov_exponent(traj1, traj2, dt=1.0):
+    """
+    Calculate the lyapunov exponent of two multidimensional trajectories using
+    simple linear regression based on the log-transformed separation of the
+    trajectories.
+
+    Args:
+        traj1 (np.ndarray): trajectory 1 with shape (n_timesteps, n_dimensions)
+        traj2 (np.ndarray): trajectory 2 with shape (n_timesteps, n_dimensions)
+        dt (float): time step between timesteps
+
+    Returns:
+        float: lyapunov exponent
+    """
+    separation = np.linalg.norm(traj1 - traj2, axis=1)
+    log_separation = np.log(separation)
+    time_vals = np.arange(log_separation.shape[0])
+    slope, intercept, r_value, p_value, std_err = linregress(time_vals, log_separation)
+    lyap = slope / dt
+    return lyap
+
+def lyapunov_exponent_naive(
+    eq, rtol=1e-3, atol=1e-10, n_samples=1000, traj_length=5000, max_time=500, dt=1.0
+    ):
+    """
+    Calculate the lyapunov spectrum of the system using a naive method based on the
+    log-transformed separation of the trajectories over time.
+
+    Args:
+        eq (dysts.DynSys): equation to calculate the lyapunov spectrum of
+        rtol (float): relative tolerance for the separation of the trajectories
+        atol (float): absolute tolerance for the separation of the trajectories
+        n_samples (int): number of initial conditions to sample
+        traj_length (int): length of the trajectories to sample
+        max_time (int): maximum time to integrate the system for. This should be long
+            enough to ensure that most trajectories explore the attractor.
+
+    Returns:
+        float: largest lyapunov exponent
+
+    Example:
+        >>> import dysts
+        >>> eq = dysts.Lorenz()
+        >>> max_lyap = dysts.lyapunov_exponent_naive(eq)
+        
+    """
+    all_ic = sample_initial_conditions(eq, n_samples, traj_length=traj_length)
+    pts_per_period = 100
+    eps = atol
+    eps_max = rtol
+    all_lyap = []
+    all_cutoffs = []
+    for ic in all_ic:
+        eq.ic = ic
+        tvals, traj1 = eq.sample(
+            traj_length, 
+            resample=True, 
+            return_times=True, 
+            pts_per_period=pts_per_period
+        )
+        eq.ic = ic
+        eq.ic *= (1 + eps * (np.random.random(eq.ic.shape) - 0.5))
+        traj2 = eq.sample(traj_length, resample=True)
+        ## Truncate traj1 and traj2 to when their scaled separation is less than eps_max
+        separation = np.linalg.norm(traj1 - traj2, axis=1) / np.linalg.norm(traj1, axis=1)
+        cutoff_index = np.where(separation < eps_max)[0][-1]
+        all_cutoffs.append(cutoff_index)
+        traj1 = traj1[:cutoff_index]
+        traj2 = traj2[:cutoff_index]
+        lyap = calculate_lyapunov_exponent(traj1, traj2, dt=np.median(np.diff(tvals)))
+        all_lyap.append(lyap)
+
+    if np.median(cutoff_index) < pts_per_period:
+        warnings.warn(
+            "The median cutoff index is less than the number of points per period." \
+            + "This may indicate that the integration is not long enough to capture" \
+            + "the invariant properties."
+        )
+
+    return np.mean(all_lyap)
 
 def kaplan_yorke_dimension(spectrum0):
     """Calculate the Kaplan-Yorke dimension, given a list of
