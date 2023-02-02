@@ -66,6 +66,11 @@ def dtw(y_true, y_pred):
 
     return cost, D, p, q
 
+def wape(y_true, y_pred):
+    """
+    Weighted Absolute Percentage Error
+    """
+    return 100 * np.sum(np.abs(y_true - y_pred)) / np.sum(y_true)
 
 def mase(y_true, y_pred, y_train):
     """
@@ -209,6 +214,7 @@ def compute_metrics(y_true, y_pred, standardize=False):
     metrics["rmsle"] = rmsle(y_true, y_pred)
     metrics["smape"] = smape(y_true, y_pred)
     metrics["mape"] = mape(y_true, y_pred)
+    metrics["wape"] = wape(y_true, y_pred)
     metrics["spearman"] = spearman(y_true, y_pred)
     metrics["pearson"] = pearson(y_true, y_pred)
     metrics["kendall"] = kendall(y_true, y_pred)
