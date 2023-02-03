@@ -262,12 +262,6 @@ def lyapunov_exponent_naive(
             continue
         else:
             tvals, traj1 = out
-        # tvals, traj1 = eq.sample(
-        #     traj_length, 
-        #     return_times=True, 
-        #     resample=True, 
-        #     **kwargs
-        # )
         eq.ic = ic
         eq.ic *= (1 + eps * (np.random.random(eq.ic.shape) - 0.5))
 
