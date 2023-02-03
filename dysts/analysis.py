@@ -16,7 +16,7 @@ except:
 
 from .utils import *
 from .utils import standardize_ts
-
+from .utils import ComputationHolder
 
 
 def sample_initial_conditions(
@@ -213,7 +213,8 @@ def calculate_lyapunov_exponent(traj1, traj2, dt=1.0):
     return lyap
 
 def lyapunov_exponent_naive(
-    eq, rtol=1e-3, atol=1e-10, n_samples=1000, traj_length=5000, max_time=500, dt=1.0
+    eq, rtol=1e-3, atol=1e-10, n_samples=1000, traj_length=5000, max_walltime=None,
+    **kwargs
     ):
     """
     Calculate the lyapunov spectrum of the system using a naive method based on the
@@ -224,9 +225,13 @@ def lyapunov_exponent_naive(
         rtol (float): relative tolerance for the separation of the trajectories
         atol (float): absolute tolerance for the separation of the trajectories
         n_samples (int): number of initial conditions to sample
-        traj_length (int): length of the trajectories to sample
-        max_time (int): maximum time to integrate the system for. This should be long
+        traj_length (int): length of the trajectories to sample. This should be long
             enough to ensure that most trajectories explore the attractor.
+        max_walltime (float): maximum walltime in seconds to spend on the calculation
+            of a given trajectory. If the calculation takes longer than this, the
+            trajectory is discarded and a new one is sampled.
+        **kwargs: keyword arguments to pass to the sample / make_trajectory method of
+             the dynamical equation
 
     Returns:
         float: largest lyapunov exponent
@@ -245,15 +250,39 @@ def lyapunov_exponent_naive(
     all_cutoffs = []
     for ic in all_ic:
         eq.ic = ic
-        tvals, traj1 = eq.sample(
+        out = ComputationHolder(
+            eq.make_trajectory, 
             traj_length, 
+            timeout=max_walltime,
             resample=True, 
-            return_times=True, 
-            pts_per_period=pts_per_period
-        )
+            return_times=True,
+            **kwargs
+        ).run()
+        if out is None:
+            continue
+        else:
+            tvals, traj1 = out
+        # tvals, traj1 = eq.sample(
+        #     traj_length, 
+        #     return_times=True, 
+        #     resample=True, 
+        #     **kwargs
+        # )
         eq.ic = ic
         eq.ic *= (1 + eps * (np.random.random(eq.ic.shape) - 0.5))
-        traj2 = eq.sample(traj_length, resample=True)
+
+
+        # traj2 = eq.sample(traj_length, resample=True, **kwargs)
+        traj2 = ComputationHolder(
+            eq.make_trajectory, 
+            traj_length,
+            timeout=max_walltime, 
+            resample=True, 
+            **kwargs
+        ).run()
+        if traj2 is None:
+            continue
+
         ## Truncate traj1 and traj2 to when their scaled separation is less than eps_max
         separation = np.linalg.norm(traj1 - traj2, axis=1) / np.linalg.norm(traj1, axis=1)
         cutoff_index = np.where(separation < eps_max)[0][-1]
@@ -263,10 +292,21 @@ def lyapunov_exponent_naive(
         lyap = calculate_lyapunov_exponent(traj1, traj2, dt=np.median(np.diff(tvals)))
         all_lyap.append(lyap)
 
-    if np.median(cutoff_index) < pts_per_period:
+    ## Return None if no trajectories were successful
+    if len(all_lyap) == 0:
+        return None
+
+    if len(all_lyap) < int(0.6 * n_samples):
         warnings.warn(
-            "The median cutoff index is less than the number of points per period." \
-            + "This may indicate that the integration is not long enough to capture" \
+            "The number of successful trajectories is less than 60% of the total number " \
+            + "of trajectories attempted. This may indicate that the integration " \
+            + "is unstable"
+        )
+
+    if np.median(all_cutoffs) < pts_per_period:
+        warnings.warn(
+            "The median cutoff index is less than the number of points per period. " \
+            + "This may indicate that the integration is not long enough to capture " \
             + "the invariant properties."
         )
 

@@ -1,7 +1,16 @@
 """
-Helper utilities for working with time series arrays.
-This module is intended to have no dependencies on the rest of
-the package
+Helper utilities for working with time series arrays. This module is intended to have no
+dependencies on the rest of the package.
+
+Author: Jacob Reinhold (
+    http://jcreinhold.github.io
+)
+
+Created on: June 10, 2020
+
+Copyright: 2020 Jacob Reinhold (
+    http://jcreinhold.github.io
+)
 
 """
 import numpy as np
@@ -555,3 +564,53 @@ def make_epsilon_ball(pt, n, eps=1e-5, random_state=None):
     coords = r * vecs / norm
     out = pt[:, None] + eps * coords
     return out
+
+import threading
+class ComputationHolder:
+    """
+    A wrapper class to force a computation to stop after a timeout.
+
+    Parameters
+        func (callable): the function to run
+        args (tuple): the arguments to pass to the function
+        kwargs (dict): the keyword arguments to pass to the function
+        timeout (int): the timeout in seconds. If None is passed, the computation
+            will run indefinitely until it finishes.
+
+    Example
+        >>> def my_func():
+        ...     while True:
+        ...         print("hello")
+        ...         time.sleep(8)
+        >>> ch = ComputationHolder(my_func, timeout=3)
+        >>> ch.run()
+        hello
+        hello
+        hello
+        None
+
+    """
+
+    def __init__(self, func=None, *args, timeout=10, **kwargs):
+        self.sol = None
+        self.func = func
+        self.args = args
+        self.kwargs = kwargs
+        self.timeout = timeout
+
+        def func_wrapped():
+            self.sol = self.func(*self.args, **self.kwargs)
+
+        self.func_wrapped = func_wrapped
+
+    def run(self):
+        my_thread = threading.Thread(
+            target=self.func_wrapped
+        )
+        my_thread.start()
+        my_thread.join(self.timeout) # kill the thread after `timeout` seconds
+
+        if self.sol is None:
+            return None
+        else:
+            return self.sol
