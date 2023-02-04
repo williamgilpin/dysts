@@ -304,7 +304,7 @@ def lyapunov_exponent_naive(
             + "the invariant properties."
         )
 
-    return np.mean(all_lyap)
+    return np.median(all_lyap)
 
 def kaplan_yorke_dimension(spectrum0):
     """Calculate the Kaplan-Yorke dimension, given a list of
