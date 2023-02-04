@@ -19,7 +19,7 @@
             0.020305496211675024,
             -0.3090729926541944
         ],
-        "maximum_lyapunov_estimated": 0.08947878317195473,
+        "maximum_lyapunov_estimated": 0.13489555530106362,
         "multiscale_entropy": 0.514512246123007,
         "nonautonomous": false,
         "parameters": {
@@ -54,7 +54,7 @@
             0.0008785544495802295,
             -0.44025308728606666
         ],
-        "maximum_lyapunov_estimated": 0.03977755489021002,
+        "maximum_lyapunov_estimated": 0.10107726791527546,
         "multiscale_entropy": 0.7612343892027325,
         "nonautonomous": false,
         "parameters": {
@@ -85,7 +85,7 @@
             -0.0006168721448237418,
             -1.2169777901647385
         ],
-        "maximum_lyapunov_estimated": 0.24285661379003065,
+        "maximum_lyapunov_estimated": 0.23737468667051287,
         "multiscale_entropy": 0.7388404221540498,
         "nonautonomous": false,
         "parameters": {
@@ -118,7 +118,7 @@
             -0.01824039630029517,
             -2.378562986862767
         ],
-        "maximum_lyapunov_estimated": 1.47222087191395,
+        "maximum_lyapunov_estimated": 0.3667300080060703,
         "multiscale_entropy": 1.2759526834024162,
         "nonautonomous": false,
         "parameters": {
@@ -158,7 +158,7 @@
             -0.00233619507966634,
             -0.0039196281630406
         ],
-        "maximum_lyapunov_estimated": 0.06266308160064184,
+        "maximum_lyapunov_estimated": 0.06514413995171335,
         "multiscale_entropy": 0.620621428966386,
         "nonautonomous": true,
         "parameters": {
@@ -183,13 +183,13 @@
         "embedding_dimension": 3,
         "hamiltonian": false,
         "initial_conditions": [
-            0.026544189906947246, 
-            0.20580772677536016, 
+            0.026544189906947246,
+            0.20580772677536016,
             0.43758119702219506
         ],
         "kaplan_yorke_dimension": 2.1859596374283137,
         "lyapunov_spectrum_estimated": null,
-        "maximum_lyapunov_estimated": 0.29807113997986867,
+        "maximum_lyapunov_estimated": 0.010543274932274862,
         "multiscale_entropy": 0.4278776303819699,
         "nonautonomous": false,
         "parameters": {
@@ -224,7 +224,7 @@
             -0.00011803510272572572,
             -0.5318869010933206
         ],
-        "maximum_lyapunov_estimated": 0.01627457119251563,
+        "maximum_lyapunov_estimated": 0.038767800131815223,
         "multiscale_entropy": 0.5244807630539362,
         "nonautonomous": false,
         "parameters": {
@@ -280,7 +280,7 @@
             -0.4669861532822692,
             -5529.048679334775
         ],
-        "maximum_lyapunov_estimated": 114.64513768787073,
+        "maximum_lyapunov_estimated": 132.08766434104578,
         "multiscale_entropy": 0.8764191281600929,
         "nonautonomous": false,
         "parameters": {
@@ -330,7 +330,7 @@
             2.5409880958463764e-09,
             -9.631983584415862e-08
         ],
-        "maximum_lyapunov_estimated": 1.965179437740836e-07,
+        "maximum_lyapunov_estimated": 3.0318672544949706e-06,
         "multiscale_entropy": 0.733566708397195,
         "nonautonomous": false,
         "parameters": {
@@ -380,7 +380,7 @@
             0.001803137034352918,
             -2.9362739640325555
         ],
-        "maximum_lyapunov_estimated": 0.047127554009157836,
+        "maximum_lyapunov_estimated": 0.12597339364128174,
         "multiscale_entropy": 0.5917316835585642,
         "nonautonomous": false,
         "parameters": {
@@ -417,7 +417,7 @@
             0.007963961496808246,
             -6.16801583110239
         ],
-        "maximum_lyapunov_estimated": 5.609358269449125,
+        "maximum_lyapunov_estimated": 2.120338159738003,
         "multiscale_entropy": 1.2895030395332947,
         "nonautonomous": true,
         "parameters": {
@@ -483,17 +483,17 @@
         "embedding_dimension": 3,
         "hamiltonian": true,
         "initial_conditions": [
-            3.966790341130254, 
+            3.966790341130254,
             0.18425981346720144,
             0.0
         ],
         "kaplan_yorke_dimension": 2.9856669109882814,
         "lyapunov_spectrum_estimated": [
             1.00757312,
-            -0.00276829, 
+            -0.00276829,
             -1.01941623
         ],
-        "maximum_lyapunov_estimated": 1.00757312,
+        "maximum_lyapunov_estimated": 2.172601412109087,
         "multiscale_entropy": 0.7815824521381879,
         "nonautonomous": true,
         "parameters": {
@@ -529,7 +529,7 @@
             0.0006869653413631164,
             -0.22171821407820913
         ],
-        "maximum_lyapunov_estimated": 0.04911273564448129,
+        "maximum_lyapunov_estimated": 0.06012563518102038,
         "multiscale_entropy": 0.7505556173926505,
         "nonautonomous": false,
         "parameters": {
@@ -565,7 +565,7 @@
             0.0033455417942589724,
             -0.009602768742817189
         ],
-        "maximum_lyapunov_estimated": 0.02038922500462878,
+        "maximum_lyapunov_estimated": 0.07681730213975516,
         "multiscale_entropy": 0.4520009826326611,
         "nonautonomous": false,
         "parameters": {
@@ -601,7 +601,7 @@
             0.027056468824027846,
             -11.225316054517004
         ],
-        "maximum_lyapunov_estimated": 2.3453555864112117,
+        "maximum_lyapunov_estimated": 2.324596351534631,
         "multiscale_entropy": 0.906432166797223,
         "nonautonomous": false,
         "parameters": {
@@ -632,7 +632,7 @@
             0.022652249040266133,
             -9.284523260554844
         ],
-        "maximum_lyapunov_estimated": 0.5788123099350391,
+        "maximum_lyapunov_estimated": 0.5802865327706731,
         "multiscale_entropy": 0.5770296569860646,
         "nonautonomous": false,
         "parameters": {
@@ -680,7 +680,7 @@
             -0.02225809783295617,
             -0.054895455267669285
         ],
-        "maximum_lyapunov_estimated": 0.1620868046117494,
+        "maximum_lyapunov_estimated": 0.48083152954373326,
         "multiscale_entropy": 0.8512706770213926,
         "nonautonomous": false,
         "parameters": {
@@ -734,7 +734,7 @@
             -2.850536314608979,
             -6.767614340964144
         ],
-        "maximum_lyapunov_estimated": 0.004699854181221581,
+        "maximum_lyapunov_estimated": 0.010172128409635746,
         "multiscale_entropy": 1.021736994304444,
         "nonautonomous": false,
         "parameters": {
@@ -774,7 +774,7 @@
             0.0036354952626342415,
             -0.6061495728157424
         ],
-        "maximum_lyapunov_estimated": 0.09799656528996928,
+        "maximum_lyapunov_estimated": 2.3258468977096562,
         "multiscale_entropy": 1.2414841874061011,
         "nonautonomous": false,
         "parameters": {
@@ -807,7 +807,7 @@
             -0.05031354288886987,
             -11.841816202859391
         ],
-        "maximum_lyapunov_estimated": 2.0471208808332557,
+        "maximum_lyapunov_estimated": 2.005961349488129,
         "multiscale_entropy": 0.7604529380690989,
         "nonautonomous": false,
         "parameters": {
@@ -839,7 +839,7 @@
             0.00018225769802326938,
             -5.485329903201408
         ],
-        "maximum_lyapunov_estimated": 0.16460631102343387,
+        "maximum_lyapunov_estimated": 0.16363115430160305,
         "multiscale_entropy": 0.6224325755254609,
         "nonautonomous": false,
         "parameters": {
@@ -871,7 +871,7 @@
             0.0022048281168492866,
             -4.319076735248446
         ],
-        "maximum_lyapunov_estimated": 0.4605474829443073,
+        "maximum_lyapunov_estimated": 1.2301163591725595,
         "multiscale_entropy": 1.2693527097629784,
         "nonautonomous": false,
         "parameters": {
@@ -908,7 +908,7 @@
             -0.3598453092044599,
             -1.091393481159416
         ],
-        "maximum_lyapunov_estimated": 0.09298369588063138,
+        "maximum_lyapunov_estimated": 0.006263277393890506,
         "multiscale_entropy": 0.7054585345031309,
         "nonautonomous": true,
         "parameters": {
@@ -954,7 +954,7 @@
             0.0017391810332012293,
             -1.9676998121970224
         ],
-        "maximum_lyapunov_estimated": 0.003487942886059227,
+        "maximum_lyapunov_estimated": 0.00732698039035783,
         "multiscale_entropy": 1.006450625395487,
         "nonautonomous": false,
         "parameters": {
@@ -995,7 +995,7 @@
             -0.0021021241106901328,
             -1.0014048629576902
         ],
-        "maximum_lyapunov_estimated": 0.1375028529066911,
+        "maximum_lyapunov_estimated": 0.3736008151161584,
         "multiscale_entropy": 0.7266290517682168,
         "nonautonomous": false,
         "parameters": {
@@ -1029,7 +1029,7 @@
             -6.504894715051528e-05,
             -0.5873658566804084
         ],
-        "maximum_lyapunov_estimated": 0.14890693833273877,
+        "maximum_lyapunov_estimated": 0.13718762024831516,
         "multiscale_entropy": 0.9055084400125268,
         "nonautonomous": false,
         "parameters": {
@@ -1062,7 +1062,7 @@
             0.0064562720284210215,
             -11.157725546142514
         ],
-        "maximum_lyapunov_estimated": 0.47344233096408,
+        "maximum_lyapunov_estimated": 0.40591521049520063,
         "multiscale_entropy": 0.8537980405426894,
         "nonautonomous": false,
         "parameters": {
@@ -1096,7 +1096,7 @@
             0.09866428540326228,
             -2.867185439620747
         ],
-        "maximum_lyapunov_estimated": 1.8601963396884453,
+        "maximum_lyapunov_estimated": 0.739747976641268,
         "multiscale_entropy": 0.8319369667525882,
         "nonautonomous": false,
         "parameters": {
@@ -1131,7 +1131,7 @@
             -0.0036702088073069326,
             -0.06633987533400756
         ],
-        "maximum_lyapunov_estimated": 0.06285936079346421,
+        "maximum_lyapunov_estimated": 0.12185254082886439,
         "multiscale_entropy": 0.66519273658672,
         "nonautonomous": true,
         "parameters": {
@@ -1167,7 +1167,7 @@
             -0.17345525567611142,
             -10.805817517613212
         ],
-        "maximum_lyapunov_estimated": 8.464443924343541,
+        "maximum_lyapunov_estimated": 3.985298067514186,
         "multiscale_entropy": 0.5591104791210428,
         "nonautonomous": false,
         "parameters": {
@@ -1201,7 +1201,7 @@
             0.0003077550037828977,
             -0.17595301607629793
         ],
-        "maximum_lyapunov_estimated": 0.09952054532941003,
+        "maximum_lyapunov_estimated": 0.14026545752865122,
         "multiscale_entropy": 0.8686568999981737,
         "nonautonomous": true,
         "parameters": {
@@ -1237,7 +1237,7 @@
             -0.3267053778962445,
             -129.70230355691595
         ],
-        "maximum_lyapunov_estimated": 17.030315084501463,
+        "maximum_lyapunov_estimated": 0.7164303367057223,
         "multiscale_entropy": 0.7807524009298388,
         "nonautonomous": false,
         "parameters": {
@@ -1278,7 +1278,7 @@
             0.0009835797228343356,
             -0.6279525877233353
         ],
-        "maximum_lyapunov_estimated": 0.10708598383274774,
+        "maximum_lyapunov_estimated": 0.09354106442670211,
         "multiscale_entropy": 0.7817861077722251,
         "nonautonomous": false,
         "parameters": {
@@ -1310,7 +1310,7 @@
             -0.0011783910877478326,
             -0.09403052188090477
         ],
-        "maximum_lyapunov_estimated": 0.08081301489037328,
+        "maximum_lyapunov_estimated": 0.22311237411461174,
         "multiscale_entropy": 0.796312585554829,
         "nonautonomous": true,
         "parameters": {
@@ -1344,7 +1344,7 @@
             -0.014898681909916936,
             -0.23304448314240073
         ],
-        "maximum_lyapunov_estimated": 0.0028307087627546254,
+        "maximum_lyapunov_estimated": 0.015326007974604663,
         "multiscale_entropy": 0.47299463051887286,
         "nonautonomous": true,
         "parameters": {
@@ -1379,7 +1379,7 @@
             -0.0017541532237019502,
             -0.9544351506941636
         ],
-        "maximum_lyapunov_estimated": 0.0006271045837994498,
+        "maximum_lyapunov_estimated": 0.007561278655908403,
         "multiscale_entropy": 0.946734422406113,
         "nonautonomous": true,
         "parameters": {
@@ -1416,7 +1416,7 @@
             -0.0008450617218488057,
             -20.60632249066986
         ],
-        "maximum_lyapunov_estimated": 0.26518243888151155,
+        "maximum_lyapunov_estimated": 0.0035097622587646343,
         "multiscale_entropy": 0.39443058905146283,
         "nonautonomous": true,
         "parameters": {
@@ -1450,7 +1450,7 @@
             0.00038146676582121423,
             -0.5282231255530121
         ],
-        "maximum_lyapunov_estimated": 0.09974381765927796,
+        "maximum_lyapunov_estimated": 0.10509061137519304,
         "multiscale_entropy": 0.7003576241153363,
         "nonautonomous": false,
         "parameters": {
@@ -1482,7 +1482,7 @@
             -0.0032191807339425173,
             -0.9216135618098852
         ],
-        "maximum_lyapunov_estimated": 0.34082003567895874,
+        "maximum_lyapunov_estimated": 0.7885729042404602,
         "multiscale_entropy": 0.5385101182847213,
         "nonautonomous": false,
         "parameters": {
@@ -1517,7 +1517,7 @@
             -0.0010838827053467116,
             -0.42739317979015523
         ],
-        "maximum_lyapunov_estimated": 0.31166133927315953,
+        "maximum_lyapunov_estimated": 0.2386587703845738,
         "multiscale_entropy": 0.9351389987191853,
         "nonautonomous": false,
         "parameters": {
@@ -1550,7 +1550,7 @@
             -0.031953945256851884,
             -4.6876300977027565
         ],
-        "maximum_lyapunov_estimated": 0.586197150399321,
+        "maximum_lyapunov_estimated": 0.6963711539102683,
         "multiscale_entropy": 0.7527831765757674,
         "nonautonomous": false,
         "parameters": {
@@ -1581,7 +1581,7 @@
             0.005765040490702786,
             -0.5169232002224432
         ],
-        "maximum_lyapunov_estimated": 0.008585012825774561,
+        "maximum_lyapunov_estimated": 0.012532796124563227,
         "multiscale_entropy": 0.47829796264231095,
         "nonautonomous": false,
         "parameters": {
@@ -1618,7 +1618,7 @@
             -1.4057113933414076e-05,
             -0.011151041415888588
         ],
-        "maximum_lyapunov_estimated": 0.026747154244887203,
+        "maximum_lyapunov_estimated": 0.03551120315239528,
         "multiscale_entropy": 0.7137794258156454,
         "nonautonomous": false,
         "parameters": {
@@ -1648,7 +1648,7 @@
             0.0017705383465481184,
             -6.510663065519547
         ],
-        "maximum_lyapunov_estimated": 0.2621464274609406,
+        "maximum_lyapunov_estimated": 0.6535393283242747,
         "multiscale_entropy": 0.8692605688019491,
         "nonautonomous": false,
         "parameters": {
@@ -1690,7 +1690,7 @@
             -0.40604718386075256,
             -1.4425404449511432
         ],
-        "maximum_lyapunov_estimated": 0.07726437124258394,
+        "maximum_lyapunov_estimated": 0.5684266951234997,
         "multiscale_entropy": 0.9160145554679957,
         "nonautonomous": false,
         "parameters": {
@@ -1774,7 +1774,7 @@
             0.01646766869238271,
             -19.983737503321315
         ],
-        "maximum_lyapunov_estimated": 0.6959739496471207,
+        "maximum_lyapunov_estimated": 0.7941925747845208,
         "multiscale_entropy": 0.8910215561062699,
         "nonautonomous": false,
         "parameters": {
@@ -1810,7 +1810,7 @@
             -0.003328688360603957,
             -12.747646341795276
         ],
-        "maximum_lyapunov_estimated": 1.6344436239089568,
+        "maximum_lyapunov_estimated": 1.6777584899044127,
         "multiscale_entropy": 1.1155413734604414,
         "nonautonomous": false,
         "parameters": {
@@ -1846,7 +1846,7 @@
             0.005568431034995312,
             -13.022125042186726
         ],
-        "maximum_lyapunov_estimated": 0.3949499860671474,
+        "maximum_lyapunov_estimated": 0.38695361636760767,
         "multiscale_entropy": 0.8934166449122942,
         "nonautonomous": false,
         "parameters": {
@@ -1881,7 +1881,7 @@
             0.04704434899468292,
             -13.118440302968889
         ],
-        "maximum_lyapunov_estimated": 0.2925643599949083,
+        "maximum_lyapunov_estimated": 0.3288809596909799,
         "multiscale_entropy": 0.8026458791332332,
         "nonautonomous": false,
         "parameters": {
@@ -1916,7 +1916,7 @@
             0.02849951886859947,
             -19.313823203887658
         ],
-        "maximum_lyapunov_estimated": 1.0855770127041702,
+        "maximum_lyapunov_estimated": 1.042961263138283,
         "multiscale_entropy": 1.0455788608813867,
         "nonautonomous": false,
         "parameters": {
@@ -1951,7 +1951,7 @@
             -0.0011541322141891326,
             -21.007696151519628
         ],
-        "maximum_lyapunov_estimated": 1.586932998381499,
+        "maximum_lyapunov_estimated": 1.4465315511406867,
         "multiscale_entropy": 0.9172158388570456,
         "nonautonomous": false,
         "parameters": {
@@ -1986,7 +1986,7 @@
             -0.04957904444451209,
             -59.32758839771818
         ],
-        "maximum_lyapunov_estimated": 13.908799876284396,
+        "maximum_lyapunov_estimated": 12.787249321134263,
         "multiscale_entropy": 0.9988440965886223,
         "nonautonomous": false,
         "parameters": {
@@ -2023,7 +2023,7 @@
             -0.3014660985555502,
             -70.26609894565237
         ],
-        "maximum_lyapunov_estimated": 0.27859233648384435,
+        "maximum_lyapunov_estimated": 0.1718849632568779,
         "multiscale_entropy": 0.9144754695112332,
         "nonautonomous": false,
         "parameters": {
@@ -2058,7 +2058,7 @@
             -0.0075512136517132625,
             -13.986919236227278
         ],
-        "maximum_lyapunov_estimated": 1.2224015619377895,
+        "maximum_lyapunov_estimated": 1.2930140887300063,
         "multiscale_entropy": 0.9969261837212393,
         "nonautonomous": false,
         "parameters": {
@@ -2094,7 +2094,7 @@
             -0.0033988115975040426,
             -13.697896294059921
         ],
-        "maximum_lyapunov_estimated": 1.0420068843753962,
+        "maximum_lyapunov_estimated": 0.9819830018599975,
         "multiscale_entropy": 0.9312323303231519,
         "nonautonomous": false,
         "parameters": {
@@ -2130,7 +2130,7 @@
             -14.977382134147613,
             -39.36365990052555
         ],
-        "maximum_lyapunov_estimated": 0.9120352761173002,
+        "maximum_lyapunov_estimated": 1.3945968455812914,
         "multiscale_entropy": 0.8166157518949907,
         "nonautonomous": false,
         "parameters": {
@@ -2165,7 +2165,7 @@
             0.023510192276255986,
             -34.77284163099938
         ],
-        "maximum_lyapunov_estimated": 0.5742688696462734,
+        "maximum_lyapunov_estimated": 0.42042732521941667,
         "multiscale_entropy": 0.9730322217427024,
         "nonautonomous": false,
         "parameters": {
@@ -2212,7 +2212,7 @@
             -0.2833034824174493,
             -0.6392438255039592
         ],
-        "maximum_lyapunov_estimated": 0.7139744431963619,
+        "maximum_lyapunov_estimated": 10.614256406561465,
         "nonautonomous": false,
         "parameters": {
             "c": 1.0,
@@ -2244,7 +2244,7 @@
             -0.05136527222093221,
             -7.392541736904205
         ],
-        "maximum_lyapunov_estimated": 0.3365871343421436,
+        "maximum_lyapunov_estimated": 0.450090505359164,
         "multiscale_entropy": 0.6589422003608746,
         "nonautonomous": false,
         "parameters": {
@@ -2277,7 +2277,7 @@
             -0.0135394920593605,
             -0.5610833889492404
         ],
-        "maximum_lyapunov_estimated": 0.022156938955395417,
+        "maximum_lyapunov_estimated": 0.03621509684991421,
         "multiscale_entropy": 0.5883298730506914,
         "nonautonomous": false,
         "parameters": {
@@ -2314,7 +2314,7 @@
             0.1849026306096344,
             -1.1407351759248092
         ],
-        "maximum_lyapunov_estimated": 0.394872929553187,
+        "maximum_lyapunov_estimated": 0.2922722771543928,
         "multiscale_entropy": 0.38139916676685187,
         "nonautonomous": false,
         "parameters": {
@@ -2345,7 +2345,7 @@
             -0.06145426210744069,
             -0.31683393262481707
         ],
-        "maximum_lyapunov_estimated": 0.02560751992932341,
+        "maximum_lyapunov_estimated": 0.0757060839542753,
         "multiscale_entropy": 0.5935098791328474,
         "nonautonomous": false,
         "parameters": {
@@ -2378,7 +2378,7 @@
             0.020943250302999646,
             -15.909545615344538
         ],
-        "maximum_lyapunov_estimated": 0.7637435195473311,
+        "maximum_lyapunov_estimated": 0.6080602180196161,
         "multiscale_entropy": 1.004437967414151,
         "nonautonomous": false,
         "parameters": {
@@ -2482,7 +2482,7 @@
             -0.045398035352994866,
             -2.251992293230755
         ],
-        "maximum_lyapunov_estimated": 1.0474807193950644,
+        "maximum_lyapunov_estimated": 0.46146683857936616,
         "multiscale_entropy": 0.6685802317710752,
         "nonautonomous": false,
         "parameters": {
@@ -2517,7 +2517,7 @@
             -1.1936282999960617,
             -3.550455057872212
         ],
-        "maximum_lyapunov_estimated": 1.6247012663091516,
+        "maximum_lyapunov_estimated": 1.3361667787286362,
         "multiscale_entropy": 0.8046726640855828,
         "nonautonomous": false,
         "parameters": {
@@ -2547,7 +2547,7 @@
             0.001413707285345669,
             -12.120634680260636
         ],
-        "maximum_lyapunov_estimated": 0.8497533717540197,
+        "maximum_lyapunov_estimated": 0.7124135270827626,
         "multiscale_entropy": 1.1983193915488475,
         "nonautonomous": false,
         "parameters": {
@@ -2586,7 +2586,7 @@
             -13.618111101381306,
             -15.073328947851422
         ],
-        "maximum_lyapunov_estimated": 1.2218762961515068,
+        "maximum_lyapunov_estimated": 1.0284398414904556,
         "multiscale_entropy": 1.1717493753138832,
         "nonautonomous": false,
         "parameters": {
@@ -2623,7 +2623,7 @@
             -2.7358399678801906,
             -3.4213273148340293
         ],
-        "maximum_lyapunov_estimated": 0.44944459925783387,
+        "maximum_lyapunov_estimated": 0.3807742646421621,
         "multiscale_entropy": 1.0299236916146275,
         "nonautonomous": false,
         "parameters": {
@@ -2656,7 +2656,7 @@
             0.1450338199952451,
             -22.56999542505058
         ],
-        "maximum_lyapunov_estimated": 0.6651845739025707,
+        "maximum_lyapunov_estimated": 0.3266868574498627,
         "multiscale_entropy": 0.4483903807918106,
         "nonautonomous": false,
         "parameters": {
@@ -2688,7 +2688,7 @@
             -0.012414362698175424,
             -11.556516575635818
         ],
-        "maximum_lyapunov_estimated": 0.35106210160478324,
+        "maximum_lyapunov_estimated": 0.2612775880231121,
         "multiscale_entropy": 0.6029763775293518,
         "nonautonomous": false,
         "parameters": {
@@ -2734,7 +2734,7 @@
             -0.3058908399877519,
             -17.37453227551654
         ],
-        "maximum_lyapunov_estimated": 0.1934617869736995,
+        "maximum_lyapunov_estimated": 0.2494638510848618,
         "multiscale_entropy": 0.7844902548776685,
         "nonautonomous": false,
         "parameters": {
@@ -2861,7 +2861,7 @@
             -0.18584871959889662,
             -2.2412562118189827
         ],
-        "maximum_lyapunov_estimated": 0.21081023801544096,
+        "maximum_lyapunov_estimated": 4.370840245811356,
         "nonautonomous": false,
         "parameters": {
             "beta": 2,
@@ -2893,7 +2893,7 @@
             -0.022079955878999143,
             -1.1975751283606624
         ],
-        "maximum_lyapunov_estimated": 0.4074353399833356,
+        "maximum_lyapunov_estimated": 0.6976623003008144,
         "multiscale_entropy": 0.5401952179209213,
         "nonautonomous": false,
         "parameters": {
@@ -2925,7 +2925,7 @@
             -0.00140279701621115,
             -3.10264254580399
         ],
-        "maximum_lyapunov_estimated": 0.2210571234274344,
+        "maximum_lyapunov_estimated": 1.462134784614238,
         "multiscale_entropy": 0.8118881305702679,
         "nonautonomous": false,
         "parameters": {
@@ -2972,7 +2972,7 @@
             -0.00036976661148194504,
             -0.7795789311467557
         ],
-        "maximum_lyapunov_estimated": 0.1723564207468104,
+        "maximum_lyapunov_estimated": 0.14945341784639976,
         "multiscale_entropy": 0.6322918700854281,
         "nonautonomous": false,
         "parameters": {
@@ -3003,7 +3003,7 @@
             0.0013844486958287268,
             -0.011653762286922777
         ],
-        "maximum_lyapunov_estimated": 0.04757010871740569,
+        "maximum_lyapunov_estimated": 0.010464383779400952,
         "multiscale_entropy": 0.5656074689683536,
         "nonautonomous": false,
         "parameters": {
@@ -3035,7 +3035,7 @@
             -0.00449888101008936,
             -0.2658004759134054
         ],
-        "maximum_lyapunov_estimated": 0.27858365099437626,
+        "maximum_lyapunov_estimated": 0.29554197767663787,
         "multiscale_entropy": 0.8209529097052416,
         "nonautonomous": false,
         "parameters": {
@@ -3067,7 +3067,7 @@
             -0.005029615144529367,
             -0.43888500460322705
         ],
-        "maximum_lyapunov_estimated": 0.4274159768365288,
+        "maximum_lyapunov_estimated": 0.13470179997834794,
         "multiscale_entropy": 0.6177682255070645,
         "nonautonomous": true,
         "parameters": {
@@ -3103,7 +3103,7 @@
             0.01603608355912526,
             -13.744271396596757
         ],
-        "maximum_lyapunov_estimated": 0.8697394318152157,
+        "maximum_lyapunov_estimated": 0.6132378917107628,
         "multiscale_entropy": 1.0993195372407014,
         "nonautonomous": false,
         "parameters": {
@@ -3138,7 +3138,7 @@
             0.0015323304198873254,
             -0.6168618108533457
         ],
-        "maximum_lyapunov_estimated": 0.0951232752895907,
+        "maximum_lyapunov_estimated": 0.10415076085878888,
         "multiscale_entropy": 0.6547493000137818,
         "nonautonomous": false,
         "parameters": {},
@@ -3214,7 +3214,7 @@
             -4.347891883424509,
             -44.356041824978305
         ],
-        "maximum_lyapunov_estimated": 2.0360429519545677,
+        "maximum_lyapunov_estimated": 2.1916060472989556,
         "multiscale_entropy": 0.8855652233700573,
         "nonautonomous": false,
         "parameters": {
@@ -3247,7 +3247,7 @@
             0.13379585631170307,
             -43.8359895934497
         ],
-        "maximum_lyapunov_estimated": 3.8880075026301206,
+        "maximum_lyapunov_estimated": 4.0275703123027435,
         "multiscale_entropy": 0.846453868214798,
         "nonautonomous": false,
         "parameters": {
@@ -3279,7 +3279,7 @@
             1.7068504600119996e-05,
             -0.6717710576786404
         ],
-        "maximum_lyapunov_estimated": 0.24233580922074083,
+        "maximum_lyapunov_estimated": 0.2541443669572464,
         "multiscale_entropy": 0.9189339042839536,
         "nonautonomous": false,
         "parameters": {
@@ -3310,7 +3310,7 @@
             0.3076248958606731,
             -19.04195798211122
         ],
-        "maximum_lyapunov_estimated": 1.7098267053321798,
+        "maximum_lyapunov_estimated": 1.8138795790741327,
         "multiscale_entropy": 0.9190517908569512,
         "nonautonomous": false,
         "parameters": {
@@ -3342,7 +3342,7 @@
             0.0007222098218782572,
             -2.1743990404663296
         ],
-        "maximum_lyapunov_estimated": 0.14571192786308473,
+        "maximum_lyapunov_estimated": 0.1318127385277225,
         "multiscale_entropy": 0.9664471212975273,
         "nonautonomous": false,
         "parameters": {
@@ -3373,7 +3373,7 @@
             0.007522476799147231,
             -5.741024338716747
         ],
-        "maximum_lyapunov_estimated": 0.07633013937806932,
+        "maximum_lyapunov_estimated": 0.15059688939547888,
         "multiscale_entropy": 0.605878349292794,
         "nonautonomous": false,
         "parameters": {
@@ -3405,7 +3405,7 @@
             -0.0039065765687848,
             -3.2151284307504713
         ],
-        "maximum_lyapunov_estimated": 0.18286378999435815,
+        "maximum_lyapunov_estimated": 0.1936356650629198,
         "multiscale_entropy": 0.6441822675461503,
         "nonautonomous": false,
         "parameters": {
@@ -3436,7 +3436,7 @@
             0.00035292037656675234,
             -1.2584697568737606
         ],
-        "maximum_lyapunov_estimated": 0.3080921246264039,
+        "maximum_lyapunov_estimated": 0.26501036485491514,
         "multiscale_entropy": 0.6082767822064958,
         "nonautonomous": false,
         "parameters": {
@@ -3473,7 +3473,7 @@
             -0.0037578848522063194,
             -4.592867667006148
         ],
-        "maximum_lyapunov_estimated": 0.3914445015077359,
+        "maximum_lyapunov_estimated": 1.0702552017260383,
         "multiscale_entropy": 0.9335269725171643,
         "nonautonomous": false,
         "parameters": {
@@ -3510,7 +3510,7 @@
             -0.0002916165416126154,
             -1.2296759041605134
         ],
-        "maximum_lyapunov_estimated": 0.23913890446639052,
+        "maximum_lyapunov_estimated": 0.2606135207962152,
         "multiscale_entropy": 0.9947542017597873,
         "nonautonomous": false,
         "parameters": {
@@ -3554,7 +3554,7 @@
             -0.008605197946011937,
             -0.012607310979495853
         ],
-        "maximum_lyapunov_estimated": 0.016452858090143806,
+        "maximum_lyapunov_estimated": 1.0457570240712148,
         "nonautonomous": false,
         "parameters": {
             "alpha": 0.2,
@@ -3585,7 +3585,7 @@
             -1.3942528300804223e-05,
             -1.409991553164768
         ],
-        "maximum_lyapunov_estimated": 0.044032234819090736,
+        "maximum_lyapunov_estimated": 0.03577425334463406,
         "multiscale_entropy": 0.7156563118943259,
         "nonautonomous": false,
         "parameters": {
@@ -3616,7 +3616,7 @@
             0.004990159457687409,
             -0.0015561317158397701
         ],
-        "maximum_lyapunov_estimated": 0.029259920155059096,
+        "maximum_lyapunov_estimated": 0.012993052652429771,
         "multiscale_entropy": 0.5748267225365974,
         "nonautonomous": false,
         "parameters": {},
@@ -3644,7 +3644,7 @@
             0.005187437926969091,
             -1.2145826242115807
         ],
-        "maximum_lyapunov_estimated": 0.2198750386697164,
+        "maximum_lyapunov_estimated": 0.20674275256006883,
         "multiscale_entropy": 0.8826029903839796,
         "nonautonomous": false,
         "parameters": {},
@@ -3672,7 +3672,7 @@
             -0.0007304674803429964,
             -1.1644550651924115
         ],
-        "maximum_lyapunov_estimated": 0.17898394736414458,
+        "maximum_lyapunov_estimated": 0.15806924766944033,
         "multiscale_entropy": 1.14839462464542,
         "nonautonomous": false,
         "parameters": {},
@@ -3700,7 +3700,7 @@
             0.001787998513315278,
             -1.4601870646976078
         ],
-        "maximum_lyapunov_estimated": 0.11415315682442646,
+        "maximum_lyapunov_estimated": 0.10170941886932346,
         "multiscale_entropy": 1.0030259093693934,
         "nonautonomous": false,
         "parameters": {},
@@ -3742,7 +3742,7 @@
             -0.012665556385738196,
             -0.014601336849935557
         ],
-        "maximum_lyapunov_estimated": 0.2056760250875861,
+        "maximum_lyapunov_estimated": 6.027845582332582,
         "nonautonomous": false,
         "parameters": {
             "c": 0.0,
@@ -3774,7 +3774,7 @@
             -0.00031069798260046597,
             -1.0953799295090543
         ],
-        "maximum_lyapunov_estimated": 0.09834470642927143,
+        "maximum_lyapunov_estimated": 0.09016067590084897,
         "multiscale_entropy": 0.8387888716672988,
         "nonautonomous": false,
         "parameters": {},
@@ -3802,7 +3802,7 @@
             0.0192716855937824,
             -0.603011686855317
         ],
-        "maximum_lyapunov_estimated": 0.13246006583273318,
+        "maximum_lyapunov_estimated": 0.1183090101484132,
         "multiscale_entropy": 0.7674306147320477,
         "nonautonomous": false,
         "parameters": {
@@ -3832,7 +3832,7 @@
             -0.0012749369106980868,
             -0.6182204265060449
         ],
-        "maximum_lyapunov_estimated": 0.03349131570257799,
+        "maximum_lyapunov_estimated": 0.09067832253388744,
         "multiscale_entropy": 0.6185493944257671,
         "nonautonomous": false,
         "parameters": {
@@ -3862,7 +3862,7 @@
             0.003501431527456669,
             -0.5889065665901029
         ],
-        "maximum_lyapunov_estimated": 0.13871794302385682,
+        "maximum_lyapunov_estimated": 0.13100182470690253,
         "multiscale_entropy": 0.6325364503922819,
         "nonautonomous": false,
         "parameters": {
@@ -3892,7 +3892,7 @@
             9.478591964272237e-06,
             -1.031514712617076
         ],
-        "maximum_lyapunov_estimated": 0.020459651934364873,
+        "maximum_lyapunov_estimated": 0.023218704376506836,
         "multiscale_entropy": 0.5893805046352655,
         "nonautonomous": false,
         "parameters": {
@@ -3922,7 +3922,7 @@
             0.0010621228852282804,
             -2.055842238064512
         ],
-        "maximum_lyapunov_estimated": 0.04451808076432957,
+        "maximum_lyapunov_estimated": 0.12290789099642041,
         "multiscale_entropy": 0.6352974298685767,
         "nonautonomous": false,
         "parameters": {},
@@ -3950,7 +3950,7 @@
             -0.0007831911114099333,
             -2.1347047232043663
         ],
-        "maximum_lyapunov_estimated": 0.06738258231535932,
+        "maximum_lyapunov_estimated": 0.08785190282162628,
         "multiscale_entropy": 0.5314887786603959,
         "nonautonomous": false,
         "parameters": {
@@ -3980,7 +3980,7 @@
             -0.0005109461395399151,
             -0.8934722146671759
         ],
-        "maximum_lyapunov_estimated": 0.03778259119323125,
+        "maximum_lyapunov_estimated": 0.05962593786799159,
         "multiscale_entropy": 0.6562812206790845,
         "nonautonomous": false,
         "parameters": {
@@ -4010,7 +4010,7 @@
             -0.000391471796353918,
             -1.012962157697122
         ],
-        "maximum_lyapunov_estimated": 0.03407149258791976,
+        "maximum_lyapunov_estimated": 0.09216197583296963,
         "multiscale_entropy": 0.5605870039438788,
         "nonautonomous": false,
         "parameters": {
@@ -4041,7 +4041,7 @@
             -0.00033063791832836577,
             -1.0391447706177515
         ],
-        "maximum_lyapunov_estimated": 0.05230117379497564,
+        "maximum_lyapunov_estimated": 0.08422043130700084,
         "multiscale_entropy": 0.7481178461456197,
         "nonautonomous": false,
         "parameters": {
@@ -4071,7 +4071,7 @@
             -0.0001641583999746131,
             -0.31918544080126926
         ],
-        "maximum_lyapunov_estimated": 0.3249983459604661,
+        "maximum_lyapunov_estimated": 1.0946909441433958,
         "multiscale_entropy": 0.6370154977546665,
         "nonautonomous": false,
         "parameters": {},
@@ -4099,7 +4099,7 @@
             6.560209716837452e-05,
             -2.101648044064128
         ],
-        "maximum_lyapunov_estimated": 0.060958614491943536,
+        "maximum_lyapunov_estimated": 0.11869612209728901,
         "multiscale_entropy": 0.6385218945868028,
         "nonautonomous": false,
         "parameters": {},
@@ -4127,7 +4127,7 @@
             0.011533284505120292,
             -0.3165440349833235
         ],
-        "maximum_lyapunov_estimated": 0.06685684927644238,
+        "maximum_lyapunov_estimated": 0.09141077854590315,
         "multiscale_entropy": 0.4161154943097029,
         "nonautonomous": false,
         "parameters": {
@@ -4157,7 +4157,7 @@
             0.00025136328640969387,
             -0.4843551814513015
         ],
-        "maximum_lyapunov_estimated": 0.10261657056457861,
+        "maximum_lyapunov_estimated": 0.1064676723437159,
         "multiscale_entropy": 0.8486396469370624,
         "nonautonomous": false,
         "parameters": {
@@ -4187,7 +4187,7 @@
             0.0010386716745898255,
             -0.6140516336902575
         ],
-        "maximum_lyapunov_estimated": 0.13698250147166127,
+        "maximum_lyapunov_estimated": 0.17169784338063596,
         "multiscale_entropy": 0.8105158145249107,
         "nonautonomous": false,
         "parameters": {
@@ -4218,7 +4218,7 @@
             0.0013697096816499383,
             -1.0784000269941107
         ],
-        "maximum_lyapunov_estimated": 0.07608481335025485,
+        "maximum_lyapunov_estimated": 0.09661415277799693,
         "multiscale_entropy": 0.5877166245477188,
         "nonautonomous": false,
         "parameters": {
@@ -4249,7 +4249,7 @@
             0.0030194370306177213,
             -1.1945344436340624
         ],
-        "maximum_lyapunov_estimated": 0.2149312025337423,
+        "maximum_lyapunov_estimated": 0.2737629235389973,
         "multiscale_entropy": 0.6690400524585065,
         "nonautonomous": false,
         "parameters": {},
@@ -4277,7 +4277,7 @@
             0.0005468818242604863,
             -0.3910853761095065
         ],
-        "maximum_lyapunov_estimated": 0.29656066211909027,
+        "maximum_lyapunov_estimated": 0.1056964344650892,
         "multiscale_entropy": 0.9562901894463037,
         "nonautonomous": false,
         "parameters": {},
@@ -4305,7 +4305,7 @@
             3.356854711815694e-05,
             -0.02131392884593247
         ],
-        "maximum_lyapunov_estimated": 0.07073329226101452,
+        "maximum_lyapunov_estimated": 0.06406131604734494,
         "multiscale_entropy": 0.9213029740441252,
         "nonautonomous": true,
         "parameters": {
@@ -4347,7 +4347,7 @@
             -3.002075505122432,
             -7.664246463289054
         ],
-        "maximum_lyapunov_estimated": 7.735006558021491,
+        "maximum_lyapunov_estimated": 1.0111284961954359,
         "nonautonomous": false,
         "parameters": {
             "m1": 1.0,
@@ -4377,7 +4377,7 @@
             0.057355308262307496,
             -6.421950974462397
         ],
-        "maximum_lyapunov_estimated": 0.7589685797630259,
+        "maximum_lyapunov_estimated": 0.6324054000339867,
         "multiscale_entropy": 0.9921951854111759,
         "nonautonomous": false,
         "parameters": {
@@ -4408,7 +4408,7 @@
             0.004970451463443095,
             -2.8467429841890293
         ],
-        "maximum_lyapunov_estimated": 1.338784931894327,
+        "maximum_lyapunov_estimated": 1.390858033637042,
         "multiscale_entropy": 1.3049872431864915,
         "nonautonomous": false,
         "parameters": {
@@ -4439,7 +4439,7 @@
             0.0,
             0.0
         ],
-        "maximum_lyapunov_estimated": 0.0,
+        "maximum_lyapunov_estimated": 0.00817284128815307,
         "multiscale_entropy": 0.47330913201518593,
         "nonautonomous": false,
         "parameters": {
@@ -4471,7 +4471,7 @@
             -0.22409536897391863,
             -1.3233103558456687
         ],
-        "maximum_lyapunov_estimated": 0.6414001783252772,
+        "maximum_lyapunov_estimated": 0.13621488344499086,
         "multiscale_entropy": 0.3913632586715302,
         "nonautonomous": false,
         "parameters": {
@@ -4506,7 +4506,7 @@
             -0.181183885924572,
             -2.522759887828014
         ],
-        "maximum_lyapunov_estimated": 0.03719830596656144,
+        "maximum_lyapunov_estimated": 0.12906862565697674,
         "multiscale_entropy": 0.4989636261373046,
         "nonautonomous": true,
         "parameters": {
@@ -4544,7 +4544,7 @@
             0.022689184568283626,
             -5.6332694618503885
         ],
-        "maximum_lyapunov_estimated": 0.6561566154431996,
+        "maximum_lyapunov_estimated": 0.5477586276153029,
         "multiscale_entropy": 0.9058707360850027,
         "nonautonomous": false,
         "parameters": {
@@ -4590,7 +4590,7 @@
             -0.019016383554425968,
             -9.625045518169777
         ],
-        "maximum_lyapunov_estimated": 0.029847825391001673,
+        "maximum_lyapunov_estimated": 0.32767116410725794,
         "nonautonomous": false,
         "parameters": {
             "alpha": 3.24,
@@ -4620,7 +4620,7 @@
             -0.001043918775422804,
             -1.3240808432405
         ],
-        "maximum_lyapunov_estimated": 0.07990874520682273,
+        "maximum_lyapunov_estimated": 0.06735463002480017,
         "multiscale_entropy": 0.9045422097501858,
         "nonautonomous": false,
         "parameters": {
@@ -4655,7 +4655,7 @@
             9.695760899839663e-05,
             -1.6450480911820564
         ],
-        "maximum_lyapunov_estimated": 0.15595238514031914,
+        "maximum_lyapunov_estimated": 0.403521000622694,
         "multiscale_entropy": 0.5896070173085494,
         "nonautonomous": false,
         "parameters": {
@@ -4690,7 +4690,7 @@
             -0.07297917814211805,
             -14.00993065520751
         ],
-        "maximum_lyapunov_estimated": 2.459880656234634,
+        "maximum_lyapunov_estimated": 1.8525516537708415,
         "multiscale_entropy": 0.6340382196367295,
         "nonautonomous": false,
         "parameters": {
@@ -4723,7 +4723,7 @@
             0.007966964664720393,
             -13.078014115524866
         ],
-        "maximum_lyapunov_estimated": 0.802715215563475,
+        "maximum_lyapunov_estimated": 1.1576066800869989,
         "multiscale_entropy": 0.9335570471768684,
         "nonautonomous": false,
         "parameters": {
@@ -4756,7 +4756,7 @@
             0.005203946388490041,
             -12.999237688229242
         ],
-        "maximum_lyapunov_estimated": 0.5917259125455694,
+        "maximum_lyapunov_estimated": 0.6828000288089435,
         "multiscale_entropy": 0.7337896982114851,
         "nonautonomous": false,
         "parameters": {
