@@ -2212,7 +2212,7 @@
             -0.2833034824174493,
             -0.6392438255039592
         ],
-        "maximum_lyapunov_estimated": 10.614256406561465,
+        "maximum_lyapunov_estimated": 0.448298365567425,
         "nonautonomous": false,
         "parameters": {
             "c": 1.0,
@@ -2861,7 +2861,7 @@
             -0.18584871959889662,
             -2.2412562118189827
         ],
-        "maximum_lyapunov_estimated": 4.370840245811356,
+        "maximum_lyapunov_estimated": 0.07287527454565443,
         "nonautonomous": false,
         "parameters": {
             "beta": 2,
@@ -3156,15 +3156,15 @@
         "embedding_dimension": 10,
         "hamiltonian": false,
         "initial_conditions": [
-            -0.37155972, 
-            -0.55024994, 
-            -1.07760125, 
-            -2.08210946, 
+            -0.37155972,
+            -0.55024994,
+            -1.07760125,
+            -2.08210946,
             -2.92172609,
-            0.22026821,  
-            2.18909877,  
-            1.43553442,  
-            0.47734972,  
+            0.22026821,
+            2.18909877,
+            1.43553442,
+            0.47734972,
             1.36510289
         ],
         "kaplan_yorke_dimension": 9.098082330516,
@@ -3180,7 +3180,7 @@
             -0.004928520908431463,
             -0.5553991058827761
         ],
-        "maximum_lyapunov_estimated": 0.014785562725300386,
+        "maximum_lyapunov_estimated": 0.036102233030474856,
         "nonautonomous": false,
         "parameters": {
             "alpha": 1.0,
@@ -3554,7 +3554,7 @@
             -0.008605197946011937,
             -0.012607310979495853
         ],
-        "maximum_lyapunov_estimated": 1.0457570240712148,
+        "maximum_lyapunov_estimated": 0.024859095331628417,
         "nonautonomous": false,
         "parameters": {
             "alpha": 0.2,
@@ -3742,7 +3742,7 @@
             -0.012665556385738196,
             -0.014601336849935557
         ],
-        "maximum_lyapunov_estimated": 6.027845582332582,
+        "maximum_lyapunov_estimated": 0.0794701998101797,
         "nonautonomous": false,
         "parameters": {
             "c": 0.0,
@@ -4590,7 +4590,7 @@
             -0.019016383554425968,
             -9.625045518169777
         ],
-        "maximum_lyapunov_estimated": 0.32767116410725794,
+        "maximum_lyapunov_estimated": 0.017260872874199203,
         "nonautonomous": false,
         "parameters": {
             "alpha": 3.24,
