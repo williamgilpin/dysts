@@ -458,8 +458,8 @@ class DynSysDelay(DynSys):
         postprocess=True,
     ):
         """
-        Generate a fixed-length trajectory with default timestep,
-        parameters, and initial conditions
+        Generate a fixed-length trajectory with default timestep, parameters, and 
+        initial conditions.
         
         Args:
             n (int): the total number of trajectory points
@@ -481,55 +481,65 @@ class DynSysDelay(DynSys):
         np.random.seed(self.random_state)
         n0 = n
 
-        mem_stride = int(np.ceil(self.tau / self.dt))  # stride
-        #         clipping = mem_stride
-        #         n += 2 * clipping
-
+        ## history length proportional to the delay time over the timestep
+        mem_stride = int(np.ceil(self.tau / self.dt))
+        
+        ## If resampling is performed, calculate the true number of timesteps for the
+        ## Euler loop
         if resample:
-            nt = int(np.ceil((self.period / self.dt) * (n / pts_per_period)))
+            num_periods = n / pts_per_period
+            num_timesteps_per_period = self.period / self.dt
+            nt = int(np.ceil(num_timesteps_per_period *  num_periods))
         else:
             nt = n
 
         # remove transient at front and back
         clipping = int(np.ceil(mem_stride / (nt / n)))
+
+        ## Augment the number of timesteps to account for the transient and the embedding
+        ## dimension
         n += (d + 1) * clipping
         nt += (d + 1) * mem_stride
 
-        if len(self.ic) >= mem_stride:
-            history = collections.deque(self.ic[-mem_stride:])
-        else:
-            np.random.seed(0)
-            history = collections.deque(
-                self.ic[-1] * (1 + 0.2 * np.random.rand(1 + mem_stride))
-            )
+        ## If passed initial conditions are sufficient, then use them. Otherwise, 
+        ## pad with with random initial conditions
+        values = self.ic[0] * (1 + 0.2 * np.random.rand(1 + mem_stride))
+        values[-len(self.ic[-mem_stride:]):] = self.ic[-mem_stride:]
+        history = collections.deque(values)
 
+        ## pre-allocate full solution
         tpts = np.arange(nt) * self.dt
-        tlim = tpts[-1]
-        save_inds = np.linspace(0, nt, n).astype(int)
-
-        # pre-allocate solution
         sol = np.zeros(n)
         sol[0] = self.ic[-1]
         x_next = sol[0]
 
+        ## Define solution submesh for resampling
+        save_inds = np.linspace(0, nt, n).astype(int)
+        save_tpts = list()
+
         ## Pre-compute noise
-        noise_vals = np.random.normal(size=nt, loc=0.0, scale=np.sqrt(self.dt))
+        noise_vals = noise * np.random.normal(size=nt, loc=0.0, scale=np.sqrt(self.dt))
+
+        ## Run Euler integration loop
         for i, t in enumerate(tpts):
             if i == 0:
                 continue
-            dt = tpts[i] - tpts[i - 1]
 
             x_next = (
                 x_next
-                + self.rhs([x_next, history.pop()], t) * self.dt
-                + noise * noise_vals[i]
+                + self.rhs([x_next, history.popleft()], t) * self.dt
+                + noise_vals[i]
             )
 
             if i in save_inds:
                 sol[save_inds == i] = x_next
-            history.appendleft(x_next)
+                save_tpts.append(t)
+            history.append(x_next)
 
-        ## now stack to create an embedding
+        save_tpts = np.array(save_tpts)
+        save_dt = np.median(np.diff(save_tpts))
+
+        ## now stack strided solution to create an embedding
         sol_embed = list()
         embed_stride = int((n / nt) * mem_stride)
         for i in range(d):
@@ -549,10 +559,9 @@ class DynSysDelay(DynSys):
             sol0 = standardize_ts(sol0)
 
         if return_times:
-            return tpts[clipping : (n0 + clipping)], sol0
+            return np.arange(sol0.shape[0]) * save_dt, sol0
         else:
             return sol0
-
 
 def get_attractor_list(model_type="continuous"):
     """
