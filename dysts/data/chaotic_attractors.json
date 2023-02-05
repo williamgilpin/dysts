@@ -473,42 +473,6 @@
             2
         ]
     },
-    "LidDrivenCavityFlow": {
-        "bifurcation_parameter": null,
-        "citation": "Grover et al. Chaos (2012). Topological chaos, braiding and bifurcation of almost-cyclic sets.",
-        "correlation_dimension": 2.4669485126996986,
-        "delay": false,
-        "description": "A two-dimensional flow alternately driven by translation of the left and right walls.",
-        "dt": 0.0005269919710144677,
-        "embedding_dimension": 3,
-        "hamiltonian": true,
-        "initial_conditions": [
-            3.966790341130254,
-            0.18425981346720144,
-            0.0
-        ],
-        "kaplan_yorke_dimension": 2.9856669109882814,
-        "lyapunov_spectrum_estimated": [
-            1.00757312,
-            -0.00276829,
-            -1.01941623
-        ],
-        "maximum_lyapunov_estimated": 2.172601412109087,
-        "multiscale_entropy": 0.7815824521381879,
-        "nonautonomous": true,
-        "parameters": {
-            "a": 6.0,
-            "b": 1.0,
-            "u1": 9.92786,
-            "u2": 8.34932,
-            "tau": 1.1
-        },
-        "period": 2.7333134945588955,
-        "pesin_entropy": 1.007573134065856,
-        "unbounded_indices": [
-            2
-        ]
-    },
     "Bouali": {
         "bifurcation_parameter": null,
         "citation": "Bouali (1999). Feedback loop in extended Van der Pols equation applied to an economic model of cycles. International Journal of Bifurkation and Chaos, Vol. 9, No. 4",
@@ -2224,6 +2188,53 @@
         "pesin_entropy": 0.7465581459689814,
         "unbounded_indices": []
     },
+    "InteriorSquirmer": {
+        "bifurcation_parameter": null,
+        "citation": "Blake, J. R. Self propulsion due to oscillations on the surface of a cylinder at low Reynolds number. AMS Bulletin 1971.",
+        "correlation_dimension": 2.4915316423406364,
+        "delay": false,
+        "description": "Boundary-driven flow of a viscous fluid within a cylinder. Any slip boundary condition can be used, as long as it is parametrized by its Fourier coefficients.",
+        "dt": 0.0034587087840134245,
+        "embedding_dimension": 3,
+        "hamiltonian": true,
+        "initial_conditions": [
+            0.1,
+            0.1,
+            0.1
+        ],
+        "kaplan_yorke_dimension": 3.244868718449604,
+        "lyapunov_spectrum_estimated": [
+            0.84473454954854,
+            0.06626639436139446,
+            -0.7318095377786615
+        ],
+        "maximum_lyapunov_estimated": 0.84473454954854,
+        "multiscale_entropy": 0.8772895630687737,
+        "nonautonomous": true,
+        "parameters": {
+            "a": [
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5
+            ],
+            "g": [
+                0.5,
+                0.5,
+                0.5,
+                0.5,
+                0.5
+            ],
+            "n": 5,
+            "tau": 3
+        },
+        "period": 28.822573200111794,
+        "pesin_entropy": 0.9110009439099345,
+        "unbounded_indices": [
+            2
+        ]
+    },
     "IsothermalChemical": {
         "bifurcation_parameter": null,
         "citation": "Petrov, Scott, Showalter. Mixed-mode oscillations in chemical systems. J Chem Phys 1992",
@@ -2392,6 +2403,42 @@
         "period": 0.94667,
         "pesin_entropy": 0.7848314215142518,
         "unbounded_indices": []
+    },
+    "LidDrivenCavityFlow": {
+        "bifurcation_parameter": null,
+        "citation": "Grover et al. Chaos (2012). Topological chaos, braiding and bifurcation of almost-cyclic sets.",
+        "correlation_dimension": 2.4669485126996986,
+        "delay": false,
+        "description": "A two-dimensional flow alternately driven by translation of the left and right walls.",
+        "dt": 0.0005269919710144677,
+        "embedding_dimension": 3,
+        "hamiltonian": true,
+        "initial_conditions": [
+            3.966790341130254,
+            0.18425981346720144,
+            0.0
+        ],
+        "kaplan_yorke_dimension": 2.9856669109882814,
+        "lyapunov_spectrum_estimated": [
+            1.00757312,
+            -0.00276829,
+            -1.01941623
+        ],
+        "maximum_lyapunov_estimated": 2.172601412109087,
+        "multiscale_entropy": 0.7815824521381879,
+        "nonautonomous": true,
+        "parameters": {
+            "a": 6.0,
+            "b": 1.0,
+            "tau": 1.1,
+            "u1": 9.92786,
+            "u2": 8.34932
+        },
+        "period": 2.7333134945588955,
+        "pesin_entropy": 1.007573134065856,
+        "unbounded_indices": [
+            2
+        ]
     },
     "LiuChen": {
         "bifurcation_parameter": null,
