@@ -2450,7 +2450,7 @@
             0.02994120961308413,
             -14.915552395875103
         ],
-        "maximum_lyapunov_estimated": 1.0910931847726466,
+        "maximum_lyapunov_estimated": 0.8917098035724058,
         "multiscale_entropy": 1.1541457906835575,
         "nonautonomous": false,
         "parameters": {
