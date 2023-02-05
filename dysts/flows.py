@@ -360,6 +360,81 @@ class LidDrivenCavityFlow(DynSys):
 class BlinkingVortex(BlinkingRotlet):
     pass
 
+class InteriorSquirmer(DynSys):
+
+    @staticjit
+    def _rhs_static(r, th, t, a, g, n):
+
+        nvals = np.arange(1, n + 1)
+        sinvals, cosvals = np.sin(th * nvals), np.cos(th * nvals)
+        rnvals = r ** nvals
+
+        vrn = g * cosvals + a * sinvals
+        vrn *= (nvals * rnvals * (r ** 2 - 1)) / r
+
+        vth = 2 * r + (r ** 2 - 1) * nvals / r
+        vth *= a * cosvals - g * sinvals
+        vth *= rnvals
+
+        return np.sum(vrn), np.sum(vth) / r
+    
+    @staticjit
+    def _jac_static(r, th, t, a, g, n):
+
+        nvals = np.arange(1, n + 1)
+        sinvals, cosvals = np.sin(th * nvals), np.cos(th * nvals)
+        rnvals = r ** nvals
+        trigsum = a * sinvals + g * cosvals
+        trigskew = a * cosvals - g * sinvals
+
+        j11 = np.copy(trigsum)
+        j11 *= nvals * rnvals * (2 * r ** 2 + (r ** 2 - 1) * (nvals - 1))
+        j11 = (1 / r ** 2) * np.sum(j11)
+
+        j12 = np.copy(trigskew)
+        j12 *= -(nvals ** 2) * rnvals * (1 - r ** 2) / r
+        j12 = np.sum(j12)
+
+        j21 = 2 * rnvals * (2 * nvals + 1) * (-np.copy(trigskew))
+        j21 += (n * (1 - r ** 2) * rnvals * (nvals - 1) / r ** 2) * np.copy(
+            g * sinvals + a * cosvals
+        )
+        j21 = -np.sum(j21)
+
+        j22 = np.copy(trigsum)
+        j22 *= -nvals * rnvals * (2 * r + (r ** 2 - 1) * nvals / r)
+        j22 = np.sum(j22)
+        # (1 / r**2) *
+
+        ## Correct for polar coordinates
+        vth = np.copy(trigskew)
+        vth *= 2 * r + (r ** 2 - 1) * nvals / r
+        vth *= rnvals
+        vth = np.sum(vth) / r
+        j21 = j21 / r - vth / r
+        j22 /= r
+
+        return np.array([[j11, j12], [j21, j22]])
+
+    @staticjit
+    def _protocol(t, tau, stiffness=20):
+        return 0.5 + 0.5 * np.tanh(tau * stiffness * np.sin(2 * np.pi * t / tau))
+    
+    def _postprocessing(self, r, th, tt):
+        return r * np.cos(th), r * np.sin(th), np.sin(2 * np.pi * tt / self.tau)
+    
+    def jac(self, X, t):
+        r, th = X[0], X[1]
+        phase = self._protocol(t, self.tau)
+        return self._jac_static(r, th, t, self.a * phase, self.g * (1 - phase), self.n)
+    
+    def rhs(self, X, t):
+        r, th, tt = X
+        phase = self._protocol(tt, self.tau)
+        dtt = 1
+        dr, dth = self._rhs_static(r, th, t, self.a * phase, self.g * (1 - phase), self.n)
+        return dr, dth, dtt
+
 
 class OscillatingFlow(DynSys):
     @staticjit
