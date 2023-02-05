@@ -248,7 +248,9 @@ def lyapunov_exponent_naive(
     eps_max = rtol
     all_lyap = []
     all_cutoffs = []
-    for ic in all_ic:
+    for ind, ic in enumerate(all_ic):
+        np.random.seed(ind)
+        eq.random_state = ind
         eq.ic = ic
         out = ComputationHolder(
             eq.make_trajectory, 
@@ -262,10 +264,11 @@ def lyapunov_exponent_naive(
             continue
         else:
             tvals, traj1 = out
+
+        np.random.seed(ind)
+        eq.random_state = ind
         eq.ic = ic
         eq.ic *= (1 + eps * (np.random.random(eq.ic.shape) - 0.5))
-
-
         # traj2 = eq.sample(traj_length, resample=True, **kwargs)
         traj2 = ComputationHolder(
             eq.make_trajectory, 

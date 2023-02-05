@@ -2833,7 +2833,7 @@
         "correlation_dimension": 1.7750825878015626,
         "delay": true,
         "description": "A physiological circuit with time-delayed feedback. A standard delay dimension of three is used.",
-        "dt": 0.001243,
+        "dt": 0.0011564772806684687,
         "embedding_dimension": 10,
         "hamiltonian": false,
         "initial_conditions": [
@@ -2869,7 +2869,7 @@
             "n": 9.65,
             "tau": 2.0
         },
-        "period": 7.43264,
+        "period": 5.9612230962292045,
         "pesin_entropy": 0.3741375523997009,
         "unbounded_indices": []
     },
@@ -3152,20 +3152,20 @@
         "correlation_dimension": 1.3715663776355644,
         "delay": true,
         "description": "A delay model that can be implemented as an electronic circuit. A standard delay dimension of three is used.",
-        "dt": 0.07032,
+        "dt": 0.010386990384645287,
         "embedding_dimension": 10,
         "hamiltonian": false,
         "initial_conditions": [
-            2.34555749,
-            1.47680635,
-            0.82341021,
-            1.732819,
-            2.6907941,
-            2.37671687,
-            -1.63813079,
-            -2.08396784,
-            -1.73699867,
-            -1.12395851
+            -0.37155972, 
+            -0.55024994, 
+            -1.07760125, 
+            -2.08210946, 
+            -2.92172609,
+            0.22026821,  
+            2.18909877,  
+            1.43553442,  
+            0.47734972,  
+            1.36510289
         ],
         "kaplan_yorke_dimension": 9.098082330516,
         "lyapunov_spectrum_estimated": [
@@ -3188,7 +3188,7 @@
             "c": 2.24,
             "tau": 4.9
         },
-        "period": 59.92807058823529,
+        "period": 52.99484890125133,
         "pesin_entropy": 0.014785562725300386,
         "unbounded_indices": []
     },
@@ -3526,7 +3526,7 @@
         "correlation_dimension": 1.6731262397195827,
         "delay": true,
         "description": "A delay model that can be implemented as an electronic circuit. A standard delay dimension of three is used.",
-        "dt": 0.01215,
+        "dt": 0.028957332188474537,
         "embedding_dimension": 10,
         "hamiltonian": false,
         "initial_conditions": [
@@ -3561,7 +3561,7 @@
             "beta": 0.2,
             "tau": 10.0
         },
-        "period": 48.5132,
+        "period": 152.40701151828662,
         "pesin_entropy": 0.016452858090143806,
         "unbounded_indices": []
     },
@@ -4562,7 +4562,7 @@
         "correlation_dimension": 0.3215769338785323,
         "delay": true,
         "description": "An electronic circuit with delayed feedback. A standard delay dimension of three is used.",
-        "dt": 0.01215,
+        "dt": 0.005208196388368833,
         "embedding_dimension": 10,
         "hamiltonian": false,
         "initial_conditions": [
@@ -4596,7 +4596,7 @@
             "alpha": 3.24,
             "tau": 13.28
         },
-        "period": 23.16075,
+        "period": 26.57243055290214,
         "pesin_entropy": 0.040600955873224424,
         "unbounded_indices": []
     },
