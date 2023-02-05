@@ -242,7 +242,12 @@ def lyapunov_exponent_naive(
         >>> max_lyap = dysts.lyapunov_exponent_naive(eq)
         
     """
-    all_ic = sample_initial_conditions(eq, n_samples, traj_length=traj_length)
+    all_ic = sample_initial_conditions(
+        eq, 
+        n_samples, 
+        traj_length=max(traj_length, n_samples),
+        pts_per_period=15,
+    )
     pts_per_period = 100
     eps = atol
     eps_max = rtol
@@ -262,6 +267,8 @@ def lyapunov_exponent_naive(
         ).run()
         if out is None:
             continue
+        if np.sum(np.isnan(out[1])) > 0:
+            continue
         else:
             tvals, traj1 = out
 
@@ -278,6 +285,8 @@ def lyapunov_exponent_naive(
             **kwargs
         ).run()
         if traj2 is None:
+            continue
+        if np.sum(np.isnan(traj2)) > 0:
             continue
 
         ## Truncate traj1 and traj2 to when their scaled separation is less than eps_max
@@ -307,7 +316,7 @@ def lyapunov_exponent_naive(
             + "the invariant properties."
         )
 
-    return np.median(all_lyap)
+    return np.mean(all_lyap)
 
 def kaplan_yorke_dimension(spectrum0):
     """Calculate the Kaplan-Yorke dimension, given a list of
