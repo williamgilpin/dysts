@@ -1,28 +1,15 @@
 """
 Helper utilities for working with time series arrays. This module is intended to have no
 dependencies on the rest of the package.
-
-Author: Jacob Reinhold (
-    http://jcreinhold.github.io
-)
-
-Created on: June 10, 2020
-
-Copyright: 2020 Jacob Reinhold (
-    http://jcreinhold.github.io
-)
-
 """
 import numpy as np
-from numpy.fft import rfft, irfft
+from numpy.fft import rfft
 
 import warnings
-from scipy.integrate import odeint, solve_ivp
-from scipy.signal import blackmanharris, fftconvolve, resample, periodogram
+from scipy.integrate import solve_ivp
+from scipy.signal import blackmanharris, resample, periodogram
 from collections import deque
 from functools import partial
-
-import json
 
 try:
     from sdeint import itoint
