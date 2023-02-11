@@ -20,7 +20,7 @@ from dysts.datasets import load_file, convert_json_to_gzip
 from resources.esn import NVARForecast
 
 SEED = 0
-LONG_TEST = True
+LONG_TEST = False
 
 niters = 500
 
@@ -94,7 +94,7 @@ for equation_name in get_attractor_list():
 
     ## Inference
     test_data = np.copy(np.array(equation_data_test.dataset[equation_name]["values"]))
-    split_point = int(1 / 6 * len(test_data))
+    split_point = int(5 / 6 * len(test_data))
     if LONG_TEST:
         split_point = int(1 / 6 * len(test_data))
     y_test, y_test_val = test_data[:split_point], test_data[split_point:]
