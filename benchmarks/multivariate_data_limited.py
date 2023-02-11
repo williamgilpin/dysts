@@ -64,7 +64,10 @@ except FileNotFoundError:
 model_names = list(all_hyperparameters["Aizawa"].keys())
 equation_names = list(equation_data.dataset.keys())
 
+print("model_names: ", model_names, flush=True)
+
 model_names = ["RandomForest"]
+model_names = ["LinearRegressionModel"]
 
 
 
