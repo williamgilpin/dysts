@@ -16,11 +16,15 @@ import darts.models
 
 import dysts.metrics
 
+LONG = True
+
 
 cwd = os.path.dirname(os.path.realpath(__file__))
 # cwd = os.getcwd()
 input_path = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json"
-input_path = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_60.json"
+
+if LONG:
+    input_path = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_60.json"
 
 dataname = os.path.splitext(os.path.basename(os.path.split(input_path)[-1]))[0]
 output_path = cwd + "/results/results_" + dataname + ".json"
@@ -69,8 +73,9 @@ for equation_name in equation_data.dataset:
     if equation_name not in all_results.keys():
         all_results[equation_name] = dict()
     
-    # split_point = int(5 / 6 * len(train_data))
-    split_point = int(1 / 6 * len(train_data)) # long horizon
+    split_point = int(5 / 6 * len(train_data))
+    if LONG:
+        split_point = int(1 / 6 * len(train_data)) # long horizon
     y_train, y_val = train_data[:split_point], train_data[split_point:]
     y_train_ts, y_test_ts = TimeSeries.from_values(train_data).split_before(split_point)
     
