@@ -68,6 +68,7 @@ print("model_names: ", model_names, flush=True)
 
 model_names = ["RandomForest"]
 model_names = ["LinearRegressionModel"]
+model_names = ["KalmanForecaster"]
 
 
 

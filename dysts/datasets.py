@@ -191,7 +191,7 @@ def featurize_timeseries(dataset):
     return extracted_features
 
 
-def convert_json_to_gzip(fpath, encoding="utf-8"):
+def convert_json_to_gzip(fpath, encoding="utf-8", delete_original=False):
     """
     Convert a json file to a gzip file in a format that can be easily read by the
     `dysts` package. By default, the gzip file will be saved with the same name and
@@ -200,6 +200,8 @@ def convert_json_to_gzip(fpath, encoding="utf-8"):
     Args:
         fpath (str): Path to the json file to be converted
         encoding (str): Encoding to use when writing the gzip file
+        delete_original (bool): Whether to delete the original json file after
+            conversion. Default is False.
 
     Returns:
         None
@@ -215,7 +217,34 @@ def convert_json_to_gzip(fpath, encoding="utf-8"):
     with gzip.open(fpath + ".gz", 'wt', encoding=encoding) as file:
         json.dump(data, file, indent=4)
 
+    if delete_original:
+        os.remove(fpath)
 
+import zipfile
+def load_json(fpath):
+    """
+    Load either a raw, zipped, or gzipped json file.
+
+    Args:
+        fpath (str): Path to the json file to be loaded
+
+    Returns:
+        data (dict): Dictionary containing the data from the json file
+    """
+    if os.path.splitext(fpath)[1] == ".json":
+        with open(fpath, 'r') as file:
+            data = json.load(file)
+        return data
+    elif os.path.splitext(fpath)[1] == ".gz":
+        with gzip.open(fpath, 'rt') as file:
+            data = json.load(file)
+        return data
+    elif os.path.splitext(fpath)[1] == ".zip":
+        with zipfile.ZipFile(fpath, 'r') as file:
+            data = json.load(file.open(file.namelist()[0]))
+        return data
+    else:
+        raise ValueError("File must be a json or gzipped json file")
 
 def load_file(filename):
     """Locate and import from the module data directory"""
