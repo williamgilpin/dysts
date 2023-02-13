@@ -21,13 +21,13 @@ LONG = True
 
 cwd = os.path.dirname(os.path.realpath(__file__))
 # cwd = os.getcwd()
-input_path = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json"
+input_path = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json.gz"
 
 if LONG:
-    input_path = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_60.json"
+    input_path = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_60.json.gz"
 
 dataname = os.path.splitext(os.path.basename(os.path.split(input_path)[-1]))[0]
-output_path = cwd + "/results/results_" + dataname + ".json"
+output_path = cwd + "/results/results_" + dataname + "22.json"
 dataname = dataname.replace("test", "train" )
 hyperparameter_path = cwd + "/hyperparameters/hyperparameters_multivariate_" + dataname + ".json"
 hyperparameter_path = cwd + "/hyperparameters/hyperparameters_multivariate_train_multivariate__pts_per_period_100__periods_12.json"
@@ -118,7 +118,7 @@ for equation_name in equation_data.dataset:
         ## Attempt to compute several time series distance metrics. If it fails due
         ## to a ValueError, then all metrics are not defined for the given time series.
         try:
-	        all_metrics = dysts.metrics.compute_metrics(y_val, y_val_pred)
+            all_metrics = dysts.metrics.compute_metrics(y_val, y_val_pred)
         except ValueError:
             all_metrics = dysts.metrics.compute_metrics(y_val, y_val)
             for	key in all_metrics:

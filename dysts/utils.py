@@ -53,6 +53,25 @@ def dict_loudassign(d, key, val):
     d[key] = val
     return d
 
+def nested_dict_invert(ndict, levels=(0,1)):
+    """
+    Invert a nested dictionary.
+    
+    Args:
+        ndict (dict): The nested dictionary to invert.
+        levels (tuple): The levels of the nested dictionary to invert. Not Implemented.
+
+    Returns:
+        inverted (dict): The inverted dictionary.
+    """
+    inverted = dict()
+    for key1 in ndict:
+        for key2 in ndict[key1]:
+            if key2 not in inverted:
+                inverted[key2] = dict()
+            inverted[key2][key1] = ndict[key1][key2]
+    return inverted
+
 def standardize_ts(a, scale=1.0):
     """Standardize an array along dimension -2
     For dimensions with zero variance, divide by one instead of zero
