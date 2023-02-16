@@ -36,7 +36,7 @@ print(f"{n} devices found.", flush=True)
 if not has_gpu:
     warnings.warn("No GPU found.")
     gpu_params = {
-        "accelerator": "cpu",                                                                                    
+        "accelerator": "cpu",                                                                             
     }
 else:
     warnings.warn("GPU working.")
@@ -54,32 +54,32 @@ equation_data = load_file(input_path)
 with open(hyperparameter_path, "r") as file:
     all_hyperparameters = json.load(file)
 
+model_names = list(all_hyperparameters["Aizawa"].keys())
+equation_names = list(equation_data.dataset.keys())
+
+# print("model_names: ", model_names, flush=True)
+# model_names = ["RandomForest"]
+# model_names = ["LinearRegressionModel"]
+
+## load file and clean out dictionary of null keys
 try:
     with open(output_path, "r") as file:
         all_results = json.load(file)
 except FileNotFoundError:
     all_results = dict()
-
-
-model_names = list(all_hyperparameters["Aizawa"].keys())
-equation_names = list(equation_data.dataset.keys())
-
-print("model_names: ", model_names, flush=True)
-
-model_names = ["RandomForest"]
-model_names = ["LinearRegressionModel"]
-model_names = ["KalmanForecaster"]
-
-
-
 for equation_name in equation_data.dataset:
-    if equation_name not in all_results.keys():
-        all_results[equation_name] = dict()
     for model_name in model_names:
         if model_name not in all_results[equation_name].keys():
-            all_results[equation_name][model_name] = list()
+            continue
+        if len(all_results[equation_name][model_name]) == 0:
+            all_results[equation_name].pop(model_name, None)
 
 for equation_name in equation_names:
+    
+    if equation_name not in all_results.keys():
+        all_results[equation_name] = dict()
+    else:
+        print(f"{equation_name} seen before.", flush=True) 
     
     train_data = np.copy(np.array(equation_data.dataset[equation_name]["values"]))
     split_point = int(5 / 6 * len(train_data)) # long horizon
@@ -87,10 +87,31 @@ for equation_name in equation_names:
     truncate_inds = np.unique(np.linspace(0, split_point - max_lag_val - 1, 25).astype(int))
         
     for model_name in model_names:
-        all_scores = list()
+        
+        ## re-load file and clean out dictionary of null keys
+#         try:
+#             with open(output_path, "r") as file:
+#                 all_results = json.load(file)
+#         except FileNotFoundError:
+#             all_results = dict()
+#         for equation_name in equation_data.dataset:
+#             for model_name in model_names:
+#                 if model_name not in all_results[equation_name].keys():
+#                     continue
+#                 if len(all_results[equation_name][model_name]) == 0:
+#                     all_results[equation_name].pop(model_name, None)
+        
+    
+        if model_name not in all_results[equation_name].keys():
+            all_results[equation_name][model_name] = list()
+        elif len(all_results[equation_name][model_name]) >= len(truncate_inds):
+            print(f"Skipping {model_name} for {equation_name}", flush=True)
+            continue
+        else:
+            ## reset count
+            all_results[equation_name][model_name] = list()
 
         for i in truncate_inds:
-    
             y_train, y_val = train_data[i:split_point], train_data[split_point:]
             # print("y_train.shape: ", y_train.shape, flush=True)
             y_train_ts, y_test_ts = (
