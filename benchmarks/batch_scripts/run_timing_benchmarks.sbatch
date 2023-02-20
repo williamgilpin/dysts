@@ -27,7 +27,7 @@
 #SBATCH --cpus-per-task=1
 #
 # Wall clock limit: HH:MM:SS
-#SBATCH --time=47:30:00
+#SBATCH --time=2:30:00
 #
 ## Command(s) to run (example):
 conda init bash
@@ -37,4 +37,4 @@ source ~/work/miniconda3/etc/profile.d/conda.sh
 conda activate dysts
 echo $CONDA_DEFAULT_ENV
 echo $CONDA_PREFIX
-python timing_benchmarks.py
+python timing_benchmarks2.py

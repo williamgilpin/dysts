@@ -20,7 +20,7 @@ from dysts.datasets import load_file, convert_json_to_gzip
 from resources.esn import ESNForecast
 
 SEED = 0
-LONG_TEST = True
+LONG_TEST = False
 
 niters = 500
 
@@ -52,6 +52,7 @@ except FileNotFoundError:
 from dysts.metrics import smape
 score_func = smape
 
+np.random.seed(SEED)
 leak_rates = np.arange(1, 12) * 0.1
 all_best_tau = dict()
 for equation_name in get_attractor_list():
@@ -59,6 +60,10 @@ for equation_name in get_attractor_list():
     print(equation_name, flush=True)
     if equation_name in all_results.keys():
         print("Skipped")
+        continue
+
+    if equation_name not in equation_data_train.dataset.keys():
+        print(f"Skipped {equation_name}, not in precomputed splits")
         continue
 
     train_data = np.copy(np.array(equation_data_train.dataset[equation_name]["values"]))
@@ -90,7 +95,7 @@ for equation_name in get_attractor_list():
 
     ## Inference
     test_data = np.copy(np.array(equation_data_test.dataset[equation_name]["values"]))
-    split_point = int(1 / 6 * len(test_data))
+    split_point = int(5 / 6 * len(test_data))
     if LONG_TEST:
         split_point = int(1 / 6 * len(test_data))
     y_test, y_test_val = test_data[:split_point], test_data[split_point:]

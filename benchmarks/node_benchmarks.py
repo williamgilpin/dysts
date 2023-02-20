@@ -20,6 +20,7 @@ from dysts.datasets import load_file
 from resources.node import NODEForecast
 
 SEED = 0
+LONG_TEST = False
 niters = 500
 
 cwd = os.path.dirname(os.path.realpath(__file__))
@@ -81,9 +82,11 @@ for equation_name in get_attractor_list():
 
     test_data = np.copy(np.array(equation_data_test.dataset[equation_name]["values"]))
     split_point = int(5 / 6 * len(test_data))
+    if LONG_TEST:
+        split_point = int(1 / 6 * len(test_data))
     y_test, y_test_val = test_data[:split_point], test_data[split_point:]
 
-    model = NODEForecast(test_data.shape[-1], tau_op, random_state=SEED)
+    model = NODEForecast(test_data.shape[-1], tau_opt, random_state=SEED)
     model.fit(y_test, niters=500)
     y_test_pred_val = model.predict(200)
     score_val = score_func(y_test_val, y_test_pred_val)
