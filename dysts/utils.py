@@ -72,6 +72,40 @@ def nested_dict_invert(ndict, levels=(0,1)):
             inverted[key2][key1] = ndict[key1][key2]
     return inverted
 
+def nanmean_trimmed(arr, percentile=0.5, axis=None):
+    """
+    Compute the trimmed mean of an array along a specified axis, ignoring NaNs.
+
+    Args:
+        arr (np.array): Input array
+        percentile (float): The fraction of data to be trimmed. Should be between 0 and
+            1. Default is 0.5.
+        axis (int): Axis along which to compute the trimmed mean. If None (the default),
+            compute over the whole array.
+    Returns:
+        Trimmed mean of the input array along the specified axis.
+    """
+    if axis is None:
+        arr = arr.ravel()
+        axis = 0
+    
+    if not 0 <= percentile <= 1:
+        raise ValueError("percentile must be between 0 and 1")
+    
+    # Calculate the indices corresponding to the trimming percentage
+    n = arr.shape[axis]
+    lower = int(n * percentile / 2)
+    upper = n - lower
+    
+    # Sort the array along the specified axis, ignoring NaNs
+    sorted_arr = np.partition(arr, (lower, upper), axis=axis)
+    sorted_slice = [slice(None)] * arr.ndim
+    sorted_slice[axis] = slice(lower, upper)
+    sorted_arr = sorted_arr[sorted_slice]
+    
+    # Calculate the mean along the specified axis, ignoring NaNs
+    return np.nanmean(sorted_arr, axis=axis)
+
 def standardize_ts(a, scale=1.0):
     """Standardize an array along dimension -2
     For dimensions with zero variance, divide by one instead of zero
