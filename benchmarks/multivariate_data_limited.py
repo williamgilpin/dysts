@@ -61,13 +61,14 @@ equation_names = list(equation_data.dataset.keys())
 # model_names = ["RandomForest"]
 # model_names = ["LinearRegressionModel"]
 
-## load file and clean out dictionary of null keys
 try:
     with open(output_path, "r") as file:
         all_results = json.load(file)
 except FileNotFoundError:
     all_results = dict()
 for equation_name in equation_data.dataset:
+    if equation_name not in all_results.keys():
+        continue
     for model_name in model_names:
         if model_name not in all_results[equation_name].keys():
             continue
@@ -159,7 +160,8 @@ for equation_name in equation_names:
                 score = None
 
             all_results[equation_name][model_name].append(score)
+            
         print(equation_name + " " + model_name, flush=True)
         ## Update results dictionary with metrics, then save to JSON file.
         with open(output_path, 'w') as f:
-            json.dump(all_results, f, indent=4)   
+            json.dump(all_results, f, indent=4)  
