@@ -13,6 +13,7 @@ from scipy.spatial.distance import cdist
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import shortest_path
 
+
 def dtw(y_true, y_pred):
     """
     Compute the Dynamic Time Warping (DTW) distance between two time series.
@@ -191,6 +192,22 @@ def kendall(y_true, y_pred):
             all_vals.append(kendalltau(y_true[:, i], y_pred[:, i])[0])
         return np.mean(all_vals)
 
+from sklearn.feature_selection import mutual_info_regression
+def mutual_information(y_true, y_pred):
+    """
+    Mutual Information. Returns dimensionwise mean for multivariate time series of
+    shape (T, D). Computes the mutual information separately for each dimension and
+    returns the mean.
+    """
+    mi = np.zeros(y_true.shape[1])
+    for i in range(y_true.shape[1]):
+        mi[i] = mutual_info_regression(
+            y_true[:, i].reshape(-1, 1), 
+            y_pred[:, i].reshape(-1, 1)
+        )
+    return np.mean(mi)
+
+
 def compute_metrics(y_true, y_pred, standardize=False):
     """
     Compute multiple time series metrics
@@ -219,4 +236,5 @@ def compute_metrics(y_true, y_pred, standardize=False):
     metrics["pearson"] = pearson(y_true, y_pred)
     metrics["kendall"] = kendall(y_true, y_pred)
     metrics["coefficient_of_variation"] = coefficient_of_variation(y_true, y_pred)
+    metrics["mutual_information"] = mutual_information(y_true, y_pred)
     return metrics
