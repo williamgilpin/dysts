@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 # Datasets too large for GitHub
-results_classical_multivariate.json
+*results_classical_multivariate.json*
 results_test_univariate__pts_per_period_100__periods_12_granularity_sweep.json*
 results_test_univariate__pts_per_period_100__periods_12_noise_sweep.json*
 dysts/data/test_multivariate__pts_per_period_100__periods_60.json*
