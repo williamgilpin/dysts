@@ -53,16 +53,18 @@ score_func = smape
 
 
 time_delays = [3, 5, 10, 25]
-season_values = [darts.utils.utils.SeasonalityMode.ADDITIVE, 
-                 darts.utils.utils.SeasonalityMode.NONE
-                ]
+season_values = [
+    darts.utils.utils.SeasonalityMode.ADDITIVE, 
+    darts.utils.utils.SeasonalityMode.NONE
+]
 all_best_hparam = dict()
 parameter_candidates = dict()
 parameter_candidates["ARIMA"] = {"p": time_delays}
 parameter_candidates["ExponentialSmoothing"] = {"seasonal": season_values}
 parameter_candidates["FourTheta"] = {"season_mode": season_values}
 parameter_candidates["Theta"] = {"season_mode": season_values}
-for model_name in ["AutoARIMA", "FFT", "NaiveDrift", "NaiveMean", "NaiveSeasonal", "TBATS"]:
+parameter_candidates["TBATS"] = {"n_jobs": [1]}
+for model_name in ["AutoARIMA", "FFT", "NaiveDrift", "NaiveMean", "NaiveSeasonal"]:
     parameter_candidates[model_name] = {}
 
 for equation_name in get_attractor_list():
@@ -99,6 +101,7 @@ for equation_name in get_attractor_list():
         train_ts = TimeSeries.from_values(y_train)
         test_ts = TimeSeries.from_values(y_val)
 
+        ## n_jobs not valid for all
         if len(parameter_candidates[model_name]) > 0:
             all_scores = list()
             hkey = list(parameter_candidates[model_name].keys())[0]
@@ -107,7 +110,7 @@ for equation_name in get_attractor_list():
             for hparam in hparam_list:
                 try:
                     model = MultivariateForecast(model_instance)
-                    model.fit(train_ts, n_jobs=1, **{hkey: hparam})
+                    model.fit(train_ts, **{hkey: hparam})
                     pred_ts = model.predict(len(y_val))
                     sol_pred = pred_ts.values()
                     score_val = score_func(sol_test, sol_pred)
@@ -134,18 +137,19 @@ for equation_name in get_attractor_list():
         model = MultivariateForecast(model_instance)
         try:
             time_start = time.perf_counter()
-            model.fit(y_test_ts, n_jobs=1, **hyperparams)
+            model.fit(y_test_ts, **hyperparams)
             time_end = time.perf_counter()
             fit_time = str(time_end - time_start)
-            
+
+            y_test_pred_val = model.predict(len(y_test_val))
+            y_test_pred_val = y_test_pred_val.values()
+            score_val = score_func(y_test_val, y_test_pred_val)
+
             time_start = time.perf_counter()
             _ = model.predict(200)
             time_end = time.perf_counter()
             predict_time = str(time_end - time_start)
 
-            y_test_pred_val = model.predict(len(y_test_val))
-            y_test_pred_val = y_test_pred_val.values()
-            score_val = score_func(y_test_val, y_test_pred_val)
         except:
             score_val = None
             y_test_pred_val = np.array([None] * len(y_test_val))
