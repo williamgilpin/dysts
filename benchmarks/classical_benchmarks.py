@@ -137,7 +137,6 @@ for equation_name in get_attractor_list():
             time_end = time.perf_counter()
             fit_time = str(time_end - time_start)
             
-
             time_start = time.perf_counter()
             _ = model.predict(200)
             time_end = time.perf_counter()
