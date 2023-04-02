@@ -1,16 +1,22 @@
 import numpy as np
 
-
 import darts
 from darts import TimeSeries
-# from darts.models.forecasting.forecasting_model import GlobalForecastingModel, ForecastingModel
-
-
-## wrap forecast models that operate only on univariate time series to separately
-## forecast each component of a multivariate time series. Train a separate model
-## for each component of the multivariate time series.
 
 class MultivariateForecast():
+    """MultivariateForecast class.
+
+    A wrapper for univariate forecasting models that can be used to forecast
+    multivariate time series. This class trains a separate model for each
+    component of the multivariate time series.
+
+    Parameters:
+        model: forecasting model to be used for each component.
+
+    Attributes:
+        models_ (list): list of models, one for each component.
+        n_components (int): number of components of the multivariate time series.
+    """
     def __init__(self, model):
         self.model = model
 

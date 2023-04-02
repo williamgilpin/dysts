@@ -14,7 +14,7 @@ import pandas as pd
 import dysts
 import dysts.flows
 from dysts.base import get_attractor_list
-from dysts.datasets import load_file
+from dysts.datasets import load_file, convert_json_to_gzip
 
 import darts
 from darts.models import *
@@ -33,7 +33,7 @@ input_path_train = os.path.dirname(cwd)  + "/dysts/data/train_multivariate__pts_
 input_path_test = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json.gz"
 if LONG_TEST:
     input_path_test = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_60.json.gz"
-output_path = cwd + "/results/results_classical_multivariate.json"
+output_path = cwd + "/results/results_classical_multivariate2.json"
 
 equation_data_train = load_file(input_path_train)
 equation_data_test = load_file(input_path_test)
@@ -62,12 +62,8 @@ parameter_candidates["ARIMA"] = {"p": time_delays}
 parameter_candidates["ExponentialSmoothing"] = {"seasonal": season_values}
 parameter_candidates["FourTheta"] = {"season_mode": season_values}
 parameter_candidates["Theta"] = {"season_mode": season_values}
-for model_name in ["AutoARIMA", "FFT", "NaiveDrift", "NaiveMean", "NaiveSeasonal", "Prophet"]:
+for model_name in ["AutoARIMA", "FFT", "NaiveDrift", "NaiveMean", "NaiveSeasonal", "TBATS"]:
     parameter_candidates[model_name] = {}
-
-model_name = "ARIMA"
-model_instance = getattr(darts.models, model_name)
-
 
 for equation_name in get_attractor_list():
 
@@ -80,7 +76,7 @@ for equation_name in get_attractor_list():
 
     for model_name in [ "ExponentialSmoothing", "ARIMA","FourTheta", 
                     "Theta", "AutoARIMA", "FFT", "NaiveDrift", "NaiveMean", 
-                    "NaiveSeasonal", "Prophet"]:
+                    "NaiveSeasonal", "TBATS"]:
         model_instance = getattr(darts.models, model_name)
 
         print(model_name, flush=True)
@@ -111,7 +107,7 @@ for equation_name in get_attractor_list():
             for hparam in hparam_list:
                 try:
                     model = MultivariateForecast(model_instance)
-                    model.fit(train_ts, **{hkey: hparam})
+                    model.fit(train_ts, n_jobs=1, **{hkey: hparam})
                     pred_ts = model.predict(len(y_val))
                     sol_pred = pred_ts.values()
                     score_val = score_func(sol_test, sol_pred)
@@ -137,16 +133,18 @@ for equation_name in get_attractor_list():
         model = MultivariateForecast(model_instance)
         try:
             time_start = time.perf_counter()
-            model.fit(y_test_ts, **hyperparams)
+            model.fit(y_test_ts, n_jobs=1, **hyperparams)
             time_end = time.perf_counter()
             fit_time = str(time_end - time_start)
+            
 
             time_start = time.perf_counter()
-            y_test_pred_val = model.predict(len(y_test_val))
+            _ = model.predict(200)
             time_end = time.perf_counter()
-            y_test_pred_val = y_test_pred_val.values()
             predict_time = str(time_end - time_start)
 
+            y_test_pred_val = model.predict(len(y_test_val))
+            y_test_pred_val = y_test_pred_val.values()
             score_val = score_func(y_test_val, y_test_pred_val)
         except:
             score_val = None
@@ -170,5 +168,4 @@ for equation_name in get_attractor_list():
             json.dump(all_results, f, indent=4, sort_keys=True)   
             
 
-
-
+convert_json_to_gzip(output_path)
