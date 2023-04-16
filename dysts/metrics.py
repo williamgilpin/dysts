@@ -207,6 +207,15 @@ def mutual_information(y_true, y_pred):
         )
     return np.mean(mi)
 
+def nrmse(y_true, y_pred):
+    return np.sqrt(
+        np.mean((y_true - y_pred)**2)) / np.sqrt(np.mean(y_true**2)
+    )
+
+def mae(y_true, y_pred):
+    return np.mean(np.abs(y_true - y_pred))
+
+rmse = lambda x: np.sqrt(np.mean(*x))
 
 def compute_metrics(y_true, y_pred, standardize=False):
     """
@@ -224,8 +233,9 @@ def compute_metrics(y_true, y_pred, standardize=False):
     metrics = dict()
     metrics["mse"] = mse(y_true, y_pred)
     metrics["mae"] = mae(y_true, y_pred)
-    metrics["rmse"] = np.sqrt(metrics["mse"])
-    metrics["mae"] = np.mean(np.abs(y_true - y_pred))
+    metrics["rmse"] = rmse(y_true, y_pred)
+    metrics["nrmse"] = nrmse(y_true, y_pred)
+    metrics["mae"] = mae(y_true, y_pred)
     metrics["marre"] = marre(y_true, y_pred)
     metrics["r2_score"] = r2_score(y_true, y_pred)
     metrics["rmsle"] = rmsle(y_true, y_pred)

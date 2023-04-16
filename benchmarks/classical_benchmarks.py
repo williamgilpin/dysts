@@ -76,7 +76,7 @@ for equation_name in get_attractor_list():
     
     all_results[equation_name] = dict()
 
-    for model_name in [ "ExponentialSmoothing", "ARIMA","FourTheta", 
+    for model_name in ["ExponentialSmoothing", "ARIMA", "FourTheta", 
                     "Theta", "AutoARIMA", "FFT", "NaiveDrift", "NaiveMean", 
                     "NaiveSeasonal", "TBATS"]:
         model_instance = getattr(darts.models, model_name)
@@ -168,8 +168,9 @@ for equation_name in get_attractor_list():
         all_results[equation_name][model_name]["Inference time"] = predict_time
 
         print(equation_name, score_val, flush=True)
-        with open(output_path, 'w') as f:
-            json.dump(all_results, f, indent=4, sort_keys=True)   
+        
+    with open(output_path, 'w') as f:
+        json.dump(all_results, f, indent=4, sort_keys=True)   
             
 
 convert_json_to_gzip(output_path)
