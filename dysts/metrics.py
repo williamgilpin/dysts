@@ -73,11 +73,13 @@ def wape(y_true, y_pred):
     """
     return 100 * np.sum(np.abs(y_true - y_pred)) / np.sum(y_true)
 
-def mase(y_true, y_pred, y_train):
+def mase(y_true, y_pred, y_train=None):
     """
     Mean Absolute Scaled Error. If the time series are multivariate, the first axis is
     assumed to be the time dimension.
     """    
+    if y_train is None:
+        y_train = y_true
     return np.mean(np.abs(y_true - y_pred)) / np.mean(np.abs(y_true[1:] - y_train[:-1]))
 
 def mse(y_true, y_pred):
@@ -203,19 +205,22 @@ def mutual_information(y_true, y_pred):
     for i in range(y_true.shape[1]):
         mi[i] = mutual_info_regression(
             y_true[:, i].reshape(-1, 1), 
-            y_pred[:, i].reshape(-1, 1)
+            y_pred[:, i].ravel()
         )
     return np.mean(mi)
 
-def nrmse(y_true, y_pred):
-    return np.sqrt(
-        np.mean((y_true - y_pred)**2)) / np.sqrt(np.mean(y_true**2)
-    )
+def nrmse(y_true, y_pred, eps=1e-8):
+    """
+    Normalized Root Mean Squared Error
+    """
+    sigma = np.std(y_true, axis=0) # D
+    vals = (y_true - y_pred)**2 / (sigma**2 + eps) # T x D
+    return np.sqrt(np.mean(vals)) # Flatten along both dimensions
 
 def mae(y_true, y_pred):
     return np.mean(np.abs(y_true - y_pred))
 
-rmse = lambda x: np.sqrt(np.mean(*x))
+rmse = lambda x, y: np.sqrt(mse(x, y))
 
 def compute_metrics(y_true, y_pred, standardize=False):
     """

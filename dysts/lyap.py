@@ -807,7 +807,7 @@ def lyap_e(data, emb_dim=10, matrix_dim=4, min_nb=None, min_tsep=0, tau=1,
     min_len = lyap_e_len(
         emb_dim=emb_dim, matrix_dim=matrix_dim, min_nb=min_nb, min_tsep=min_tsep
     )
-    print(min_len)
+    #print(min_len)
     if n < min_len:
         msg = "{} data points are not enough! For emb_dim = {}, matrix_dim = {}, " \
             + "min_tsep = {} and min_nb = {} you need at least {} data points " \
