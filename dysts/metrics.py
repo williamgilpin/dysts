@@ -71,7 +71,7 @@ def wape(y_true, y_pred):
     """
     Weighted Absolute Percentage Error
     """
-    return 100 * np.sum(np.abs(y_true - y_pred)) / np.sum(y_true)
+    return 100 * np.sum(np.abs(y_true - y_pred)) / np.sum(np.abs(y_true))
 
 def mase(y_true, y_pred, y_train=None):
     """
@@ -240,7 +240,6 @@ def compute_metrics(y_true, y_pred, standardize=False):
     metrics["mae"] = mae(y_true, y_pred)
     metrics["rmse"] = rmse(y_true, y_pred)
     metrics["nrmse"] = nrmse(y_true, y_pred)
-    metrics["mae"] = mae(y_true, y_pred)
     metrics["marre"] = marre(y_true, y_pred)
     metrics["r2_score"] = r2_score(y_true, y_pred)
     metrics["rmsle"] = rmsle(y_true, y_pred)
