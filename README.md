@@ -31,14 +31,14 @@ sol = eq.load_trajectory(subsets="test", noise=False, granularity="fine")
 # plt.plot(sol[:, 0], sol[:, 1])
 ```
 
-Integrate new trajectories from all 131 chaotic systems with a custom granularity
+Integrate new trajectories from all 135 chaotic systems with a custom granularity
 ```python
 from dysts.base import make_trajectory_ensemble
 
 all_out = make_trajectory_ensemble(100, resample=True, pts_per_period=75)
 ```
 
-Load a precomputed collection of time series from all 131 chaotic systems
+Load a precomputed collection of time series from all 135 chaotic systems
 ```python
 from dysts.datasets import load_dataset
 
