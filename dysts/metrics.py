@@ -209,11 +209,24 @@ def mutual_information(y_true, y_pred):
         )
     return np.mean(mi)
 
-def nrmse(y_true, y_pred, eps=1e-8):
+def nrmse(y_true, y_pred, eps=1e-8, scale=None):
     """
     Normalized Root Mean Squared Error
+
+    Args:
+        y_true (np.ndarray): True values of shape (T, D)
+        y_pred (np.ndarray): Predicted values of shape (T, D)
+        eps (float): Small value to avoid division by zero
+        scale (np.ndarray): Standard deviation of the true values of shape (D,). If None,
+            the standard deviation is computed from the true values.
+
+    Returns:
+        float: NRMSE
     """
-    sigma = np.std(y_true, axis=0) # D
+    if scale is None:
+        sigma = np.std(y_true, axis=0) # D
+    else:
+        sigma = scale
     vals = (y_true - y_pred)**2 / (sigma**2 + eps) # T x D
     return np.sqrt(np.mean(vals)) # Flatten along both dimensions
 
