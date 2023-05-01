@@ -1860,7 +1860,7 @@
     },
     "HyperLu": {
         "bifurcation_parameter": null,
-        "citation": "J\u00fcrgen Meier (2003). Presentation of Attractors with Cinema.",
+        "citation": "Chen, A., Lu, J., Lü, J., & Yu, S. (2006). Generating hyperchaotic Lü attractor via state feedback control. Physica A: Statistical Mechanics and its Applications, 364, 103-110.",
         "correlation_dimension": 2.343735648584751,
         "delay": false,
         "description": "A hyperchaotic variant of the Lu attractor.",
@@ -1895,7 +1895,7 @@
     },
     "HyperPang": {
         "bifurcation_parameter": null,
-        "citation": "J\u00fcrgen Meier (2003). Presentation of Attractors with Cinema.",
+        "citation": "Pang, S., & Liu, Y. (2011). A new hyperchaotic system from the Lü system and its control. Journal of Computational and Applied Mathematics, 235(8), 2775-2789.",
         "correlation_dimension": 2.409444534598458,
         "delay": false,
         "description": "A hyperchaotic system.",
