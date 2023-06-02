@@ -53,6 +53,10 @@ For additional details, please see the preprint. If using this code for publishe
 
 > William Gilpin. "Chaos as an interpretable benchmark for forecasting and data-driven modelling" Advances in Neural Information Processing Systems (NeurIPS) 2021 https://arxiv.org/abs/2110.05266
 
+For the forecasting experiments, please refer to the preprint
+
+> William Gilpin. "Large-scale statistical forecasting models reassess the unpredictability of chaotic systems" 2023 https://arxiv.org/abs/2303.08011
+
 We are very grateful for any suggestions or contributions. See [`CONTRIBUTING.md`](CONTRIBUTING.md)
 
 ## Installation
