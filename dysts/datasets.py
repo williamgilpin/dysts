@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import pkg_resources
 
+## Check for optional time series featurizer
 try:
     from tsfresh import extract_features
     from tsfresh import select_features
@@ -12,6 +13,16 @@ except ImportError:
     _has_tsfresh = False
 else:
     _has_tsfresh = True
+
+
+## Check for optional datasets
+try:
+    from dysts_data.dataloader import get_datapath
+except ImportError:
+    _has_data = False
+else:
+    print(get_datapath())
+    _has_data = True
 
 from .utils import *
 
@@ -248,6 +259,11 @@ def load_json(fpath):
 
 def load_file(filename):
     """Locate and import from the module data directory"""
+    if not _has_data:
+        warnings.warn(
+            "Data module not found. If you are using external precomputed datasets, "+ \
+                  "please install extra dependencies `pip install dysts[data]`"
+        )
     base_path = pkg_resources.resource_filename("dysts", "data")
     data_path = os.path.join(base_path, filename)
     dataset = TimeSeriesDataset(data_path)
@@ -292,7 +308,7 @@ def load_dataset(
         name_parts = list(os.path.splitext(data_path))
         data_path = "".join(name_parts[:-1] + ["_noise"] + [name_parts[-1]])
     
-    ## append a .gz extension if it's not there
+    ## append a .gz extension if it's not there already
     if os.path.splitext(data_path)[1] != ".gz":
         data_path += ".gz"
     dataset = load_file(data_path)
