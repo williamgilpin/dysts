@@ -65,6 +65,22 @@ Install from PyPI
 
     pip install dysts
 
+See the [additional installation guide](#additional-installation-guide) for more options.
+
+
+## Benchmarks
+
+The benchmarks reported in our preprint can be found in [`benchmarks`](benchmarks/). An overview of the contents of the directory can be found in [`BENCHMARKS.md`](benchmarks/BENCHMARKS.md), while individual task areas are summarized in corresponding Jupyter Notebooks within the top level of the directory.
+
+## Contents
+
++ Code to generate benchmark forecasting and training experiments are included in [`benchmarks`](benchmarks/)
++ Pre-computed time series with training and test partitions are included in [`data`](dysts/data/)
++ The raw definitions metadata for all chaotic systems are included in the database file [`chaotic_attractors`](dysts/data/chaotic_attractors.json). The Python implementations of differential equations can be found in [`the flows module`](dysts/flows.py)
+
+
+## Additional Installation Guide
+
 To obtain the latest version, including new features and bug fixes, download and install the project repository directly from GitHub
 
     git clone https://github.com/williamgilpin/dysts
@@ -74,6 +90,10 @@ To obtain the latest version, including new features and bug fixes, download and
 To install the optional precomputed trajectories (a large, static dataset), install directly from GitHub with the `data` extra
 
     pip install dysts[data]
+
+Or, if that fails
+
+    pip install -I git+https://github.com/williamgilpin/dysts_data
 
 Test that everything is working
 
@@ -100,17 +120,6 @@ These additional optional dependencies are needed to reproduce some portions of 
 + tsfresh (used for statistical quantity extraction)
 + pytorch (used for neural network benchmarks)
 + sympy (used for equation analysis benchmarks)
-
-
-## Benchmarks
-
-The benchmarks reported in our preprint can be found in [`benchmarks`](benchmarks/). An overview of the contents of the directory can be found in [`BENCHMARKS.md`](benchmarks/BENCHMARKS.md), while individual task areas are summarized in corresponding Jupyter Notebooks within the top level of the directory.
-
-## Contents
-
-+ Code to generate benchmark forecasting and training experiments are included in [`benchmarks`](benchmarks/)
-+ Pre-computed time series with training and test partitions are included in [`data`](dysts/data/)
-+ The raw definitions metadata for all chaotic systems are included in the database file [`chaotic_attractors`](dysts/data/chaotic_attractors.json). The Python implementations of differential equations can be found in [`the flows module`](dysts/flows.py)
 
 ## Implementation Notes
 
