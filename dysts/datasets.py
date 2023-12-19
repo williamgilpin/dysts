@@ -264,7 +264,8 @@ def load_file(filename):
             "Data module not found. If you are using external precomputed datasets, "+ \
                   "please install extra dependencies `pip install dysts[data]`"
         )
-    base_path = pkg_resources.resource_filename("dysts", "data")
+    # base_path = pkg_resources.resource_filename("dysts", "data")
+    base_path = get_datapath()
     data_path = os.path.join(base_path, filename)
     dataset = TimeSeriesDataset(data_path)
     return dataset
