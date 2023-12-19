@@ -71,6 +71,10 @@ To obtain the latest version, including new features and bug fixes, download and
     cd dysts
     pip install -I . 
 
+To install the optional precomputed trajectories (a large, static dataset), install directly from GitHub with the `data` extra
+
+    pip install dysts[data]
+
 Test that everything is working
 
     python -m unittest
