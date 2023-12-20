@@ -30,6 +30,15 @@ data_path_continuous = pkg_resources.resource_filename(
 )
 data_path_discrete = pkg_resources.resource_filename("dysts", "data/discrete_maps.json")
 
+
+## Check for optional datasets
+try:
+    from dysts_data.dataloader import get_datapath
+except ImportError:
+    _has_data = False
+else:
+    _has_data = True
+
 import numpy as np
 
 from .utils import integrate_dyn, standardize_ts
@@ -148,6 +157,7 @@ class BaseDyn:
         """Bound a trajectory within a periodic domain"""
         return np.mod(traj, 2 * np.pi)
     
+
     def load_trajectory(
         self,
         subsets="train", 
@@ -179,11 +189,21 @@ class BaseDyn:
         if noise:
             name_parts = list(os.path.splitext(data_path))
             data_path = "".join(name_parts[:-1] + ["_noise"] + [name_parts[-1]])
-            
-        cwd = os.path.dirname(os.path.realpath(__file__))
-        data_path = os.path.join(cwd, "data", data_path)
-        # with open(data_path, "r") as file:
-        #     dataset = json.load(file)
+
+
+        if not _has_data:
+            warnings.warn(
+                        "Data module not found. To use precomputed datasets, "+ \
+                            "please install the external data repository "+ \
+                                "\npip install git+https://github.com/williamgilpin/dysts_data"
+            )
+
+        base_path = get_datapath()
+        data_path = os.path.join(base_path, data_path)
+
+        # cwd = os.path.dirname(os.path.realpath(__file__))
+        # data_path = os.path.join(cwd, "data", data_path)
+
         with gzip.open(data_path, 'rt', encoding="utf-8") as file:
             dataset = json.load(file)
             

@@ -260,8 +260,9 @@ def load_file(filename):
     """Locate and import from the module data directory"""
     if not _has_data:
         warnings.warn(
-            "Data module not found. If you are using external precomputed datasets, "+ \
-                  "please install extra dependencies `pip install dysts[data]`"
+                    "Data module not found. To use precomputed datasets, "+ \
+                        "please install the external data repository "+ \
+                            "\npip install git+https://github.com/williamgilpin/dysts_data"
         )
     # base_path = pkg_resources.resource_filename("dysts", "data")
     base_path = get_datapath()

@@ -81,27 +81,17 @@ The benchmarks reported in our preprint can be found in [`benchmarks`](benchmark
 
 ## Additional Installation Guide
 
-To obtain the latest version, including new features and bug fixes, download and install the project repository directly from GitHub
+To obtain the latest version, including new features and bug fixes, download and install the project directly from GitHub
 
-    git clone https://github.com/williamgilpin/dysts
-    cd dysts
-    pip install -I . 
-
-To install the optional precomputed trajectories (a large, static dataset), install directly from GitHub with the `data` extra
-
-    pip install dysts[data]
-
-Or, if that fails
-
-    pip install -I git+https://github.com/williamgilpin/dysts_data
+    pip install git+https://github.com/williamgilpin/dysts
 
 Test that everything is working
 
     python -m unittest
 
-Alternatively, to use this as a regular package without downloading the full repository, install directly from GitHub
+To install the optional precomputed trajectories (a large, static dataset), install directly from GitHub
 
-    pip install git+https://github.com/williamgilpin/dysts
+    pip install git+https://github.com/williamgilpin/dysts_data
 
 The key dependencies are
 
