@@ -21,7 +21,6 @@ try:
 except ImportError:
     _has_data = False
 else:
-    print(get_datapath())
     _has_data = True
 
 from .utils import *
