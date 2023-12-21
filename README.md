@@ -24,13 +24,6 @@ sol = model.make_trajectory(1000)
 # plt.plot(sol[:, 0], sol[:, 1])
 ```
 
-Load a precomputed trajectory for the model
-```python
-eq = Lorenz()
-sol = eq.load_trajectory(subsets="test", noise=False, granularity="fine")
-# plt.plot(sol[:, 0], sol[:, 1])
-```
-
 Integrate new trajectories from all 135 chaotic systems with a custom granularity
 ```python
 from dysts.base import make_trajectory_ensemble
@@ -49,13 +42,11 @@ Additional functionality and examples can be found in [`the demonstrations noteb
 
 ## Reference
 
-For additional details, please see the preprint. If using this code for published work, please consider citing the paper.
+For more information, or if using this code for published work, please consider citing the papers.
 
 > William Gilpin. "Chaos as an interpretable benchmark for forecasting and data-driven modelling" Advances in Neural Information Processing Systems (NeurIPS) 2021 https://arxiv.org/abs/2110.05266
 
-For the forecasting experiments, please refer to the preprint
-
-> William Gilpin. "Large-scale statistical forecasting models reassess the unpredictability of chaotic systems" 2023 https://arxiv.org/abs/2303.08011
+> William Gilpin. "Model scale versus domain knowledge in statistical forecasting of chaotic systems" Physical Review Research 2023 https://arxiv.org/abs/2303.08011
 
 We are very grateful for any suggestions or contributions. See [`CONTRIBUTING.md`](CONTRIBUTING.md)
 
