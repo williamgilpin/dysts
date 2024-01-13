@@ -8,7 +8,6 @@ If you would like a new chaotic system added to the database, please mention it 
 
 The biggest bottleneck when adding new models is a lack of known parameter values and initial conditions, and so please provide a reference or code that contains all parameter values necessary to reproduce the claimed dynamics. For this reason, we would very much appreciate it if you could include as much of possible of the following pieces of information: **Right hand side** and **Metadata**
 
-
 **1. Right hand side.** The first thing that we need is a working right-hand side of the dynamical system. The Lorenz system is currently represented this way. Just replace the name and `_rhs` function, and list the parameters in alphabetical order
 
     class Lorenz(DynSys):
