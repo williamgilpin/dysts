@@ -149,14 +149,18 @@ class BaseDyn:
 
     @staticmethod
     def _rhs(X, t):
-        """The right-hand side of the dynamical system"""
+        """The right-hand side of the dynamical system. Overwritten by the subclass"""
         return X
+    
+    @staticmethod
+    def _jac(X, t, *args):
+        """The Jacobian of the dynamical system. Overwritten by the subclass"""
+        return None
 
     @staticmethod
     def bound_trajectory(traj):
         """Bound a trajectory within a periodic domain"""
         return np.mod(traj, 2 * np.pi)
-    
 
     def load_trajectory(
         self,
@@ -227,9 +231,6 @@ class BaseDyn:
         
 
 
-from scipy.integrate import solve_ivp
-
-
 class DynSys(BaseDyn):
     """
     A continuous dynamical system base class, which loads and assigns parameter
@@ -253,6 +254,14 @@ class DynSys(BaseDyn):
         ]
         out = self._rhs(*X.T, t, *param_list)
         return out
+    
+    def jac(self, X, t):
+        """The Jacobian of the dynamical system"""
+        param_list = [
+            getattr(self, param_name) for param_name in self.get_param_names()
+        ]
+        out = self._jac(*X.T, t, *param_list)
+        return out
 
     def __call__(self, X, t):
         """Wrapper around right hand side"""
@@ -268,6 +277,7 @@ class DynSys(BaseDyn):
         standardize=False,
         postprocess=True,
         noise=0.0,
+        **kwargs
     ):
         """
         Generate a fixed-length trajectory with default timestep, parameters, and initial conditions
@@ -285,6 +295,7 @@ class DynSys(BaseDyn):
                 rescalings to the integration coordinates
             noise (float): The amount of stochasticity in the integrated dynamics. This would correspond
                 to Brownian motion in the absence of any forcing.
+            **kwargs: Additional keyword arguments passed to the integration routine
         
         Returns:
             sol (ndarray): A T x D trajectory
@@ -305,17 +316,26 @@ class DynSys(BaseDyn):
             tpts = np.linspace(0, tlim, n)
 
         m = len(np.array(self.ic).shape)
+
+        # check for analytical Jacobian
+        if self.jac(self.ic, 0) is not None:
+            jac = lambda t, x : self.jac(x, t)
+        else:
+            jac = None
+
         if m < 1:
             m = 1
         if m == 1:
             sol = integrate_dyn(
-                self, self.ic, tpts, dtval=self.dt, method=method, noise=noise
+                self, self.ic, tpts, dtval=self.dt, method=method, noise=noise, jac=jac,
+                **kwargs
             ).T
         else:
             sol = list()
             for ic in self.ic:
                 traj = integrate_dyn(
-                    self, ic, tpts, dtval=self.dt, method=method, noise=noise
+                    self, ic, tpts, dtval=self.dt, method=method, noise=noise, jac=jac,
+                    **kwargs
                 )
                 check_complete = (traj.shape[-1] == len(tpts))
                 if check_complete: 

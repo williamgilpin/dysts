@@ -15,7 +15,7 @@ import sys
 
 sys.path.insert(1, os.path.join(WORKING_DIR, "dysts"))
 from dysts.flows import Lorenz
-from dysts.base import make_trajectory_ensemble
+from dysts.base import make_trajectory_ensemble, get_attractor_list
 import dysts.flows as dfl
 
 
@@ -101,6 +101,32 @@ class TestMakeTrajectoryEnsemble(unittest.TestCase):
         kwargs = {"method": "Radau"}
         with self.assertWarns(UserWarning):
             make_trajectory_ensemble(n, subset=subset, use_multiprocessing=True, random_state=random_state, **kwargs)
+
+
+class TestJacobian(unittest.TestCase):
+    """Perform a grad check to ensure that the Jacobian is implemented correctly"""
+    def test_all_jacobians(self):
+
+        eps = 1e-8
+
+        equation_names = get_attractor_list()
+        for name in equation_names:
+            eq = getattr(dfl, name)()
+            if eq.jac(eq.ic, 0) is None:
+                continue
+            
+            jac_analytic = eq.jac(eq.ic, 0)
+
+            d = len(eq.ic)
+            jac_fd = np.zeros((d, d))
+            for i in range(d):
+                ei = np.zeros(d)
+                ei[i] = 1
+                jac_fd[:, i] = (np.array(eq.rhs(eq.ic + eps*ei, 0)) - np.array(eq.rhs(eq.ic - eps*ei, 0)))/(2 * eps)
+
+            self.assertTrue(np.allclose(jac_analytic, jac_fd, atol=1e-5), f"Jacobian for {name} is incorrect")
+            
+
         
 if __name__ == "__main__":
     unittest.main()
