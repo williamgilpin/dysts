@@ -28,7 +28,7 @@ class Lorenz(DynSys):
         row1 = [-sigma, sigma, 0]
         row2 = [rho - z, -1, -x]
         row3 = [y, x, -beta]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class LorenzBounded(DynSys):
