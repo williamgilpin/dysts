@@ -74,7 +74,7 @@ class Lorenz84(DynSys):
         row1 = [-a, -2 * y, -2 * z]
         row2 = [y - b * z, x - 1, -b * x]
         row3 = [b * y + z, b * x, -1 + x]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class Rossler(DynSys):
@@ -89,7 +89,7 @@ class Rossler(DynSys):
         row1 = [0, -1, -1]
         row2 = [1, a, 0]
         row3 = [z, 0, x - c]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class Thomas(DynSys):
@@ -104,7 +104,7 @@ class Thomas(DynSys):
         row1 = [-a, b * np.cos(y), 0]
         row2 = [0, -a, b * np.cos(z)]
         row3 = [b * np.cos(x), 0, -a]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class ThomasLabyrinth(Thomas):
@@ -158,6 +158,13 @@ class GuckenheimerHolmes(DynSys):
         ydot = a * y + b * x + c * z * y
         zdot = e - z ** 2 - f * x ** 2 - f * y ** 2 - a * z ** 3
         return xdot, ydot, zdot
+    
+    # @staticjit
+    # def _jac(x, y, z, t, a, b, c, d, e, f):
+    #     row1 = a + c * z + 2 * d * z * x, b, -2 * f * x
+    #     row2 = -b + 2 * d * z * y, a + c * z, -2 * f * y
+    #     row3 = c * x + d * x ** 2 + d * y ** 2, c * y, -2 * z - 3 * a * z ** 2
+    #     return row1, row2, row3
 
 
 class HenonHeiles(DynSys):
@@ -174,7 +181,7 @@ class HenonHeiles(DynSys):
         row2 = [0, 0, 0, 1]
         row3 = [-1 - 2 * lam * y, -2 * lam * x, 0, 0]
         row4 = [-2 * lam * x, 2 * lam * y - 1, 0, 0]
-        return [row1, row2, row3, row4]
+        return row1, row2, row3, row4
 
 
 class Halvorsen(DynSys):
@@ -189,7 +196,7 @@ class Halvorsen(DynSys):
         row1 = [-a, -b - 2 * y, -b]
         row2 = [-b, -a, -b - 2 * z]
         row3 = [-b - 2 * x, -b, -a]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class Chua(DynSys):
@@ -229,7 +236,7 @@ class Duffing(DynSys):
         row1 = [0, 1, 0]
         row2 = [-3 * alpha * x ** 2 - beta, -delta, -gamma * np.sin(z)]
         row3 = [0, 0, 0]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
     @staticjit
     def _postprocessing(x, y, z):
@@ -527,7 +534,7 @@ class JerkCircuit(DynSys):
         row1 = [0, 1, 0]
         row2 = [0, 0, 1]
         row3 = [-1, -eps * np.exp(y / y0) / y0, -1]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class ForcedBrusselator(DynSys):
@@ -566,7 +573,7 @@ class MooreSpiegel(DynSys):
         row1 = [0, 1, 0]
         row2 = [0, 0, a]
         row3 = [-2 * x * y - b, eps - x**2, -1]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class CoevolvingPredatorPrey(DynSys):
@@ -751,7 +758,7 @@ class SprottA(DynSys):
         row1 = [0, 1, 0]
         row2 = [-1, z, y]
         row3 = [0, -2 * y, 0]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class SprottB(DynSys):
@@ -766,7 +773,7 @@ class SprottB(DynSys):
         row1 = [0, z, y]
         row2 = [1, -1, 0]
         row3 = [-y, -x, 0]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class SprottC(DynSys):
@@ -781,7 +788,7 @@ class SprottC(DynSys):
         row1 = [0, z, y]
         row2 = [1, -1, 0]
         row3 = [-2 * x, 0, 0]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class SprottD(DynSys):
@@ -796,7 +803,7 @@ class SprottD(DynSys):
         row1 = [0, -1, 0]
         row2 = [1, 0, 1]
         row3 = [z, 6 * y, x]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class SprottE(DynSys):
@@ -811,7 +818,7 @@ class SprottE(DynSys):
         row1 = [0, z, y]
         row2 = [2 * x, -1, 0]
         row3 = [-4, 0, 0]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class SprottF(DynSys):
@@ -826,7 +833,7 @@ class SprottF(DynSys):
         row1 = [0, 1, 1]
         row2 = [-1, a, 0]
         row3 = [2 * x, 0, -1]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class SprottG(DynSys):
@@ -841,7 +848,7 @@ class SprottG(DynSys):
         row1 = [a, 0, 1]
         row2 = [z, -1, x]
         row3 = [-1, 1, 0]
-        return [row1, row2, row3]
+        return row1, row2, row3
 
 
 class SprottH(DynSys):
@@ -1160,7 +1167,7 @@ class ArnoldWeb(DynSys):
     #     row3 = [1, 0, 0, 0, 0]
     #     row4 = [0, 1, 0, 0, 0]
     #     row5 = [0, 0, 0, 0, 0]
-    #     return [row1, row2, row3, row4, row5]
+    #     return row1, row2, row3, row4, row5
 
     @staticjit
     def _postprocessing(p1, p2, x1, x2, z):
