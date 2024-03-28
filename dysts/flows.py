@@ -1046,6 +1046,12 @@ class SprottR(DynSys):
         ydot = b + z
         zdot = x * y - z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b):
+        row1 = [0, -1, 0]
+        row2 = [0, 0, 1]
+        row3 = [y, x, -1]
+        return row1, row2, row3
 
 
 class SprottS(DynSys):
@@ -1055,6 +1061,12 @@ class SprottS(DynSys):
         ydot = x + z ** 2
         zdot = 1 + x
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t):
+        row1 = [-1, -4, 0]
+        row2 = [1, 0, 2 * z]
+        row3 = [1, 0, 0]
+        return row1, row2, row3
 
 
 class SprottMore(DynSys):
@@ -1064,6 +1076,12 @@ class SprottMore(DynSys):
         ydot = -x - np.sign(z) * y
         zdot = y ** 2 - np.exp(-(x ** 2))
         return xdot, ydot, zdot
+    # @staticjit
+    # def _jac(x, y, z, t):
+    #     row1 = [0, 1, 0]
+    #     row2 = [-1, -np.sign(z), 0]
+    #     row3 = [-2 * x * np.exp(-x ** 2), 2 * y, 0]
+    #     return row1, row2, row3
 
 
 class Arneodo(DynSys):
@@ -1073,6 +1091,12 @@ class Arneodo(DynSys):
         ydot = z
         zdot = -a * x - b * y - c * z + d * x ** 3
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c, d):
+        row1 = [0, 1, 0]
+        row2 = [0, 0, 1]
+        row3 = [-a + 3 * d * x ** 2, -b, -c]
+        return row1, row2, row3
 
 
 class Coullet(Arneodo):
@@ -1086,6 +1110,12 @@ class Rucklidge(DynSys):
         ydot = x
         zdot = -z + y ** 2
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b):
+        row1 = [-a, b - z, -y]
+        row2 = [1, 0, 0]
+        row3 = [0, 2 * y, -1]
+        return row1, row2, row3
 
 
 class Sakarya(DynSys):
@@ -1095,6 +1125,12 @@ class Sakarya(DynSys):
         ydot = -b * y - p * x + q * x * z
         zdot = c * z - r * x * y
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c, h, p, q, r, s):
+        row1 = [a, h + s * z, s * y]
+        row2 = [-p + q * z, -b, q * x]
+        row3 = [-r * y, -r * x, c]
+        return row1, row2, row3
 
 
 class LiuChen(Sakarya):
@@ -1108,6 +1144,12 @@ class RayleighBenard(DynSys):
         ydot = r * y - x * z
         zdot = x * y - b * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, r):
+        row1 = [-a, a, 0]
+        row2 = [-z, r, -x]
+        row3 = [y, x, -b]
+        return row1, row2, row3
 
 
 class Finance(DynSys):
@@ -1117,6 +1159,12 @@ class Finance(DynSys):
         ydot = -b * y - x ** 2
         zdot = -x - c * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c):
+        row1 = [(1 / b - a) + y, x, 1]
+        row2 = [-2 * x, -b, 0]
+        row3 = [-1, 0, -c]
+        return row1, row2, row3
 
 
 class Bouali2(DynSys):
@@ -1126,6 +1174,12 @@ class Bouali2(DynSys):
         ydot = -g * y + g * y * x ** 2
         zdot = -1.5 * m * x + m * bb * x * z - c * z
         return xdot, ydot, zdot
+    # @staticjit
+    # def _jac(x, y, z, t, a, b, bb, c, g, m, y0):
+    #     row1 = [a * y0 - a * y, -a * x, -b]
+    #     row2 = [2 * g * x, g * x ** 2 - g, 0]
+    #     row3 = [-1.5 * m + m * bb * z, 0, -c + m * bb * x]
+    #     return row1, row2, row3
 
 
 class Bouali(Bouali2):
@@ -1139,6 +1193,12 @@ class LuChenCheng(DynSys):
         ydot = a * y + x * z
         zdot = b * z + x * y
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c):
+        row1 = [-(a * b) / (a + b), -z, -y]
+        row2 = [z, a, x]
+        row3 = [y, x, b]
+        return row1, row2, row3
 
 
 class LuChen(DynSys):
@@ -1148,6 +1208,12 @@ class LuChen(DynSys):
         ydot = -x * z + c * y
         zdot = x * y - b * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c):
+        row1 = [-a, a, 0]
+        row2 = [-z, c, -x]
+        row3 = [y, x, -b]
+        return row1, row2, row3
 
 
 class QiChen(DynSys):
@@ -1157,6 +1223,12 @@ class QiChen(DynSys):
         ydot = c * x + y - x * z
         zdot = x * y - b * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c):
+        row1 = [-a, a + z, y]
+        row2 = [c - z, 1, -x]
+        row3 = [y, x, -b]
+        return row1, row2, row3
 
 
 class ZhouChen(DynSys):
@@ -1166,6 +1238,12 @@ class ZhouChen(DynSys):
         ydot = c * y - x * z + d * y * z
         zdot = e * z - x * y
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c, d, e):
+        row1 = [a, b + z, y]
+        row2 = [-z, c + d * z, -x + d * y]
+        row3 = [-y, -x, e]
+        return row1, row2, row3
 
 
 class BurkeShaw(DynSys):
@@ -1175,6 +1253,12 @@ class BurkeShaw(DynSys):
         ydot = y - n * x * z
         zdot = n * x * y + e
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, e, n):
+        row1 = [-n, -n, 0]
+        row2 = [-n * z, 1, -n * x]
+        row3 = [n * y, n * x, 0]
+        return row1, row2, row3
 
 
 class Chen(DynSys):
@@ -1184,6 +1268,12 @@ class Chen(DynSys):
         ydot = (c - a) * x - x * z + c * y
         zdot = x * y - b * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c):
+        row1 = [-a, a, 0]
+        row2 = [c - a - z, c, -x]
+        row3 = [y, x, -b]
+        return row1, row2, row3
 
 
 class ChenLee(DynSys):
@@ -1193,6 +1283,12 @@ class ChenLee(DynSys):
         ydot = b * y + x * z
         zdot = c * z + 0.3333333333333333333333333 * x * y
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c):
+        row1 = [a, -z, -y]
+        row2 = [z, b, x]
+        row3 = [0.3333333333333333333333333 * y, 0.3333333333333333333333333 * x, c]
+        return row1, row2, row3
 
 
 class WangSun(DynSys):
@@ -1202,6 +1298,12 @@ class WangSun(DynSys):
         ydot = b * x + d * y - x * z
         zdot = e * z + f * x * y
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, d, e, f, q):
+        row1 = [a, q * z, q * y]
+        row2 = [b - z, d, -x]
+        row3 = [f * y, f * x, e]
+        return row1, row2, row3
 
 
 class YuWang(DynSys):
@@ -1211,6 +1313,12 @@ class YuWang(DynSys):
         ydot = b * x - c * x * z
         zdot = np.exp(x * y) - d * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c, d):
+        row1 = [-a, a, 0]
+        row2 = [b - c * z, 0, -c * x]
+        row3 = [y * np.exp(x * y), x * np.exp(x * y), -d]
+        return row1, row2, row3
 
 
 class YuWang2(DynSys):
@@ -1220,6 +1328,12 @@ class YuWang2(DynSys):
         ydot = b * x - c * x * z
         zdot = np.cosh(x * y) - d * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c, d):
+        row1 = [-a, a, 0]
+        row2 = [b - c * z, 0, -c * x]
+        row3 = [y * np.sinh(x * y), x * np.sinh(x * y), -d]
+        return row1, row2, row3
 
 
 class SanUmSrisuchinwong(DynSys):
@@ -1229,6 +1343,12 @@ class SanUmSrisuchinwong(DynSys):
         ydot = -z * np.tanh(x)
         zdot = -a + x * y + np.abs(y)
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a):
+        row1 = [-1, 1, 0]
+        row2 = [-z * (1 - np.tanh(x) ** 2), 0, -np.tanh(x)]
+        row3 = [y, x + np.sign(y), 0]
+        return row1, row2, row3
 
 
 class DequanLi(DynSys):
@@ -1238,6 +1358,12 @@ class DequanLi(DynSys):
         ydot = k * x + f * y - x * z
         zdot = c * z + x * y - eps * x ** 2
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, c, d, eps, f, k):
+        row1 = [-a + d * z, a, d * x]
+        row2 = [k - z, f, -x]
+        row3 = [y - 2 * eps * x, x, c]
+        return row1, row2, row3
 
 
 class PanXuZhou(DequanLi):
@@ -1615,6 +1741,13 @@ class Hadley(DynSys):
         ydot = x * y - b * x * z - y + g
         zdot = b * x * y + x * z - z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, f, g):
+        row1 = [-a, -2 * y, -2 * z]
+        row2 = [y - b * z, x - 1, -b * x]
+        row3 = [b * y + z, b * x, x - 1]
+        return row1, row2, row3
+    
 
 
 class ForcedVanDerPol(DynSys):
@@ -1650,6 +1783,12 @@ class HindmarshRose(DynSys):
         ydot = -a * x ** 3 - (d - b) * x ** 2 + z
         zdot = -s / tz * x - 1 / tz * z + c / tz
         return xdot, ydot, zdot
+    # @staticjit
+    # def _jac(x, y, z, t, a, b, c, d, s, tx, tz):
+    #     row1 = [-1 / tx - 3 * a / tx * x ** 2 + 2 * b / tx * x, 1 / tx, 1 / tx]
+    #     row2 = [-3 * a * x ** 2 - 2 * (d - b) * x, 0, 1]
+    #     row3 = [-s / tz, 0, -1 / tz - c / tz]
+    #     return row1, row2, row3
 
 
 class Colpitts(DynSys):
@@ -1670,6 +1809,12 @@ class Laser(DynSys):
         ydot = c * x + d * x * z ** 2
         zdot = h * z + k * x ** 2
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c, d, h, k):
+        row1 = [-a, a + b * z ** 2, 2 * b * y * z]
+        row2 = [c + d * z ** 2, 0, 2 * d * x * z]
+        row3 = [2 * k * x, 0, h]
+        return row1, row2, row3
 
 
 class Blasius(DynSys):
