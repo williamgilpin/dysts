@@ -207,6 +207,13 @@ class Chua(DynSys):
         ydot = x - y + z
         zdot = -beta * y
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, alpha, beta, m0, m1):
+        dramp_xdx = m1 + 0.5 * (m0 - m1) * (np.sign(x + 1) - np.sign(x - 1))
+        row1 = [-alpha - alpha * dramp_xdx, alpha, 0]
+        row2 = [1, -1, 1]
+        row3 = [0, -beta, 0]
+        return row1, row2, row3
 
 class MultiChua(DynSys):
     def diode(self, x):
@@ -604,6 +611,12 @@ class KawczynskiStrizhak(DynSys):
         ydot = -2 * mu * x - y - z + beta
         zdot = kappa * x - kappa * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, beta, gamma, kappa, mu):
+        row1 = [-3 * gamma * x ** 2 + 3 * mu * gamma, gamma, 0]
+        row2 = [-2 * mu, -1, -1]
+        row3 = [kappa, 0, -kappa]
+        return row1, row2, row3
 
 
 class BelousovZhabotinsky(DynSys):
@@ -697,6 +710,12 @@ class RikitakeDynamo(DynSys):
         ydot = -mu * y - a * x + x * z
         zdot = 1 - x * y
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, mu):
+        row1 = [-mu, z, y]
+        row2 = [-a + z, -mu, x]
+        row3 = [-y, -x, 0]
+        return row1, row2, row3
 
 
 class NuclearQuadrupole(DynSys):
@@ -716,6 +735,12 @@ class PehlivanWei(DynSys):
         ydot = y + y * z - 2 * x
         zdot = 2 - x * y - y ** 2
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t):
+        row1 = [0, 1 - z, -y]
+        row2 = [-2, 1 + z, y]
+        row3 = [-y, -x - 2 * y, 0]
+        return row1, row2, row3
 
 
 class SprottTorus(DynSys):
@@ -725,6 +750,12 @@ class SprottTorus(DynSys):
         ydot = 1 - 2 * x ** 2 + y * z
         zdot = x - x ** 2 - y ** 2
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t):
+        row1 = [2 * y + z, 2 * x + 1, x]
+        row2 = [-4 * x, z, y]
+        row3 = [1 - 2 * x, -2 * y, 0]
+        return row1, row2, row3
 
 
 class SprottJerk(DynSys):
@@ -734,6 +765,12 @@ class SprottJerk(DynSys):
         ydot = z
         zdot = -x + y ** 2 - mu * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, mu):
+        row1 = [0, 1, 0]
+        row2 = [0, 0, 1]
+        row3 = [-1, 2 * y, -mu]
+        return row1, row2, row3
 
 
 ## Not chaotic
@@ -858,6 +895,12 @@ class SprottH(DynSys):
         ydot = x + a * y
         zdot = x - z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a):
+        row1 = [0, -1, 2 * z]
+        row2 = [1, a, 0]
+        row3 = [1, 0, -1]
+        return row1, row2, row3
 
 
 class SprottI(DynSys):
@@ -867,6 +910,12 @@ class SprottI(DynSys):
         ydot = x + z
         zdot = x + y ** 2 - z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a):
+        row1 = [0, -a, 0]
+        row2 = [1, 0, 1]
+        row3 = [1, 2 * y, -1]
+        return row1, row2, row3
 
 
 class SprottJ(DynSys):
@@ -875,7 +924,14 @@ class SprottJ(DynSys):
         xdot = 2 * z
         ydot = -2 * y + z
         zdot = -x + y + y ** 2
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t):
+        row1 = [0, 0, 2]
+        row2 = [0, -2, 1]
+        row3 = [-1, 1 + 2 * y, 0]
+        return row1, row2, row3
+    
 
 
 class SprottK(DynSys):
@@ -885,6 +941,12 @@ class SprottK(DynSys):
         ydot = x - y
         zdot = x + a * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a):
+        row1 = [y, x, -1]
+        row2 = [1, -1, 0]
+        row3 = [1, 0, a]
+        return row1, row2, row3
 
 
 class SprottL(DynSys):
@@ -894,6 +956,12 @@ class SprottL(DynSys):
         ydot = a * x ** 2 - y
         zdot = 1 - x
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b):
+        row1 = [0, 1, b]
+        row2 = [2 * a * x, -1, 0]
+        row3 = [-1, 0, 0]
+        return row1, row2, row3
 
 
 class SprottM(DynSys):
@@ -903,6 +971,12 @@ class SprottM(DynSys):
         ydot = -x ** 2 - y
         zdot = a + a * x + y
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a):
+        row1 = [0, 0, -1]
+        row2 = [-2 * x, -1, 0]
+        row3 = [a, 1, 0]
+        return row1, row2, row3
 
 
 class SprottN(DynSys):
@@ -912,6 +986,12 @@ class SprottN(DynSys):
         ydot = x + z ** 2
         zdot = 1 + y - 2 * z
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t):
+        row1 = [0, -2, 0]
+        row2 = [1, 0, 2 * z]
+        row3 = [0, 1, -2]
+        return row1, row2, row3
 
 
 class SprottO(DynSys):
@@ -921,6 +1001,12 @@ class SprottO(DynSys):
         ydot = x - z
         zdot = x + x * z + a * y
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a):
+        row1 = [0, 1, 0]
+        row2 = [1, 0, -1]
+        row3 = [1 + z, a, x]
+        return row1, row2, row3
 
 
 class SprottP(DynSys):
@@ -930,6 +1016,12 @@ class SprottP(DynSys):
         ydot = -x + y ** 2
         zdot = x + y
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a):
+        row1 = [0, a, 1]
+        row2 = [-1, 2 * y, 0]
+        row3 = [1, 1, 0]
+        return row1, row2, row3
 
 
 class SprottQ(DynSys):
@@ -939,6 +1031,12 @@ class SprottQ(DynSys):
         ydot = x - y
         zdot = a * x + y ** 2 + b * z
         return (xdot, ydot, zdot)
+    @staticjit
+    def _jac(x, y, z, t, a, b):
+        row1 = [0, 0, -1]
+        row2 = [1, -1, 0]
+        row3 = [a, 2 * y, b]
+        return row1, row2, row3
 
 
 class SprottR(DynSys):
