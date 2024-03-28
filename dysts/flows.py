@@ -1712,6 +1712,12 @@ class ShimizuMorioka(DynSys):
         ydot = x - a * y - x * z
         zdot = -b * z + x ** 2
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b):
+        row1 = [0, 1, 0]
+        row2 = [1 - z, -a, -x]
+        row3 = [2 * x, 0, -b]
+        return row1, row2, row3
 
 
 class GenesioTesi(DynSys):
@@ -1721,6 +1727,12 @@ class GenesioTesi(DynSys):
         ydot = z
         zdot = -c * x - b * y - a * z + x ** 2
         return xdot, ydot, zdot
+    @staticjit
+    def _jac(x, y, z, t, a, b, c):
+        row1 = [0, 1, 0]
+        row2 = [0, 0, 1]
+        row3 = [-c * 2 * x, -b, -a]
+        return row1, row2, row3
 
 
 class AtmosphericRegime(DynSys):
