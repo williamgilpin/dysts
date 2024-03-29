@@ -148,43 +148,53 @@ def find_lyapunov_exponents(
     d = np.asarray(model.ic).shape[-1]
     tpts, traj = model.make_trajectory(
         traj_length, pts_per_period=pts_per_period, resample=True, return_times=True,
+        postprocessing=False,
         **kwargs
     )
     dt = np.median(np.diff(tpts))
+    # traj has shape (traj_length, d), where d is the dimension of the system
+    # tpts has shape (traj_length,)
+    # dt is the dimension of the system
 
     u = np.identity(d)
     all_lyap = list()
-    for i in range(traj_length):
-        yval = traj[i]
-        # rhsy = lambda x: np.array(model.rhs(x, tpts[i]))
+    # for i in range(traj_length):
+    for i, (t, X) in enumerate(zip(tpts, traj)):
+        X = traj[i]
 
-        rhsy = lambda x: np.array(model.rhs(x, tpts[i]))
-        jacval = jac_fd(rhsy, yval)
+        if eq.jac(eq.ic, 0) is None:
+            rhsy = lambda x: np.array(model.rhs(x, t))
+            jacval = jac_fd(rhsy, X)
+        else:
+            jacval = np.array(eq.jac(X, t))
 
-        # If postprocessing is applied to a trajectory,
-        # boost the jacobian to the new coordinates
+        # If postprocessing is applied to a trajectory, transform the jacobian into the
+        # new coordinates.
         if hasattr(model, "_postprocessing"):
-            #             print("using different formulation")
-            y0 = np.copy(yval)
+            X0 = np.copy(X)
             y2h = lambda y: model._postprocessing(*y)
-
-            rhsh = lambda y: jac_fd(y2h, y) @ rhsy(y)  # dh/dy * dy/dt = dh/dt
-            dydh = np.linalg.inv(jac_fd(y2h, y0))  # dy/dh
+            dhdy = jac_fd(y2h, X0)
+            dydh = np.linalg.inv(dhdy)  # dy/dh
             ## Alternate version if good second-order fd is ever available
-            # dydh = jac_fd(y2h, y0, m=2, eps=1e-2) @ rhsy(y0) + jac_fd(y2h, y0) @ jac_fd(rhsy, y0))
+            # dydh = jac_fd(y2h, X0, m=2, eps=1e-2) @ rhsy(X0) + jac_fd(y2h, y0) @ jac_fd(rhsy, X0))
+            jacval = dhdy @ jacval @ dydh
 
-            jacval = jac_fd(rhsh, y0, eps=1e-3) @ dydh
-
-        u_n = np.matmul(np.identity(d) + jacval * dt, u)
+        ## Forward Euler update
+        # u_n = np.matmul(np.eye(d) + jacval * dt, u)
+        
+        ## Backward Euler update
+        if i < 1: continue
+        u_n = np.matmul(np.linalg.inv(np.eye(d) - jacval * dt), u)
+        
         q, r = np.linalg.qr(u_n)
         lyap_estimate = np.log(abs(r.diagonal()))
         all_lyap.append(lyap_estimate)
         u = q  # post-iteration update axes
 
-        ## early stopping
+        ## early stopping if middle exponents are close to zero, a requirement for
+        ## continuous-time dynamical systems
         if (np.min(np.abs(lyap_estimate)) < tol) and (i > min_tpts):
             traj_length = i
-            print("stopped early.")
 
     all_lyap = np.array(all_lyap)
     final_lyap = np.sum(all_lyap, axis=0) / (dt * traj_length)
