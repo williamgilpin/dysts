@@ -305,11 +305,11 @@ def find_lyapunov_exponents(
     for i, (t, X) in enumerate(zip(tpts, traj)):
         X = traj[i]
 
-        if eq.jac(eq.ic, 0) is None:
+        if model.jac(model.ic, 0) is None:
             rhsy = lambda x: np.array(model.rhs(x, t))
             jacval = jac_fd(rhsy, X)
         else:
-            jacval = np.array(eq.jac(X, t))
+            jacval = np.array(model.jac(X, t))
 
         # If postprocessing is applied to a trajectory, transform the jacobian into the
         # new coordinates.
