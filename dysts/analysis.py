@@ -115,6 +115,149 @@ def compute_timestep(
         return dt, period
     else:
         return dt
+    
+
+from scipy.spatial.distance import cdist
+from scipy.optimize import curve_fit
+
+
+def corr_integral(data, y_data=None, rvals=None, nmax=100):
+    """
+    Estimate the correlation integral for a numpy array
+
+    Args:
+        data (np.array): T x D, where T is the number of datapoints/timepoints, and D
+            is the number of features/dimensions
+        y_data (np.array, Optional): A second dataset of shape T2 x D, for 
+            computing cross-correlation.
+        rvals (np.array): A list of radii
+        nmax (int): The number of points at which to evaluate the correlation integral
+
+    Returns:
+        rvals (np.array): The discrete bins at which the correlation integral is 
+            estimated
+        corr_sum (np.array): The estimates of the correlation integral at each bin
+
+    TODO:
+        power law fit
+        Check Clauset paper
+        Implement robust least squares linear fitting
+
+    For time series or spatial aurocorrelation, what is a standard scaled distance
+    based on cross-correlation versus individual autocorrections?
+
+    <ox oy> / ox oy
+
+    """
+
+    data = np.asarray(data)
+    # data = embed(data)
+
+    ## For self-correlation
+    if y_data is None:
+        y_data = data.copy()
+
+    if rvals is None:
+        std = np.std(data)
+        rvals = np.logspace(np.log10(0.1 * std), np.log10(0.5 * std), nmax)
+
+    n = len(data)
+    
+    # dists = cdist(data, y_data)
+    # corr_sum = []
+    # for r in rvals:
+    #     corr_sum.append(np.sum(dists < r))
+    # corr_sum = np.array(corr_sum) / (n * (n - 1))
+
+    # dists = cdist(data, y_data)
+    # hist, _ = np.histogram(dists, bins=np.hstack([0, rvals])) # can we skip this and direct fit?
+    # corr_sum = np.cumsum(hist).astype(float)
+    # corr_sum /= n * (n - 1)
+
+    dists = cdist(data, y_data)
+    rvals = np.sort(dists.ravel())
+    corr_sum = np.arange(len(rvals)).astype(float)
+    corr_sum /= n * (n - 1)
+    std = np.std(data)
+    sel_inds = rvals > 0.1 * std
+    rvals = rvals[sel_inds]
+    corr_sum = corr_sum[sel_inds]
+    sel_inds = rvals < 0.5 * std
+    rvals = rvals[sel_inds]
+    corr_sum = corr_sum[sel_inds]
+
+    # corr_sum = count_pairs_within_thresholds(data, rvals).astype(float)
+    # corr_sum /= n * (n - 1)
+
+    ## Drop zeros before regression
+    sel_inds = corr_sum > 0
+    rvals = rvals[sel_inds]
+    corr_sum = corr_sum[sel_inds]
+    
+    # poly = np.polyfit(np.log(rvals), np.log(corr_sum), 1)
+    # return poly[0]
+
+    power_law = lambda x, a, b: a * (x ** b)
+    fit_vals = curve_fit(power_law, rvals, corr_sum)
+    return fit_vals[0][1]
+    
+def corr_gpdim(traj1, traj2, register=False, standardize=False, **kwargs):
+    """
+    Given two multivariate time series, estimate their similarity using the cross
+    Grassberger-Procaccia dimension
+
+    Args:
+        traj1 (np.array): T x D, where T is the number of timepoints, and D
+            is the number of dimensions
+        traj2 (np.array): T x D, where T is the number of timepoints, and D
+            is the number of dimensions
+        register (bool): Whether to register the two time series before computing the
+            cross-correlation
+        standardize (bool): Whether to standardize the time series before computing the
+            cross-correlation
+
+    Returns:
+        float: The cross-correlation between the two time series
+    """
+    if register:
+        model = RidgeCV()
+        model.fit(traj1, traj2)
+        traj1 = model.predict(traj1)
+
+    if standardize:
+        traj1 = (traj1 - np.mean(traj1, axis=0)) / np.std(traj1, axis=0)
+        traj2 = (traj2 - np.mean(traj2, axis=0)) / np.std(traj2, axis=0)
+
+    return corr_integral(traj1, traj2, **kwargs) / np.sqrt(corr_integral(traj1, **kwargs) * corr_integral(traj2, **kwargs))
+
+from sklearn.linear_model import RidgeCV
+def gpdistance(traj1, traj2, standardize=True, register=False, **kwargs):
+    """
+    Given two multivariate time series, estimate their similarity using the cross
+    Grassberger-Procaccia distance
+
+    Args:
+        traj1 (np.array): T x D, where T is the number of timepoints, and D
+            is the number of dimensions
+        traj2 (np.array): T x D, where T is the number of timepoints, and D
+            is the number of dimensions
+        register (bool): Whether to register the two time series before computing the
+            cross-correlation
+        standardize (bool): Whether to standardize the time series before computing the
+            cross-correlation
+    """
+
+    if register:
+        model = RidgeCV()
+        model.fit(traj1, traj2)
+        traj1 = model.predict(traj1)
+
+    if standardize:
+        traj1 = (traj1 - np.mean(traj1, axis=0)) / np.std(traj1, axis=0)
+        traj2 = (traj2 - np.mean(traj2, axis=0)) / np.std(traj2, axis=0)
+        
+    return np.abs(np.log(corr_gpdim(traj1, traj2, **kwargs)))
+
 
 
 def find_lyapunov_exponents(
