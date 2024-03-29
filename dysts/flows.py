@@ -1405,8 +1405,8 @@ class NewtonLiepnik(DynSys):
         ydot = -x - 0.4 * y + 5 * x * z
         zdot = b * z - 5 * x * y
         return xdot, ydot, zdot
-    @staticjit
-    def _jac(x, y, z, t, a, b):
+    # @staticjit
+    # def _jac(x, y, z, t, a, b):
 
 
 class HyperRossler(DynSys):
