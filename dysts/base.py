@@ -317,8 +317,8 @@ class DynSys(BaseDyn):
 
         m = len(np.array(self.ic).shape)
 
-        # check for analytical Jacobian
-        if self.jac(self.ic, 0) is not None:
+        # check for analytical Jacobian, with condition of ic being a ndim array
+        if (self.ic.ndim > 1 and self.jac(self.ic[0],0)) or self.jac(self.ic, 0) is not None:
             jac = lambda t, x : self.jac(x, t)
         else:
             jac = None
