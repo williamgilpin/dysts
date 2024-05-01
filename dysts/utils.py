@@ -439,7 +439,7 @@ def find_significant_frequencies(sig, window=True, fs=1, n_samples=100,
     if window:
         sig = sig * blackmanharris(n)
     
-    psd_sig = rfft(sig)
+    psd_sig = np.abs(rfft(sig))**2
     
     all_surr_psd = list()
     for i in range(n_samples):
@@ -448,7 +448,7 @@ def find_significant_frequencies(sig, window=True, fs=1, n_samples=100,
         #np.random.shuffle(surr)
         if window:
             surr = surr * blackmanharris(len(surr))
-            psd_surr = rfft(surr)
+            psd_surr = np.abs(rfft(surr))**2
         all_surr_psd.append(psd_surr)
     all_surr_psd = np.array(all_surr_psd)
 
