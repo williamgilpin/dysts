@@ -7,7 +7,8 @@ from numpy.fft import rfft
 
 import warnings
 from scipy.integrate import solve_ivp
-from scipy.signal import blackmanharris, resample, periodogram
+from scipy.signal import resample, periodogram
+from scipy.signal.windows import blackmanharris
 from collections import deque
 from functools import partial
 
