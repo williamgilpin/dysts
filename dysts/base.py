@@ -623,7 +623,7 @@ def get_attractor_list(model_type="continuous"):
     return attractor_list
 
 
-def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, random_state=None, **kwargs):
+def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, random_state=None, use_tqdm=False, **kwargs):
     """
     Integrate multiple dynamical systems with identical settings
     
@@ -632,6 +632,7 @@ def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, random_s
         subset (list): A list of system names. Defaults to all systems
         use_multiprocessing (bool): Not yet implemented.
         random_state (int): The random seed to use for the ensemble
+        use_tqdm (bool): Whether to use a progress bar
         kwargs (dict): Integration options passed to each system's make_trajectory() method
     
     Returns:
@@ -640,6 +641,10 @@ def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, random_s
     """
     if not subset:
         subset = get_attractor_list()
+
+    if use_tqdm:
+        from tqdm import tqdm
+        subset = tqdm(subset)
 
     if use_multiprocessing:
         warnings.warn(
