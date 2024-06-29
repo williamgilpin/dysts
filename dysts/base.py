@@ -277,6 +277,7 @@ class DynSys(BaseDyn):
         standardize=False,
         postprocess=True,
         noise=0.0,
+        timescale="Fourier",
         **kwargs
     ):
         """
@@ -295,6 +296,10 @@ class DynSys(BaseDyn):
                 rescalings to the integration coordinates
             noise (float): The amount of stochasticity in the integrated dynamics. This would correspond
                 to Brownian motion in the absence of any forcing.
+            timescale (str): The timescale to use for resampling. "Fourier" (default) uses
+                the dominant significant Fourier timescale, estimated using the periodogram
+                of the system and surrogates. "Lyapunov" uses the Lypunov timescale of 
+                the system.
             **kwargs: Additional keyword arguments passed to the integration routine
         
         Returns:
@@ -306,8 +311,13 @@ class DynSys(BaseDyn):
         np.random.seed(self.random_state)
 
         if resample:
-            #         print((self.period * self.dt))
-            tlim = (self.period) * (n / pts_per_period)
+            if timescale == "Fourier":
+                tlim = (self.period) * (n / pts_per_period)
+            elif timescale == "Lyapunov":
+                tlim = (1 / self.maximum_lyapunov_estimated) * (n / pts_per_period)
+            else:
+                tlim = (self.period) * (n / pts_per_period)
+                
             upscale_factor = (tlim / self.dt) / n
             if upscale_factor > 1e3:
                 warnings.warn(
@@ -494,6 +504,7 @@ class DynSysDelay(DynSys):
         resample=False,
         pts_per_period=100,
         standardize=False,
+        timescale="Fourier",
         return_times=False,
         postprocess=True,
     ):
@@ -510,8 +521,14 @@ class DynSysDelay(DynSys):
                 Fourier components
             pts_per_period (int): if resampling, the number of points per period
             standardize (bool): Standardize the output time series.
+            timescale (str): The timescale to use for resampling. "Fourier" (default) uses
+                the dominant significant Fourier timescale, estimated using the periodogram
+                of the system and surrogates. "Lyapunov" uses the Lypunov timescale of 
+                the system.
             return_times (bool): Whether to return the timepoints at which the solution 
                 was computed
+            postprocess (bool): Whether to apply coordinate conversions and other domain-specific
+                rescalings to the integration coordinates
             
         Todo:
             Support for multivariate and multidelay equations with multiple deques
@@ -528,7 +545,12 @@ class DynSysDelay(DynSys):
         ## Euler loop
         if resample:
             num_periods = n / pts_per_period
-            num_timesteps_per_period = self.period / self.dt
+            if timescale == "Fourier":
+                num_timesteps_per_period = self.period / self.dt
+            elif timescale == "Lyapunov":
+                num_timesteps_per_period = (1 / self.maximum_lyapunov_estimated) / self.dt
+            else:
+                num_timesteps_per_period = self.period / self.dt
             nt = int(np.ceil(num_timesteps_per_period *  num_periods))
         else:
             nt = n

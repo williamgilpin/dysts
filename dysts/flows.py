@@ -1695,6 +1695,15 @@ class Aizawa(DynSys):
         ydot = d * x + y * z - b * y
         zdot = c + a * z - 0.333333333333333333 * z ** 3 - x ** 2 - y ** 2 - e * z * x ** 2 - e * z * y ** 2 + f * z * x ** 3
         return xdot, ydot, zdot
+    # @staticjit
+    # def _jac(x, y, z, t, a, b, c, d, e, f):
+    #     xdot = x * z - b * x - d * y
+    #     ydot = d * x + y * z - b * y
+    #     zdot = c + a * z - 0.333333333333333333 * z ** 3 - x ** 2 - y ** 2 - e * z * x ** 2 - e * z * y ** 2 + f * z * x ** 3
+    #     row1 = [z - b, -d, x]
+    #     row2 = [d, z - b, y]
+    #     row3 = [- 2 * x - 2 * e * z + 3 * f * z * x ** 2, - 2 * y
+    #     return row1, row2, row3
 
 
 class AnishchenkoAstakhov(DynSys):
