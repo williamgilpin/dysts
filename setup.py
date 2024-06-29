@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(name = 'dysts',
       packages=['dysts'],
-      version='0.82',
+      version='0.83',
       # packages=find_packages(),
       install_requires = ["numpy", "scipy", "pandas"],
       extras_require = {
