@@ -20,7 +20,7 @@ def rowwise_euclidean(x, y):
 
 def corr_dim(*args, **kwargs):
     raise NotImplementedError("corr_dim has been removed from the library." + \
-                              "Please use dysts.analysis.corr_integral instead.")
+                              "Please use dysts.analysis.gp_dim instead.")
 
 def lyap_r_len(**kwargs):
     """

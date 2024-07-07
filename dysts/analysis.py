@@ -121,9 +121,27 @@ from scipy.spatial.distance import cdist
 from scipy.optimize import curve_fit
 
 
-def corr_integral(data, y_data=None, rvals=None, nmax=100):
+def estimate_powerlaw(data0):
     """
-    Estimate the correlation integral for a numpy array
+    Given a 1D array of continuous-valued data, estimate the power law exponent using the 
+    maximum likelihood estimator proposed by Clauset, Shalizi, Newman (2009).
+    
+    Args:
+        data0 (np.ndarray): An array of continuous-valued data
+
+    Returns:
+        float: The estimated power law exponent
+    """
+    data = np.sort(data0, axis=0).copy()
+    xmin = np.min(data, axis=0)
+    n = data.shape[0]
+    ahat = 1 + n / np.sum(np.log(data / xmin), axis=0)
+    return ahat
+
+def gp_dim(data, y_data=None, rvals=None, nmax=100):
+    """
+    Estimate the Grassberger-Procaccia dimension for a numpy array using the 
+    empirical correlation integral.
 
     Args:
         data (np.array): T x D, where T is the number of datapoints/timepoints, and D
@@ -228,7 +246,7 @@ def corr_gpdim(traj1, traj2, register=False, standardize=False, **kwargs):
         traj1 = (traj1 - np.mean(traj1, axis=0)) / np.std(traj1, axis=0)
         traj2 = (traj2 - np.mean(traj2, axis=0)) / np.std(traj2, axis=0)
 
-    return corr_integral(traj1, traj2, **kwargs) / np.sqrt(corr_integral(traj1, **kwargs) * corr_integral(traj2, **kwargs))
+    return gp_dim(traj1, traj2, **kwargs) / np.sqrt(gp_dim(traj1, **kwargs) * gp_dim(traj2, **kwargs))
 
 from sklearn.linear_model import RidgeCV
 def gpdistance(traj1, traj2, standardize=True, register=False, **kwargs):
