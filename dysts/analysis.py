@@ -156,16 +156,6 @@ def gp_dim(data, y_data=None, rvals=None, nmax=100):
             estimated
         corr_sum (np.array): The estimates of the correlation integral at each bin
 
-    TODO:
-        power law fit
-        Check Clauset paper
-        Implement robust least squares linear fitting
-
-    For time series or spatial aurocorrelation, what is a standard scaled distance
-    based on cross-correlation versus individual autocorrections?
-
-    <ox oy> / ox oy
-
     """
 
     data = np.asarray(data)
@@ -191,38 +181,51 @@ def gp_dim(data, y_data=None, rvals=None, nmax=100):
     # hist, _ = np.histogram(dists, bins=np.hstack([0, rvals])) # can we skip this and direct fit?
     # corr_sum = np.cumsum(hist).astype(float)
     # corr_sum /= n * (n - 1)
-
+    
     dists = cdist(data, y_data)
-    rvals = np.sort(dists.ravel())
-    corr_sum = np.arange(len(rvals)).astype(float)
-    corr_sum /= n * (n - 1)
+    rvals = dists.ravel()
+
+    ## Truncate the distance distribution to the linear scaling range
     std = np.std(data)
-    sel_inds = rvals > 0.1 * std
-    rvals = rvals[sel_inds]
-    corr_sum = corr_sum[sel_inds]
-    sel_inds = rvals < 0.5 * std
-    rvals = rvals[sel_inds]
-    corr_sum = corr_sum[sel_inds]
+    rvals = rvals[rvals > 0]
+    rvals = rvals[rvals > np.percentile(rvals, 5)]
+    rvals = rvals[rvals < np.percentile(rvals, 50)]
+    
+    return estimate_powerlaw(rvals)
 
-    # corr_sum = count_pairs_within_thresholds(data, rvals).astype(float)
+    # dists = cdist(data, y_data)
+    # rvals = np.sort(dists.ravel())
+    # corr_sum = np.arange(len(rvals)).astype(float)
     # corr_sum /= n * (n - 1)
+    # std = np.std(data)
+    # sel_inds = rvals > 0.1 * std
+    # rvals = rvals[sel_inds]
+    # corr_sum = corr_sum[sel_inds]
+    # sel_inds = rvals < 0.5 * std
+    # rvals = rvals[sel_inds]
+    # corr_sum = corr_sum[sel_inds]
 
-    ## Drop zeros before regression
-    sel_inds = corr_sum > 0
-    rvals = rvals[sel_inds]
-    corr_sum = corr_sum[sel_inds]
+    # ## Drop zeros before regression
+    # sel_inds = corr_sum > 0
+    # rvals = rvals[sel_inds]
+    # corr_sum = corr_sum[sel_inds]
     
-    # poly = np.polyfit(np.log(rvals), np.log(corr_sum), 1)
-    # return poly[0]
+    # # poly = np.polyfit(np.log(rvals), np.log(corr_sum), 1)
+    # # return poly[0]
 
-    power_law = lambda x, a, b: a * (x ** b)
-    fit_vals = curve_fit(power_law, rvals, corr_sum)
-    return fit_vals[0][1]
-    
+    # power_law = lambda x, a, b: a * (x ** b)
+    # fit_vals = curve_fit(power_law, rvals, corr_sum)
+    # return fit_vals[0][1]
+
+
 def corr_gpdim(traj1, traj2, register=False, standardize=False, **kwargs):
     """
     Given two multivariate time series, estimate their similarity using the cross
     Grassberger-Procaccia dimension
+
+    This quantity is defined as the cross-correlation between the two time series
+    normalized by the product of the Grassberger-Procaccia dimension of each time series.
+    np.sqrt(<ox oy> / ox oy)
 
     Args:
         traj1 (np.array): T x D, where T is the number of timepoints, and D
