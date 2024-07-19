@@ -150,6 +150,15 @@ class SwingingAtwood(DynSys):
     def _postprocessing(r, th, pr, pth):
         return r, np.sin(th), pr, pth
 
+class GlycolyticOscillation(DynSys):
+    @staticjit
+    def _rhs(a, b, c, t, d, k, l1, l2, nu, q1, q2, s1, s2):
+        phi = (a * (1 + a) * (1 + b)**2) / (l1 + (1 + a)**2 * (1 + b)**2)
+        eta = b * (1 + d * b) * (1 + c)**2 / (l2 + (1 + d * b)**2 * (1 + c)**2)
+        adot = nu - s1 * phi
+        bdot = q1 * s1 * phi - s2 * eta
+        cdot = q2 * s2 * eta - k * c
+        return adot, bdot, cdot
 
 class GuckenheimerHolmes(DynSys):
     @staticjit

@@ -1426,6 +1426,44 @@
         "pesin_entropy": 0.10027488648885732,
         "unbounded_indices": []
     },
+    "GlycolyticOscillation": {
+        "bifurcation_parameter": "k",
+        "citation": "Decroly, O.; Goldbeter, An amplified sensitivity arising from covalent modification in biological systems. A. Proc. Natl. Acad. Sci. USA 1982, 79,6917–6921.",
+        "correlation_dimension": 1.6403587221370042,
+        "delay": false,
+        "description": "A model of feedback in glycolytic reactions. Based on the Monod–Wyman–Changeux model.",
+        "dt": 0.010091998840098313,
+        "embedding_dimension": 3,
+        "hamiltonian": false,
+        "initial_conditions": [
+            29.453349256846987, 
+            130.19350141357407, 
+            0.18407087674169492
+        ],
+        "kaplan_yorke_dimension": 1.5520229717346938,
+        "lyapunov_spectrum_estimated": [
+            0.01959615,
+            -0.03550638, 
+            -2.39422048
+        ],
+        "maximum_lyapunov_estimated": 0.021594561241816756,
+        "multiscale_entropy": 0.4632600047939084,
+        "nonautonomous": false,
+        "parameters": {
+            "d": 0.0,
+            "k": 4.422,
+            "l1" : 5e8,
+            "l2" : 100,
+            "nu": 1.0,
+            "q1": 50,
+            "q2": 0.02,
+            "s1": 22.2222,
+            "s2": 22.2222
+        },
+        "period": 50.45999420049144,
+        "pesin_entropy": 0.019596154307804443,
+        "unbounded_indices": []
+    },
     "GuckenheimerHolmes": {
         "bifurcation_parameter": null,
         "citation": "Guckenheimer, John, and Philip Holmes (1983).  Nonlinear oscillations, dynamical systems, and bifurcations of vector fields. Vol. 42. Springer Science & Business Media.",
