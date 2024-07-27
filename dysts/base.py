@@ -270,7 +270,6 @@ class DynSys(BaseDyn):
     def make_trajectory(
         self,
         n,
-        method="Radau",
         resample=True,
         pts_per_period=100,
         return_times=False,
@@ -278,6 +277,9 @@ class DynSys(BaseDyn):
         postprocess=True,
         noise=0.0,
         timescale="Fourier",
+        method="Radau",
+        rtol=1e-12,
+        atol=1e-12,
         **kwargs
     ):
         """
@@ -285,7 +287,6 @@ class DynSys(BaseDyn):
         
         Args:
             n (int): the total number of trajectory points
-            method (str): the integration method
             resample (bool): whether to resample trajectories to have matching dominant 
                 Fourier components
             pts_per_period (int): if resampling, the number of points per period
@@ -300,6 +301,9 @@ class DynSys(BaseDyn):
                 the dominant significant Fourier timescale, estimated using the periodogram
                 of the system and surrogates. "Lyapunov" uses the Lypunov timescale of 
                 the system.
+            method (str): the integration method
+            rtol (float): relative tolerance for the integration routine
+            atol (float): absolute tolerance for the integration routine
             **kwargs: Additional keyword arguments passed to the integration routine
         
         Returns:
@@ -337,14 +341,14 @@ class DynSys(BaseDyn):
             m = 1
         if m == 1:
             sol = integrate_dyn(
-                self, self.ic, tpts, dtval=self.dt, method=method, noise=noise, jac=jac,
+                self, self.ic, tpts, dtval=self.dt, method=method, noise=noise, jac=jac, rtol=rtol, atol=atol,
                 **kwargs
             ).T
         else:
             sol = list()
             for ic in self.ic:
                 traj = integrate_dyn(
-                    self, ic, tpts, dtval=self.dt, method=method, noise=noise, jac=jac,
+                    self, ic, tpts, dtval=self.dt, method=method, noise=noise, jac=jac, rtol=rtol, atol=atol,
                     **kwargs
                 )
                 check_complete = (traj.shape[-1] == len(tpts))
