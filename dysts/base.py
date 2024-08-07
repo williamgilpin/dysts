@@ -39,6 +39,13 @@ except ImportError:
 else:
     _has_data = True
 
+## Check for multiprocessing
+try:
+    from multiprocessing import Pool
+    _has_multiprocessing = True
+except ImportError:
+    _has_multiprocessing = False
+
 import numpy as np
 
 from .utils import integrate_dyn, standardize_ts
@@ -648,6 +655,13 @@ def get_attractor_list(model_type="continuous"):
     attractor_list = sorted(list(data.keys()))
     return attractor_list
 
+# flows = importlib.import_module("dysts.flows", package=".flows")
+import dysts.flows as dfl
+def _compute_trajectory(equation_name, n, kwargs):
+    """A wrapper function for multiprocessing"""
+    eq = getattr(dfl, equation_name)()
+    traj = eq.make_trajectory(n, **kwargs)
+    return traj
 
 def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, random_state=None, use_tqdm=False, **kwargs):
     """
@@ -668,23 +682,30 @@ def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, random_s
     if not subset:
         subset = get_attractor_list()
 
-    if use_tqdm:
+    if use_tqdm and not use_multiprocessing:
         from tqdm import tqdm
         subset = tqdm(subset)
 
-    if use_multiprocessing:
-        warnings.warn(
-            "Multiprocessing not implemented."
-        )
+    if use_multiprocessing and not _has_multiprocessing:
+        warnings.warn("Multiprocessing is not available on this system. Falling back to single-threaded mode.")
     
     # We run this inside the function scope to avoid a circular import issue
-    flows = importlib.import_module("dysts.flows", package=".flows")
+    # flows = importlib.import_module("dysts.flows", package=".flows")
     
     all_sols = dict()
-    for equation_name in subset:
-        eq = getattr(flows, equation_name)()
-        eq.random_state = random_state
-        sol = eq.make_trajectory(n, **kwargs)
-        all_sols[equation_name] = sol
+    if use_multiprocessing and _has_multiprocessing:
+        with Pool() as pool:
+            results = pool.starmap(
+                _compute_trajectory, 
+                [(equation_name, n, kwargs) for equation_name in subset]
+            )
+        all_sols = dict(zip(subset, results))
+
+    else:
+        for equation_name in subset:
+            # eq = getattr(flows, equation_name)()
+            # eq.random_state = random_state
+            sol = _compute_trajectory(equation_name, n, kwargs)
+            all_sols[equation_name] = sol
 
     return all_sols

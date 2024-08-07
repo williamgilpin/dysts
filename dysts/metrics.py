@@ -3,6 +3,7 @@ Metrics for comparing two time series. These metrics are included to faciliate
 benchmarking of the algorithms in this package while reducing dependencies.
 
 For more exhaustive sets of metrics, use the external `tslearn`, `darts`, or `sktime`
+libraries.
 """
 
 import numpy as np
@@ -17,6 +18,13 @@ from scipy.sparse.csgraph import shortest_path
 def dtw(y_true, y_pred):
     """
     Compute the Dynamic Time Warping (DTW) distance between two time series.
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+
+    Returns:
+        float: The DTW distance
     """
 
     y_true, y_pred = np.array(y_true), np.array(y_pred)
@@ -70,27 +78,39 @@ def dtw(y_true, y_pred):
 def wape(y_true, y_pred):
     """
     Weighted Absolute Percentage Error
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+
+    Returns:
+        float: The WAPE
     """
     return 100 * np.sum(np.abs(y_true - y_pred)) / np.sum(np.abs(y_true))
-
-def mase(y_true, y_pred, y_train=None):
-    """
-    Mean Absolute Scaled Error. If the time series are multivariate, the first axis is
-    assumed to be the time dimension.
-    """    
-    if y_train is None:
-        y_train = y_true
-    return np.mean(np.abs(y_true - y_pred)) / np.mean(np.abs(y_true[1:] - y_train[:-1]))
 
 def mse(y_true, y_pred):
     """
     Mean Squared Error
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+
+    Returns:
+        float: The MSE
     """
     return np.mean(np.square(y_true - y_pred))
 
 def mae(y_true, y_pred):
     """
     Mean Absolute Error
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+
+    Returns:
+        float: The MAE
     """
     return np.mean(np.abs(y_true - y_pred))
 
@@ -98,18 +118,39 @@ def coefficient_of_variation(y_true, y_pred):
     """
     Coefficient of Variation of the root mean squared error relative to the mean 
     of the true values
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+
+    Returns:
+        float: The Coefficient of Variation
     """
     return 100 * np.std(y_true - y_pred) / np.mean(y_true)
 
 def marre(y_true, y_pred):
     """
     Mean Absolute Ranged Relative Error
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+
+    Returns:
+        float: The MARRE
     """
     return 100 * np.mean(np.abs(y_true - y_pred) / (np.max(y_true) - np.min(y_true)))
 
 def ope(y_true, y_pred):
     """
     Optimality Percentage Error
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+
+    Returns:
+        float: The OPE
     """
     return np.sum(np.abs(y_true - y_pred)) / np.sum(np.abs(y_true - np.mean(y_true)))
 
@@ -117,6 +158,13 @@ def rmsle(y_true, y_pred):
     """
     Root Mean Squared Log Error. In case of negative values, the series is shifted
     to the positive domain.
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+
+    Returns:
+        float: The RMSLE
     """
     y_true = y_true - np.min(y_true, axis=0, keepdims=True) + 1e-8
     y_pred = y_pred - np.min(y_pred, axis=0, keepdims=True) + 1e-8
@@ -124,19 +172,103 @@ def rmsle(y_true, y_pred):
 
 def r2_score(y_true, y_pred):
     """
-    R2 Score
+    The R2 Score
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+
+    Returns:
+        float: The R2 Score
     """
     return 1 - np.sum(np.square(y_true - y_pred)) / np.sum(np.square(y_true - np.mean(y_true)))
 
 def mape(y_true, y_pred):
     """
-    Mean Absolute Percentage Error
+    The Mean Absolute Percentage Error
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+
+    Returns:
+        float: The MAPE
     """
     return 100 * np.mean(np.abs(y_true - y_pred) / y_true)
 
+
+# def mase(y_true, y_pred, y_train=None):
+#     """
+#     Mean Absolute Scaled Error. If the time series are multivariate, the first axis is
+#     assumed to be the time dimension.
+#     """    
+#     if y_train is None:
+#         y_train = y_true
+#     return np.mean(np.abs(y_true - y_pred)) / np.mean(np.abs(y_true[1:] - y_train[:-1]))
+
 def smape(x, y):
     """Symmetric mean absolute percentage error"""
+    assert len(y) == len(x)
     return 100 * np.mean(np.abs(x - y) / (np.abs(x) + np.abs(y))) * 2
+
+
+    
+def mase(y, yhat, y_train=None, m=1):
+    """
+    The mean absolute scaled error.
+
+    Adapted from tensorflow-probability and 
+    https://en.wikipedia.org/wiki/Mean_absolute_scaled_error
+
+    Args:
+        y (ndarray): The true values.
+        yhat (ndarray): The predicted values.
+        y_train (ndarray): The training values.
+        m (int): The season length, which is the number of time steps that are
+            skipped when computing the denominator. Default is 1.
+
+    Returns:
+        mase_val (float): The MASE error
+    """
+    if y_train is None:
+        y_train = y.copy()
+    assert len(yhat) == len(y)
+    n, h = len(y_train), len(y)
+    assert 0 < m < len(y_train)
+    numer = np.sum(np.abs(y - yhat))
+    denom = np.sum(np.abs(y_y_train[m:] - y_train[:-m])) / (n - m)
+    mase_val = (1 / h) * (numer / denom)
+    return mase_val
+
+def msis(y, yhat_lower, yhat_upper, y_obs, m, a=0.05):
+  """The mean scaled interval score.
+
+  Adapted from tensorflow-probability and
+  https://www.uber.com/blog/m4-forecasting-competition/
+
+  Args:
+    y (np.ndarray): An array containing the true values.
+    yhat_lower: An array containing the a% quantile of the predicted
+      distribution.
+    yhat_upper: An array containing the (1-a)% quantile of the
+      predicted distribution.
+    y_obs: An array containing the training values.
+    m: The season length.
+    a: A scalar in [0, 1] specifying the quantile window to evaluate.
+
+  Returns:
+    The scalar MSIS.
+  """
+  assert len(y) == len(yhat_lower) == len(yhat_upper)
+  n = len(y_obs)
+  h = len(y)
+  numer = np.sum(
+      (yhat_upper - yhat_lower)
+      + (2 / a) * (yhat_lower - y) * (y < yhat_lower)
+      + (2 / a) * (y - yhat_upper) * (yhat_upper < y))
+  denom = np.sum(np.abs(y_obs[m:] - y_obs[:-m])) / (n - m)
+  msis_val =  (1 / h) * (numer / denom)
+  return msis_val
 
 def spearman(y_true, y_pred):
     """
@@ -234,6 +366,26 @@ def mae(y_true, y_pred):
     return np.mean(np.abs(y_true - y_pred))
 
 rmse = lambda x, y: np.sqrt(mse(x, y))
+
+def horizoned_metric(y_true, y_pred, metric, *args, horizon=None, **kwargs):
+    """
+    Compute a metric over a range of horizons
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+        metric (callable): The metric function
+        *args: Additional arguments to pass to the metric function
+        horizon (int): The maximum horizon to compute the metric over. If None, the 
+            horizon is set to the length of the time series
+        **kwargs: Additional keyword arguments to pass to the metric function
+
+    Returns:
+        np.ndarray: The metric values at each horizon
+    """
+    if horizon is None:
+        horizon = len(y_true)
+    return [metric(y_true[:i+1], y_pred[:i+1], *args, **kwargs) for i in range(horizon)]
 
 def compute_metrics(y_true, y_pred, standardize=False):
     """
