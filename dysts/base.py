@@ -689,9 +689,6 @@ def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, random_s
     if use_multiprocessing and not _has_multiprocessing:
         warnings.warn("Multiprocessing is not available on this system. Falling back to single-threaded mode.")
     
-    # We run this inside the function scope to avoid a circular import issue
-    # flows = importlib.import_module("dysts.flows", package=".flows")
-    
     all_sols = dict()
     if use_multiprocessing and _has_multiprocessing:
         with Pool() as pool:
@@ -703,8 +700,6 @@ def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, random_s
 
     else:
         for equation_name in subset:
-            # eq = getattr(flows, equation_name)()
-            # eq.random_state = random_state
             sol = _compute_trajectory(equation_name, n, kwargs)
             all_sols[equation_name] = sol
 
