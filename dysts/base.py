@@ -1,5 +1,4 @@
-"""
-Dynamical systems in Python
+"""Dynamical systems in Python
 
 (M, T, D) or (T, D) convention for outputs
 
@@ -22,6 +21,8 @@ import gzip
 curr_path = sys.path[0]
 
 import pkg_resources
+from functools import partial
+from itertools import starmap
 from typing import Optional, Iterable, Dict, Callable
 
 DATAPATH_CONTINUOUS = pkg_resources.resource_filename(
@@ -129,7 +130,11 @@ class BaseDyn:
 
         for key in self._load_data().keys():
             setattr(self, key, self._load_data()[key])
-    
+        
+        self.param_list = [
+            getattr(self, param_name) for param_name in sorted(self.params.keys())
+        ]
+   
     def update_params(self):
         """
         Update all instance attributes to match the values stored in the 
@@ -137,9 +142,16 @@ class BaseDyn:
         """
         for key in self.params.keys():
             setattr(self, key, self.params[key])
-    
-    def get_param_names(self):
-        return sorted(self.params.keys())
+
+    def transform_params(self, transform_fn: Callable[[str, np.ndarray], np.ndarray]) -> None:
+        """Transforms the current parameter list via a transform function
+        """
+        self.param_list = list(
+            starmap(
+                transform_fn,
+                zip(sorted(self.params.keys()), self.param_list)
+            )
+        )
 
     def _load_data(self):
         """Load data from a JSON file"""
@@ -236,8 +248,6 @@ class BaseDyn:
         """Sample a trajectory for the dynamical system via numerical integration"""
         return self.make_trajectory(*args, **kwargs)
         
-
-
 class DynSys(BaseDyn):
     """
     A continuous dynamical system base class, which loads and assigns parameter
@@ -256,18 +266,12 @@ class DynSys(BaseDyn):
 
     def rhs(self, X, t):
         """The right hand side of a dynamical equation"""
-        param_list = [
-            getattr(self, param_name) for param_name in self.get_param_names()
-        ]
-        out = self._rhs(*X.T, t, *param_list)
+        out = self._rhs(*X.T, t, *self.param_list)
         return out
     
     def jac(self, X, t):
         """The Jacobian of the dynamical system"""
-        param_list = [
-            getattr(self, param_name) for param_name in self.get_param_names()
-        ]
-        out = self._jac(*X.T, t, *param_list)
+        out = self._jac(*X.T, t, *self.param_list)
         return out
 
     def __call__(self, X, t):
@@ -383,7 +387,6 @@ class DynSys(BaseDyn):
         else:
             return sol
 
-
 class DynMap(BaseDyn):
     """
     A dynamical system base class, which loads and assigns parameter
@@ -404,18 +407,12 @@ class DynMap(BaseDyn):
 
     def rhs(self, X):
         """The right hand side of a dynamical map"""
-        param_list = [
-            getattr(self, param_name) for param_name in self.get_param_names()
-        ]
-        out = self._rhs(*X.T, *param_list)
+        out = self._rhs(*X.T, *self.param_list)
         return np.vstack(out).T
 
     def rhs_inv(self, Xp):
         """The inverse of the right hand side of a dynamical map"""
-        param_list = [
-            getattr(self, param_name) for param_name in self.get_param_names()
-        ]
-        out = self._rhs_inv(*Xp.T, *param_list)
+        out = self._rhs_inv(*Xp.T, *self.param_list)
         return np.vstack(out).T
 
     def __call__(self, X):
@@ -472,8 +469,6 @@ class DynMap(BaseDyn):
         else:
             return sol
 
-
-
 class DynSysDelay(DynSys):
     """
     A delayed differential equation object. Defaults to using Euler integration scheme
@@ -500,10 +495,7 @@ class DynSysDelay(DynSys):
     def rhs(self, X, t):
         """The right hand side of a dynamical equation"""
         X, Xprev = X[0], X[1]
-        param_list = [
-            getattr(self, param_name) for param_name in self.get_param_names()
-        ]
-        out = self._rhs(X, Xprev, t, *param_list)
+        out = self._rhs(X, Xprev, t, *self.param_list)
         return out
 
     def make_trajectory(
@@ -656,15 +648,22 @@ def get_attractor_list(model_type="continuous"):
     return attractor_list
 
 import dysts.flows as dfl
-def _compute_trajectory(equation_name, n, kwargs, init_cond=None):
+def _compute_trajectory(equation_name, n, kwargs, init_cond=None, param_transform_fn=None):
     """A helper function for multiprocessing"""
     eq = getattr(dfl, equation_name)()
+
     if init_cond is not None:
         eq.ic = init_cond
+
+    if param_transform_fn is not None:
+        eq.transform_params(param_transform_fn)
+
     traj = eq.make_trajectory(n, **kwargs)
     return traj
 
-def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, init_conds={}, use_tqdm=False, **kwargs):
+def make_trajectory_ensemble(
+    n, subset=None, use_multiprocessing=False, init_conds={}, param_transform=None, use_tqdm=False, **kwargs
+):
     """
     Integrate multiple dynamical systems with identical settings
     
@@ -673,6 +672,7 @@ def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, init_con
         subset (list): A list of system names. Defaults to all systems
         use_multiprocessing (bool): Not yet implemented.
         init_cond (dict): Optional user input initial conditions mapping string system name to array
+        param_transform (callable)
         use_tqdm (bool): Whether to use a progress bar
         kwargs (dict): Integration options passed to each system's make_trajectory() method
     
@@ -684,7 +684,9 @@ def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, init_con
         subset = get_attractor_list()
 
     if len(init_conds) > 0:
-        assert all(sys in init_conds.keys() for sys in subset), "given initial conditions must at least contain the subset"
+        assert all(sys in init_conds.keys() for sys in subset), (
+            "given initial conditions must at least contain the subset"
+        )
 
     if use_tqdm and not use_multiprocessing:
         from tqdm import tqdm
@@ -697,14 +699,17 @@ def make_trajectory_ensemble(n, subset=None, use_multiprocessing=False, init_con
     if use_multiprocessing and _has_multiprocessing:
         with Pool() as pool:
             results = pool.starmap(
-                _compute_trajectory, 
-                [(equation_name, n, kwargs, init_conds.get(equation_name)) for equation_name in subset]
+                partial(_compute_trajectory, param_transform_fn=param_transform),
+                [
+                    (equation_name, n, kwargs, init_conds.get(equation_name))
+                    for equation_name in subset
+                ]
             )
         all_sols = dict(zip(subset, results))
 
     else:
         for equation_name in subset:
-            sol = _compute_trajectory(equation_name, n, kwargs)
+            sol = _compute_trajectory(equation_name, n, kwargs, init_conds.get(equation_name), param_transform)
             all_sols[equation_name] = sol
 
     return all_sols
