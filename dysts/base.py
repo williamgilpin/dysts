@@ -672,7 +672,7 @@ def make_trajectory_ensemble(
         subset (list): A list of system names. Defaults to all systems
         use_multiprocessing (bool): Not yet implemented.
         init_cond (dict): Optional user input initial conditions mapping string system name to array
-        param_transform (callable)
+        param_transform (callable): function that transforms individual system parameters
         use_tqdm (bool): Whether to use a progress bar
         kwargs (dict): Integration options passed to each system's make_trajectory() method
     
