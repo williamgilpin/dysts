@@ -22,7 +22,6 @@ def main():
     
     sampler = init_cond_sampler()
     pt = ParamPerturb(1e-4, random_seed=9999)
-    # pt = None
     make_trajectory_ensemble(100, use_multiprocessing=True, use_tqdm=True, init_conds=sampler(), param_transform=pt)
 
 
