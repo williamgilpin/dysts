@@ -233,8 +233,12 @@ class BaseDyn:
         tpts, sol = np.array(dataset[self.name]['time']), np.array(dataset[self.name]['values'])
         
         if standardize:
-            sol = standardize_ts(sol)
-
+            print(f"Standardizing {self.name}... ", sol.shape)
+            try:
+                sol = standardize_ts(sol)
+            except:
+                sol = None
+                warnings.warn("Standardization failed")
         if return_times:
             return tpts, sol
         else:
@@ -354,7 +358,12 @@ class DynSys(BaseDyn):
             sol = integrate_dyn(
                 self, self.ic, tpts, dtval=self.dt, method=method, noise=noise, jac=jac, rtol=rtol, atol=atol,
                 **kwargs
-            ).T
+            )
+            check_complete = (sol.shape[-1] == len(tpts))
+            if not check_complete:
+                warnings.warn(f"{self.name}: Integration did not complete for the initial condition {self.ic} specified, only got {sol.shape[-1]} points")
+                return (tpts, None) if return_times else None
+            sol = sol.T
         else:
             sol = list()
             for ic in self.ic:
@@ -366,8 +375,11 @@ class DynSys(BaseDyn):
                 if check_complete: 
                     sol.append(traj)
                 else:
-                    warnings.warn(f"Integration did not complete for initial condition {ic}, skipping this point")
+                    warnings.warn(f"{self.name}: Integration did not complete for initial condition {ic}, only got {traj.shape[-1]} points. Skipping this point")
                     pass
+            if len(sol) == 0:
+                return (tpts, None) if return_times else None
+            
             sol = np.transpose(np.array(sol), (0, 2, 1))
 
         if hasattr(self, "_postprocessing") and postprocess:
@@ -380,7 +392,12 @@ class DynSys(BaseDyn):
             )
 
         if standardize:
-            sol = standardize_ts(sol)
+            print(f"Standardizing {self.name}... ", sol.shape)
+            try:
+                sol = standardize_ts(sol)
+            except:
+                sol = None
+                warnings.warn("Standardization failed")
 
         if return_times:
             return tpts, sol
