@@ -377,9 +377,8 @@ class DynSys(BaseDyn):
                 "This system has at least one unbounded variable, which has been mapped to a bounded domain. Pass argument postprocess=False in order to generate trajectories from the raw system."
             )
             sol2 = np.moveaxis(sol, (-1, 0), (0, -1))
-            sol = np.squeeze(
-                np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0))
-            )
+            sol = np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0))
+        sol = np.squeeze(sol)
 
         # standardize the trajectory along time (T) dimension, sol shape must be (T, D) or (B, T, D)
         if standardize:
