@@ -50,7 +50,6 @@ import numpy as np
 import numpy.typing as npt
 
 from .utils import integrate_dyn, standardize_ts
-import importlib
 
 try:
     from numba import jit, njit
@@ -117,14 +116,14 @@ class BaseDyn:
         self.params = self._load_data()["parameters"]
         self.params.update(entries)
         # Cast all parameter arrays to numpy
-        for key in self.params:
-            if not np.isscalar(self.params[key]):
-                self.params[key] = np.array(self.params[key])
+        for key, value in self.params.items():
+            if not np.isscalar(value):
+                self.params[key] = np.array(value)
         self.__dict__.update(self.params)
 
         ic_val = self._load_data()["initial_conditions"]
-        if not np.isscalar(ic_val):
-            ic_val = np.array(ic_val)
+        # Cast initial condition to numpy
+        ic_val = np.array(ic_val) if not np.isscalar(ic_val) else np.array([ic_val])
         self.ic = ic_val
         np.random.seed(self.random_state)
 
@@ -233,12 +232,16 @@ class BaseDyn:
         tpts, sol = np.array(dataset[self.name]['time']), np.array(dataset[self.name]['values'])
         
         if standardize:
-            sol = standardize_ts(sol)
+            print(f"Standardizing {self.name}... ", sol.shape)
+            try:
+                sol = standardize_ts(sol)
+            except Exception as err:
+                print(f"Error {err=}, {type(err)=}")
+                warnings.warn("Standardization failed")
+                sol = None
+                raise
 
-        if return_times:
-            return tpts, sol
-        else:
-            return sol
+        return (tpts, sol) if return_times else sol
 
     def make_trajectory(self, *args, **kwargs):
         """Make a trajectory for the dynamical system"""
@@ -323,7 +326,7 @@ class DynSys(BaseDyn):
             
         """
         tpts = np.arange(n) * self.dt
-        np.random.seed(self.random_state)
+        np.random.seed(self.random_state) # set random seed
 
         if resample:
             if timescale == "Fourier":
@@ -340,36 +343,35 @@ class DynSys(BaseDyn):
                 )
             tpts = np.linspace(0, tlim, n)
 
-        m = len(np.array(self.ic).shape)
-
         # check for analytical Jacobian, with condition of ic being a ndim array
         if (self.ic.ndim > 1 and self.jac(self.ic[0],0)) or self.jac(self.ic, 0) is not None:
             jac = lambda t, x : self.jac(x, t)
         else:
             jac = None
 
-        if m < 1:
-            m = 1
-        if m == 1:
-            sol = integrate_dyn(
-                self, self.ic, tpts, dtval=self.dt, method=method, noise=noise, jac=jac, rtol=rtol, atol=atol,
-                **kwargs
-            ).T
-        else:
-            sol = list()
-            for ic in self.ic:
-                traj = integrate_dyn(
-                    self, ic, tpts, dtval=self.dt, method=method, noise=noise, jac=jac, rtol=rtol, atol=atol,
-                    **kwargs
-                )
-                check_complete = (traj.shape[-1] == len(tpts))
-                if check_complete: 
-                    sol.append(traj)
-                else:
-                    warnings.warn(f"Integration did not complete for initial condition {ic}, skipping this point")
-                    pass
-            sol = np.transpose(np.array(sol), (0, 2, 1))
+        m = self.ic.ndim
+        ics = np.expand_dims(self.ic, axis=0) if m < 2 else self.ic
 
+        # compute trajectories
+        sol = list()
+        for ic in ics:
+            traj = integrate_dyn(
+                self, ic, tpts, dtval=self.dt, method=method, noise=noise, jac=jac, rtol=rtol, atol=atol,
+                **kwargs
+            )
+            # check completeness of trajectory to kill off incomplete trajectories
+            check_complete = (traj.shape[-1] == len(tpts)) # full trajectory should have n points
+            if check_complete: 
+                sol.append(traj)
+            else:
+                warnings.warn(f"{self.name}: Integration did not complete for initial condition {ic}, only got {traj.shape[-1]} points. Skipping this point")
+
+        if len(sol) == 0: # if no complete trajectories, return None
+            return (tpts, None) if return_times else None
+        
+        sol = np.transpose(np.array(sol), (0, 2, 1))
+
+        # postprocess the trajectory, if necessary
         if hasattr(self, "_postprocessing") and postprocess:
             warnings.warn(
                 "This system has at least one unbounded variable, which has been mapped to a bounded domain. Pass argument postprocess=False in order to generate trajectories from the raw system."
@@ -379,13 +381,18 @@ class DynSys(BaseDyn):
                 np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0))
             )
 
+        # standardize the trajectory along time (T) dimension, sol shape must be (T, D) or (B, T, D)
         if standardize:
-            sol = standardize_ts(sol)
+            print(f"Standardizing {self.name}... ", sol.shape)
+            try:
+                sol = standardize_ts(sol)
+            except Exception as err:
+                print(f"Error {err=}, {type(err)=}")
+                warnings.warn("Standardization failed")
+                sol = None
+                raise
 
-        if return_times:
-            return tpts, sol
-        else:
-            return sol
+        return (tpts, sol) if return_times else sol
 
 class DynMap(BaseDyn):
     """
@@ -434,15 +441,9 @@ class DynMap(BaseDyn):
                 was computed
         """
 
-        m = len(np.array(self.ic).shape)
-
-        if m < 1:
-            m = 1
-
-        if m == 1:
-            curr = np.array(self.ic)[None, :]  # (M, D)
-        else:
-            curr = np.array(self.ic)
+        m = self.ic.ndim
+        # shape (M, D)
+        curr = np.expand_dims(self.ic, axis=0) if m < 2 else self.ic
 
         if inverse:
             propagator = self.rhs_inv
