@@ -58,7 +58,7 @@ def main():
     # get a list of all available dynamical systems
     systems = get_attractor_list()
     # exclude the delay systems
-    systems = [sys for sys in systems if sys not in DELAY_SYSTEMS][:10]
+    systems = [sys for sys in systems if sys not in DELAY_SYSTEMS][:12]
 
     # events for solve_ivp
     time_limit_event = TimeLimitEvent(max_duration=60)  # 1 min time limit
@@ -68,15 +68,17 @@ def main():
     ic_sampler = init_cond_sampler(subset=systems, random_seed=rseed)
 
     # each ensemble is of type Dict[str, [ndarray]]
-    train_ensemble = make_trajectory_ensemble(
+    dyst_ensemble = make_trajectory_ensemble(
         num_points, subset=systems, use_multiprocessing=True, 
         init_conds=ic_sampler(scale=1e-1), param_transform=None,
         use_tqdm=True, standardize=True, pts_per_period=num_points//num_periods,
-        events=[time_limit_event, instability_event],
+        events=[time_limit_event, instability_event]
     )
-    train_ensemble, excluded_keys = filter_dict(train_ensemble) #, req_num_vals=num_points)
-    print("INTEGRATION FAILED FOR:", excluded_keys)
-
+    dyst_ensemble, excluded_keys = filter_dict(dyst_ensemble) #, req_num_vals=num_points)
+    if len(excluded_keys) > 0:
+        print("INTEGRATION FAILED FOR:", excluded_keys)
+    else:
+        print("INTEGRATION SUCCEEDED FOR ALL SYSTEMS")
 
 if __name__ == "__main__":
     main()

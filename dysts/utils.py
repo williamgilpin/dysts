@@ -121,6 +121,7 @@ def standardize_ts(a, scale=1.0):
             the input
     """
 #     if len(a.shape) == 1: a = a[:, None]
+    assert a.ndim in [2, 3], "Input must be a time series (T, D) or batch of time series (B, T, D)"
     stds = np.std(a, axis=-2, keepdims=True)
     stds[stds==0] = 1
     ts_scaled = (a - np.mean(a, axis=-2, keepdims=True))/(scale*stds)
