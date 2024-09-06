@@ -1,3 +1,5 @@
+"""Compute stats for all continuous systems, useful for downstream modeling"""
+
 import json
 
 from dysts.base import get_attractor_list
