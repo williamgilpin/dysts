@@ -1,10 +1,11 @@
 #!/usr/bin/python
 
-from dysts.base import get_attractor_list
+from multiprocessing import Manager, Pool
+
 import dysts.flows as dfl
 from dysts.analysis import lyapunov_exponent_naive
+from dysts.base import get_attractor_list
 
-from multiprocessing import Pool, Lock, Manager
 
 def compute_lyapunov_exponent_naive(equation_name, lock):
     """
@@ -31,22 +32,23 @@ def compute_lyapunov_exponent_naive(equation_name, lock):
 
     return lyap
 
+
 def main():
-    eq_list = get_attractor_list() # your list of eq objects
+    eq_list = get_attractor_list()  # your list of eq objects
 
     manager = Manager()
     lock = manager.Lock()
 
-    with Pool(processes=16) as pool: # use 4 processes
-        results = pool.starmap(compute_lyapunov_exponent_naive, [(eq, lock) for eq in eq_list])
-    
-    print(results) # list of lyap values
+    with Pool(processes=16) as pool:  # use 4 processes
+        results = pool.starmap(
+            compute_lyapunov_exponent_naive, [(eq, lock) for eq in eq_list]
+        )
 
-if __name__ == '__main__':
+    print(results)  # list of lyap values
+
+
+if __name__ == "__main__":
     main()
-
-
-
 
 
 ## Single-threaded version
@@ -80,4 +82,3 @@ if __name__ == '__main__':
 #     ## save to file
 #     with open("lyapunov_exponents.txt", "a") as f:
 #         f.write(f"{equation_name}: {lyap} \n")
-    

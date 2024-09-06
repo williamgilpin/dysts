@@ -1,23 +1,16 @@
 #!/usr/bin/python
 
-import os
-import numpy as np
 # import torch
 import json
+import os
+
+import numpy as np
+from resources.esn import ESNForecast
 
 # import torch.optim as optim
 # from torchdiffeq import odeint
-
-import pandas as pd
-from darts import TimeSeries
-
-import dysts
-import dysts.flows
 from dysts.base import get_attractor_list
-from dysts.datasets import load_file, convert_json_to_gzip
-
-
-from resources.esn import ESNForecast
+from dysts.datasets import convert_json_to_gzip, load_file
 
 SEED = 0
 LONG_TEST = False
@@ -26,19 +19,29 @@ niters = 500
 
 cwd = os.path.dirname(os.path.realpath(__file__))
 # cwd = os.getcwd()
-input_path_train = os.path.dirname(cwd)  + "/dysts/data/train_multivariate__pts_per_period_100__periods_12.json.gz"
-input_path_test = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json.gz"
+input_path_train = (
+    os.path.dirname(cwd)
+    + "/dysts/data/train_multivariate__pts_per_period_100__periods_12.json.gz"
+)
+input_path_test = (
+    os.path.dirname(cwd)
+    + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json.gz"
+)
 if LONG_TEST:
-    input_path_test = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_60.json.gz"
+    input_path_test = (
+        os.path.dirname(cwd)
+        + "/dysts/data/test_multivariate__pts_per_period_100__periods_60.json.gz"
+    )
 
 output_path = cwd + "/results/results_esn_multivariate.json"
 if LONG_TEST:
-    output_path = cwd + "/results/results_esn_multivariate__pts_per_period_100__periods_60.json"
+    output_path = (
+        cwd + "/results/results_esn_multivariate__pts_per_period_100__periods_60.json"
+    )
 
 
 equation_data_train = load_file(input_path_train)
 equation_data_test = load_file(input_path_test)
-
 
 
 ## Load results
@@ -50,13 +53,13 @@ except FileNotFoundError:
     all_results = dict()
 
 from dysts.metrics import smape
+
 score_func = smape
 
 np.random.seed(SEED)
 leak_rates = np.arange(1, 12) * 0.1
 all_best_tau = dict()
 for equation_name in get_attractor_list():
-
     print(equation_name, flush=True)
     if equation_name in all_results.keys():
         print("Skipped")
@@ -70,7 +73,7 @@ for equation_name in get_attractor_list():
 
     if equation_name not in all_results.keys():
         all_results[equation_name] = dict()
-    
+
     split_point = int(5 / 6 * len(train_data))
     y_train, y_val = train_data[:split_point], train_data[split_point:]
 
@@ -81,7 +84,9 @@ for equation_name in get_attractor_list():
     all_scores = list()
     for leak_rate in leak_rates:
         try:
-            model = ESNForecast(train_data.shape[-1], leak_rate=leak_rate, random_state=0)
+            model = ESNForecast(
+                train_data.shape[-1], leak_rate=leak_rate, random_state=0
+            )
             model.fit(y_train)
             sol_pred = model.predict(200)
         except AssertionError:
@@ -91,7 +96,6 @@ for equation_name in get_attractor_list():
         all_scores.append(score_val)
     leak_rate_opt = leak_rates[np.argmin(all_scores)]
     print(leak_rate_opt)
-
 
     ## Inference
     test_data = np.copy(np.array(equation_data_test.dataset[equation_name]["values"]))
@@ -108,15 +112,11 @@ for equation_name in get_attractor_list():
     all_results[equation_name] = dict()
     all_results[equation_name]["tau_val"] = float(leak_rate_opt)
     all_results[equation_name]["smape"] = score_val
-    all_results[equation_name]["traj_true"] =  y_test_val.tolist()
-    all_results[equation_name]["traj_pred"] =  y_test_pred_val.tolist()
+    all_results[equation_name]["traj_true"] = y_test_val.tolist()
+    all_results[equation_name]["traj_pred"] = y_test_pred_val.tolist()
 
     print(equation_name, score_val, flush=True)
-    with open(output_path, 'w') as f:
-        json.dump(all_results, f, indent=4, sort_keys=True)   
+    with open(output_path, "w") as f:
+        json.dump(all_results, f, indent=4, sort_keys=True)
 
 convert_json_to_gzip(output_path)
-        
-
-
-

@@ -1,27 +1,21 @@
 #!/usr/bin/python
 
-import os
-import numpy as np
 # import torch
 import json
+import os
 import time
+
+import darts
+import darts.models
+import numpy as np
+from darts import TimeSeries
+from darts.models import *
+from resources.univariate_strided import MultivariateForecast
 
 # import torch.optim as optim
 # from torchdiffeq import odeint
-
-import pandas as pd
-
-import dysts
-import dysts.flows
 from dysts.base import get_attractor_list
-from dysts.datasets import load_file, convert_json_to_gzip
-
-import darts
-from darts.models import *
-from darts import TimeSeries
-import darts.models
-
-from resources.univariate_strided import MultivariateForecast
+from dysts.datasets import convert_json_to_gzip, load_file
 
 SEED = 0
 LONG_TEST = True
@@ -29,15 +23,23 @@ niters = 500
 
 cwd = os.path.dirname(os.path.realpath(__file__))
 # cwd = os.getcwd()
-input_path_train = os.path.dirname(cwd)  + "/dysts/data/train_multivariate__pts_per_period_100__periods_12.json.gz"
-input_path_test = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json.gz"
+input_path_train = (
+    os.path.dirname(cwd)
+    + "/dysts/data/train_multivariate__pts_per_period_100__periods_12.json.gz"
+)
+input_path_test = (
+    os.path.dirname(cwd)
+    + "/dysts/data/test_multivariate__pts_per_period_100__periods_12.json.gz"
+)
 if LONG_TEST:
-    input_path_test = os.path.dirname(cwd)  + "/dysts/data/test_multivariate__pts_per_period_100__periods_60.json.gz"
+    input_path_test = (
+        os.path.dirname(cwd)
+        + "/dysts/data/test_multivariate__pts_per_period_100__periods_60.json.gz"
+    )
 output_path = cwd + "/results/results_classical_multivariate2.json"
 
 equation_data_train = load_file(input_path_train)
 equation_data_test = load_file(input_path_test)
-
 
 
 ## Load results
@@ -49,13 +51,14 @@ except FileNotFoundError:
     all_results = dict()
 
 from dysts.metrics import smape
+
 score_func = smape
 
 
 time_delays = [3, 5, 10, 25]
 season_values = [
-    darts.utils.utils.SeasonalityMode.ADDITIVE, 
-    darts.utils.utils.SeasonalityMode.NONE
+    darts.utils.utils.SeasonalityMode.ADDITIVE,
+    darts.utils.utils.SeasonalityMode.NONE,
 ]
 all_best_hparam = dict()
 parameter_candidates = dict()
@@ -68,17 +71,25 @@ for model_name in ["AutoARIMA", "FFT", "NaiveDrift", "NaiveMean", "NaiveSeasonal
     parameter_candidates[model_name] = {}
 
 for equation_name in get_attractor_list():
-
     print(equation_name, flush=True)
     if equation_name in all_results.keys():
         print(f"Skipped {equation_name}")
         continue
-    
+
     all_results[equation_name] = dict()
 
-    for model_name in ["ExponentialSmoothing", "ARIMA", "FourTheta", 
-                    "Theta", "AutoARIMA", "FFT", "NaiveDrift", "NaiveMean", 
-                    "NaiveSeasonal", "TBATS"]:
+    for model_name in [
+        "ExponentialSmoothing",
+        "ARIMA",
+        "FourTheta",
+        "Theta",
+        "AutoARIMA",
+        "FFT",
+        "NaiveDrift",
+        "NaiveMean",
+        "NaiveSeasonal",
+        "TBATS",
+    ]:
         model_instance = getattr(darts.models, model_name)
 
         print(model_name, flush=True)
@@ -87,11 +98,13 @@ for equation_name in get_attractor_list():
             continue
         all_results[equation_name][model_name] = dict()
 
-        train_data = np.copy(np.array(equation_data_train.dataset[equation_name]["values"]))
+        train_data = np.copy(
+            np.array(equation_data_train.dataset[equation_name]["values"])
+        )
 
         if equation_name not in all_results.keys():
             all_results[equation_name] = dict()
-        
+
         split_point = int(5 / 6 * len(train_data))
         y_train, y_val = train_data[:split_point], train_data[split_point:]
 
@@ -125,9 +138,10 @@ for equation_name in get_attractor_list():
         else:
             hyperparams = {}
             hparam_opt = None
-        
 
-        test_data = np.copy(np.array(equation_data_test.dataset[equation_name]["values"]))
+        test_data = np.copy(
+            np.array(equation_data_test.dataset[equation_name]["values"])
+        )
         split_point = int(5 / 6 * len(test_data))
         if LONG_TEST:
             split_point = int(1 / 6 * len(test_data))
@@ -159,18 +173,18 @@ for equation_name in get_attractor_list():
         ## For SeasonalityModes, convert to a serializable string
         if hasattr(hparam_opt, "name"):
             hparam_opt = hparam_opt.name
-        
+
         all_results[equation_name][model_name]["hparam_val"] = hparam_opt
         all_results[equation_name][model_name]["smape"] = score_val
-        all_results[equation_name][model_name]["traj_true"] =  y_test_val.tolist()
-        all_results[equation_name][model_name]["traj_pred"] =  y_test_pred_val.tolist()
+        all_results[equation_name][model_name]["traj_true"] = y_test_val.tolist()
+        all_results[equation_name][model_name]["traj_pred"] = y_test_pred_val.tolist()
         all_results[equation_name][model_name]["Train time"] = fit_time
         all_results[equation_name][model_name]["Inference time"] = predict_time
 
         print(equation_name, score_val, flush=True)
-        
-    with open(output_path, 'w') as f:
-        json.dump(all_results, f, indent=4, sort_keys=True)   
-            
+
+    with open(output_path, "w") as f:
+        json.dump(all_results, f, indent=4, sort_keys=True)
+
 
 convert_json_to_gzip(output_path)
