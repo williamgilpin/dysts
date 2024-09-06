@@ -2,6 +2,7 @@
 
 from functools import partial
 from multiprocessing import Pool
+from os import PathLike
 from typing import Callable, Dict, Iterable, Optional
 
 import numpy as np
@@ -9,6 +10,8 @@ import numpy.typing as npt
 
 import dysts.flows as dfl
 from dysts.base import get_attractor_list
+
+Array = npt.NDArray[np.float64]
 
 
 def _compute_trajectory(
@@ -28,14 +31,14 @@ def _compute_trajectory(
 
 
 def make_trajectory_ensemble(
-    n,
-    subset=None,
-    use_multiprocessing=False,
-    init_conds={},
-    param_transform=None,
-    use_tqdm=False,
+    n: int,
+    init_conds: Dict[str, Array] = {},
+    use_tqdm: bool = False,
+    use_multiprocessing: bool = False,
+    param_transform: Optional[Callable] = None,
+    subset: Optional[Iterable[str]] = None,
     **kwargs,
-):
+) -> Dict[str, Array]:
     """
     Integrate multiple dynamical systems with identical settings
 
@@ -52,7 +55,7 @@ def make_trajectory_ensemble(
         all_sols (dict): A dictionary containing trajectories for each system
 
     """
-    if not subset:
+    if subset is None:
         subset = get_attractor_list()
 
     if len(init_conds) > 0:
@@ -105,10 +108,24 @@ def init_cond_sampler(
     rng = np.random.default_rng(random_seed)
     ic_dict = {sys: np.array(getattr(dfl, sys)().ic) for sys in subset}
 
-    def _sampler(scale: float = 1e-4) -> Dict[str, npt.NDArray[np.float64]]:
+    def _sampler(scale: float = 1e-4) -> Dict[str, Array]:
         return {
             sys: ic + rng.normal(scale=scale * np.linalg.norm(ic), size=ic.shape)
             for sys, ic in ic_dict.items()
         }
 
     return _sampler
+
+
+def compute_trajectory_statistics(
+    n: int,
+    subset: Optional[Iterable[str]] = None,
+    datapath: Optional[PathLike] = None,
+    **kwargs,
+) -> Dict[str, Dict[str, Array]]:
+    """Compute mean and std for given trajectory list"""
+    sols = make_trajectory_ensemble(n, subset=subset, **kwargs)
+    return {
+        name: {"mean": sol.mean(axis=0), "std": sol.std(axis=0)}
+        for name, sol in sols.items()
+    }

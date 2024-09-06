@@ -3,11 +3,10 @@ Helper utilities for working with time series arrays. This module is intended to
 dependencies on the rest of the package.
 """
 
-from typing import Iterable, Union
+from typing import Callable, Iterable, Union
 
 import numpy as np
 from numpy.fft import rfft
-from pandas.core.reshape.tile import Callable
 from scipy.integrate import solve_ivp
 from scipy.ndimage import gaussian_filter1d
 from scipy.optimize import approx_fprime

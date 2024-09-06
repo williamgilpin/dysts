@@ -17,10 +17,9 @@ import os
 import warnings
 from dataclasses import dataclass, field
 from itertools import starmap
-from typing import Callable
+from typing import Callable, List, Optional
 
 import pkg_resources
-from typing_extensions import Optional
 
 ## Check for optional datasets
 try:
@@ -81,12 +80,11 @@ DATAPATH_CONTINUOUS = pkg_resources.resource_filename(
 DATAPATH_DISCRETE = pkg_resources.resource_filename("dysts", "data/discrete_maps.json")
 
 
-@staticmethod
 def staticjit(func: Callable) -> Callable:
-    return njit(func)
+    return staticmethod(njit(func))
 
 
-def get_attractor_list(model_type="continuous"):
+def get_attractor_list(model_type: str = "continuous") -> List[str]:
     """
     Returns the names of all models in the package
 
