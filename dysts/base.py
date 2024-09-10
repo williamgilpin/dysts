@@ -176,7 +176,7 @@ class BaseDyn:
     @staticmethod
     def _rhs(X, t):
         """The right-hand side of the dynamical system. Overwritten by the subclass"""
-        return X
+        raise NotImplementedError
 
     @staticmethod
     def _jac(X, t, *args):
