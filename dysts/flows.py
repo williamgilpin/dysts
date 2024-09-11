@@ -12,8 +12,8 @@ Requirements:
 """
 
 import numpy as np
-from .base import DynSys, DynSysDelay, staticjit
 
+from .base import DynSys, DynSysDelay, staticjit
 
 
 class Lorenz(DynSys):
@@ -23,6 +23,7 @@ class Lorenz(DynSys):
         ydot = rho * x - x * z - y
         zdot = x * y - beta * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, beta, rho, sigma):
         row1 = [-sigma, sigma, 0]
@@ -34,9 +35,40 @@ class Lorenz(DynSys):
 class LorenzBounded(DynSys):
     @staticjit
     def _rhs(x, y, z, t, beta, r, rho, sigma):
-        xdot = sigma * y - sigma * x - sigma/r**2 * y * x ** 2 - sigma/r**2 * y ** 3 - sigma/r**2 * y * z ** 2 + sigma/r**2 * x ** 3 + sigma/r**2 * x * y ** 2 + sigma/r**2 * x * z ** 2
-        ydot = rho * x - x * z - y - rho/r**2 * x ** 3 - rho/r**2 * x * y ** 2 - rho/r**2 * x * z ** 2 + 1/r**2 * z * x ** 3 + 1/r**2 * x * z * y ** 2 + 1/r**2 * x * z ** 3 + 1/r**2 * y * x ** 2 + 1/r**2 * y ** 3 + 1/r**2 * y * z ** 2
-        zdot = x * y - beta * z - 1/r**2 * y * x ** 3 - 1/r**2 * x * y ** 3 - 1/r**2 * x * y * z ** 2 + beta/r**2 * z * x ** 2 + beta/r**2 * z * y ** 2 + beta/r**2 * z ** 3
+        xdot = (
+            sigma * y
+            - sigma * x
+            - sigma / r**2 * y * x**2
+            - sigma / r**2 * y**3
+            - sigma / r**2 * y * z**2
+            + sigma / r**2 * x**3
+            + sigma / r**2 * x * y**2
+            + sigma / r**2 * x * z**2
+        )
+        ydot = (
+            rho * x
+            - x * z
+            - y
+            - rho / r**2 * x**3
+            - rho / r**2 * x * y**2
+            - rho / r**2 * x * z**2
+            + 1 / r**2 * z * x**3
+            + 1 / r**2 * x * z * y**2
+            + 1 / r**2 * x * z**3
+            + 1 / r**2 * y * x**2
+            + 1 / r**2 * y**3
+            + 1 / r**2 * y * z**2
+        )
+        zdot = (
+            x * y
+            - beta * z
+            - 1 / r**2 * y * x**3
+            - 1 / r**2 * x * y**3
+            - 1 / r**2 * x * y * z**2
+            + beta / r**2 * z * x**2
+            + beta / r**2 * z * y**2
+            + beta / r**2 * z**3
+        )
         return xdot, ydot, zdot
 
 
@@ -65,10 +97,11 @@ class Lorenz96(DynSys):
 class Lorenz84(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, f, g):
-        xdot = -a * x - y ** 2 - z ** 2 + a * f
+        xdot = -a * x - y**2 - z**2 + a * f
         ydot = -y + x * y - b * x * z + g
         zdot = -z + b * x * y + x * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, f, g):
         row1 = [-a, -2 * y, -2 * z]
@@ -84,6 +117,7 @@ class Rossler(DynSys):
         ydot = x + a * y
         zdot = b + z * x - c * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c):
         row1 = [0, -1, -1]
@@ -99,6 +133,7 @@ class Thomas(DynSys):
         ydot = -a * y + b * np.sin(z)
         zdot = -a * z + b * np.sin(x)
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b):
         row1 = [-a, b * np.cos(y), 0]
@@ -115,18 +150,18 @@ class DoublePendulum(DynSys):
     @staticjit
     def _rhs(th1, th2, p1, p2, t, d, m):
         g = 9.82
-        pre = 6 / (m * d ** 2)
+        pre = 6 / (m * d**2)
         denom = 16 - 9 * np.cos(th1 - th2) ** 2
         th1_dot = pre * (2 * p1 - 3 * np.cos(th1 - th2) * p2) / denom
         th2_dot = pre * (8 * p2 - 3 * np.cos(th1 - th2) * p1) / denom
         p1_dot = (
             -0.5
-            * (m * d ** 2)
+            * (m * d**2)
             * (th1_dot * th2_dot * np.sin(th1 - th2) + 3 * (g / d) * np.sin(th1))
         )
         p2_dot = (
             -0.5
-            * (m * d ** 2)
+            * (m * d**2)
             * (-th1_dot * th2_dot * np.sin(th1 - th2) + 3 * (g / d) * np.sin(th2))
         )
         return th1_dot, th2_dot, p1_dot, p2_dot
@@ -141,8 +176,8 @@ class SwingingAtwood(DynSys):
     def _rhs(r, th, pr, pth, t, m1, m2):
         g = 9.82
         rdot = pr / (m1 + m2)
-        thdot = pth / (m1 * r ** 2)
-        prdot = pth ** 2 / (m1 * r ** 3) - m2 * g + m1 * g * np.cos(th)
+        thdot = pth / (m1 * r**2)
+        prdot = pth**2 / (m1 * r**3) - m2 * g + m1 * g * np.cos(th)
         pthdot = -m1 * g * r * np.sin(th)
         return rdot, thdot, prdot, pthdot
 
@@ -150,24 +185,26 @@ class SwingingAtwood(DynSys):
     def _postprocessing(r, th, pr, pth):
         return r, np.sin(th), pr, pth
 
+
 class GlycolyticOscillation(DynSys):
     @staticjit
     def _rhs(a, b, c, t, d, k, l1, l2, nu, q1, q2, s1, s2):
-        phi = (a * (1 + a) * (1 + b)**2) / (l1 + (1 + a)**2 * (1 + b)**2)
-        eta = b * (1 + d * b) * (1 + c)**2 / (l2 + (1 + d * b)**2 * (1 + c)**2)
+        phi = (a * (1 + a) * (1 + b) ** 2) / (l1 + (1 + a) ** 2 * (1 + b) ** 2)
+        eta = b * (1 + d * b) * (1 + c) ** 2 / (l2 + (1 + d * b) ** 2 * (1 + c) ** 2)
         adot = nu - s1 * phi
         bdot = q1 * s1 * phi - s2 * eta
         cdot = q2 * s2 * eta - k * c
         return adot, bdot, cdot
 
+
 class GuckenheimerHolmes(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, c, d, e, f):
-        xdot = a * x - b * y + c * z * x + d * z * x ** 2 + d * z * y ** 2
+        xdot = a * x - b * y + c * z * x + d * z * x**2 + d * z * y**2
         ydot = a * y + b * x + c * z * y
-        zdot = e - z ** 2 - f * x ** 2 - f * y ** 2 - a * z ** 3
+        zdot = e - z**2 - f * x**2 - f * y**2 - a * z**3
         return xdot, ydot, zdot
-    
+
     # @staticjit
     # def _jac(x, y, z, t, a, b, c, d, e, f):
     #     row1 = a + c * z + 2 * d * z * x, b, -2 * f * x
@@ -182,8 +219,9 @@ class HenonHeiles(DynSys):
         xdot = px
         ydot = py
         pxdot = -x - 2 * lam * x * y
-        pydot = -y - lam * x ** 2 + lam * y ** 2
+        pydot = -y - lam * x**2 + lam * y**2
         return xdot, ydot, pxdot, pydot
+
     @staticjit
     def _jac(x, y, px, py, t, lam):
         row1 = [0, 0, 1, 0]
@@ -196,10 +234,11 @@ class HenonHeiles(DynSys):
 class Halvorsen(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b):
-        xdot = -a * x - b * y - b * z - y ** 2
-        ydot = -a * y - b * z - b * x - z ** 2
-        zdot = -a * z - b * x - b * y - x ** 2
+        xdot = -a * x - b * y - b * z - y**2
+        ydot = -a * y - b * z - b * x - z**2
+        zdot = -a * z - b * x - b * y - x**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b):
         row1 = [-a, -b - 2 * y, -b]
@@ -216,6 +255,7 @@ class Chua(DynSys):
         ydot = x - y + z
         zdot = -beta * y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, alpha, beta, m0, m1):
         dramp_xdx = m1 + 0.5 * (m0 - m1) * (np.sign(x + 1) - np.sign(x - 1))
@@ -223,6 +263,7 @@ class Chua(DynSys):
         row2 = [1, -1, 1]
         row3 = [0, -beta, 0]
         return row1, row2, row3
+
 
 class MultiChua(DynSys):
     def diode(self, x):
@@ -244,13 +285,14 @@ class Duffing(DynSys):
     @staticjit
     def _rhs(x, y, z, t, alpha, beta, delta, gamma, omega):
         xdot = y
-        ydot = -delta * y - beta * x - alpha * x ** 3 + gamma * np.cos(z)
+        ydot = -delta * y - beta * x - alpha * x**3 + gamma * np.cos(z)
         zdot = omega
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, alpha, beta, delta, gamma, omega):
         row1 = [0, 1, 0]
-        row2 = [-3 * alpha * x ** 2 - beta, -delta, -gamma * np.sin(z)]
+        row2 = [-3 * alpha * x**2 - beta, -delta, -gamma * np.sin(z)]
         row3 = [0, 0, 0]
         return row1, row2, row3
 
@@ -262,7 +304,7 @@ class Duffing(DynSys):
 class MackeyGlass(DynSysDelay):
     @staticjit
     def _rhs(x, xt, t, beta, gamma, n, tau):
-        xdot = beta * (xt / (1 + xt ** n)) - gamma * x
+        xdot = beta * (xt / (1 + xt**n)) - gamma * x
         return xdot
 
 
@@ -280,7 +322,7 @@ class SprottDelay(IkedaDelay):
 class VossDelay(DynSysDelay):
     @staticjit
     def _rhs(x, xt, t, alpha, tau):
-        f = -10.44 * xt ** 3 - 13.95 * xt ** 2 - 3.63 * xt + 0.85
+        f = -10.44 * xt**3 - 13.95 * xt**2 - 3.63 * xt + 0.85
         xdot = -alpha * x + f
         return xdot
 
@@ -314,7 +356,7 @@ class DoubleGyre(DynSys):
     def _rhs(x, y, z, t, alpha, eps, omega):
         a = eps * np.sin(z)
         b = 1 - 2 * eps * np.sin(z)
-        f = a * x ** 2 + b * x
+        f = a * x**2 + b * x
         dx = -alpha * np.pi * np.sin(np.pi * f) * np.cos(np.pi * y)
         dy = alpha * np.pi * np.cos(np.pi * f) * np.sin(np.pi * y) * (2 * a * x + b)
         dz = omega
@@ -329,15 +371,15 @@ class BlinkingRotlet(DynSys):
     @staticjit
     def _rotlet(r, theta, a, b, bc):
         """A rotlet velocity field"""
-        kappa = a ** 2 + (b ** 2 * r ** 2) / a ** 2 - 2 * b * r * np.cos(theta)
-        gamma = (1 - r ** 2 / a ** 2) * (a ** 2 - (b ** 2 * r ** 2) / a ** 2)
-        iota = (b ** 2 * r) / a ** 2 - b * np.cos(theta)
-        zeta = b ** 2 + r ** 2 - 2 * b * r * np.cos(theta)
-        nu = a ** 2 + b ** 2 - (2 * b ** 2 * r ** 2) / a ** 2
-        vr = b * np.sin(theta) * (-bc * (gamma / kappa ** 2) - 1 / kappa + 1 / zeta)
+        kappa = a**2 + (b**2 * r**2) / a**2 - 2 * b * r * np.cos(theta)
+        gamma = (1 - r**2 / a**2) * (a**2 - (b**2 * r**2) / a**2)
+        iota = (b**2 * r) / a**2 - b * np.cos(theta)
+        zeta = b**2 + r**2 - 2 * b * r * np.cos(theta)
+        nu = a**2 + b**2 - (2 * b**2 * r**2) / a**2
+        vr = b * np.sin(theta) * (-bc * (gamma / kappa**2) - 1 / kappa + 1 / zeta)
         vth = (
-            bc * (gamma * iota) / kappa ** 2
-            + bc * r * nu / (a ** 2 * kappa)
+            bc * (gamma * iota) / kappa**2
+            + bc * r * nu / (a**2 * kappa)
             + iota / kappa
             - (r - b * np.cos(theta)) / zeta
         )
@@ -360,22 +402,55 @@ class BlinkingRotlet(DynSys):
     def _postprocessing(self, r, th, tt):
         return r * np.cos(th), r * np.sin(th), np.sin(2 * np.pi * tt / self.tau)
 
+
 class LidDrivenCavityFlow(DynSys):
     @staticjit
     def _lid(x, y, a, b, tau, u1, u2):
         """The velocity field when the left domain drives"""
-        prefactor1 = 2 * u1 * np.sin(np.pi * x / a) / (2 * b * np.pi + a * np.sinh(2 * np.pi * b / a))
-        prefactor2 = 2 * u2 * np.sin(2 * np.pi * x / a) / (4 * b * np.pi + a * np.sinh(4 * np.pi * b / a))
-        vx1 = -b * np.pi * np.sinh(np.pi * b / a) * np.sinh(np.pi * y / a) + np.cosh(np.pi * b / a) * (np.pi * y * np.cosh(np.pi * y /a) + a * np.sinh(np.pi * y / a))
-        vx2 = -2 * b * np.pi * np.sinh(2 * np.pi * b / a) * np.sinh(2 * np.pi * y / a) + np.cosh(2 * np.pi * b / a) * (2 * np.pi * y * np.cosh(2 * np.pi * y / a) + a * np.sinh(2 * np.pi * y / a))
+        prefactor1 = (
+            2
+            * u1
+            * np.sin(np.pi * x / a)
+            / (2 * b * np.pi + a * np.sinh(2 * np.pi * b / a))
+        )
+        prefactor2 = (
+            2
+            * u2
+            * np.sin(2 * np.pi * x / a)
+            / (4 * b * np.pi + a * np.sinh(4 * np.pi * b / a))
+        )
+        vx1 = -b * np.pi * np.sinh(np.pi * b / a) * np.sinh(np.pi * y / a) + np.cosh(
+            np.pi * b / a
+        ) * (np.pi * y * np.cosh(np.pi * y / a) + a * np.sinh(np.pi * y / a))
+        vx2 = -2 * b * np.pi * np.sinh(2 * np.pi * b / a) * np.sinh(
+            2 * np.pi * y / a
+        ) + np.cosh(2 * np.pi * b / a) * (
+            2 * np.pi * y * np.cosh(2 * np.pi * y / a) + a * np.sinh(2 * np.pi * y / a)
+        )
         vx = prefactor1 * vx1 + prefactor2 * vx2
 
-        prefactor1 = 2 * np.pi * u1 * np.cos(np.pi * x / a) / (2 * b * np.pi + a * np.sinh(2 * np.pi * b / a))
-        prefactor2 = 4 * np.pi * u2 * np.cos(2 * np.pi * x / a) / (4 * b * np.pi + a * np.sinh(4 * np.pi * b / a))
-        vy1 = b * np.sinh(np.pi * b / a) * np.cosh(np.pi * y / a) - np.cosh(np.pi * b / a) * y * np.sinh(np.pi * y / a)
-        vy2 = b * np.sinh(2 * np.pi * b / a) * np.cosh(2 * np.pi * y / a) - np.cosh(2 * np.pi * b / a) * y * np.sinh(2 * np.pi * y / a)
+        prefactor1 = (
+            2
+            * np.pi
+            * u1
+            * np.cos(np.pi * x / a)
+            / (2 * b * np.pi + a * np.sinh(2 * np.pi * b / a))
+        )
+        prefactor2 = (
+            4
+            * np.pi
+            * u2
+            * np.cos(2 * np.pi * x / a)
+            / (4 * b * np.pi + a * np.sinh(4 * np.pi * b / a))
+        )
+        vy1 = b * np.sinh(np.pi * b / a) * np.cosh(np.pi * y / a) - np.cosh(
+            np.pi * b / a
+        ) * y * np.sinh(np.pi * y / a)
+        vy2 = b * np.sinh(2 * np.pi * b / a) * np.cosh(2 * np.pi * y / a) - np.cosh(
+            2 * np.pi * b / a
+        ) * y * np.sinh(2 * np.pi * y / a)
         vy = prefactor1 * vy1 + prefactor2 * vy2
-        
+
         # vy1 = b * np.sinh(np.pi * b / a) * np.cosh(np.pi * y / a) - np.cosh(np.pi * b / a) * y * np.sinh(np.pi * y / a)
         # vy2 = b * np.sinh(2 * np.pi * b / a) * np.cosh(2 * np.pi * y / a) - np.cosh(2 * np.pi * b / a) * y * np.sinh(2 * np.pi * y / a)
         # vy = np.pi * prefactor1 * vy1 + 2 * np.pi * prefactor2 * vy2
@@ -416,58 +491,57 @@ class LidDrivenCavityFlow(DynSys):
     def _postprocessing(self, x, y, tt):
         return x, y, np.sin(2 * np.pi * tt / self.tau)
 
+
 class BlinkingVortex(BlinkingRotlet):
     pass
 
-class InteriorSquirmer(DynSys):
 
+class InteriorSquirmer(DynSys):
     @staticjit
     def _rhs_static(r, th, t, a, g, n):
-
         nvals = np.arange(1, n + 1)
         sinvals, cosvals = np.sin(th * nvals), np.cos(th * nvals)
-        rnvals = r ** nvals
+        rnvals = r**nvals
 
         vrn = g * cosvals + a * sinvals
-        vrn *= (nvals * rnvals * (r ** 2 - 1)) / r
+        vrn *= (nvals * rnvals * (r**2 - 1)) / r
 
-        vth = 2 * r + (r ** 2 - 1) * nvals / r
+        vth = 2 * r + (r**2 - 1) * nvals / r
         vth *= a * cosvals - g * sinvals
         vth *= rnvals
 
         return np.sum(vrn), np.sum(vth) / r
-    
+
     @staticjit
     def _jac_static(r, th, t, a, g, n):
-
         nvals = np.arange(1, n + 1)
         sinvals, cosvals = np.sin(th * nvals), np.cos(th * nvals)
-        rnvals = r ** nvals
+        rnvals = r**nvals
         trigsum = a * sinvals + g * cosvals
         trigskew = a * cosvals - g * sinvals
 
         j11 = np.copy(trigsum)
-        j11 *= nvals * rnvals * (2 * r ** 2 + (r ** 2 - 1) * (nvals - 1))
-        j11 = (1 / r ** 2) * np.sum(j11)
+        j11 *= nvals * rnvals * (2 * r**2 + (r**2 - 1) * (nvals - 1))
+        j11 = (1 / r**2) * np.sum(j11)
 
         j12 = np.copy(trigskew)
-        j12 *= -(nvals ** 2) * rnvals * (1 - r ** 2) / r
+        j12 *= -(nvals**2) * rnvals * (1 - r**2) / r
         j12 = np.sum(j12)
 
         j21 = 2 * rnvals * (2 * nvals + 1) * (-np.copy(trigskew))
-        j21 += (n * (1 - r ** 2) * rnvals * (nvals - 1) / r ** 2) * np.copy(
+        j21 += (n * (1 - r**2) * rnvals * (nvals - 1) / r**2) * np.copy(
             g * sinvals + a * cosvals
         )
         j21 = -np.sum(j21)
 
         j22 = np.copy(trigsum)
-        j22 *= -nvals * rnvals * (2 * r + (r ** 2 - 1) * nvals / r)
+        j22 *= -nvals * rnvals * (2 * r + (r**2 - 1) * nvals / r)
         j22 = np.sum(j22)
         # (1 / r**2) *
 
         ## Correct for polar coordinates
         vth = np.copy(trigskew)
-        vth *= 2 * r + (r ** 2 - 1) * nvals / r
+        vth *= 2 * r + (r**2 - 1) * nvals / r
         vth *= rnvals
         vth = np.sum(vth) / r
         j21 = j21 / r - vth / r
@@ -478,20 +552,22 @@ class InteriorSquirmer(DynSys):
     @staticjit
     def _protocol(t, tau, stiffness=20):
         return 0.5 + 0.5 * np.tanh(tau * stiffness * np.sin(2 * np.pi * t / tau))
-    
+
     def _postprocessing(self, r, th, tt):
         return r * np.cos(th), r * np.sin(th), np.sin(2 * np.pi * tt / self.tau)
-    
+
     # def jac(self, X, t):
     #     r, th = X[0], X[1]
     #     phase = self._protocol(t, self.tau)
     #     return self._jac_static(r, th, t, self.a * phase, self.g * (1 - phase), self.n)
-    
+
     def rhs(self, X, t):
         r, th, tt = X
         phase = self._protocol(tt, self.tau)
         dtt = 1
-        dr, dth = self._rhs_static(r, th, t, self.a * phase, self.g * (1 - phase), self.n)
+        dr, dth = self._rhs_static(
+            r, th, t, self.a * phase, self.g * (1 - phase), self.n
+        )
         return dr, dth, dtt
 
 
@@ -514,8 +590,8 @@ class BickleyJet(DynSys):
         sechy = 1 / np.cosh(y / ell)
         inds = np.arange(3)
         un = k[inds] * (x - z * sigma[inds])
-        dx = u * sechy ** 2 * (-1 - 2 * np.dot(np.cos(un), eps) * np.tanh(y / ell))
-        dy = ell * u * sechy ** 2 * np.dot(eps * k, np.sin(un))
+        dx = u * sechy**2 * (-1 - 2 * np.dot(np.cos(un), eps) * np.tanh(y / ell))
+        dy = ell * u * sechy**2 * np.dot(eps * k, np.sin(un))
         dz = omega
         return dy, dx, dz
 
@@ -545,6 +621,7 @@ class JerkCircuit(DynSys):
         ydot = z
         zdot = -z - x - eps * (np.exp(y / y0) - 1)
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, eps, y0):
         row1 = [0, 1, 0]
@@ -556,8 +633,8 @@ class JerkCircuit(DynSys):
 class ForcedBrusselator(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, f, w):
-        xdot = a + x ** 2 * y - (b + 1) * x + f * np.cos(z)
-        ydot = b * x - x ** 2 * y
+        xdot = a + x**2 * y - (b + 1) * x + f * np.cos(z)
+        ydot = b * x - x**2 * y
         zdot = w
         return xdot, ydot, zdot
 
@@ -570,10 +647,8 @@ class WindmiReduced(DynSys):
     @staticjit
     def _rhs(i, v, p, t, a1, b1, b2, b3, d1, vsw):
         idot = a1 * (vsw - v)
-        vdot = b1 * i - b2 * p ** 1 / 2 - b3 * v
-        pdot = (
-            vsw ** 2 - p ** (5 / 4) * vsw ** (1 / 2) * (1 + np.tanh(d1 * (i - 1))) / 2
-        )
+        vdot = b1 * i - b2 * p**1 / 2 - b3 * v
+        pdot = vsw**2 - p ** (5 / 4) * vsw ** (1 / 2) * (1 + np.tanh(d1 * (i - 1))) / 2
         return idot, vdot, pdot
 
 
@@ -582,8 +657,9 @@ class MooreSpiegel(DynSys):
     def _rhs(x, y, z, t, a, b, eps):
         xdot = y
         ydot = a * z
-        zdot = -z + eps * y - y * x ** 2 - b * x
+        zdot = -z + eps * y - y * x**2 - b * x
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, eps):
         row1 = [0, 1, 0]
@@ -601,14 +677,14 @@ class CoevolvingPredatorPrey(DynSys):
             - d1
             * (
                 1
-                - k2 * (-(alpha ** 2) + (alpha * delta) ** 2)
-                + k4 * (-(alpha ** 4) + (alpha * delta) ** 4)
+                - k2 * (-(alpha**2) + (alpha * delta) ** 2)
+                + k4 * (-(alpha**4) + (alpha * delta) ** 4)
             )
         )
         ydot = (-d2 + (a2 * x) / (1 + b2 * x)) * y
         alphadot = vv * (
             -((a1 * k1 * x * alpha * delta) / (1 + b1 * alpha))
-            - d1 * (-2 * k2 * alpha * delta ** 2 + 4 * k4 * alpha ** 3 * delta ** 4)
+            - d1 * (-2 * k2 * alpha * delta**2 + 4 * k4 * alpha**3 * delta**4)
         )
         return xdot, ydot, alphadot
 
@@ -616,13 +692,14 @@ class CoevolvingPredatorPrey(DynSys):
 class KawczynskiStrizhak(DynSys):
     @staticjit
     def _rhs(x, y, z, t, beta, gamma, kappa, mu):
-        xdot = gamma * y - gamma * x ** 3 + 3 * mu * gamma * x
+        xdot = gamma * y - gamma * x**3 + 3 * mu * gamma * x
         ydot = -2 * mu * x - y - z + beta
         zdot = kappa * x - kappa * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, beta, gamma, kappa, mu):
-        row1 = [-3 * gamma * x ** 2 + 3 * mu * gamma, gamma, 0]
+        row1 = [-3 * gamma * x**2 + 3 * mu * gamma, gamma, 0]
         row2 = [-2 * mu, -1, -1]
         row3 = [kappa, 0, -kappa]
         return row1, row2, row3
@@ -661,17 +738,17 @@ class BelousovZhabotinsky(DynSys):
         if x < 0.0:
             x = 0
         rf = (ci - z0 * z) * np.sqrt(x)
-        xdot = c1 * x * ybar + c2 * ybar + c3 * x ** 2 + c4 * rf + c5 * x * z - kf * x
+        xdot = c1 * x * ybar + c2 * ybar + c3 * x**2 + c4 * rf + c5 * x * z - kf * x
         zdot = (c6 / z0) * rf + c7 * x * z + c8 * z * v + c9 * z - kf * z
-        vdot = c10 * x * ybar + c11 * ybar + c12 * x ** 2 + c13 * z * v - kf * v
+        vdot = c10 * x * ybar + c11 * ybar + c12 * x**2 + c13 * z * v - kf * v
         return xdot * t0, zdot * t0, vdot * t0
 
 
 class IsothermalChemical(DynSys):
     @staticmethod
     def _rhs(alpha, beta, gamma, t, delta, kappa, mu, sigma):
-        alphadot = mu * (kappa + gamma) - alpha * beta ** 2 - alpha
-        betadot = (alpha * beta ** 2 + alpha - beta) / sigma
+        alphadot = mu * (kappa + gamma) - alpha * beta**2 - alpha
+        betadot = (alpha * beta**2 + alpha - beta) / sigma
         gammadot = (beta - gamma) / delta
         return alphadot, betadot, gammadot
 
@@ -688,9 +765,9 @@ class VallisElNino(DynSys):
 class RabinovichFabrikant(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, g):
-        xdot = y * z - y + y * x ** 2 + g * x
-        ydot = 3 * x * z + x - x ** 3 + g * y
-        zdot = -2 * a * z  - 2 * x * y * z
+        xdot = y * z - y + y * x**2 + g * x
+        ydot = 3 * x * z + x - x**3 + g * y
+        zdot = -2 * a * z - 2 * x * y * z
         return (xdot, ydot, zdot)
 
 
@@ -699,7 +776,7 @@ class NoseHoover(DynSys):
     def _rhs(x, y, z, t, a):
         xdot = y
         ydot = -x + y * z
-        zdot = a - y ** 2
+        zdot = a - y**2
         return xdot, ydot, zdot
 
 
@@ -719,6 +796,7 @@ class RikitakeDynamo(DynSys):
         ydot = -mu * y - a * x + x * z
         zdot = 1 - x * y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, mu):
         row1 = [-mu, z, y]
@@ -732,8 +810,14 @@ class NuclearQuadrupole(DynSys):
     def _rhs(q1, q2, p1, p2, t, a, b, d):
         q1dot = a * p1
         q2dot = a * p2
-        p1dot = - a * q1 + 3 / np.sqrt(2) * b * q1 ** 2 - 3 / np.sqrt(2) * b * q2 ** 2 - d * q1 ** 3 - d * q1 * q2 ** 2
-        p2dot = -a * q2 - 3 * np.sqrt(2) * b * q1 * q2 - d * q2 * q1 ** 2 - d * q2 ** 3
+        p1dot = (
+            -a * q1
+            + 3 / np.sqrt(2) * b * q1**2
+            - 3 / np.sqrt(2) * b * q2**2
+            - d * q1**3
+            - d * q1 * q2**2
+        )
+        p2dot = -a * q2 - 3 * np.sqrt(2) * b * q1 * q2 - d * q2 * q1**2 - d * q2**3
         return q1dot, q2dot, p1dot, p2dot
 
 
@@ -742,8 +826,9 @@ class PehlivanWei(DynSys):
     def _rhs(x, y, z, t):
         xdot = y - y * z
         ydot = y + y * z - 2 * x
-        zdot = 2 - x * y - y ** 2
+        zdot = 2 - x * y - y**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t):
         row1 = [0, 1 - z, -y]
@@ -756,9 +841,10 @@ class SprottTorus(DynSys):
     @staticjit
     def _rhs(x, y, z, t):
         xdot = y + 2 * x * y + x * z
-        ydot = 1 - 2 * x ** 2 + y * z
-        zdot = x - x ** 2 - y ** 2
+        ydot = 1 - 2 * x**2 + y * z
+        zdot = x - x**2 - y**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t):
         row1 = [2 * y + z, 2 * x + 1, x]
@@ -772,8 +858,9 @@ class SprottJerk(DynSys):
     def _rhs(x, y, z, t, mu):
         xdot = y
         ydot = z
-        zdot = -x + y ** 2 - mu * z
+        zdot = -x + y**2 - mu * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, mu):
         row1 = [0, 1, 0]
@@ -797,8 +884,9 @@ class SprottA(DynSys):
     def _rhs(x, y, z, t):
         xdot = y
         ydot = -x + y * z
-        zdot = 1 - y ** 2
+        zdot = 1 - y**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t):
         row1 = [0, 1, 0]
@@ -814,6 +902,7 @@ class SprottB(DynSys):
         ydot = x - y
         zdot = 1 - x * y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t):
         row1 = [0, z, y]
@@ -827,8 +916,9 @@ class SprottC(DynSys):
     def _rhs(x, y, z, t):
         xdot = y * z
         ydot = x - y
-        zdot = 1 - x ** 2
+        zdot = 1 - x**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t):
         row1 = [0, z, y]
@@ -842,8 +932,9 @@ class SprottD(DynSys):
     def _rhs(x, y, z, t):
         xdot = -y
         ydot = x + z
-        zdot = x * z + 3 * y ** 2
+        zdot = x * z + 3 * y**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t):
         row1 = [0, -1, 0]
@@ -856,9 +947,10 @@ class SprottE(DynSys):
     @staticjit
     def _rhs(x, y, z, t):
         xdot = y * z
-        ydot = x ** 2 - y
+        ydot = x**2 - y
         zdot = 1 - 4 * x
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t):
         row1 = [0, z, y]
@@ -872,8 +964,9 @@ class SprottF(DynSys):
     def _rhs(x, y, z, t, a):
         xdot = y + z
         ydot = -x + a * y
-        zdot = x ** 2 - z
+        zdot = x**2 - z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a):
         row1 = [0, 1, 1]
@@ -889,6 +982,7 @@ class SprottG(DynSys):
         ydot = x * z - y
         zdot = -x + y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a):
         row1 = [a, 0, 1]
@@ -900,10 +994,11 @@ class SprottG(DynSys):
 class SprottH(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a):
-        xdot = -y + z ** 2
+        xdot = -y + z**2
         ydot = x + a * y
         zdot = x - z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a):
         row1 = [0, -1, 2 * z]
@@ -917,8 +1012,9 @@ class SprottI(DynSys):
     def _rhs(x, y, z, t, a):
         xdot = -a * y
         ydot = x + z
-        zdot = x + y ** 2 - z
+        zdot = x + y**2 - z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a):
         row1 = [0, -a, 0]
@@ -932,15 +1028,15 @@ class SprottJ(DynSys):
     def _rhs(x, y, z, t):
         xdot = 2 * z
         ydot = -2 * y + z
-        zdot = -x + y + y ** 2
+        zdot = -x + y + y**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t):
         row1 = [0, 0, 2]
         row2 = [0, -2, 1]
         row3 = [-1, 1 + 2 * y, 0]
         return row1, row2, row3
-    
 
 
 class SprottK(DynSys):
@@ -950,6 +1046,7 @@ class SprottK(DynSys):
         ydot = x - y
         zdot = x + a * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a):
         row1 = [y, x, -1]
@@ -962,9 +1059,10 @@ class SprottL(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b):
         xdot = y + b * z
-        ydot = a * x ** 2 - y
+        ydot = a * x**2 - y
         zdot = 1 - x
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b):
         row1 = [0, 1, b]
@@ -977,9 +1075,10 @@ class SprottM(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a):
         xdot = -z
-        ydot = -x ** 2 - y
+        ydot = -(x**2) - y
         zdot = a + a * x + y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a):
         row1 = [0, 0, -1]
@@ -992,9 +1091,10 @@ class SprottN(DynSys):
     @staticjit
     def _rhs(x, y, z, t):
         xdot = -2 * y
-        ydot = x + z ** 2
+        ydot = x + z**2
         zdot = 1 + y - 2 * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t):
         row1 = [0, -2, 0]
@@ -1010,6 +1110,7 @@ class SprottO(DynSys):
         ydot = x - z
         zdot = x + x * z + a * y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a):
         row1 = [0, 1, 0]
@@ -1022,9 +1123,10 @@ class SprottP(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a):
         xdot = a * y + z
-        ydot = -x + y ** 2
+        ydot = -x + y**2
         zdot = x + y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a):
         row1 = [0, a, 1]
@@ -1038,8 +1140,9 @@ class SprottQ(DynSys):
     def _rhs(x, y, z, t, a, b):
         xdot = -z
         ydot = x - y
-        zdot = a * x + y ** 2 + b * z
+        zdot = a * x + y**2 + b * z
         return (xdot, ydot, zdot)
+
     @staticjit
     def _jac(x, y, z, t, a, b):
         row1 = [0, 0, -1]
@@ -1055,6 +1158,7 @@ class SprottR(DynSys):
         ydot = b + z
         zdot = x * y - z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b):
         row1 = [0, -1, 0]
@@ -1067,9 +1171,10 @@ class SprottS(DynSys):
     @staticjit
     def _rhs(x, y, z, t):
         xdot = -x - 4 * y
-        ydot = x + z ** 2
+        ydot = x + z**2
         zdot = 1 + x
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t):
         row1 = [-1, -4, 0]
@@ -1083,8 +1188,9 @@ class SprottMore(DynSys):
     def _rhs(x, y, z, t):
         xdot = y
         ydot = -x - np.sign(z) * y
-        zdot = y ** 2 - np.exp(-(x ** 2))
+        zdot = y**2 - np.exp(-(x**2))
         return xdot, ydot, zdot
+
     # @staticjit
     # def _jac(x, y, z, t):
     #     row1 = [0, 1, 0]
@@ -1098,13 +1204,14 @@ class Arneodo(DynSys):
     def _rhs(x, y, z, t, a, b, c, d):
         xdot = y
         ydot = z
-        zdot = -a * x - b * y - c * z + d * x ** 3
+        zdot = -a * x - b * y - c * z + d * x**3
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c, d):
         row1 = [0, 1, 0]
         row2 = [0, 0, 1]
-        row3 = [-a + 3 * d * x ** 2, -b, -c]
+        row3 = [-a + 3 * d * x**2, -b, -c]
         return row1, row2, row3
 
 
@@ -1117,8 +1224,9 @@ class Rucklidge(DynSys):
     def _rhs(x, y, z, t, a, b):
         xdot = -a * x + b * y - y * z
         ydot = x
-        zdot = -z + y ** 2
+        zdot = -z + y**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b):
         row1 = [-a, b - z, -y]
@@ -1134,6 +1242,7 @@ class Sakarya(DynSys):
         ydot = -b * y - p * x + q * x * z
         zdot = c * z - r * x * y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c, h, p, q, r, s):
         row1 = [a, h + s * z, s * y]
@@ -1153,6 +1262,7 @@ class RayleighBenard(DynSys):
         ydot = r * y - x * z
         zdot = x * y - b * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, r):
         row1 = [-a, a, 0]
@@ -1165,9 +1275,10 @@ class Finance(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, c):
         xdot = (1 / b - a) * x + z + x * y
-        ydot = -b * y - x ** 2
+        ydot = -b * y - x**2
         zdot = -x - c * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c):
         row1 = [(1 / b - a) + y, x, 1]
@@ -1180,9 +1291,10 @@ class Bouali2(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, bb, c, g, m, y0):
         xdot = a * y0 * x - a * x * y - b * z
-        ydot = -g * y + g * y * x ** 2
+        ydot = -g * y + g * y * x**2
         zdot = -1.5 * m * x + m * bb * x * z - c * z
         return xdot, ydot, zdot
+
     # @staticjit
     # def _jac(x, y, z, t, a, b, bb, c, g, m, y0):
     #     row1 = [a * y0 - a * y, -a * x, -b]
@@ -1202,6 +1314,7 @@ class LuChenCheng(DynSys):
         ydot = a * y + x * z
         zdot = b * z + x * y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c):
         row1 = [-(a * b) / (a + b), -z, -y]
@@ -1217,6 +1330,7 @@ class LuChen(DynSys):
         ydot = -x * z + c * y
         zdot = x * y - b * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c):
         row1 = [-a, a, 0]
@@ -1232,6 +1346,7 @@ class QiChen(DynSys):
         ydot = c * x + y - x * z
         zdot = x * y - b * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c):
         row1 = [-a, a + z, y]
@@ -1247,6 +1362,7 @@ class ZhouChen(DynSys):
         ydot = c * y - x * z + d * y * z
         zdot = e * z - x * y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c, d, e):
         row1 = [a, b + z, y]
@@ -1262,6 +1378,7 @@ class BurkeShaw(DynSys):
         ydot = y - n * x * z
         zdot = n * x * y + e
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, e, n):
         row1 = [-n, -n, 0]
@@ -1277,6 +1394,7 @@ class Chen(DynSys):
         ydot = (c - a) * x - x * z + c * y
         zdot = x * y - b * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c):
         row1 = [-a, a, 0]
@@ -1292,6 +1410,7 @@ class ChenLee(DynSys):
         ydot = b * y + x * z
         zdot = c * z + 0.3333333333333333333333333 * x * y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c):
         row1 = [a, -z, -y]
@@ -1307,6 +1426,7 @@ class WangSun(DynSys):
         ydot = b * x + d * y - x * z
         zdot = e * z + f * x * y
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, d, e, f, q):
         row1 = [a, q * z, q * y]
@@ -1322,6 +1442,7 @@ class YuWang(DynSys):
         ydot = b * x - c * x * z
         zdot = np.exp(x * y) - d * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c, d):
         row1 = [-a, a, 0]
@@ -1337,6 +1458,7 @@ class YuWang2(DynSys):
         ydot = b * x - c * x * z
         zdot = np.cosh(x * y) - d * z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c, d):
         row1 = [-a, a, 0]
@@ -1352,6 +1474,7 @@ class SanUmSrisuchinwong(DynSys):
         ydot = -z * np.tanh(x)
         zdot = -a + x * y + np.abs(y)
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a):
         row1 = [-1, 1, 0]
@@ -1365,8 +1488,9 @@ class DequanLi(DynSys):
     def _rhs(x, y, z, t, a, c, d, eps, f, k):
         xdot = a * y - a * x + d * x * z
         ydot = k * x + f * y - x * z
-        zdot = c * z + x * y - eps * x ** 2
+        zdot = c * z + x * y - eps * x**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, c, d, eps, f, k):
         row1 = [-a + d * z, a, d * x]
@@ -1387,12 +1511,13 @@ class ArnoldWeb(DynSys):
     @staticjit
     def _rhs(p1, p2, x1, x2, z, t, mu, w):
         denom = 4 + np.cos(z) + np.cos(x1) + np.cos(x2)
-        p1dot = -mu * np.sin(x1) / denom ** 2
-        p2dot = -mu * np.sin(x2) / denom ** 2
+        p1dot = -mu * np.sin(x1) / denom**2
+        p2dot = -mu * np.sin(x2) / denom**2
         x1dot = p1
         x2dot = p2
         zdot = w
         return p1dot, p2dot, x1dot, x2dot, zdot
+
     # @staticjit
     # def _jac(p1, p2, x1, x2, z, t, mu, w):
     #     row1 = [-mu * np.cos(x1) / (4 + np.cos(z) + np.cos(x1) + np.cos(x2)) ** 2, 0, 0, 0, 0]
@@ -1414,6 +1539,7 @@ class NewtonLiepnik(DynSys):
         ydot = -x - 0.4 * y + 5 * x * z
         zdot = b * z - 5 * x * y
         return xdot, ydot, zdot
+
     # @staticjit
     # def _jac(x, y, z, t, a, b):
 
@@ -1443,7 +1569,7 @@ class HyperCai(DynSys):
     def _rhs(x, y, z, w, t, a, b, c, d, e):
         xdot = a * y - a * x
         ydot = b * x + c * y - x * z + w
-        zdot = -d * z + y ** 2
+        zdot = -d * z + y**2
         wdot = -e * x
         return xdot, ydot, zdot, wdot
 
@@ -1533,7 +1659,7 @@ class HyperWang(DynSys):
     def _rhs(x, y, z, w, t, a=10, b=40, c=2.5, d=10.6, e=4):
         xdot = a * y - a * x
         ydot = -x * z + b * x + w
-        zdot = -c * z + e * x ** 2
+        zdot = -c * z + e * x**2
         wdot = -d * x
         return xdot, ydot, zdot, wdot
 
@@ -1587,13 +1713,13 @@ class ExcitableCell(DynSys):
         ca = c / (1 + c)
 
         vdot = (
-            self.gi * minf ** 3 * hinf * (self.vi - v)
-            + self.gkv * n ** 4 * (self.vk - v)
+            self.gi * minf**3 * hinf * (self.vi - v)
+            + self.gkv * n**4 * (self.vk - v)
             + self.gkc * ca * (self.vk - v)
             + self.gl * (self.vl - v)
         )
         ndot = (ninf - n) / tau
-        cdot = self.rho * (minf ** 3 * hinf * (self.vc - v) - self.kc * c)
+        cdot = self.rho * (minf**3 * hinf * (self.vc - v) - self.kc * c)
         return vdot, ndot, cdot
 
 
@@ -1601,16 +1727,16 @@ class CaTwoPlus(DynSys):
     def rhs(self, X, t):
         z, y, a = X
         Vin = self.V0 + self.V1 * self.beta
-        V2 = self.Vm2 * (z ** 2) / (self.K2 ** 2 + z ** 2)
+        V2 = self.Vm2 * (z**2) / (self.K2**2 + z**2)
         V3 = (
-            (self.Vm3 * (z ** self.m) / (self.Kz ** self.m + z ** self.m))
-            * (y ** 2 / (self.Ky ** 2 + y ** 2))
-            * (a ** 4 / (self.Ka ** 4 + a ** 4))
+            (self.Vm3 * (z**self.m) / (self.Kz**self.m + z**self.m))
+            * (y**2 / (self.Ky**2 + y**2))
+            * (a**4 / (self.Ka**4 + a**4))
         )
         V5 = (
             self.Vm5
-            * (a ** self.p / (self.K5 ** self.p + a ** self.p))
-            * (z ** self.n / (self.Kd ** self.n + z ** self.n))
+            * (a**self.p / (self.K5**self.p + a**self.p))
+            * (z**self.n / (self.Kd**self.n + z**self.n))
         )
         zdot = Vin - V2 + V3 + self.kf * y - self.k * z
         ydot = V2 - V3 - self.kf * y
@@ -1672,7 +1798,7 @@ class CircadianRhythm(DynSys):
         v,
     ):
         vs = 2.5 * ((0.5 + 0.5 * np.cos(th)) + vmin) * (vmax - vmin)
-        mdot = vs * (Ki ** n) / (Ki ** n + fn ** n) - vm * m / (km + m)
+        mdot = vs * (Ki**n) / (Ki**n + fn**n) - vm * m / (km + m)
         fcdot = ks * m - k1 * fc + k2 * fn - k * fc
         fsdot = k * fc - vd * fs / (kd + fs)
         fndot = k1 * fc - k2 * fn - vdn * fn / (kdn + fn)
@@ -1702,8 +1828,18 @@ class Aizawa(DynSys):
     def _rhs(x, y, z, t, a, b, c, d, e, f):
         xdot = x * z - b * x - d * y
         ydot = d * x + y * z - b * y
-        zdot = c + a * z - 0.333333333333333333 * z ** 3 - x ** 2 - y ** 2 - e * z * x ** 2 - e * z * y ** 2 + f * z * x ** 3
+        zdot = (
+            c
+            + a * z
+            - 0.333333333333333333 * z**3
+            - x**2
+            - y**2
+            - e * z * x**2
+            - e * z * y**2
+            + f * z * x**3
+        )
         return xdot, ydot, zdot
+
     # @staticjit
     # def _jac(x, y, z, t, a, b, c, d, e, f):
     #     xdot = x * z - b * x - d * y
@@ -1721,8 +1857,8 @@ class AnishchenkoAstakhov(DynSys):
         mu, eta = self.mu, self.eta
         xdot = mu * x + y - x * z
         ydot = -x
-        zdot = -eta * z + eta * np.heaviside(x, 0) * x ** 2
-        return (xdot, ydot, zdot)
+        zdot = -eta * z + eta * np.heaviside(x, 0) * x**2
+        return xdot, ydot, zdot
 
 
 class ShimizuMorioka(DynSys):
@@ -1730,8 +1866,9 @@ class ShimizuMorioka(DynSys):
     def _rhs(x, y, z, t, a, b):
         xdot = y
         ydot = x - a * y - x * z
-        zdot = -b * z + x ** 2
+        zdot = -b * z + x**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b):
         row1 = [0, 1, 0]
@@ -1745,8 +1882,9 @@ class GenesioTesi(DynSys):
     def _rhs(x, y, z, t, a, b, c):
         xdot = y
         ydot = z
-        zdot = -c * x - b * y - a * z + x ** 2
+        zdot = -c * x - b * y - a * z + x**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c):
         row1 = [0, 1, 0]
@@ -1757,35 +1895,33 @@ class GenesioTesi(DynSys):
 
 class AtmosphericRegime(DynSys):
     @staticjit
-    def _rhs(
-        x, y, z, t, alpha, beta, mu1, mu2, omega, sigma
-    ):
+    def _rhs(x, y, z, t, alpha, beta, mu1, mu2, omega, sigma):
         xdot = mu1 * x + sigma * x * y
-        ydot = mu2 * y + omega * z + alpha * y * z + beta * z ** 2 - sigma * x ** 2
-        zdot = mu2 * z - omega * y - alpha * y ** 2 - beta * y * z
+        ydot = mu2 * y + omega * z + alpha * y * z + beta * z**2 - sigma * x**2
+        zdot = mu2 * z - omega * y - alpha * y**2 - beta * y * z
         return xdot, ydot, zdot
 
 
 class Hadley(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, f, g):
-        xdot = -y ** 2 - z ** 2 - a * x + a * f
+        xdot = -(y**2) - z**2 - a * x + a * f
         ydot = x * y - b * x * z - y + g
         zdot = b * x * y + x * z - z
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, f, g):
         row1 = [-a, -2 * y, -2 * z]
         row2 = [y - b * z, x - 1, -b * x]
         row3 = [b * y + z, b * x, x - 1]
         return row1, row2, row3
-    
 
 
 class ForcedVanDerPol(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, mu, w):
-        ydot = mu * (1 - x ** 2) * y - x + a * np.sin(z)
+        ydot = mu * (1 - x**2) * y - x + a * np.sin(z)
         xdot = y
         zdot = w
         return xdot, ydot, zdot
@@ -1798,7 +1934,7 @@ class ForcedVanDerPol(DynSys):
 class ForcedFitzHughNagumo(DynSys):
     @staticjit
     def _rhs(v, w, z, t, a, b, curr, f, gamma, omega):
-        vdot = v - v ** 3 / 3 - w + curr + f * np.sin(z)
+        vdot = v - v**3 / 3 - w + curr + f * np.sin(z)
         wdot = gamma * (v + a - b * w)
         zdot = omega
         return vdot, wdot, zdot
@@ -1811,10 +1947,11 @@ class ForcedFitzHughNagumo(DynSys):
 class HindmarshRose(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, c, d, s, tx, tz):
-        xdot = -x + 1 / tx * y - a / tx * x ** 3 + b / tx * x ** 2 + 1 / tx * z
-        ydot = -a * x ** 3 - (d - b) * x ** 2 + z
+        xdot = -x + 1 / tx * y - a / tx * x**3 + b / tx * x**2 + 1 / tx * z
+        ydot = -a * x**3 - (d - b) * x**2 + z
         zdot = -s / tz * x - 1 / tz * z + c / tz
         return xdot, ydot, zdot
+
     # @staticjit
     # def _jac(x, y, z, t, a, b, c, d, s, tx, tz):
     #     row1 = [-1 / tx - 3 * a / tx * x ** 2 + 2 * b / tx * x, 1 / tx, 1 / tx]
@@ -1837,14 +1974,15 @@ class Colpitts(DynSys):
 class Laser(DynSys):
     @staticjit
     def _rhs(x, y, z, t, a, b, c, d, h, k):
-        xdot = a * y - a * x + b * y * z ** 2
-        ydot = c * x + d * x * z ** 2
-        zdot = h * z + k * x ** 2
+        xdot = a * y - a * x + b * y * z**2
+        ydot = c * x + d * x * z**2
+        zdot = h * z + k * x**2
         return xdot, ydot, zdot
+
     @staticjit
     def _jac(x, y, z, t, a, b, c, d, h, k):
-        row1 = [-a, a + b * z ** 2, 2 * b * y * z]
-        row2 = [c + d * z ** 2, 0, 2 * d * x * z]
+        row1 = [-a, a + b * z**2, 2 * b * y * z]
+        row2 = [c + d * z**2, 0, 2 * d * x * z]
         row3 = [2 * k * x, 0, h]
         return row1, row2, row3
 
@@ -1863,11 +2001,11 @@ class TurchinHanski(DynSys):
     def _rhs(n, p, z, t, a, d, e, g, h, r, s):
         ndot = (
             r * (1 - e * np.sin(z)) * n
-            - r * (n ** 2)
-            - g * (n ** 2) / (n ** 2 + h ** 2)
+            - r * (n**2)
+            - g * (n**2) / (n**2 + h**2)
             - a * n * p / (n + d)
         )
-        pdot = s * (1 - e * np.sin(z)) * p - s * (p ** 2) / n
+        pdot = s * (1 - e * np.sin(z)) * p - s * (p**2) / n
         zdot = 2 * np.pi
         return ndot, pdot, zdot
 
@@ -1878,13 +2016,13 @@ class TurchinHanski(DynSys):
 
 class StickSlipOscillator(DynSys):
     def _t(self, v):
-        return self.t0 * np.sign(v) - self.alpha * v + self.beta * v ** 3
+        return self.t0 * np.sign(v) - self.alpha * v + self.beta * v**3
 
     @staticjit
     def _rhs(x, v, th, t, a, alpha, b, beta, eps, gamma, t0, vs, w):
         tq = t0 * np.sign(v - vs) - alpha * v + beta * (v - vs) ** 3
         xdot = v
-        vdot = eps * (gamma * np.cos(th) - tq) + a * x - b * x ** 3
+        vdot = eps * (gamma * np.cos(th) - tq) + a * x - b * x**3
         thdot = w
         return xdot, vdot, thdot
 
