@@ -149,12 +149,14 @@ class BaseDyn:
     def set_params(self, params: Optional[Dict[str, Any]] = None) -> None:
         """Updates current parameter list with given parameters"""
         if params is not None:
-            # is this too restrictive? Consider relaxing
             assert all(
                 key in self.params.keys() for key in params
-            ), "Can only modify existing parameters, cannot add new ones"
-            for key in params:
-                setattr(self, key, params[key])
+            ), "Can only modify existing system parameters, cannot add new ones"
+            self.__dict__.update(params)
+            warnings.warn(
+                """Changing the systems parameters makes all other estimated parameters
+                such as `period`, `maximum_lyapunov_estimated`, `mean`, etc invalid!"""
+            )
 
         self.param_list = [
             getattr(self, param_name) for param_name in sorted(self.params.keys())
@@ -166,6 +168,11 @@ class BaseDyn:
         """Updates the current parameter list via a transform function"""
         self.param_list = list(
             starmap(transform_fn, zip(sorted(self.params.keys()), self.param_list))
+        )
+
+        warnings.warn(
+            """Changing the systems parameters makes all other estimated parameters
+            such as `period`, `maximum_lyapunov_estimated`, `mean`, etc invalid!"""
         )
 
     def _load_data(self):
