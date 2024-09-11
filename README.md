@@ -111,6 +111,7 @@ These additional optional dependencies are needed to reproduce some portions of 
 
 ## Development goals
 
++ align max lyapunov exponent with estimated spectrum better
 + Better flexibility for changing systems (e.g. changing system parameters requires changing other attributes)
 + Change implementation of delay differential equations.
 + Consider switching from numba to JAX for acceleration of integration.
