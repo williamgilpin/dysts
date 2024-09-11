@@ -139,6 +139,10 @@ class BaseDyn:
         self.ic = ic_val
         np.random.seed(self.random_state)
 
+        # for standardization
+        self.zero_mean = np.zeros(self.ic.shape)
+        self.unit_std = np.ones(self.ic.shape)
+
         for key in data:
             setattr(self, key, data[key])
 
