@@ -132,21 +132,19 @@ class BaseDyn:
             if not np.isscalar(value):
                 self.params[key] = np.array(value)
         self.__dict__.update(self.params)
+        self.set_params()
 
-        ic_val = data["initial_conditions"]
         # Cast initial condition to numpy
+        ic_val = data["initial_conditions"]
         ic_val = np.array(ic_val) if not np.isscalar(ic_val) else np.array([ic_val])
         self.ic = ic_val
         np.random.seed(self.random_state)
 
-        # for standardization fallback
-        self.zero_mean = np.zeros(self.ic.shape)
-        self.unit_std = np.ones(self.ic.shape)
-
         for key in data:
             setattr(self, key, data[key])
 
-        self.set_params()
+        self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
+        self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
 
     def set_params(self, params: Optional[Dict[str, Any]] = None) -> None:
         """Updates current parameter list with given parameters"""
@@ -285,13 +283,11 @@ class DynSys(BaseDyn):
 
     def rhs(self, X, t):
         """The right hand side of a dynamical equation"""
-        out = self._rhs(*X.T, t, *self.param_list)
-        return out
+        return self._rhs(*X.T, t, *self.param_list)
 
     def jac(self, X, t):
         """The Jacobian of the dynamical system"""
-        out = self._jac(*X.T, t, *self.param_list)
-        return out
+        return self._jac(*X.T, t, *self.param_list)
 
     def __call__(self, X, t):
         """Wrapper around right hand side"""
@@ -359,23 +355,29 @@ class DynSys(BaseDyn):
                 )
             tpts = np.linspace(0, tlim, n)
 
+        mu = self.mean if standardize else np.zeros_like(self.ic)
+        std = self.std if standardize else np.ones_like(self.ic)
+
         # check for analytical Jacobian, with condition of ic being a ndim array
         if (self.ic.ndim > 1 and self.jac(self.ic[0], 0)) or self.jac(
             self.ic, 0
         ) is not None:
-            jac = lambda t, x: self.jac(x, t)
+            jac = lambda t, x: self.jac(std * x + mu, t) / std
         else:
             jac = None
 
         m = self.ic.ndim
         ics = np.expand_dims(self.ic, axis=0) if m < 2 else self.ic
 
+        def standard_rhs(X, t):
+            return self(X * std + mu, t) / std
+
         # compute trajectories
         sol = list()
         for ic in ics:
             traj = integrate_dyn(
-                self,
-                ic,
+                standard_rhs,
+                (ic - mu) / std,
                 tpts,
                 dtval=self.dt,
                 method=method,
@@ -386,10 +388,7 @@ class DynSys(BaseDyn):
                 **kwargs,
             )
             # check completeness of trajectory to kill off incomplete trajectories
-            check_complete = traj.shape[-1] == len(
-                tpts
-            )  # full trajectory should have n points
-            if check_complete:
+            if traj.shape[-1] == len(tpts):  # full trajectory should have n points
                 sol.append(traj)
             else:
                 warnings.warn(
@@ -409,17 +408,6 @@ class DynSys(BaseDyn):
             sol2 = np.moveaxis(sol, (-1, 0), (0, -1))
             sol = np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0))
         sol = np.squeeze(sol)
-
-        # standardize the trajectory along time (T) dimension, sol shape must be (T, D) or (B, T, D)
-        if standardize:
-            print(f"Standardizing {self.name}... ", sol.shape)
-            try:
-                sol = standardize_ts(sol)
-            except Exception as err:
-                print(f"Error {err=}, {type(err)=}")
-                warnings.warn("Standardization failed")
-                sol = None
-                raise
 
         return (tpts, sol) if return_times else sol
 

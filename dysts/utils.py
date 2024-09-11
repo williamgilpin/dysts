@@ -21,14 +21,12 @@ else:
     _has_sdeint = True
 
 
-# @njit
 def polar_to_cartesian(r, th):
     """Convert polar coordinates to 2D Cartesian coordinates"""
     x, y = r * np.cos(th), r * np.sin(th)
     return x, y
 
 
-# @njit
 def cartesian_to_polar(x, y):
     """Convert 2D cartesian coordinates to polar coordinates"""
     th = np.arctan2(y, x)
@@ -189,13 +187,15 @@ def integrate_dyn(
         sol_fine = itoint(fw, gw, np.array(ic), tvals_fine).T
         sol = np.vstack([resample(item, len(tvals)) for item in sol_fine])
     else:
-        # dt = np.median(np.diff(tvals))
-        fc = lambda t, y: f(y, t)
         sol0 = solve_ivp(
-            fc, [tvals[0], tvals[-1]], ic, t_eval=tvals, first_step=dtval, **kwargs
+            lambda t, y: f(y, t),
+            [tvals[0], tvals[-1]],
+            ic,
+            t_eval=tvals,
+            first_step=dtval,
+            **kwargs,
         )
         sol = sol0.y
-        # sol = odeint(f, np.array(ic), tvals).T
 
     return sol
 
@@ -420,7 +420,6 @@ def resample_timepoints(model, ic, tpts, pts_per_period=100):
     period = dt * (1 / freq_from_autocorr(samp[:10000], 1))
     num_periods = len(tpts) // pts_per_period
     new_timepoints = np.linspace(0, num_periods * period, num_periods * pts_per_period)
-    # out = integrate_dyn(eq, ic, tt)
     return new_timepoints
 
 
