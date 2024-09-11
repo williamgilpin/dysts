@@ -17,7 +17,7 @@ import os
 import warnings
 from dataclasses import dataclass, field
 from itertools import starmap
-from typing import Callable, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 import pkg_resources
 
@@ -123,9 +123,9 @@ class BaseDyn:
 
     def __init__(self, **entries):
         self.name = self.__class__.__name__
-        self._load_data()
+        data = self._load_data()
 
-        self.params = self._load_data()["parameters"]
+        self.params = data["parameters"]
         self.params.update(entries)
         # Cast all parameter arrays to numpy
         for key, value in self.params.items():
@@ -133,31 +133,35 @@ class BaseDyn:
                 self.params[key] = np.array(value)
         self.__dict__.update(self.params)
 
-        ic_val = self._load_data()["initial_conditions"]
+        ic_val = data["initial_conditions"]
         # Cast initial condition to numpy
         ic_val = np.array(ic_val) if not np.isscalar(ic_val) else np.array([ic_val])
         self.ic = ic_val
         np.random.seed(self.random_state)
 
-        for key in self._load_data().keys():
-            setattr(self, key, self._load_data()[key])
+        for key in data:
+            setattr(self, key, data[key])
+
+        self.set_params()
+
+    def set_params(self, params: Optional[Dict[str, Any]] = None) -> None:
+        """Updates current parameter list with given parameters"""
+        if params is not None:
+            # is this too restrictive? Consider relaxing
+            assert all(
+                key in self.params.keys() for key in params
+            ), "Can only modify existing parameters, cannot add new ones"
+            for key in params:
+                setattr(self, key, params[key])
 
         self.param_list = [
             getattr(self, param_name) for param_name in sorted(self.params.keys())
         ]
 
-    def update_params(self):
-        """
-        Update all instance attributes to match the values stored in the
-        `params` field
-        """
-        for key in self.params.keys():
-            setattr(self, key, self.params[key])
-
     def transform_params(
         self, transform_fn: Callable[[str, np.ndarray], np.ndarray]
     ) -> None:
-        """Transforms the current parameter list via a transform function"""
+        """Updates the current parameter list via a transform function"""
         self.param_list = list(
             starmap(transform_fn, zip(sorted(self.params.keys()), self.param_list))
         )

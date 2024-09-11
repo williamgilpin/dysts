@@ -1,7 +1,8 @@
+from dataclasses import dataclass
+
 import numpy as np
 
-from dataclasses import dataclass
-from dysts.base import init_cond_sampler, make_trajectory_ensemble
+from dysts.trajectory import init_cond_sampler, make_trajectory_ensemble
 
 
 @dataclass
@@ -19,7 +20,7 @@ class ParamPerturb:
 
 
 def main():
-    
+
     sampler = init_cond_sampler()
     pt = ParamPerturb(1e-4, random_seed=9999)
     make_trajectory_ensemble(100, use_multiprocessing=True, use_tqdm=True, init_conds=sampler(), param_transform=pt)
