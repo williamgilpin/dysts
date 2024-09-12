@@ -5,6 +5,8 @@ dependencies on the rest of the package.
 
 from typing import Callable, Iterable, Union
 
+import warnings
+
 import numpy as np
 from numpy.fft import rfft
 from scipy.integrate import solve_ivp
