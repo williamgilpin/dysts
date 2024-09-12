@@ -3,9 +3,8 @@ Helper utilities for working with time series arrays. This module is intended to
 dependencies on the rest of the package.
 """
 
-from typing import Callable, Iterable, Union
-
 import warnings
+from typing import Callable, Iterable, Union
 
 import numpy as np
 from numpy.fft import rfft
