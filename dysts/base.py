@@ -17,7 +17,7 @@ import os
 import warnings
 from dataclasses import dataclass, field
 from itertools import starmap
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, Optional
 
 import pkg_resources
 
@@ -82,26 +82,6 @@ DATAPATH_DISCRETE = pkg_resources.resource_filename("dysts", "data/discrete_maps
 
 def staticjit(func: Callable) -> Callable:
     return staticmethod(njit(func))
-
-
-def get_attractor_list(model_type: str = "continuous") -> List[str]:
-    """
-    Returns the names of all models in the package
-
-    Args:
-        model_type (str): "continuous" (default) or "discrete"
-
-    Returns:
-        attractor_list (list of str): The names of all attractors in database
-    """
-    if model_type == "continuous":
-        data_path = DATAPATH_CONTINUOUS
-    else:
-        data_path = DATAPATH_DISCRETE
-    with open(data_path, "r") as file:
-        data = json.load(file)
-    attractor_list = sorted(list(data.keys()))
-    return attractor_list
 
 
 @dataclass(init=False)

@@ -2,8 +2,7 @@
 
 import json
 
-from dysts.base import get_attractor_list
-from dysts.trajectory import compute_trajectory_statistics
+from dysts.systems import compute_trajectory_statistics, get_attractor_list
 
 if __name__ == "__main__":
     num_points = 4096

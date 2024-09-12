@@ -7,10 +7,11 @@ import os
 import numpy as np
 from resources.esn import ESNForecast
 
+from dysts.datasets import convert_json_to_gzip, load_file
+
 # import torch.optim as optim
 # from torchdiffeq import odeint
-from dysts.base import get_attractor_list
-from dysts.datasets import convert_json_to_gzip, load_file
+from dysts.systems import get_attractor_list
 
 SEED = 0
 LONG_TEST = False

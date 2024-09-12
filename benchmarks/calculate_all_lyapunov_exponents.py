@@ -4,7 +4,7 @@ from multiprocessing import Manager, Pool
 
 import dysts.flows as dfl
 from dysts.analysis import lyapunov_exponent_naive
-from dysts.base import get_attractor_list
+from dysts.systems import get_attractor_list
 
 
 def compute_lyapunov_exponent_naive(equation_name, lock):
@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
 
 ## Single-threaded version
-# from dysts.base import get_attractor_list
+# from dysts.systems import get_attractor_list
 # import dysts.flows as dfl
 # from dysts.analysis import lyapunov_exponent_naive
 

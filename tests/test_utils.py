@@ -4,16 +4,24 @@ Test the models and regularizer
 """
 #!/usr/bin/env python
 import os
-import numpy as np
+import sys
 import unittest
 
-import sys
+import numpy as np
+
 WORKING_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(WORKING_DIR)
 sys.path.insert(1, os.path.join(WORKING_DIR, "dysts"))
 
-from dysts.utils import polar_to_cartesian, cartesian_to_polar, signif, dict_loudassign
-from dysts.utils import standardize_ts, integrate_dyn, freq_from_fft, resample_timepoints, make_surrogate
+from dysts.utils import (
+    cartesian_to_polar,
+    dict_loudassign,
+    make_surrogate,
+    polar_to_cartesian,
+    signif,
+    standardize_ts,
+)
+
 
 class TestUtils(unittest.TestCase):
     def setUp(self):
@@ -35,20 +43,20 @@ class TestUtils(unittest.TestCase):
         r, th = cartesian_to_polar(self.x, self.y)
         self.assertAlmostEqual(r, self.r)
         self.assertAlmostEqual(th, self.th)
-        
+
     def test_signif(self):
         res = signif(1.2345678, figs=4)
         self.assertEqual(res, 1.235)
-        
+
     def test_dict_loudassign(self):
         res = dict_loudassign(self.d, 'b', 2)
         self.assertEqual(res, {'a': 1, 'b': 2})
-        
+
     def test_standardize_ts(self):
         res = standardize_ts(self.a)
         expected = np.array([[-1.22474487, -1.22474487, -1.22474487], [0., 0., 0.], [1.22474487, 1.22474487, 1.22474487]])
         self.assertTrue(np.allclose(res, expected))
-    
+
     # def test_integrate_dyn(self):
     #     def f(y, t):
     #         return -y
@@ -60,14 +68,14 @@ class TestUtils(unittest.TestCase):
     # def test_freq_from_fft(self):
     #     sig = np.sin(2*np.pi*5*np.linspace(0, 1, 100))
     #     self.assertAlmostEqual(freq_from_fft(sig, fs=100), 5)
-    
+
     # def test_resample_timepoints(self):
     #     def model(y, t):
     #         return -y
     #     ic = [1]
     #     tpts = np.linspace(0, 1, 10)
     #     self.assertTrue(np.array_equal(resample_timepoints(model, ic, tpts, pts_per_period=100), np.linspace(0, 10, 1000)))
-        
+
     def test_make_surrogate(self):
         data = np.sin(2*np.pi*5*np.linspace(0, 1, 100))
         surr_data = make_surrogate(data, "rp")

@@ -26,7 +26,7 @@ sol = model.make_trajectory(1000)
 
 Integrate new trajectories from all 135 chaotic systems with a custom granularity
 ```python
-from dysts.base import make_trajectory_ensemble
+from dysts.systems import make_trajectory_ensemble
 
 all_out = make_trajectory_ensemble(100, resample=True, pts_per_period=75)
 ```

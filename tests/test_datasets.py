@@ -14,8 +14,8 @@ import sys
 
 sys.path.insert(1, os.path.join(WORKING_DIR, "dysts"))
 
-from dysts.base import get_attractor_list
 from dysts.datasets import load_dataset
+from dysts.systems import get_attractor_list
 
 
 class TestUtilities(unittest.TestCase):

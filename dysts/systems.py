@@ -1,17 +1,80 @@
-"""Utilities for simulating trajectories"""
+"""Utilities for the implemented systems"""
 
+import inspect
+import json
 from functools import partial
 from multiprocessing import Pool
 from os import PathLike
-from typing import Callable, Dict, Iterable, Optional
+from typing import Any, Callable, Dict, Iterable, List, Optional
 
 import numpy as np
 import numpy.typing as npt
 
 import dysts.flows as dfl
-from dysts.base import get_attractor_list
+import dysts.maps as dmp
+from dysts.base import DATAPATH_CONTINUOUS, DATAPATH_DISCRETE
 
 Array = npt.NDArray[np.float64]
+
+
+def get_attractor_list(sys_class: str = "continuous") -> List[str]:
+    """Get names of implemented dynamical systems
+
+    Args:
+        sys_class: class of systems to get the name of - must
+            be one of ['continuous', 'continuous_no_delay', 'delay', 'discrete']
+
+    Returns:
+        Sorted list of systems belonging to sys_class
+    """
+    if sys_class in ["continuous", "continuous_no_delay", "delay"]:
+        module = dfl
+    elif sys_class == "discrete":
+        module = dmp
+    else:
+        raise Exception(
+            "sys_class must be in ['continuous', 'continuous_no_delay', 'delay', 'discrete']"
+        )
+
+    systems = (
+        name
+        for name, obj in inspect.getmembers(module, inspect.isclass)
+        if obj.__module__ == module.__name__
+    )
+
+    if sys_class == "continuous_no_delay":
+        systems = filter(lambda name: "delay" not in name.lower(), systems)
+    elif sys_class == "delay":
+        systems = filter(lambda name: "delay" in name.lower(), systems)
+
+    return sorted(systems)
+
+
+def get_system_data(sys_class: str = "continuous") -> Dict[str, Any]:
+    """Get system data from the dedicated system class json files
+
+    Arguments:
+        sys_class: class of systems to get the name of - must
+            be one of ['continuous', 'continuous_no_delay', 'delay', 'discrete']
+
+    Returns:
+        Data from json file filtered by sys_class as a dict
+    """
+    if sys_class in ["continuous", "continuous_no_delay", "delay"]:
+        datapath = DATAPATH_CONTINUOUS
+    elif sys_class == "discrete":
+        datapath = DATAPATH_DISCRETE
+    else:
+        raise Exception(
+            "sys_class must be in ['continuous', 'continuous_no_delay', 'delay', 'discrete']"
+        )
+
+    systems = get_attractor_list(sys_class)
+    with open(datapath, "r") as file:
+        data = json.load(file)
+
+    # filter out systems from the data
+    return {k: v for k, v in data.items() if k in systems}
 
 
 def _compute_trajectory(
@@ -56,7 +119,8 @@ def make_trajectory_ensemble(
 
     """
     if subset is None:
-        subset = get_attractor_list()
+        # subset = get_attractor_list()
+        subset = []
 
     if len(init_conds) > 0:
         assert all(
@@ -90,10 +154,12 @@ def make_trajectory_ensemble(
     return all_sols
 
 
-def init_cond_sampler(
-    random_seed: Optional[int] = 0, subset: Optional[Iterable] = None
+def gaussian_init_cond_sampler(
+    random_seed: Optional[int] = 0,
+    subset: Optional[Iterable] = None,
+    dynsys_class: str = "continuous",
 ) -> Callable:
-    """Sample zero mean guassian perturbations for each initial condition in a given system list
+    """Sample gaussian perturbations for each initial condition in a given system list
 
     Args:
         random_seed: for random sampling
@@ -102,7 +168,7 @@ def init_cond_sampler(
     Returns:
         a function which samples a random perturbation of the init conditions
     """
-    if not subset:
+    if subset is None:
         subset = get_attractor_list()
 
     rng = np.random.default_rng(random_seed)
@@ -110,9 +176,28 @@ def init_cond_sampler(
 
     def _sampler(scale: float = 1e-4) -> Dict[str, Array]:
         return {
-            sys: ic + rng.normal(scale=scale * np.linalg.norm(ic), size=ic.shape)
+            sys: rng.normal(loc=ic, scale=scale, size=ic.shape)
             for sys, ic in ic_dict.items()
         }
+
+    return _sampler
+
+
+def gaussian_parameter_sampler(random_seed: int = 0, scale: float = 1e-3) -> Callable:
+    """Sample gaussian perturbations for system parameters
+
+    Args:
+        random_seed: for random sampling
+        scale: std (isotropic) of gaussian used for sampling
+
+    Returns:
+        a function which samples a random perturbation of given parameters
+    """
+    rng = np.random.default_rng(random_seed)
+
+    def _sampler(name: str, param: Array) -> Array:
+        size = None if np.isscalar(param) else param.shape
+        return rng.normal(loc=param, scale=scale, size=size)
 
     return _sampler
 

@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 import dysts.flows as dfl
-from dysts.base import get_attractor_list
+from dysts.systems import get_attractor_list
 
 
 def test_trajectory():

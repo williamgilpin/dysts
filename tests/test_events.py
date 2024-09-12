@@ -6,7 +6,10 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 
-from dysts.base import get_attractor_list, init_cond_sampler, make_trajectory_ensemble
+from dysts.systems import (
+    get_attractor_list,
+    make_trajectory_ensemble,
+)
 
 DELAY_SYSTEMS = [
     "MackeyGlass",
@@ -79,7 +82,7 @@ def main():
         True  # Stop the integration when the event is triggered
     )
 
-    ic_sampler = init_cond_sampler(subset=systems, random_seed=rseed)
+    ic_sampler = gaussian_init_cond_sampler(subset=systems, random_seed=rseed)
 
     # each ensemble is of type Dict[str, [ndarray]]
     dyst_ensemble = make_trajectory_ensemble(
