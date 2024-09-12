@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-
 from dysts.systems import (
     GaussianParamSampler,
     gaussian_init_cond_sampler,
@@ -11,22 +9,15 @@ def main():
     sampler = gaussian_init_cond_sampler()
     pt = GaussianParamSampler(random_seed=9999, scale=1e-2)
     sols = make_trajectory_ensemble(
-        1024,
+        100,
         use_multiprocessing=True,
         use_tqdm=True,
         init_conds=sampler(),
-        param_transform=None,
-        subset=["Lorenz"],
+        param_transform=pt,
+        sys_class="delay",
         rng=pt.rng,
-        standardize=True,
     )
-    traj = sols["Lorenz"]
-    print(traj.shape)
-
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection="3d")
-    ax.plot(*traj.T[:3])
-    plt.show()
+    print(sols)
 
 
 if __name__ == "__main__":
