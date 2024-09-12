@@ -19,24 +19,6 @@ Array = npt.NDArray[np.float64]
 DEFAULT_RNG = np.random.default_rng()
 
 
-@dataclass
-class CallableWorker:
-    """Any custom Worker objects should follow this template"""
-
-    fn: Callable
-
-    def __call__(self, rng: np.random.Generator, *args, **kwargs) -> Array:
-        raise NotImplementedError
-
-
-@dataclass
-class DEFAULT_WORKER(CallableWorker):
-    """Default worker for multiprocessing, does nothing"""
-
-    def __call__(self, rng: np.random.Generator, *args, **kwargs) -> Array:
-        return self.fn(*args, **kwargs)
-
-
 def get_attractor_list(sys_class: str = "continuous") -> List[str]:
     """Get names of implemented dynamical systems
 
@@ -97,7 +79,14 @@ def get_system_data(sys_class: str = "continuous") -> Dict[str, Any]:
     return {k: v for k, v in data.items() if k in systems}
 
 
-def _compute_trajectory(equation_name, n, kwargs, init_cond=None, param_transform=None):
+def _compute_trajectory(
+    equation_name,
+    n,
+    kwargs,
+    init_cond=None,
+    param_transform=None,
+    rng: np.random.Generator = DEFAULT_RNG,
+):
     """A helper function for multiprocessing"""
     eq = getattr(dfl, equation_name)()
 
@@ -105,6 +94,7 @@ def _compute_trajectory(equation_name, n, kwargs, init_cond=None, param_transfor
         eq.ic = init_cond
 
     if param_transform is not None:
+        param_transform.set_rng(rng)
         eq.transform_params(param_transform)
 
     traj = eq.make_trajectory(n, **kwargs)
@@ -118,7 +108,6 @@ def make_trajectory_ensemble(
     use_multiprocessing: bool = False,
     param_transform: Optional[Callable] = None,
     subset: Optional[Sequence[str]] = None,
-    worker_class: CallableWorker = DEFAULT_WORKER,
     rng: np.random.Generator = DEFAULT_RNG,
     **kwargs,
 ) -> Dict[str, Array]:
@@ -157,7 +146,7 @@ def make_trajectory_ensemble(
     all_sols = dict()
     if use_multiprocessing:
         all_sols = _multiprocessed_compute_trajectory(
-            rng, worker_class, n, subset, init_conds, param_transform
+            rng, n, subset, init_conds, param_transform
         )
     else:
         for equation_name in subset:
@@ -171,7 +160,6 @@ def make_trajectory_ensemble(
 
 def _multiprocessed_compute_trajectory(
     rng: np.random.Generator,
-    worker_class: CallableWorker,
     n: int,
     subset: Sequence[str],
     init_conds: Dict[str, Array] = {},
@@ -189,15 +177,15 @@ def _multiprocessed_compute_trajectory(
 
     with Pool() as pool:
         results = pool.starmap(
-            worker_class(_compute_trajectory),
+            _compute_trajectory,
             [
                 (
-                    rng,
                     equation_name,
                     n,
                     kwargs,
                     init_conds.get(equation_name),
                     param_transform,
+                    rng,
                 )
                 for equation_name, rng in zip(subset, rng_stream)
             ],

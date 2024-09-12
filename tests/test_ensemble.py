@@ -1,19 +1,8 @@
-from dataclasses import dataclass
-
 from dysts.systems import (
-    CallableWorker,
     GaussianParamSampler,
     gaussian_init_cond_sampler,
     make_trajectory_ensemble,
 )
-
-
-@dataclass
-class ParameterRNGWorker(CallableWorker):
-    def __call__(self, rng, *args, **kwargs):
-        param_sampler = args[-1]
-        param_sampler.set_rng(rng)
-        return self.fn([*args[:-1], param_sampler], **kwargs)
 
 
 def main():
@@ -26,7 +15,7 @@ def main():
         init_conds=sampler(),
         param_transform=pt,
         sys_class="delay",
-        worker_class=ParameterRNGWorker,
+        rng=pt.rng,
     )
     print(sols)
 
