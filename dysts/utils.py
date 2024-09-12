@@ -110,6 +110,30 @@ def nanmean_trimmed(arr, percentile=0.5, axis=None):
     # Calculate the mean along the specified axis, ignoring NaNs
     return np.nanmean(sorted_arr, axis=axis)
 
+def nan_fill(a, axis=0, mode='forward'):
+    """
+    Fill NaN values in an array using a specified method
+
+    Args:
+        a (np.ndarray): the array to fill
+        axis (int): the axis along which to fill NaN values
+        mode (str): the method to use for filling NaN values
+
+    Returns:
+        a_filled (np.ndarray): the array with NaN values filled
+    """
+    a = a.copy()
+    if mode == 'forward':
+        for i in range(a.shape[axis]):
+            if np.isnan(a[i]):
+                a[i] = a[i - 1]
+    if mode == 'backward':
+        for i in range(a.shape[axis] - 1, -1, -1):
+            if np.isnan(a[i]):
+                a[i] = a[i + 1]
+    else:
+        warnings.warn("Invalid mode. Returning original array.")
+    return a
 
 def standardize_ts(a, scale=1.0):
     """Standardize an array along dimension -2
