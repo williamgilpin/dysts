@@ -268,17 +268,6 @@ class GaussianParamSampler(BaseParamSampler):
         return self.rng.normal(loc=param, scale=self.scale, size=size)
 
 
-def gaussian_param_sampler(random_seed: Optional[int] = 0, scale: float = 1e-2):
-    """Functional version of GaussianParamSampler for sampling gaussian perturbations"""
-    rng = np.random.default_rng(random_seed)
-
-    def perturb(name: str, param: Array) -> Array:
-        size = None if np.isscalar(param) else param.shape
-        return rng.normal(loc=param, scale=scale, size=size)
-
-    return perturb
-
-
 def compute_trajectory_statistics(
     n: int,
     subset: Optional[Iterable[str]] = None,
