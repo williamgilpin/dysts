@@ -13,7 +13,7 @@ class ParameterRNGWorker(CallableWorker):
     def __call__(self, rng, *args, **kwargs):
         param_sampler = args[-1]
         param_sampler.set_rng(rng)
-        return self.fn(*args, **kwargs)
+        return self.fn([*args[:-1], param_sampler], **kwargs)
 
 
 def main():
