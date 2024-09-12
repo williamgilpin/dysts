@@ -5,9 +5,7 @@ from dysts.systems import get_attractor_list
 
 
 def test_trajectory():
-    """
-    Test generating a trajectory
-    """
+    """visual check for all continuous systems"""
     fig = plt.figure()
     ax = fig.add_subplot(111, projection="3d")
 
@@ -20,5 +18,15 @@ def test_trajectory():
         plt.cla()
 
 
+def main():
+    sys = dfl.Lorenz()
+    sol = sys.make_trajectory(1024, pts_per_period=1024 // 10, standardize=True)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection="3d")
+    ax.plot(*sol.T[:3])
+    plt.show()
+
+
 if __name__ == "__main__":
-    test_trajectory()
+    main()

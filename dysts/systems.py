@@ -146,7 +146,7 @@ def make_trajectory_ensemble(
     all_sols = dict()
     if use_multiprocessing:
         all_sols = _multiprocessed_compute_trajectory(
-            rng, n, subset, init_conds, param_transform
+            rng, n, subset, init_conds, param_transform, **kwargs
         )
     else:
         for equation_name in subset:
