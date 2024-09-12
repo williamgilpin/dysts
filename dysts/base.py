@@ -35,22 +35,12 @@ import numpy as np
 from .utils import integrate_dyn, standardize_ts
 
 try:
-    from numba import jit, njit
-
-    #     from jax import jit
-    #     njit = jit
-
-    has_jit = True
+    from numba import njit
 except ModuleNotFoundError:
     import numpy as np
 
-    has_jit = False
-
-    # Define placeholder functions
-    def jit(func):
+    def njit(func):
         return func
-
-    njit = jit
 
 
 data_default = {
