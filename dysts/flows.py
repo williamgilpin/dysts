@@ -303,7 +303,9 @@ class Duffing(DynSys):
 
 class MackeyGlass(DynSysDelay):
     @staticjit
-    def _rhs(x, xt, t, beta, gamma, n, tau):
+    def _rhs(Y, t, beta, gamma, n, tau):
+        x = Y(t)
+        xt = Y(t - tau)
         xdot = beta * (xt / (1 + xt**n)) - gamma * x
         return xdot
 

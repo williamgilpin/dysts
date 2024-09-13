@@ -10,7 +10,6 @@ Requirements:
 
 """
 
-import collections
 import gzip
 import json
 import os
@@ -31,6 +30,7 @@ else:
 
 
 import numpy as np
+from ddeint import ddeint
 
 from .utils import integrate_dyn, standardize_ts
 
@@ -486,9 +486,7 @@ class DynSysDelay(DynSys):
 
     def rhs(self, X, t):
         """The right hand side of a dynamical equation"""
-        X, Xprev = X[0], X[1]
-        out = self._rhs(X, Xprev, t, *self.param_list)
-        return out
+        return self._rhs(X, t, *self.param_list)
 
     def make_trajectory(
         self,
@@ -533,91 +531,92 @@ class DynSysDelay(DynSys):
         np.random.seed(self.random_state)
         n0 = n
 
-        ## history length proportional to the delay time over the timestep
-        mem_stride = int(np.ceil(self.tau / self.dt))
+        tpts = np.arange(n) * self.dt
+        np.random.seed(self.random_state)  # set random seed
 
-        ## If resampling is performed, calculate the true number of timesteps for the
-        ## Euler loop
         if resample:
-            num_periods = n / pts_per_period
             if timescale == "Fourier":
-                num_timesteps_per_period = self.period / self.dt
+                tlim = (self.period) * (n / pts_per_period)
             elif timescale == "Lyapunov":
-                num_timesteps_per_period = (
-                    1 / self.maximum_lyapunov_estimated
-                ) / self.dt
+                tlim = (1 / self.maximum_lyapunov_estimated) * (n / pts_per_period)
             else:
-                num_timesteps_per_period = self.period / self.dt
-            nt = int(np.ceil(num_timesteps_per_period * num_periods))
-        else:
-            nt = n
+                tlim = (self.period) * (n / pts_per_period)
 
-        # remove transient at front and back
-        clipping = int(np.ceil(mem_stride / (nt / n)))
+            upscale_factor = (tlim / self.dt) / n
+            if upscale_factor > 1e3:
+                warnings.warn(
+                    f"Expect slowdown due to excessive integration required; scale factor {upscale_factor}"
+                )
+            tpts = np.linspace(0, tlim, n)
 
-        ## Augment the number of timesteps to account for the transient and the embedding
-        ## dimension
-        n += (d + 1) * clipping
-        nt += (d + 1) * mem_stride
+        sol = ddeint(self.rhs, lambda t: self.ic[0], tpts)
 
-        ## If passed initial conditions are sufficient, then use them. Otherwise,
-        ## pad with with random initial conditions
-        values = self.ic[0] * (1 + 0.2 * np.random.rand(1 + mem_stride))
-        values[-len(self.ic[-mem_stride:]) :] = self.ic[-mem_stride:]
-        history = collections.deque(values)
+        # # remove transient at front and back
+        # clipping = int(np.ceil(mem_stride / (nt / n)))
 
-        ## pre-allocate full solution
-        tpts = np.arange(nt) * self.dt
-        sol = np.zeros(n)
-        sol[0] = self.ic[-1]
-        x_next = sol[0]
+        # ## Augment the number of timesteps to account for the transient and the embedding
+        # ## dimension
+        # n += (d + 1) * clipping
+        # nt += (d + 1) * mem_stride
 
-        ## Define solution submesh for resampling
-        save_inds = np.linspace(0, nt, n).astype(int)
-        save_tpts = list()
+        # ## If passed initial conditions are sufficient, then use them. Otherwise,
+        # ## pad with with random initial conditions
+        # values = self.ic[0] * (1 + 0.2 * np.random.rand(1 + mem_stride))
+        # values[-len(self.ic[-mem_stride:]) :] = self.ic[-mem_stride:]
+        # history = collections.deque(values)
 
-        ## Pre-compute noise
-        noise_vals = noise * np.random.normal(size=nt, loc=0.0, scale=np.sqrt(self.dt))
+        # ## pre-allocate full solution
+        # tpts = np.arange(nt) * self.dt
+        # sol = np.zeros(n)
+        # sol[0] = self.ic[-1]
+        # x_next = sol[0]
 
-        ## Run Euler integration loop
-        for i, t in enumerate(tpts):
-            if i == 0:
-                continue
+        # ## Define solution submesh for resampling
+        # save_inds = np.linspace(0, nt, n).astype(int)
+        # save_tpts = list()
 
-            x_next = (
-                x_next
-                + self.rhs([x_next, history.popleft()], t) * self.dt
-                + noise_vals[i]
-            )
+        # ## Pre-compute noise
+        # noise_vals = noise * np.random.normal(size=nt, loc=0.0, scale=np.sqrt(self.dt))
 
-            if i in save_inds:
-                sol[save_inds == i] = x_next
-                save_tpts.append(t)
-            history.append(x_next)
+        # ## Run Euler integration loop
+        # for i, t in enumerate(tpts):
+        #     if i == 0:
+        #         continue
 
-        save_tpts = np.array(save_tpts)
-        save_dt = np.median(np.diff(save_tpts))
+        #     x_next = (
+        #         x_next
+        #         + self.rhs([x_next, history.popleft()], t) * self.dt
+        #         + noise_vals[i]
+        #     )
 
-        ## now stack strided solution to create an embedding
-        sol_embed = list()
-        embed_stride = int((n / nt) * mem_stride)
-        for i in range(d):
-            sol_embed.append(sol[i * embed_stride : -(d - i) * embed_stride])
-        sol0 = np.vstack(sol_embed)[:, clipping : (n0 + clipping)].T
+        #     if i in save_inds:
+        #         sol[save_inds == i] = x_next
+        #         save_tpts.append(t)
+        #     history.append(x_next)
+
+        # save_tpts = np.array(save_tpts)
+        # save_dt = np.median(np.diff(save_tpts))
+
+        # ## now stack strided solution to create an embedding
+        # sol_embed = list()
+        # embed_stride = int((n / nt) * mem_stride)
+        # for i in range(d):
+        #     sol_embed.append(sol[i * embed_stride : -(d - i) * embed_stride])
+        # sol0 = np.vstack(sol_embed)[:, clipping : (n0 + clipping)].T
 
         if hasattr(self, "_postprocessing") and postprocess:
             warnings.warn(
                 "This system has at least one unbounded variable, which has been mapped to a bounded domain. Pass argument postprocess=False in order to generate trajectories from the raw system."
             )
-            sol2 = np.moveaxis(sol0, (-1, 0), (0, -1))
-            sol0 = np.squeeze(
-                np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0))
+            sol = np.moveaxis(sol, (-1, 0), (0, -1))
+            sol = np.squeeze(
+                np.moveaxis(np.dstack(self._postprocessing(*sol)), (0, 1), (1, 0))
             )
 
         if standardize:
-            sol0 = standardize_ts(sol0)
+            sol = standardize_ts(sol)
 
         if return_times:
-            return np.arange(sol0.shape[0]) * save_dt, sol0
+            return tpts, sol
         else:
-            return sol0
+            return sol
