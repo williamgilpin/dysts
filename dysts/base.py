@@ -528,9 +528,6 @@ class DynSysDelay(DynSys):
             Support for multiple initial conditions
 
         """
-        np.random.seed(self.random_state)
-        n0 = n
-
         tpts = np.arange(n) * self.dt
         np.random.seed(self.random_state)  # set random seed
 
@@ -549,60 +546,8 @@ class DynSysDelay(DynSys):
                 )
             tpts = np.linspace(0, tlim, n)
 
+        # assume constant past points
         sol = ddeint(self.rhs, lambda t: self.ic[0], tpts)
-
-        # # remove transient at front and back
-        # clipping = int(np.ceil(mem_stride / (nt / n)))
-
-        # ## Augment the number of timesteps to account for the transient and the embedding
-        # ## dimension
-        # n += (d + 1) * clipping
-        # nt += (d + 1) * mem_stride
-
-        # ## If passed initial conditions are sufficient, then use them. Otherwise,
-        # ## pad with with random initial conditions
-        # values = self.ic[0] * (1 + 0.2 * np.random.rand(1 + mem_stride))
-        # values[-len(self.ic[-mem_stride:]) :] = self.ic[-mem_stride:]
-        # history = collections.deque(values)
-
-        # ## pre-allocate full solution
-        # tpts = np.arange(nt) * self.dt
-        # sol = np.zeros(n)
-        # sol[0] = self.ic[-1]
-        # x_next = sol[0]
-
-        # ## Define solution submesh for resampling
-        # save_inds = np.linspace(0, nt, n).astype(int)
-        # save_tpts = list()
-
-        # ## Pre-compute noise
-        # noise_vals = noise * np.random.normal(size=nt, loc=0.0, scale=np.sqrt(self.dt))
-
-        # ## Run Euler integration loop
-        # for i, t in enumerate(tpts):
-        #     if i == 0:
-        #         continue
-
-        #     x_next = (
-        #         x_next
-        #         + self.rhs([x_next, history.popleft()], t) * self.dt
-        #         + noise_vals[i]
-        #     )
-
-        #     if i in save_inds:
-        #         sol[save_inds == i] = x_next
-        #         save_tpts.append(t)
-        #     history.append(x_next)
-
-        # save_tpts = np.array(save_tpts)
-        # save_dt = np.median(np.diff(save_tpts))
-
-        # ## now stack strided solution to create an embedding
-        # sol_embed = list()
-        # embed_stride = int((n / nt) * mem_stride)
-        # for i in range(d):
-        #     sol_embed.append(sol[i * embed_stride : -(d - i) * embed_stride])
-        # sol0 = np.vstack(sol_embed)[:, clipping : (n0 + clipping)].T
 
         if hasattr(self, "_postprocessing") and postprocess:
             warnings.warn(
