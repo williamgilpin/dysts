@@ -5,7 +5,7 @@ import json
 from dataclasses import dataclass
 from multiprocessing import Pool
 from os import PathLike
-from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence
+from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Union
 
 import numpy as np
 import numpy.typing as npt
@@ -197,30 +197,54 @@ def _multiprocessed_compute_trajectory(
 def gaussian_init_cond_sampler(
     random_seed: Optional[int] = 0,
     subset: Optional[Iterable] = None,
-    dynsys_class: str = "continuous",
+    covariances: Optional[Dict[str, Array]] = None,
+    sys_class: str = "continuous",
 ) -> Callable:
     """Sample gaussian perturbations for each initial condition in a given system list
 
     Args:
         random_seed: for random sampling
         subset: A list of system names. Defaults to all systems
+        covariances: A dict of covariance matrices for each system for sampling
+        sys_class: only used when subset is None
 
     Returns:
         a function which samples a random perturbation of the init conditions
     """
     if subset is None:
-        subset = get_attractor_list()
+        subset = get_attractor_list(sys_class)
 
     rng = np.random.default_rng(random_seed)
     ic_dict = {sys: np.array(getattr(dfl, sys)().ic) for sys in subset}
 
-    def _sampler(scale: float = 1e-4) -> Dict[str, Array]:
-        return {
-            sys: rng.normal(loc=ic, scale=scale, size=ic.shape)
-            for sys, ic in ic_dict.items()
-        }
+    if covariances is not None:
+        assert all(
+            cm.ndim == 2 and cm.shape[0] == cm.shape[1] for cm in covariances.values()
+        )
+        assert all(k in subset for k in covariances.keys())
+
+    def _sampler(scale: Union[float, Array] = 1e-4) -> Dict[str, Array]:
+        if covariances is not None:
+            return {
+                sys: rng.multivariate_normal(ic, covariances[sys])
+                for sys, ic in ic_dict.items()
+            }
+        else:
+            return {
+                sys: rng.normal(ic, scale=scale, size=ic.shape)
+                for sys, ic in ic_dict.items()
+            }
 
     return _sampler
+
+
+def attractor_init_cond_sampler(
+    random_seed: Optional[int] = 0,
+    subset: Optional[Iterable] = None,
+    sys_class: str = "continuous",
+) -> Callable:
+    """Sample points from the attractor of a system"""
+    pass
 
 
 @dataclass
@@ -253,7 +277,10 @@ class GaussianParamSampler(BaseParamSampler):
 
     def __call__(self, name: str, param: Array) -> Array:
         size = None if np.isscalar(param) else param.shape
-        return self.rng.normal(loc=param, scale=self.scale, size=size)
+
+        # scale each parameter relatively
+        scale = np.linalg.norm(param) * self.scale
+        return self.rng.normal(loc=param, scale=scale, size=size)
 
 
 def compute_trajectory_statistics(
