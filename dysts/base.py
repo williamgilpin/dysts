@@ -19,6 +19,7 @@ from itertools import starmap
 from typing import Any, Callable, Dict, Optional
 
 import pkg_resources
+from numpy.typing import ArrayLike
 
 ## Check for optional datasets
 try:
@@ -483,7 +484,7 @@ class DynSysDelay(DynSys):
         super().__init__(**kwargs)
         self.__call__ = self.rhs
 
-    def rhs(self, X, t):
+    def rhs(self, X: Callable[[float], ArrayLike], t: float) -> ArrayLike:
         """The right hand side of a dynamical equation"""
         return self._rhs(X, t, *self.param_list)
 
@@ -499,6 +500,7 @@ class DynSysDelay(DynSys):
         timescale="Fourier",
         return_times=False,
         postprocess=True,
+        past_function=None,
     ):
         """
         Generate a fixed-length trajectory with default timestep, parameters, and
@@ -521,6 +523,8 @@ class DynSysDelay(DynSys):
                 was computed
             postprocess (bool): Whether to apply coordinate conversions and other domain-specific
                 rescalings to the integration coordinates
+            past_function (callable): Function for specifying past conditions i.e.
+                points for t < 0
 
         Todo:
             Support for multivariate and multidelay equations with multiple deques
@@ -545,8 +549,8 @@ class DynSysDelay(DynSys):
                 )
             tpts = np.linspace(0, tlim, n)
 
-        # assume constant past points
-        sol = ddeint(self.rhs, lambda t: self.ic[0], tpts)
+        # assume constant past points, overridable behavior
+        sol = ddeint(self.rhs, past_function or (lambda t: self.ic[0]), tpts)
 
         if hasattr(self, "_postprocessing") and postprocess:
             warnings.warn(
