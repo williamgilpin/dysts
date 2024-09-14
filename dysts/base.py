@@ -20,6 +20,7 @@ from typing import Any, Callable, Dict, Optional
 
 import pkg_resources
 from numpy.typing import ArrayLike
+from scipy.interpolate import interp1d
 
 ## Check for optional datasets
 try:
@@ -490,17 +491,18 @@ class DynSysDelay(DynSys):
 
     def make_trajectory(
         self,
-        n,
-        d=10,
-        method="Euler",
-        noise=0.0,
-        resample=False,
-        pts_per_period=100,
-        standardize=False,
-        timescale="Fourier",
-        return_times=False,
-        postprocess=True,
-        past_function=None,
+        n: int,
+        method: str = "Euler",
+        noise: float = 0.0,
+        resample: bool = False,
+        pts_per_period: int = 100,
+        standardize: bool = False,
+        timescale: str = "Fourier",
+        return_times: bool = False,
+        postprocess: bool = True,
+        embedding_dim: Optional[int] = None,
+        history_function: Optional[Callable[[float], ArrayLike]] = None,
+        **kwargs,
     ):
         """
         Generate a fixed-length trajectory with default timestep, parameters, and
@@ -508,7 +510,6 @@ class DynSysDelay(DynSys):
 
         Args:
             n (int): the total number of trajectory points
-            d (int): the number of embedding dimensions to return
             method (str): Not used. Currently Euler is the only option here
             noise (float): The amplitude of brownian forcing
             resample (bool): whether to resample trajectories to have matching dominant
@@ -523,7 +524,11 @@ class DynSysDelay(DynSys):
                 was computed
             postprocess (bool): Whether to apply coordinate conversions and other domain-specific
                 rescalings to the integration coordinates
-            past_function (callable): Function for specifying past conditions i.e.
+            embedding_dim (int): Optionally augment solution with delay embedded trajectories.
+                If equation is multi-dimensional with dimension d, then this will return a flattened
+                delay embedding of shape (n, d*embedding_dim) where each consecutive (n, d) block
+                will be a trajectory for a different delay parameter.
+            history_function (callable): Function for specifying past conditions i.e.
                 points for t < 0
 
         Todo:
@@ -550,15 +555,33 @@ class DynSysDelay(DynSys):
             tpts = np.linspace(0, tlim, n)
 
         # assume constant past points, overridable behavior
-        sol = ddeint(self.rhs, past_function or (lambda t: self.ic[0]), tpts)
+        history_fn = history_function or (lambda t: self.ic[0])
+        sol = ddeint(self.rhs, history_fn, tpts)
 
-        if hasattr(self, "_postprocessing") and postprocess:
-            warnings.warn(
-                "This system has at least one unbounded variable, which has been mapped to a bounded domain. Pass argument postprocess=False in order to generate trajectories from the raw system."
-            )
-            sol = np.moveaxis(sol, (-1, 0), (0, -1))
-            sol = np.squeeze(
-                np.moveaxis(np.dstack(self._postprocessing(*sol)), (0, 1), (1, 0))
+        # optionally augment the trajectory with per-dimension delay embeddings
+        if embedding_dim is not None and isinstance(embedding_dim, int):
+            interp_fns = [
+                interp1d(
+                    tpts,
+                    sol[:, dim],
+                    axis=0,
+                    kind=kwargs.pop("kind", "linear"),
+                    bounds_error=False,
+                    fill_value="extrapolate",
+                )
+                for dim in range(sol.shape[-1])
+            ]
+
+            sol = (
+                np.stack(
+                    [
+                        [fn(tpts - tau) for fn in interp_fns]
+                        for tau in np.linspace(0, self.tau, embedding_dim)
+                    ],
+                    axis=1,
+                )
+                .reshape(-1, len(tpts))
+                .T
             )
 
         if standardize:

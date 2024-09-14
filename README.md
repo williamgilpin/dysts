@@ -111,11 +111,16 @@ These additional optional dependencies are needed to reproduce some portions of 
 
 ## Development goals
 
+In Review:
++ better solver of delay differential equations.
+  - need to find better way of extrapolating the delay solutions, maybe try adding history to the solver
+
+TODO:
++ ultra-fast function to reestimate quantities of interest with functionality to write and update the json entries
 + function to reestimate mean and std
 + move init cond to instance level sampling (follow param transform)
 + attractor init cond sampler (needs to communicate with param sampler)
 + sp stuff
-+ better solver of delay differential equations.
 + check for parent class for classifying system classes (e.g. dynsysdelay)
 
 + align max lyapunov exponent with estimated spectrum better
