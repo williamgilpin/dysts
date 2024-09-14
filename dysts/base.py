@@ -487,7 +487,8 @@ class DynSysDelay(DynSys):
 
     def rhs(self, X: Callable[[float], ArrayLike], t: float) -> ArrayLike:
         """The right hand side of a dynamical equation"""
-        return self._rhs(X, t, *self.param_list)
+        xt, xt_delayed = X(t), X(t - self.tau)
+        return self._rhs(xt, xt_delayed, t, *self.param_list)
 
     def make_trajectory(
         self,
@@ -532,11 +533,13 @@ class DynSysDelay(DynSys):
                 points for t < 0
 
         Todo:
-            Support for multivariate and multidelay equations with multiple deques
             Support for multiple initial conditions
-
         """
-        tpts = np.arange(n) * self.dt
+        # add delay time increment for potential interpolation later on
+        delay_embed = embedding_dim is not None and isinstance(embedding_dim, int)
+        interp_pad = delay_embed * self.tau
+
+        tpts = np.linspace(0, n * self.dt + interp_pad, n)
         np.random.seed(self.random_state)  # set random seed
 
         if resample:
@@ -552,14 +555,15 @@ class DynSysDelay(DynSys):
                 warnings.warn(
                     f"Expect slowdown due to excessive integration required; scale factor {upscale_factor}"
                 )
-            tpts = np.linspace(0, tlim, n)
+
+            tpts = np.linspace(0, tlim + interp_pad, n)
 
         # assume constant past points, overridable behavior
         history_fn = history_function or (lambda t: self.ic[0])
         sol = ddeint(self.rhs, history_fn, tpts)
 
         # optionally augment the trajectory with per-dimension delay embeddings
-        if embedding_dim is not None and isinstance(embedding_dim, int):
+        if delay_embed:
             interp_fns = [
                 interp1d(
                     tpts,
@@ -572,10 +576,11 @@ class DynSysDelay(DynSys):
                 for dim in range(sol.shape[-1])
             ]
 
+            sample_ts = np.linspace(self.tau, tpts[-1], n)
             sol = (
                 np.stack(
                     [
-                        [fn(tpts - tau) for fn in interp_fns]
+                        [fn(sample_ts - tau) for fn in interp_fns]
                         for tau in np.linspace(0, self.tau, embedding_dim)
                     ],
                     axis=1,

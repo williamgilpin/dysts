@@ -301,11 +301,13 @@ class Duffing(DynSys):
         return x, y, np.cos(z)
 
 
+# ------------------------------- DELAY SYSTEMS -------------------------------
+# Note: for now, delay systems will not be numba compile-able
+
+
 class MackeyGlass(DynSysDelay):
     @staticjit
-    def _rhs(Y, t, beta, gamma, n, tau):
-        x = Y(t)
-        xt = Y(t - tau)
+    def _rhs(x, xt, t, beta, gamma, n, tau):
         xdot = beta * (xt / (1 + xt**n)) - gamma * x
         return xdot
 
@@ -344,6 +346,8 @@ class PiecewiseCircuit(DynSysDelay):
         xdot = -alpha * xt + beta * f
         return xdot
 
+
+# ------------------------------- DELAY SYSTEMS -------------------------------
 
 # ## this was not chaotic
 # class ENSODelay(DynSysDelay):
