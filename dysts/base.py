@@ -599,8 +599,6 @@ class DynSysDelay(DynSys):
         save_dt = np.median(np.diff(save_tpts))
 
         ## now stack strided solution to create an embedding
-        print(tpts, nt)
-        print(sol.shape)
         sol_embed = list()
         embed_stride = int((n / nt) * mem_stride)
         for i in range(d):
