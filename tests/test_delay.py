@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from dysts.flows import MackeyGlass
 
 
-def test_mackey():
-    sys = MackeyGlass(tau=20)
+def main():
+    sys = MackeyGlass()
     sol = sys.make_trajectory(
         4096,
         pts_per_period=32,
@@ -13,13 +13,10 @@ def test_mackey():
         embedding_dim=2,
         kind="cubic",
     )
+    print(sol.shape)
 
-    plt.plot(*sol.T)
+    plt.plot(*sol.T[:2])
     plt.show()
-
-
-def main():
-    test_mackey()
 
 
 if __name__ == "__main__":

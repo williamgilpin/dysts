@@ -1963,7 +1963,7 @@
     "delay": true,
     "description": "A passive optical resonator system. A standard delay dimension of three is used.",
     "dt": 0.00029831999999998973,
-    "embedding_dimension": 1,
+    "embedding_dimension": 10,
     "hamiltonian": false,
     "initial_conditions": [
       0.94144317, 3.79262024, 3.17466302, -3.87959208, 2.05198674, 0.95755518,
@@ -2566,7 +2566,7 @@
     "delay": true,
     "description": "A physiological circuit with time-delayed feedback. A standard delay dimension of three is used.",
     "dt": 0.0012027363718948435,
-    "embedding_dimension": 1,
+    "embedding_dimension": 10,
     "hamiltonian": false,
     "initial_conditions": [
       0.83347846, 1.04053938, 1.25764979, 0.38088098, 0.92160075, 1.14714708,
@@ -2842,7 +2842,7 @@
     "delay": true,
     "description": "A delay model that can be implemented as an electronic circuit. A standard delay dimension of three is used.",
     "dt": 0.01059473019233792,
-    "embedding_dimension": 1,
+    "embedding_dimension": 10,
     "hamiltonian": false,
     "initial_conditions": [
       -0.37155972, -0.55024994, -1.07760125, -2.08210946, -2.92172609,
@@ -3183,7 +3183,7 @@
     "delay": true,
     "description": "A delay model that can be implemented as an electronic circuit. A standard delay dimension of three is used.",
     "dt": 0.030694772119777555,
-    "embedding_dimension": 1,
+    "embedding_dimension": 10,
     "hamiltonian": false,
     "initial_conditions": [
       -0.70009241, -0.1619611, -1.3858096, -2.00973849, -0.3170297, 0.33881451,
@@ -3350,7 +3350,7 @@
     "delay": true,
     "description": "An algebraically simple delay equation. A standard delay dimension of three is used.",
     "dt": 0.0028125,
-    "embedding_dimension": 1,
+    "embedding_dimension": 10,
     "hamiltonian": false,
     "initial_conditions": [
       9.30770542, 12.7465327, 9.98335715, 7.33212279, 8.554363, 11.19207081,
@@ -4091,7 +4091,7 @@
     "delay": true,
     "description": "An electronic circuit with delayed feedback. A standard delay dimension of three is used.",
     "dt": 0.0053123603161361645,
-    "embedding_dimension": 1,
+    "embedding_dimension": 10,
     "hamiltonian": false,
     "initial_conditions": [
       0.24640194, 0.02997028, 0.02899997, 0.07092207, 0.29465271, -0.46294535,

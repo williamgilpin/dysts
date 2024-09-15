@@ -537,8 +537,14 @@ class DynSysDelay(DynSys):
             Support for multiple initial conditions
         """
         # add delay time increment for potential interpolation later on
-        delay_embed = embedding_dim is not None and isinstance(embedding_dim, int)
-        interp_pad = delay_embed * self.tau
+        interp_pad = self.tau
+
+        # if not provided, fallback to default or 1 if a default doesnt exist
+        emb_dim = (
+            getattr(self, "embedding_dimension", 1)
+            if embedding_dim is None
+            else embedding_dim
+        )
 
         tpts = np.linspace(0, n * self.dt + interp_pad, n)
         np.random.seed(self.random_state)  # set random seed
@@ -559,43 +565,35 @@ class DynSysDelay(DynSys):
 
             tpts = np.linspace(0, tlim + interp_pad, n)
 
-        # unfortunately, the system dimension is named "embedding_dimension"
-        # this is temporary code block since the 1D systems have 10 dimensional
-        # embeddings saved as their initial conditions, the dysts json data
-        # needs to be re-estimated and updated.
-        if hasattr(self, "ic") and isinstance(self.ic, ArrayLike):
-            ic = self.ic[:self.embedding_dimension]
-        else:
-            assert history_function is not None, "Must specify an initial condition function for this system"
-
         # assume constant past points, overridable behavior
-        history_fn = history_function or (lambda t: ic))
+        # need to change initial conditions to NOT be the same size as the default embedding
+        # dimensions, since the delay embedding happens as a postprocessing step
+        history_fn = history_function or (lambda t: self.ic[0])
         sol = ddeint(self.rhs, history_fn, tpts)
 
-        # optionally augment the trajectory with per-dimension delay embeddings
-        if delay_embed:
-            interp_fns = [
-                interp1d(
-                    tpts,
-                    sol[:, dim],
-                    axis=0,
-                    kind=kwargs.pop("kind", "linear"),
-                )
-                for dim in range(sol.shape[-1])
-            ]
-
-            sample_ts = np.linspace(self.tau, tpts[-1], n)
-            sol = (
-                np.stack(
-                    [
-                        [fn(sample_ts - tau) for fn in interp_fns]
-                        for tau in np.linspace(0, self.tau, embedding_dim)
-                    ],
-                    axis=1,
-                )
-                .reshape(-1, len(tpts))
-                .T
+        # augment the trajectory with per-dimension delay embeddings
+        interp_fns = [
+            interp1d(
+                tpts,
+                sol[:, dim],
+                axis=0,
+                kind=kwargs.pop("kind", "linear"),
             )
+            for dim in range(sol.shape[-1])
+        ]
+
+        sample_ts = np.linspace(self.tau, tpts[-1], n)
+        sol = (
+            np.stack(
+                [
+                    [fn(sample_ts - tau) for fn in interp_fns]
+                    for tau in np.linspace(0, self.tau, emb_dim)
+                ],
+                axis=1,
+            )
+            .reshape(-1, len(tpts))
+            .T
+        )
 
         if standardize:
             sol = standardize_ts(sol)
