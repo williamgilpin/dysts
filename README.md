@@ -113,14 +113,13 @@ These additional optional dependencies are needed to reproduce some portions of 
 
 TODO:
 
-+ UPDATE DOCUMENTATION: https://www.wgilpin.com/dysts/spbuild/html/index.html
 + ultra-fast function to reestimate quantities of interest with functionality to write and update the json entries
 + modernize to pyproject.toml file
-+ function to reestimate mean and std
 + move init cond to instance level sampling (follow param transform)
 + attractor init cond sampler (needs to communicate with param sampler)
 + sp stuff
 
++ UPDATE WEB DOCUMENTATION: https://www.wgilpin.com/dysts/spbuild/html/index.html
 + align max lyapunov exponent with estimated spectrum better
 + Consider switching from numba to JAX for acceleration of integration.
 
