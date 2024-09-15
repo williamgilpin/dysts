@@ -18,6 +18,8 @@ def main():
     plt.plot(*sol.T[:2])
     plt.show()
 
+    print(sol.shape)
+
 
 if __name__ == "__main__":
     main()
