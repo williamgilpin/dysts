@@ -319,8 +319,10 @@ class IkedaDelay(DynSysDelay):
         return xdot
 
 
-class SprottDelay(IkedaDelay):
-    pass
+class SprottDelay(DynSys):
+    @staticjit
+    def _rhs(x, xt, t, tau):
+        return np.sin(xt)
 
 
 class VossDelay(DynSysDelay):

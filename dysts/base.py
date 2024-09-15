@@ -10,7 +10,6 @@ Requirements:
 
 """
 
-import collections
 import gzip
 import json
 import os
@@ -20,6 +19,8 @@ from itertools import starmap
 from typing import Any, Callable, Dict, Optional
 
 import pkg_resources
+from numpy.typing import ArrayLike
+from scipy.interpolate import interp1d
 
 ## Check for optional datasets
 try:
@@ -32,11 +33,12 @@ else:
 
 import numpy as np
 
-from .utils import integrate_dyn, standardize_ts
+from .utils import ddeint, integrate_dyn, standardize_ts
 
 try:
     from numba import njit
 except ModuleNotFoundError:
+    warnings.warn("Numba not installed. Falling back to no JIT compilation.")
     import numpy as np
 
     def njit(func):
@@ -484,24 +486,25 @@ class DynSysDelay(DynSys):
         super().__init__(**kwargs)
         self.__call__ = self.rhs
 
-    def rhs(self, X, t):
+    def rhs(self, X: Callable[[float], ArrayLike], t: float) -> ArrayLike:
         """The right hand side of a dynamical equation"""
-        X, Xprev = X[0], X[1]
-        out = self._rhs(X, Xprev, t, *self.param_list)
-        return out
+        xt, xt_delayed = X(t), X(t - self.tau)
+        return self._rhs(xt, xt_delayed, t, *self.param_list)
 
     def make_trajectory(
         self,
-        n,
-        d=10,
-        method="Euler",
-        noise=0.0,
-        resample=False,
-        pts_per_period=100,
-        standardize=False,
-        timescale="Fourier",
-        return_times=False,
-        postprocess=True,
+        n: int,
+        method: str = "Euler",
+        noise: float = 0.0,
+        resample: bool = False,
+        pts_per_period: int = 100,
+        standardize: bool = False,
+        timescale: str = "Fourier",
+        return_times: bool = False,
+        postprocess: bool = True,
+        embedding_dim: Optional[int] = None,
+        history_function: Optional[Callable[[float], ArrayLike]] = None,
+        **kwargs,
     ):
         """
         Generate a fixed-length trajectory with default timestep, parameters, and
@@ -509,7 +512,6 @@ class DynSysDelay(DynSys):
 
         Args:
             n (int): the total number of trajectory points
-            d (int): the number of embedding dimensions to return
             method (str): Not used. Currently Euler is the only option here
             noise (float): The amplitude of brownian forcing
             resample (bool): whether to resample trajectories to have matching dominant
@@ -524,100 +526,79 @@ class DynSysDelay(DynSys):
                 was computed
             postprocess (bool): Whether to apply coordinate conversions and other domain-specific
                 rescalings to the integration coordinates
+            embedding_dim (int): Optionally augment solution with delay embedded trajectories.
+                If equation is multi-dimensional with dimension d, then this will return a flattened
+                delay embedding of shape (n, d*embedding_dim) where each consecutive (n, d) block
+                will be a trajectory for a different delay parameter.
+            history_function (callable): Function for specifying past conditions i.e.
+                points for t < 0
 
         Todo:
-            Support for multivariate and multidelay equations with multiple deques
             Support for multiple initial conditions
-
         """
-        np.random.seed(self.random_state)
-        n0 = n
+        # add delay time increment for potential interpolation later on
+        interp_pad = self.tau
 
-        ## history length proportional to the delay time over the timestep
-        mem_stride = int(np.ceil(self.tau / self.dt))
+        # if not provided, fallback to default or 1 if a default doesnt exist
+        emb_dim = (
+            getattr(self, "embedding_dimension", 1)
+            if embedding_dim is None
+            else embedding_dim
+        )
 
-        ## If resampling is performed, calculate the true number of timesteps for the
-        ## Euler loop
+        tpts = np.linspace(0, n * self.dt + interp_pad, n)
+        np.random.seed(self.random_state)  # set random seed
+
         if resample:
-            num_periods = n / pts_per_period
             if timescale == "Fourier":
-                num_timesteps_per_period = self.period / self.dt
+                tlim = (self.period) * (n / pts_per_period)
             elif timescale == "Lyapunov":
-                num_timesteps_per_period = (
-                    1 / self.maximum_lyapunov_estimated
-                ) / self.dt
+                tlim = (1 / self.maximum_lyapunov_estimated) * (n / pts_per_period)
             else:
-                num_timesteps_per_period = self.period / self.dt
-            nt = int(np.ceil(num_timesteps_per_period * num_periods))
-        else:
-            nt = n
+                tlim = (self.period) * (n / pts_per_period)
 
-        # remove transient at front and back
-        clipping = int(np.ceil(mem_stride / (nt / n)))
+            upscale_factor = (tlim / self.dt) / n
+            if upscale_factor > 1e3:
+                warnings.warn(
+                    f"Expect slowdown due to excessive integration required; scale factor {upscale_factor}"
+                )
 
-        ## Augment the number of timesteps to account for the transient and the embedding
-        ## dimension
-        n += (d + 1) * clipping
-        nt += (d + 1) * mem_stride
+            tpts = np.linspace(0, tlim + interp_pad, n)
 
-        ## If passed initial conditions are sufficient, then use them. Otherwise,
-        ## pad with with random initial conditions
-        values = self.ic[0] * (1 + 0.2 * np.random.rand(1 + mem_stride))
-        values[-len(self.ic[-mem_stride:]) :] = self.ic[-mem_stride:]
-        history = collections.deque(values)
+        # assume constant past points, overridable behavior
+        # need to change initial conditions to NOT be the same size as the default embedding
+        # dimensions, since the delay embedding happens as a postprocessing step
+        history_fn = history_function or (lambda t: self.ic[0])
+        sol = ddeint(self.rhs, history_fn, tpts)
 
-        ## pre-allocate full solution
-        tpts = np.arange(nt) * self.dt
-        sol = np.zeros(n)
-        sol[0] = self.ic[-1]
-        x_next = sol[0]
-
-        ## Define solution submesh for resampling
-        save_inds = np.linspace(0, nt, n).astype(int)
-        save_tpts = list()
-
-        ## Pre-compute noise
-        noise_vals = noise * np.random.normal(size=nt, loc=0.0, scale=np.sqrt(self.dt))
-
-        ## Run Euler integration loop
-        for i, t in enumerate(tpts):
-            if i == 0:
-                continue
-
-            x_next = (
-                x_next
-                + self.rhs([x_next, history.popleft()], t) * self.dt
-                + noise_vals[i]
+        # augment the trajectory with per-dimension delay embeddings
+        interp_fns = [
+            interp1d(
+                tpts,
+                sol[:, dim],
+                axis=0,
+                kind=kwargs.pop("kind", "linear"),
             )
+            for dim in range(sol.shape[-1])
+        ]
 
-            if i in save_inds:
-                sol[save_inds == i] = x_next
-                save_tpts.append(t)
-            history.append(x_next)
-
-        save_tpts = np.array(save_tpts)
-        save_dt = np.median(np.diff(save_tpts))
-
-        ## now stack strided solution to create an embedding
-        sol_embed = list()
-        embed_stride = int((n / nt) * mem_stride)
-        for i in range(d):
-            sol_embed.append(sol[i * embed_stride : -(d - i) * embed_stride])
-        sol0 = np.vstack(sol_embed)[:, clipping : (n0 + clipping)].T
-
-        if hasattr(self, "_postprocessing") and postprocess:
-            warnings.warn(
-                "This system has at least one unbounded variable, which has been mapped to a bounded domain. Pass argument postprocess=False in order to generate trajectories from the raw system."
+        sample_ts = np.linspace(self.tau, tpts[-1], n)
+        sol = (
+            np.stack(
+                [
+                    [fn(sample_ts - tau) for fn in interp_fns]
+                    for tau in np.linspace(0, self.tau, emb_dim)
+                ],
+                axis=1,
             )
-            sol2 = np.moveaxis(sol0, (-1, 0), (0, -1))
-            sol0 = np.squeeze(
-                np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0))
-            )
+            .reshape(-1, len(tpts))
+            .T
+        )
 
         if standardize:
-            sol0 = standardize_ts(sol0)
+            sol = standardize_ts(sol)
 
         if return_times:
-            return np.arange(sol0.shape[0]) * save_dt, sol0
+            return tpts, sol
         else:
-            return sol0
+            return sol
