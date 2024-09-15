@@ -113,6 +113,7 @@ These additional optional dependencies are needed to reproduce some portions of 
 
 TODO:
 
++ UPDATE DOCUMENTATION: https://www.wgilpin.com/dysts/spbuild/html/index.html
 + ultra-fast function to reestimate quantities of interest with functionality to write and update the json entries
 + modernize to pyproject.toml file
 + function to reestimate mean and std
