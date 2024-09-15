@@ -347,6 +347,30 @@ class PiecewiseCircuit(DynSysDelay):
         return xdot
 
 
+class RoadTraffic(DynSysDelay):
+    @staticjit
+    def _rhs(x, xt, t, L, A, k, T, D, v_per, tau):
+        N = xt.shape[-1] // 2
+        vel = x[N:]
+
+        pos_tau = xt[:N]
+        vel_tau = xt[N:]
+
+        delta_x0 = vel_tau * T + D
+        delta_x = np.roll(pos_tau, -1) - pos_tau
+        delta_x[-1] += L  # position boundary condition
+
+        delta_v = np.roll(vel_tau, -1) - vel_tau
+
+        z_sq = np.maximum(0, -delta_v) ** 2
+        z_per = np.maximum(0, vel_tau - v_per)
+
+        xdot = vel
+        vdot = A * (1 - delta_x0 / delta_x) - 0.5 * z_sq / (delta_x - D) - k * z_per
+
+        return np.concat(xdot, vdot)
+
+
 # ------------------------------- DELAY SYSTEMS -------------------------------
 
 # ## this was not chaotic

@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 
-from dysts.flows import MackeyGlass
+from dysts.flows import MackeyGlass, RoadTraffic
 
 
-def main():
+def test_mackey():
     sys = MackeyGlass(tau=20)
     sol = sys.make_trajectory(
         4096,
@@ -11,11 +11,19 @@ def main():
         resample=True,
         standardize=True,
         embedding_dim=2,
-        kind="slinear",
+        kind="cubic",
     )
 
     plt.plot(*sol.T)
     plt.show()
+
+
+def main():
+    test_mackey()
+    sys = RoadTraffic()
+    sol = sys.make_trajectory(
+        4096,
+    )
 
 
 if __name__ == "__main__":

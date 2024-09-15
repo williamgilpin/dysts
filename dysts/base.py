@@ -38,6 +38,7 @@ from .utils import ddeint, integrate_dyn, standardize_ts
 try:
     from numba import njit
 except ModuleNotFoundError:
+    warnings.warn("Numba not installed. Falling back to no JIT compilation.")
     import numpy as np
 
     def njit(func):
@@ -558,8 +559,17 @@ class DynSysDelay(DynSys):
 
             tpts = np.linspace(0, tlim + interp_pad, n)
 
+        # unfortunately, the system dimension is named "embedding_dimension"
+        # this is temporary code block since the 1D systems have 10 dimensional
+        # embeddings saved as their initial conditions, the dysts json data
+        # needs to be re-estimated and updated.
+        if hasattr(self, "ic") and isinstance(self.ic, ArrayLike):
+            ic = self.ic[:self.embedding_dimension]
+        else:
+            assert history_function is not None, "Must specify an initial condition function for this system"
+
         # assume constant past points, overridable behavior
-        history_fn = history_function or (lambda t: self.ic[0])
+        history_fn = history_function or (lambda t: ic))
         sol = ddeint(self.rhs, history_fn, tpts)
 
         # optionally augment the trajectory with per-dimension delay embeddings
@@ -570,8 +580,6 @@ class DynSysDelay(DynSys):
                     sol[:, dim],
                     axis=0,
                     kind=kwargs.pop("kind", "linear"),
-                    bounds_error=False,
-                    fill_value="extrapolate",
                 )
                 for dim in range(sol.shape[-1])
             ]

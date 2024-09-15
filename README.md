@@ -111,10 +111,6 @@ These additional optional dependencies are needed to reproduce some portions of 
 
 ## Development goals
 
-In Review:
-+ better solver of delay differential equations.
-  - need to find better way of extrapolating the delay solutions, maybe try adding history to the solver
-
 TODO:
 + ultra-fast function to reestimate quantities of interest with functionality to write and update the json entries
 + function to reestimate mean and std
