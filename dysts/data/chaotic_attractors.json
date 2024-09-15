@@ -4126,25 +4126,6 @@
       0.2413348556349449
     ]
   },
-  "RoadTraffic": {
-    "bifurcation_parameter": null,
-    "citation": "Leonid (2002). Multifractal chaotic attractors in a system of delay-differential equations modeling road traffic",
-    "delay": true,
-    "description": "An arbitrary dimension DDE for traffic flow on a periodic domain.",
-    "dt": 0.0001,
-    "embedding_dimension": 100,
-    "hamiltonian": false,
-    "nonautonomous": false,
-    "parameters": {
-      "L": 29,
-      "A": 3,
-      "k": 15,
-      "T": 2,
-      "D": 5,
-      "v_per": 25,
-      "tau": 0.59
-    }
-  },
   "WangSun": {
     "bifurcation_parameter": null,
     "citation": "Wang, Z., Sun, Y., van Wyk, B. J., Qi, G. & van Wyk, M. A (2009). A 3-D four-wing attractor and its analysis. Brazilian J. Phys. 39.",

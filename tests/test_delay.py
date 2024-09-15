@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from dysts.flows import MackeyGlass, RoadTraffic
+from dysts.flows import MackeyGlass
 
 
 def test_mackey():
@@ -20,10 +20,6 @@ def test_mackey():
 
 def main():
     test_mackey()
-    sys = RoadTraffic()
-    sol = sys.make_trajectory(
-        4096,
-    )
 
 
 if __name__ == "__main__":
