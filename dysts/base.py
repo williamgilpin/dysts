@@ -33,8 +33,7 @@ else:
 
 import numpy as np
 
-from .utils.integration_utils import ddeint, integrate_dyn
-from .utils.utils import standardize_ts
+from dysts.utils import ddeint, integrate_dyn, standardize_ts
 
 try:
     from numba import njit
