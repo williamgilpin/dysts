@@ -12,7 +12,13 @@ import numpy.typing as npt
 
 import dysts.flows as dfl
 import dysts.maps as dmp
-from dysts.base import DATAPATH_CONTINUOUS, DATAPATH_DISCRETE
+from dysts.base import (
+    DATAPATH_CONTINUOUS,
+    DATAPATH_DISCRETE,
+    DynMap,
+    DynSys,
+    DynSysDelay,
+)
 
 Array = npt.NDArray[np.float64]
 
@@ -31,25 +37,27 @@ def get_attractor_list(sys_class: str = "continuous") -> List[str]:
     """
     if sys_class in ["continuous", "continuous_no_delay", "delay"]:
         module = dfl
+        parent_class = {
+            "continuous": (DynSys, DynSysDelay),
+            "continuous_no_delay": DynSys,
+            "delay": DynSysDelay,
+        }[sys_class]
     elif sys_class == "discrete":
         module = dmp
+        parent_class = DynMap
     else:
         raise Exception(
             "sys_class must be in ['continuous', 'continuous_no_delay', 'delay', 'discrete']"
         )
 
-    systems = (
-        name
-        for name, obj in inspect.getmembers(module, inspect.isclass)
-        if obj.__module__ == module.__name__
+    systems = inspect.getmembers(
+        module,
+        lambda obj: inspect.isclass(obj)
+        and issubclass(obj, parent_class)
+        and obj.__module__ == module.__name__,
     )
 
-    if sys_class == "continuous_no_delay":
-        systems = filter(lambda name: "delay" not in name.lower(), systems)
-    elif sys_class == "delay":
-        systems = filter(lambda name: "delay" in name.lower(), systems)
-
-    return sorted(systems)
+    return sorted([name for name, _ in systems])
 
 
 def get_system_data(sys_class: str = "continuous") -> Dict[str, Any]:

@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
 
-from dysts.flows import MackeyGlass
+from dysts.flows import IkedaDelay, MackeyGlass
 
 
 def main():
     sys = MackeyGlass()
+    sys = IkedaDelay()
     sol = sys.make_trajectory(
         4096,
         pts_per_period=32,

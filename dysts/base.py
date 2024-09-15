@@ -95,9 +95,9 @@ class BaseDyn:
 
     def __init__(self, **entries):
         self.name = self.__class__.__name__
-        data = self._load_data()
+        self.data = self._load_data()
 
-        self.params = data["parameters"]
+        self.params = self.data["parameters"]
         self.params.update(entries)
         # Cast all parameter arrays to numpy
         for key, value in self.params.items():
@@ -107,13 +107,13 @@ class BaseDyn:
         self.set_params()
 
         # Cast initial condition to numpy
-        ic_val = data["initial_conditions"]
+        ic_val = self.data["initial_conditions"]
         ic_val = np.array(ic_val) if not np.isscalar(ic_val) else np.array([ic_val])
         self.ic = ic_val
         np.random.seed(self.random_state)
 
-        for key in data:
-            setattr(self, key, data[key])
+        for key in self.data:
+            setattr(self, key, self.data[key])
 
         self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
         self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
@@ -257,8 +257,6 @@ class DynSys(BaseDyn):
     def __init__(self, **kwargs):
         self.data_path = DATAPATH_CONTINUOUS
         super().__init__(**kwargs)
-        self.dt = self._load_data()["dt"]
-        self.period = self._load_data()["period"]
 
     def rhs(self, X, t):
         """The right hand side of a dynamical equation"""
@@ -464,27 +462,24 @@ class DynMap(BaseDyn):
             return sol
 
 
-class DynSysDelay(DynSys):
+class DynSysDelay(BaseDyn):
     """
-    A delayed differential equation object. Defaults to using Euler integration scheme
-    The delay timescale is assumed to be the "tau" field. The embedding dimension is set
-    by default to ten, but delay equations are infinite dimensional.
-    Uses a double-ended queue for memory efficiency
+    A delayed differential equation object. Uses a exposed fork of ddeint
+    The delay timescale is assumed to be the "tau" field. The embedding dimensions are set to a
+    default value, but delay equations are infinite dimensional.
 
     Attributes:
         kwargs (dict): A dictionary of keyword arguments passed to the dynamical
             system parent class
 
     Todo:
-        Treat previous delay values as a part of the dynamical variable in rhs
-
         Currently, only univariate delay equations and single initial conditons
         are supported
     """
 
     def __init__(self, **kwargs):
+        self.data_path = DATAPATH_CONTINUOUS
         super().__init__(**kwargs)
-        self.__call__ = self.rhs
 
     def rhs(self, X: Callable[[float], ArrayLike], t: float) -> ArrayLike:
         """The right hand side of a dynamical equation"""
