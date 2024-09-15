@@ -387,9 +387,87 @@ def horizoned_metric(y_true, y_pred, metric, *args, horizon=None, **kwargs):
         horizon = len(y_true)
     return [metric(y_true[:i+1], y_pred[:i+1], *args, **kwargs) for i in range(horizon)]
 
-def compute_metrics(y_true, y_pred, standardize=False):
+
+from scipy.stats import multivariate_normal
+def create_gmm(orbit_points, sigma_squared=1.0):
+    """
+    Create a Gaussian Mixture Model from orbit points.
+    
+    Args:
+        orbit_points (np.ndarray): An array containing a time series of orbit points,
+            with shape (T, N) where T is the number of time steps and N is the 
+            dimensionality.
+        sigma_squared (float): Variance parameter for the GMM.
+
+    Returns:
+        function: Gaussian Mixture Model (GMM) function.
+    """
+    T, N = orbit_points.shape
+    cov_matrix = sigma_squared * np.eye(N)
+    
+    def gmm(x):
+        return np.mean([multivariate_normal.pdf(x, mean=x_t, cov=cov_matrix) for x_t in orbit_points])
+    
+    return gmm
+
+def estimate_kl_divergence(observed_orbit, generated_orbit, n_samples=1000, sigma_squared=1.0):
+    """
+    Estimate KL divergence between observed and generated orbits using Gaussian Mixture 
+    Models (GMMs).
+
+    References: 
+        Hess, Florian, et al. "Generalized teacher forcing for learning chaotic 
+        dynamics." Proceedings of the 40th International Conference on Machine Learning.
+        2023.
+
+        Hershey, John R., and Peder A. Olsen. "Approximating the Kullback Leibler 
+        divergence between Gaussian mixture models." 2007 IEEE International Conference 
+        on Acoustics, Speech and Signal Processing-ICASSP'07. Vol. 4. IEEE, 2007.
+    
+    Args:
+        observed_orbit (np.ndarray): Observed orbit points.
+        generated_orbit (np.ndarray): Generated orbit points.
+        n_samples (int): Number of Monte Carlo samples.
+        sigma_squared (float): Variance parameter for the GMMs.
+
+    Returns:
+        float: Estimated KL divergence 
+    """
+    p_hat = create_gmm(observed_orbit, sigma_squared)
+    q_hat = create_gmm(generated_orbit, sigma_squared)
+
+    sigma_scale = np.linalg.norm(np.diff(observed_orbit, axis=0), axis=1)
+    sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
+    # sigma_scale = np.ones_like(sigma_scale)
+    
+    # Generate Monte Carlo samples from p_hat
+    T, N = observed_orbit.shape
+    cov_matrix = sigma_squared * np.eye(N)
+    samples = np.array(
+        [multivariate_normal.rvs(mean=x_t, cov=s_t * cov_matrix) for x_t, s_t in zip(observed_orbit, sigma_scale)]
+    )
+    
+    # Randomly select n_samples from the generated samples
+    selected_samples = samples[np.random.choice(T, n_samples, replace=True)]
+    log_ratios = np.log(p_hat(selected_samples) / q_hat(selected_samples))
+    kl_estimate = np.mean(log_ratios)
+    
+    return kl_estimate
+
+
+def compute_metrics(y_true, y_pred, standardize=False, verbose=False):
     """
     Compute multiple time series metrics
+
+    Args:
+        y_true (np.ndarray): The true values
+        y_pred (np.ndarray): The predicted values
+        standardize (bool): Whether to standardize the time series before computing the 
+            metrics. Default is False.
+        verbose (bool): Whether to print the computed metrics. Default is False.
+
+    Returns:
+        dict: A dictionary containing the computed metrics
     """
     if standardize:
         scale_true, scale_pred = np.std(y_true, axis=0, keepdims=1), np.std(y_pred, axis=0, keepdims=1)
@@ -416,4 +494,8 @@ def compute_metrics(y_true, y_pred, standardize=False):
     metrics["kendall"] = kendall(y_true, y_pred)
     metrics["coefficient_of_variation"] = coefficient_of_variation(y_true, y_pred)
     metrics["mutual_information"] = mutual_information(y_true, y_pred)
+
+    if verbose:
+        for key, value in metrics.items():
+            print(f"{key}: {value:.4f}")
     return metrics
