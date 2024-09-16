@@ -17,7 +17,7 @@ dependencies = ["numpy", "scipy"]
 
 # Optional dependencies
 [project.optional-dependencies]
-benchmark = ["darts", "torch", "scikit-learn", "pandas", "tsfresh", "nolds"]
+benchmarks = ["darts", "torch", "scikit-learn", "pandas", "tsfresh", "nolds"]
 numba = ["numba"]
 sde = ["sdeint"]
 
