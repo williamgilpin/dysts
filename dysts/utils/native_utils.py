@@ -25,35 +25,6 @@ def group_consecutives(vals, step=1):
     return result
 
 
-def dict_loudassign(d, key, val):
-    """
-    Assign a key val pair in a dict, and print the result
-    """
-    print(key + ": " + str(val), flush=True)
-    d[key] = val
-    return d
-
-
-def nested_dict_invert(ndict, levels=(0, 1)):
-    """
-    Invert a nested dictionary.
-
-    Args:
-        ndict (dict): The nested dictionary to invert.
-        levels (tuple): The levels of the nested dictionary to invert. Not Implemented.
-
-    Returns:
-        inverted (dict): The inverted dictionary.
-    """
-    inverted = dict()
-    for key1 in ndict:
-        for key2 in ndict[key1]:
-            if key2 not in inverted:
-                inverted[key2] = dict()
-            inverted[key2][key1] = ndict[key1][key2]
-    return inverted
-
-
 class ComputationHolder:
     """
     A wrapper class to force a computation to stop after a timeout.

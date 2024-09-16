@@ -2,6 +2,7 @@
 Test the models and regularizer
 > python test_generation.py
 """
+
 #!/usr/bin/env python
 import os
 import sys
@@ -15,7 +16,6 @@ sys.path.insert(1, os.path.join(WORKING_DIR, "dysts"))
 
 from dysts.utils import (
     cartesian_to_polar,
-    dict_loudassign,
     make_surrogate,
     polar_to_cartesian,
     signif,
@@ -26,12 +26,12 @@ from dysts.utils import (
 class TestUtils(unittest.TestCase):
     def setUp(self):
         self.r = 5
-        self.th = np.pi/4
+        self.th = np.pi / 4
         self.x = 3.5355339059
         self.y = 3.5355339059
         self.x_arr = np.array([1, 2, 3])
         self.y_arr = np.array([4, 5, 6])
-        self.d = {'a': 1}
+        self.d = {"a": 1}
         self.a = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 
     def test_polar_to_cartesian(self):
@@ -48,13 +48,15 @@ class TestUtils(unittest.TestCase):
         res = signif(1.2345678, figs=4)
         self.assertEqual(res, 1.235)
 
-    def test_dict_loudassign(self):
-        res = dict_loudassign(self.d, 'b', 2)
-        self.assertEqual(res, {'a': 1, 'b': 2})
-
     def test_standardize_ts(self):
         res = standardize_ts(self.a)
-        expected = np.array([[-1.22474487, -1.22474487, -1.22474487], [0., 0., 0.], [1.22474487, 1.22474487, 1.22474487]])
+        expected = np.array(
+            [
+                [-1.22474487, -1.22474487, -1.22474487],
+                [0.0, 0.0, 0.0],
+                [1.22474487, 1.22474487, 1.22474487],
+            ]
+        )
         self.assertTrue(np.allclose(res, expected))
 
     # def test_integrate_dyn(self):
@@ -77,9 +79,10 @@ class TestUtils(unittest.TestCase):
     #     self.assertTrue(np.array_equal(resample_timepoints(model, ic, tpts, pts_per_period=100), np.linspace(0, 10, 1000)))
 
     def test_make_surrogate(self):
-        data = np.sin(2*np.pi*5*np.linspace(0, 1, 100))
+        data = np.sin(2 * np.pi * 5 * np.linspace(0, 1, 100))
         surr_data = make_surrogate(data, "rp")
         self.assertAlmostEqual(len(surr_data), len(data))
+
 
 if __name__ == "__main__":
     unittest.main()
