@@ -8,6 +8,8 @@ import scipy.interpolate
 from scipy.integrate import solve_ivp
 from scipy.signal import resample
 
+from .utils import freq_from_autocorr
+
 try:
     from sdeint import itoint
 except ImportError:
