@@ -388,29 +388,95 @@ def horizoned_metric(y_true, y_pred, metric, *args, horizon=None, **kwargs):
     return [metric(y_true[:i+1], y_pred[:i+1], *args, **kwargs) for i in range(horizon)]
 
 
+
+# def create_gmm(orbit_points, sigma_squared=1.0):
+#     """
+#     Create a Gaussian Mixture Model from orbit points.
+    
+#     Args:
+#         orbit_points (np.ndarray): An array containing a time series of orbit points,
+#             with shape (T, N) where T is the number of time steps and N is the 
+#             dimensionality.
+#         sigma_squared (float): Variance parameter for the GMM.
+
+#     Returns:
+#         function: Gaussian Mixture Model (GMM) function.
+#     """
+#     T, N = orbit_points.shape
+#     cov_matrix = sigma_squared * np.eye(N)
+    
+#     def gmm(x):
+#         return np.mean([multivariate_normal.pdf(x, mean=x_t, cov=cov_matrix) for x_t in orbit_points])
+    
+#     return gmm
+
 from scipy.stats import multivariate_normal
-def create_gmm(orbit_points, sigma_squared=1.0):
+class GaussianMixture:
     """
-    Create a Gaussian Mixture Model from orbit points.
-    
+    A Gaussian Mixture Model class.
+
     Args:
-        orbit_points (np.ndarray): An array containing a time series of orbit points,
-            with shape (T, N) where T is the number of time steps and N is the 
-            dimensionality.
-        sigma_squared (float): Variance parameter for the GMM.
+        means (list): A list of means for each component of the GMM.
+        covariances (list): A list of covariance matrices for each component of the GMM.
+        weights (list): A list of weights for each component of the GMM.
 
-    Returns:
-        function: Gaussian Mixture Model (GMM) function.
+    Attributes:
+        means (np.ndarray): An array of means for each component of the GMM.
+        covariances (np.ndarray): An array of covariance matrices for each component of the GMM.
+        weights (np.ndarray): An array of weights for each component of the GMM.
+        n_components (int): The number of components in the GMM.
+        gaussians (list): A list of multivariate_normal objects, one for each component
     """
-    T, N = orbit_points.shape
-    cov_matrix = sigma_squared * np.eye(N)
     
-    def gmm(x):
-        return np.mean([multivariate_normal.pdf(x, mean=x_t, cov=cov_matrix) for x_t in orbit_points])
-    
-    return gmm
+    def __init__(self, means, covariances, weights=None):
+        self.means = np.array(means)
+        self.covariances = np.array(covariances)
+        self.n_components, self.ndim = self.means.shape
 
-def estimate_kl_divergence(observed_orbit, generated_orbit, n_samples=1000, sigma_squared=1.0):
+        ## If covariances is a single scaler, assume isotropic covariance constant
+        ## Otherwise if covariances is a list of scalars, assume isotropic covariance
+        if isinstance(covariances, (int, float)):
+            self.covariances = np.ones(self.n_components)[:, None, None] * np.eye(self.ndim)[None, ...]
+        elif isinstance(covariances[0], (int, float)):
+            self.covariances = self.covariances[:, None, None] * np.eye(self.ndim)[None, ...]
+        else:
+            self.covariances = np.array(covariances)
+        
+        # If no weights are provided, assume uniform weights
+        if weights is None:
+            self.weights = np.ones(self.n_components) / self.n_components
+        else:
+            self.weights = np.array(weights)
+        
+        self.gaussians = [
+            multivariate_normal(mean=mean, cov=cov)
+            for mean, cov in zip(self.means, self.covariances)
+        ]
+    
+    def __call__(self, x):
+        # Vectorized computation of the Gaussian mixture probability density
+        x = np.array(x)
+        probs = np.array([gaussian.pdf(x) for gaussian in self.gaussians])
+        return np.dot(self.weights, probs)
+
+    def sample(self, n_samples=1):
+        """
+        Draw samples from the Gaussian Mixture Model.
+
+        Args:
+            n_samples (int): The number of samples to draw.
+
+        Returns:
+            samples (np.ndarray): An array of shape (n_samples, ndim) containing the drawn samples.
+        """
+        component_indices = np.random.choice(self.n_components, size=n_samples, p=self.weights)
+        samples = np.array([
+            self.gaussians[i].rvs() for i in component_indices
+        ])
+        return samples
+
+
+def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_squared=1.0):
     """
     Estimate KL divergence between observed and generated orbits using Gaussian Mixture 
     Models (GMMs).
@@ -425,27 +491,35 @@ def estimate_kl_divergence(observed_orbit, generated_orbit, n_samples=1000, sigm
         on Acoustics, Speech and Signal Processing-ICASSP'07. Vol. 4. IEEE, 2007.
     
     Args:
-        observed_orbit (np.ndarray): Observed orbit points.
-        generated_orbit (np.ndarray): Generated orbit points.
+        observed_orbit (np.ndarray): Observed orbit points, with shape (T, N) where T is
+            the number of time steps and N is the dimensionality.
+        generated_orbit (np.ndarray): Generated orbit points, with shape (T, N) where T is
+            the number of time steps and N is the dimensionality.
         n_samples (int): Number of Monte Carlo samples.
         sigma_squared (float): Variance parameter for the GMMs.
 
     Returns:
         float: Estimated KL divergence 
     """
-    p_hat = create_gmm(observed_orbit, sigma_squared)
-    q_hat = create_gmm(generated_orbit, sigma_squared)
-
-    sigma_scale = np.linalg.norm(np.diff(observed_orbit, axis=0), axis=1)
+    sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1)
     sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
+    p_hat = GaussianMixture(true_orbit, sigma_scale)
+
+    sigma_scale = np.linalg.norm(np.diff(generated_orbit, axis=0), axis=1)
+    sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
+    q_hat = GaussianMixture(generated_orbit, sigma_scale)
+
+    # sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1)
+    # sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
     # sigma_scale = np.ones_like(sigma_scale)
     
     # Generate Monte Carlo samples from p_hat
-    T, N = observed_orbit.shape
-    cov_matrix = sigma_squared * np.eye(N)
-    samples = np.array(
-        [multivariate_normal.rvs(mean=x_t, cov=s_t * cov_matrix) for x_t, s_t in zip(observed_orbit, sigma_scale)]
-    )
+    T, N = true_orbit.shape
+    # cov_matrix = sigma_squared * np.eye(N)
+    # samples = np.array(
+    #     [multivariate_normal.rvs(mean=x_t, cov=s_t * cov_matrix) for x_t, s_t in zip(true_orbit, sigma_scale)]
+    # )
+    samples = p_hat.sample(n_samples=T)
     
     # Randomly select n_samples from the generated samples
     selected_samples = samples[np.random.choice(T, n_samples, replace=True)]
@@ -494,6 +568,7 @@ def compute_metrics(y_true, y_pred, standardize=False, verbose=False):
     metrics["kendall"] = kendall(y_true, y_pred)
     metrics["coefficient_of_variation"] = coefficient_of_variation(y_true, y_pred)
     metrics["mutual_information"] = mutual_information(y_true, y_pred)
+    metrics["kl divergence"] = estimate_kl_divergence(y_true, y_pred)
 
     if verbose:
         for key, value in metrics.items():
