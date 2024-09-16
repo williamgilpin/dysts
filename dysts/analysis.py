@@ -4,19 +4,19 @@ Functions that act on DynSys or DynMap objects
 
 """
 
-import numpy as np
 import warnings
 
+import numpy as np
+
 try:
-    import neurokit2 # Used for computing multiscale entropy
+    import neurokit2  # Used for computing multiscale entropy
+
     has_neurokit = True
 except:
     warnings.warn("Neurokit2 must be installed before computing multiscale entropy")
     has_neurokit = False
 
-from .utils import *
-from .utils import standardize_ts
-from .utils import ComputationHolder
+from dysts.utils import *
 
 
 def sample_initial_conditions(
@@ -115,17 +115,16 @@ def compute_timestep(
         return dt, period
     else:
         return dt
-    
+
 
 from scipy.spatial.distance import cdist
-from scipy.optimize import curve_fit
 
 
 def estimate_powerlaw(data0):
     """
-    Given a 1D array of continuous-valued data, estimate the power law exponent using the 
+    Given a 1D array of continuous-valued data, estimate the power law exponent using the
     maximum likelihood estimator proposed by Clauset, Shalizi, Newman (2009).
-    
+
     Args:
         data0 (np.ndarray): An array of continuous-valued data
 
@@ -138,21 +137,22 @@ def estimate_powerlaw(data0):
     ahat = 1 + n / np.sum(np.log(data / xmin), axis=0)
     return ahat
 
+
 def gp_dim(data, y_data=None, rvals=None, nmax=100):
     """
-    Estimate the Grassberger-Procaccia dimension for a numpy array using the 
+    Estimate the Grassberger-Procaccia dimension for a numpy array using the
     empirical correlation integral.
 
     Args:
         data (np.array): T x D, where T is the number of datapoints/timepoints, and D
             is the number of features/dimensions
-        y_data (np.array, Optional): A second dataset of shape T2 x D, for 
+        y_data (np.array, Optional): A second dataset of shape T2 x D, for
             computing cross-correlation.
         rvals (np.array): A list of radii
         nmax (int): The number of points at which to evaluate the correlation integral
 
     Returns:
-        rvals (np.array): The discrete bins at which the correlation integral is 
+        rvals (np.array): The discrete bins at which the correlation integral is
             estimated
         corr_sum (np.array): The estimates of the correlation integral at each bin
 
@@ -170,7 +170,7 @@ def gp_dim(data, y_data=None, rvals=None, nmax=100):
         rvals = np.logspace(np.log10(0.1 * std), np.log10(0.5 * std), nmax)
 
     n = len(data)
-    
+
     # dists = cdist(data, y_data)
     # corr_sum = []
     # for r in rvals:
@@ -181,7 +181,7 @@ def gp_dim(data, y_data=None, rvals=None, nmax=100):
     # hist, _ = np.histogram(dists, bins=np.hstack([0, rvals])) # can we skip this and direct fit?
     # corr_sum = np.cumsum(hist).astype(float)
     # corr_sum /= n * (n - 1)
-    
+
     dists = cdist(data, y_data)
     rvals = dists.ravel()
 
@@ -190,7 +190,7 @@ def gp_dim(data, y_data=None, rvals=None, nmax=100):
     rvals = rvals[rvals > 0]
     rvals = rvals[rvals > np.percentile(rvals, 5)]
     rvals = rvals[rvals < np.percentile(rvals, 50)]
-    
+
     return estimate_powerlaw(rvals)
 
     # dists = cdist(data, y_data)
@@ -209,7 +209,7 @@ def gp_dim(data, y_data=None, rvals=None, nmax=100):
     # sel_inds = corr_sum > 0
     # rvals = rvals[sel_inds]
     # corr_sum = corr_sum[sel_inds]
-    
+
     # # poly = np.polyfit(np.log(rvals), np.log(corr_sum), 1)
     # # return poly[0]
 
@@ -249,9 +249,14 @@ def corr_gpdim(traj1, traj2, register=False, standardize=False, **kwargs):
         traj1 = (traj1 - np.mean(traj1, axis=0)) / np.std(traj1, axis=0)
         traj2 = (traj2 - np.mean(traj2, axis=0)) / np.std(traj2, axis=0)
 
-    return gp_dim(traj1, traj2, **kwargs) / np.sqrt(gp_dim(traj1, **kwargs) * gp_dim(traj2, **kwargs))
+    return gp_dim(traj1, traj2, **kwargs) / np.sqrt(
+        gp_dim(traj1, **kwargs) * gp_dim(traj2, **kwargs)
+    )
+
 
 from sklearn.linear_model import RidgeCV
+
+
 def gpdistance(traj1, traj2, standardize=True, register=False, **kwargs):
     """
     Given two multivariate time series, estimate their similarity using the cross
@@ -276,9 +281,8 @@ def gpdistance(traj1, traj2, standardize=True, register=False, **kwargs):
     if standardize:
         traj1 = (traj1 - np.mean(traj1, axis=0)) / np.std(traj1, axis=0)
         traj2 = (traj2 - np.mean(traj2, axis=0)) / np.std(traj2, axis=0)
-        
-    return np.abs(np.log(corr_gpdim(traj1, traj2, **kwargs)))
 
+    return np.abs(np.log(corr_gpdim(traj1, traj2, **kwargs)))
 
 
 def find_lyapunov_exponents(
@@ -287,12 +291,12 @@ def find_lyapunov_exponents(
     """
     Given a dynamical system, compute its spectrum of Lyapunov exponents.
     Args:
-        model (callable): the right hand side of a differential equation, in format 
+        model (callable): the right hand side of a differential equation, in format
             func(X, t)
         traj_length (int): the length of each trajectory used to calulate Lyapunov
             exponents
         pts_per_period (int): the sampling density of the trajectory
-        kwargs: additional keyword arguments to pass to the model's make_trajectory 
+        kwargs: additional keyword arguments to pass to the model's make_trajectory
             method
 
     Returns:
@@ -311,9 +315,12 @@ def find_lyapunov_exponents(
     """
     d = np.asarray(model.ic).shape[-1]
     tpts, traj = model.make_trajectory(
-        traj_length, pts_per_period=pts_per_period, resample=True, return_times=True,
+        traj_length,
+        pts_per_period=pts_per_period,
+        resample=True,
+        return_times=True,
         postprocessing=False,
-        **kwargs
+        **kwargs,
     )
     dt = np.median(np.diff(tpts))
     # traj has shape (traj_length, d), where d is the dimension of the system
@@ -345,11 +352,12 @@ def find_lyapunov_exponents(
 
         ## Forward Euler update
         # u_n = np.matmul(np.eye(d) + jacval * dt, u)
-        
+
         ## Backward Euler update
-        if i < 1: continue
+        if i < 1:
+            continue
         u_n = np.matmul(np.linalg.inv(np.eye(d) - jacval * dt), u)
-        
+
         q, r = np.linalg.qr(u_n)
         lyap_estimate = np.log(abs(r.diagonal()))
         all_lyap.append(lyap_estimate)
@@ -364,7 +372,10 @@ def find_lyapunov_exponents(
     final_lyap = np.sum(all_lyap, axis=0) / (dt * traj_length)
     return np.sort(final_lyap)[::-1]
 
+
 from scipy.stats import linregress
+
+
 def calculate_lyapunov_exponent(traj1, traj2, dt=1.0):
     """
     Calculate the lyapunov exponent of two multidimensional trajectories using
@@ -386,10 +397,16 @@ def calculate_lyapunov_exponent(traj1, traj2, dt=1.0):
     lyap = slope / dt
     return lyap
 
+
 def lyapunov_exponent_naive(
-    eq, rtol=1e-3, atol=1e-10, n_samples=1000, traj_length=5000, max_walltime=None,
-    **kwargs
-    ):
+    eq,
+    rtol=1e-3,
+    atol=1e-10,
+    n_samples=1000,
+    traj_length=5000,
+    max_walltime=None,
+    **kwargs,
+):
     """
     Calculate the lyapunov spectrum of the system using a naive method based on the
     log-transformed separation of the trajectories over time.
@@ -414,11 +431,11 @@ def lyapunov_exponent_naive(
         >>> import dysts
         >>> eq = dysts.Lorenz()
         >>> max_lyap = dysts.lyapunov_exponent_naive(eq)
-        
+
     """
     all_ic = sample_initial_conditions(
-        eq, 
-        n_samples, 
+        eq,
+        n_samples,
         traj_length=max(traj_length, n_samples),
         pts_per_period=15,
     )
@@ -432,12 +449,12 @@ def lyapunov_exponent_naive(
         eq.random_state = ind
         eq.ic = ic
         out = ComputationHolder(
-            eq.make_trajectory, 
-            traj_length, 
+            eq.make_trajectory,
+            traj_length,
             timeout=max_walltime,
-            resample=True, 
+            resample=True,
             return_times=True,
-            **kwargs
+            **kwargs,
         ).run()
         if out is None:
             continue
@@ -449,14 +466,14 @@ def lyapunov_exponent_naive(
         np.random.seed(ind)
         eq.random_state = ind
         eq.ic = ic
-        eq.ic *= (1 + eps * (np.random.random(eq.ic.shape) - 0.5))
+        eq.ic *= 1 + eps * (np.random.random(eq.ic.shape) - 0.5)
         # traj2 = eq.sample(traj_length, resample=True, **kwargs)
         traj2 = ComputationHolder(
-            eq.make_trajectory, 
+            eq.make_trajectory,
             traj_length,
-            timeout=max_walltime, 
-            resample=True, 
-            **kwargs
+            timeout=max_walltime,
+            resample=True,
+            **kwargs,
         ).run()
         if traj2 is None:
             continue
@@ -464,7 +481,9 @@ def lyapunov_exponent_naive(
             continue
 
         ## Truncate traj1 and traj2 to when their scaled separation is less than eps_max
-        separation = np.linalg.norm(traj1 - traj2, axis=1) / np.linalg.norm(traj1, axis=1)
+        separation = np.linalg.norm(traj1 - traj2, axis=1) / np.linalg.norm(
+            traj1, axis=1
+        )
         cutoff_index = np.where(separation < eps_max)[0][-1]
         all_cutoffs.append(cutoff_index)
         traj1 = traj1[:cutoff_index]
@@ -478,19 +497,20 @@ def lyapunov_exponent_naive(
 
     if len(all_lyap) < int(0.6 * n_samples):
         warnings.warn(
-            "The number of successful trajectories is less than 60% of the total number " \
-            + "of trajectories attempted. This may indicate that the integration " \
+            "The number of successful trajectories is less than 60% of the total number "
+            + "of trajectories attempted. This may indicate that the integration "
             + "is unstable"
         )
 
     if np.median(all_cutoffs) < pts_per_period:
         warnings.warn(
-            "The median cutoff index is less than the number of points per period. " \
-            + "This may indicate that the integration is not long enough to capture " \
+            "The median cutoff index is less than the number of points per period. "
+            + "This may indicate that the integration is not long enough to capture "
             + "the invariant properties."
         )
 
     return np.mean(all_lyap)
+
 
 def kaplan_yorke_dimension(spectrum0):
     """Calculate the Kaplan-Yorke dimension, given a list of
@@ -509,12 +529,10 @@ def kaplan_yorke_dimension(spectrum0):
     return dky
 
 
-
-
 def mse_mv(traj):
     """
-    Generate an estimate of the multivariate multiscale entropy. The current version 
-    computes the entropy separately for each channel and then averages. It therefore 
+    Generate an estimate of the multivariate multiscale entropy. The current version
+    computes the entropy separately for each channel and then averages. It therefore
     represents an upper-bound on the true multivariate multiscale entropy
 
     Args:
@@ -528,9 +546,11 @@ def mse_mv(traj):
     """
 
     if not has_neurokit:
-        raise Exception("NeuroKit not installed; multiscale entropy cannot be computed.")
+        raise Exception(
+            "NeuroKit not installed; multiscale entropy cannot be computed."
+        )
 
-    #mmse_opts = {"composite": True, "refined": False, "fuzzy": True}
+    # mmse_opts = {"composite": True, "refined": False, "fuzzy": True}
     mmse_opts = {"composite": True, "fuzzy": True}
     if len(traj.shape) == 1:
         mmse = neurokit2.entropy_multiscale(sol, dimension=2, **mmse_opts)[0]
@@ -543,7 +563,6 @@ def mse_mv(traj):
             neurokit2.entropy_multiscale(sol_coord, dimension=2, **mmse_opts)[0]
         )
     return np.median(all_mse)
-
 
 
 def get_train_test(eq, n_train=1000, n_test=200, standardize=True, **kwargs):
@@ -565,7 +584,7 @@ def get_train_test(eq, n_train=1000, n_test=200, standardize=True, **kwargs):
             (tuple): a tuple containing:
                 (ndarray): the timepoints of the test trajectory
                 (ndarray): the test trajectory
-                
+
     """
     train_ic, test_ic = sample_initial_conditions(eq, 2)
 
@@ -577,12 +596,11 @@ def get_train_test(eq, n_train=1000, n_test=200, standardize=True, **kwargs):
     tpts_test, sol_test = eq.make_trajectory(
         n_test, resample=True, return_times=True, **kwargs
     )
-    
+
     if standardize:
         center = np.mean(sol_train, axis=0)
         scale = np.std(sol_train, axis=0)
         sol_train = (sol_train - center) / scale
         sol_test = (sol_test - center) / scale
-    
-    return (tpts_train, sol_train), (tpts_test, sol_test)
 
+    return (tpts_train, sol_train), (tpts_test, sol_test)

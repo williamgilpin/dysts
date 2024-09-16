@@ -1,50 +1,48 @@
+import gzip
+import json
+import os
 import warnings
-import os, json, gzip
+
 import numpy as np
-import pandas as pd
-import pkg_resources
 
-## Check for optional time series featurizer
+# Check for optional datasets
+# this is bad. Reorganize this
 try:
-    from tsfresh import extract_features
-    from tsfresh import select_features
-    from tsfresh.utilities.dataframe_functions import impute
-except ImportError:
-    _has_tsfresh = False
-else:
-    _has_tsfresh = True
-
-
-## Check for optional datasets
-try:
+    import pandas as pd
     from dysts_data.dataloader import get_datapath
+    from tsfresh import extract_features
 except ImportError:
+    warnings.warn(
+        "Please install with `pip install dysts[benchmarks]` to properly use the dysts.dataset modules"
+    )
+    _has_tsfresh = False
     _has_data = False
 else:
+    _has_tsfresh = True
     _has_data = True
 
-from .utils import *
+from dysts.utils import *
 
 
 class TimeSeriesDataset:
     """A data structure for handling time series. Reads and writes from JSON
-    
+
     Assumes that all time series have the same number of timepoints. In the case
     of multivariate series with different numbers of features / dimensions, the
     missing dimensionality is padded
-    
-    
+
+
     Args:
         data (dict, optional): A time series dataset, consisting of a dictionary
             with index given by top-level names of different time series.
         datapath (string, optional): The path to a JSON dataset. Defaults to creating
             an empty dataset object
-    
+
     Attributes:
         rank (list): The original length of each time series
         is_multivariate (bool): Whether the time series dataset is multivariate
         names (list): The names of the systems in the dataset
-    
+
     """
 
     def __init__(self, datapath=None, data=None):
@@ -54,7 +52,7 @@ class TimeSeriesDataset:
                 with open(datapath, "r") as file:
                     self.dataset = json.load(file)
             elif ext == ".gz":
-                with gzip.open(datapath, 'rt', encoding="utf-8") as file:
+                with gzip.open(datapath, "rt", encoding="utf-8") as file:
                     self.dataset = json.load(file)
             else:
                 raise ValueError("Unrecognized file extension")
@@ -109,10 +107,10 @@ class TimeSeriesDataset:
         """
         Convert a data dictionary to a DataFrame
         Draws values from self.data (dict), a dictionary with index given by top-level keys
-        
+
         Args:
             standardize (bool): whether to standardize each dataset before flattening
-            filling (str): For multivariate time series of varying demensionality, values to pad 
+            filling (str): For multivariate time series of varying demensionality, values to pad
                 in empty columns.
         Returns:
             data_pd (pd.DataFrame): a 2D dataset consisting of indexed time series
@@ -121,9 +119,7 @@ class TimeSeriesDataset:
         all_names = self.names
         all_times = np.vstack([data[item]["time"] for item in data])
 
-        #         all_values = np.vstack([data[item]["values"] for item in data])
         all_values = self.to_array(standardize=standardize)
-        # self.max_d
 
         if self.is_multivariate:
             all_indices = (
@@ -175,6 +171,7 @@ class TimeSeriesDataset:
         with open(path, "w") as file:
             json.dump(self.dataset, file, indent=4)
 
+
 def featurize_timeseries(dataset):
     """
     Extract features from a TimeSeriesDataset
@@ -201,68 +198,13 @@ def featurize_timeseries(dataset):
     return extracted_features
 
 
-def convert_json_to_gzip(fpath, encoding="utf-8", delete_original=False):
-    """
-    Convert a json file to a gzip file in a format that can be easily read by the
-    `dysts` package. By default, the gzip file will be saved with the same name and
-    in the same directory as the json file, but with a ".gz" extension.
-
-    Args:
-        fpath (str): Path to the json file to be converted
-        encoding (str): Encoding to use when writing the gzip file
-        delete_original (bool): Whether to delete the original json file after
-            conversion. Default is False.
-
-    Returns:
-        None
-    
-    """
-    if os.path.splitext(fpath)[1] == ".gz":
-        warnings.warn("File already gzipped, exiting without conversion")
-        return None
-    
-    with open(fpath, 'r') as file:
-        data = json.load(file)
-        
-    with gzip.open(fpath + ".gz", 'wt', encoding=encoding) as file:
-        json.dump(data, file, indent=4)
-
-    if delete_original:
-        os.remove(fpath)
-
-import zipfile
-def load_json(fpath):
-    """
-    Load either a raw, zipped, or gzipped json file.
-
-    Args:
-        fpath (str): Path to the json file to be loaded
-
-    Returns:
-        data (dict): Dictionary containing the data from the json file
-    """
-    if os.path.splitext(fpath)[1] == ".json":
-        with open(fpath, 'r') as file:
-            data = json.load(file)
-        return data
-    elif os.path.splitext(fpath)[1] == ".gz":
-        with gzip.open(fpath, 'rt') as file:
-            data = json.load(file)
-        return data
-    elif os.path.splitext(fpath)[1] == ".zip":
-        with zipfile.ZipFile(fpath, 'r') as file:
-            data = json.load(file.open(file.namelist()[0]))
-        return data
-    else:
-        raise ValueError("File must be a json or gzipped json file")
-
 def load_file(filename):
     """Locate and import from the module data directory"""
     if not _has_data:
         warnings.warn(
-                    "Data module not found. To use precomputed datasets, "+ \
-                        "please install the external data repository "+ \
-                            "\npip install git+https://github.com/williamgilpin/dysts_data"
+            "Data module not found. To use precomputed datasets, "
+            + "please install the external data repository "
+            + "\npip install git+https://github.com/williamgilpin/dysts_data"
         )
     # base_path = pkg_resources.resource_filename("dysts", "data")
     base_path = get_datapath()
@@ -272,13 +214,17 @@ def load_file(filename):
 
 
 def load_dataset(
-    subsets="train", univariate=True, granularity="fine", data_format="object", noise=False, 
-    split_fraction=5/6,
-    **kwargs
+    subsets="train",
+    univariate=True,
+    granularity="fine",
+    data_format="object",
+    noise=False,
+    split_fraction=5 / 6,
+    **kwargs,
 ):
     """
-    Load dynamics from continuous dynamical systems. 
-    
+    Load dynamics from continuous dynamical systems.
+
     Args:
         subsets ("train" | "train_val" | "test" | "test_val" | "train_all" | "test_all"): Which dataset to draw.
             Train and train val correspond to the same time series split 5/6 of the way through,
@@ -291,7 +237,7 @@ def load_dataset(
         noise (bool): Whether to include stochastic forcing
         split_fraction (float): The fraction of the time series to hold out as a test/val partition
         kwargs (dict): keyword arguments passed to the data formatter
-    
+
     Returns:
         dataset (TimeSeriesDataset): A collection of time series datasets
     """
@@ -304,16 +250,16 @@ def load_dataset(
         data_path = f"{dataset_name}_univariate__pts_per_period_{granval}__periods_{period}.json"
     else:
         data_path = f"{dataset_name}_multivariate__pts_per_period_{granval}__periods_{period}.json"
-    
+
     if noise:
         name_parts = list(os.path.splitext(data_path))
         data_path = "".join(name_parts[:-1] + ["_noise"] + [name_parts[-1]])
-    
+
     ## append a .gz extension if it's not there already
     if os.path.splitext(data_path)[1] != ".gz":
         data_path += ".gz"
     dataset = load_file(data_path)
-    
+
     split_point = int(split_fraction * period) * granval
     if subsets == "train":
         dataset.trim_series(0, split_point)
@@ -331,35 +277,3 @@ def load_dataset(
     else:
         raise ValueError("Return format not recognized.")
         return None
-
-
-# def load_continuous(subsets="train", univariate=True, granularity="fine"):
-#     """
-#     Load dynamics from continuous dynamical systems
-
-#     Args:
-#         subsets ("train" | "val" | "test" | "test_val"): Which dataset to draw.
-#         univariate (bool): Whether to use one coordinate, or all for each system.
-#         granularity ("course" | "fine"): Whether to use fine or coarsely-spaced samples
-
-#     Returns:
-#         dataset (TimeSeriesDataset): A collection of time series dataset
-#     """
-#     period = {"train": "10", "test": "2", "val": "2"}[subsets]
-#     granval = {"coarse": "15", "fine": "100"}[granularity]
-#     split_point = 5/6*period
-#     # self.trim_series(split_point, -1)
-#     if univariate:
-#         dataset = load_file(f"{subsets}_univariate__pts_per_period_{granval}__periods_{period}.json")
-#     else:
-#         dataset = load_file(f"{subsets}_multivariate__pts_per_period_{granval}__periods_{period}.json")
-#     return dataset
-
-# def load_discrete(subsets="all"):
-#     """Load dynamics from discrete-time dynamical systems
-#     """
-#     dataset = load_file("dataset_univariate__pts_per_period_100__periods_10.json")
-#     return dataset
-
-# def make_dataset(random_state=None):
-#     pass

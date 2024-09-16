@@ -1,6 +1,40 @@
 """Native python utilities"""
 
+import gzip
+import json
+import os
 import threading
+import warnings
+
+
+def convert_json_to_gzip(fpath, encoding="utf-8", delete_original=False):
+    """
+    Convert a json file to a gzip file in a format that can be easily read by the
+    `dysts` package. By default, the gzip file will be saved with the same name and
+    in the same directory as the json file, but with a ".gz" extension.
+
+    Args:
+        fpath (str): Path to the json file to be converted
+        encoding (str): Encoding to use when writing the gzip file
+        delete_original (bool): Whether to delete the original json file after
+            conversion. Default is False.
+
+    Returns:
+        None
+
+    """
+    if os.path.splitext(fpath)[1] == ".gz":
+        warnings.warn("File already gzipped, exiting without conversion")
+        return None
+
+    with open(fpath, "r") as file:
+        data = json.load(file)
+
+    with gzip.open(fpath + ".gz", "wt", encoding=encoding) as file:
+        json.dump(data, file, indent=4)
+
+    if delete_original:
+        os.remove(fpath)
 
 
 def group_consecutives(vals, step=1):
