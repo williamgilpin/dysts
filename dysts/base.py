@@ -118,21 +118,16 @@ class BaseDyn:
         self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
         self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
 
-    def set_params(self, params: Optional[Dict[str, Any]] = None) -> None:
-        """Updates current parameter list with given parameters"""
-        if params is not None:
-            assert all(
-                key in self.params.keys() for key in params
-            ), "Can only modify existing system parameters, cannot add new ones"
-            self.__dict__.update(params)
-            warnings.warn(
-                """Changing the systems parameters makes all other estimated parameters
-                such as `period`, `maximum_lyapunov_estimated`, `mean`, etc invalid!"""
-            )
+    def transform_ic(
+        self, transform_fn: Callable[[np.ndarray], np.ndarray]
+    ) -> None:
+        """Updates the initial condition via a transform function"""
+        self.ic = transform_fn(self.ic)
 
-        self.param_list = [
-            getattr(self, param_name) for param_name in sorted(self.params.keys())
-        ]
+        warnings.warn(
+            """Changing the initial condition makes other estimated parameters
+            such as `period`, `mean`, etc invalid!"""
+        )
 
     def transform_params(
         self, transform_fn: Callable[[str, np.ndarray], np.ndarray]
