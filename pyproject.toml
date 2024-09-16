@@ -23,7 +23,6 @@ sde = ["sdeint"]
 
 # Package data
 [tool.setuptools]
-package-dir = { "dysts" = "dysts" }
 packages = ["dysts"]
 
 [tool.setuptools.package-data]
