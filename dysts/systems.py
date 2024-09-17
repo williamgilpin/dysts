@@ -24,12 +24,15 @@ Array = npt.NDArray[np.float64]
 DEFAULT_RNG = np.random.default_rng()
 
 
-def get_attractor_list(sys_class: str = "continuous") -> List[str]:
+def get_attractor_list(
+    sys_class: str = "continuous", exclude: List[str] = []
+) -> List[str]:
     """Get names of implemented dynamical systems
 
     Args:
         sys_class: class of systems to get the name of - must
             be one of ['continuous', 'continuous_no_delay', 'delay', 'discrete']
+        exclude: list of systems to exclude, optional
 
     Returns:
         Sorted list of systems belonging to sys_class
@@ -55,16 +58,20 @@ def get_attractor_list(sys_class: str = "continuous") -> List[str]:
         and issubclass(obj, parent_class)
         and obj.__module__ == module.__name__,
     )
+    systems = filter(lambda x: x[0] not in exclude, systems)
 
     return sorted([name for name, _ in systems])
 
 
-def get_system_data(sys_class: str = "continuous") -> Dict[str, Any]:
+def get_system_data(
+    sys_class: str = "continuous", exclude: List[str] = []
+) -> Dict[str, Any]:
     """Get system data from the dedicated system class json files
 
     Arguments:
         sys_class: class of systems to get the name of - must
             be one of ['continuous', 'continuous_no_delay', 'delay', 'discrete']
+        exclude: list of systems to exclude, optional
 
     Returns:
         Data from json file filtered by sys_class as a dict
@@ -140,7 +147,8 @@ def make_trajectory_ensemble(
     """
 
     sys_class = kwargs.pop("sys_class", "continuous")
-    subset = subset or get_attractor_list(sys_class)
+    exclude = kwargs.pop("exclude", [])
+    subset = subset or get_attractor_list(sys_class, exclude)
 
     if use_tqdm and not use_multiprocessing:
         subset = tqdm(subset)
@@ -176,7 +184,6 @@ def _multiprocessed_compute_trajectory(
     necessary for proper sampling as per: https://numpy.org/doc/stable/reference/random/parallel.html
     """
     rng_stream = rng.spawn(len(subset))
-
     with Pool() as pool:
         results = pool.starmap(
             _compute_trajectory,

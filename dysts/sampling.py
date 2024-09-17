@@ -84,14 +84,19 @@ class GaussianParamSampler(BaseSampler):
 
     def __call__(
         self, name: str, param: Array, system: Optional[BaseDyn] = None
-    ) -> Array:
+    ) -> Array | float:
         # scale each parameter relatively
         shape = 1 if np.isscalar(param) else param.shape
 
         # avoid shape errors
-        param = np.array(param).flatten()
-        scale = np.abs(param) * self.scale
+        flat_param = np.array(param).flatten()
+        scale = np.abs(flat_param) * self.scale
         cov = np.diag(np.square(scale))
-        return (
-            self.rng.multivariate_normal(mean=param, cov=cov).reshape(shape).squeeze()
+        out = (
+            self.rng.multivariate_normal(mean=flat_param, cov=cov)
+            .reshape(shape)
+            .squeeze()
         )
+        if isinstance(param, (float, int)):
+            out = float(out)
+        return out
