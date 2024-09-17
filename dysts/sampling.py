@@ -1,7 +1,7 @@
 """Sampling functions for dysts"""
 
 from dataclasses import dataclass
-from typing import Callable, Dict, Iterable, Optional
+from typing import Callable, Iterable, Optional
 
 import numpy as np
 from numpy.typing import NDArray
@@ -25,8 +25,8 @@ class BaseSampler:
 
 @dataclass
 class GaussianInitialConditionSampler(BaseSampler):
-    """Sample gaussian perturbations for each initial condition in a given system list
-    """
+    """Sample gaussian perturbations for each initial condition in a given system list"""
+
     scale: float = 1e-4
 
     def __call__(self, ic: Array) -> Array:
@@ -39,9 +39,9 @@ class GaussianInitialConditionSampler(BaseSampler):
         Returns:
             Array: A resampled version of the initial condition.
         """
-        cov = np.eye(ic.shape[0]) * self.scale**2
-        return self.rng.multivariate_normal(mean=ic, cov=cov)
-
+        # Scale the covariance relative to each dimension
+        scaled_cov = np.diag(np.square(ic * self.scale))
+        return self.rng.multivariate_normal(mean=ic, cov=scaled_cov)
 
 
 def attractor_init_cond_sampler(

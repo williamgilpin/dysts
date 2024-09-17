@@ -87,18 +87,19 @@ def get_system_data(sys_class: str = "continuous") -> Dict[str, Any]:
 
 
 def _compute_trajectory(
-    equation_name,
-    n,
-    kwargs,
-    init_cond=None,
-    param_transform=None,
+    equation_name: str,
+    n: int,
+    kwargs: Dict[str, Any],
+    ic_transform: Optional[Callable] = None,
+    param_transform: Optional[Callable] = None,
     rng: np.random.Generator = DEFAULT_RNG,
-):
+) -> Array:
     """A helper function for multiprocessing"""
     eq = getattr(dfl, equation_name)()
 
-    if init_cond is not None:
-        eq.ic = init_cond
+    if ic_transform is not None:
+        ic_transform.set_rng(rng)
+        eq.ic = ic_transform(eq.ic)
 
     if param_transform is not None:
         param_transform.set_rng(rng)
@@ -110,9 +111,9 @@ def _compute_trajectory(
 
 def make_trajectory_ensemble(
     n: int,
-    init_conds: Dict[str, Array] = {},
     use_tqdm: bool = False,
     use_multiprocessing: bool = False,
+    ic_transform: Optional[Callable] = None,
     param_transform: Optional[Callable] = None,
     subset: Optional[Sequence[str]] = None,
     rng: np.random.Generator = DEFAULT_RNG,
@@ -123,9 +124,9 @@ def make_trajectory_ensemble(
 
     Args:
         n (int): The number of timepoints to integrate
-        init_conds (dict): Optional user input initial conditions mapping string system name to array
         use_tqdm (bool): Whether to use a progress bar
         use_multiprocessing (bool): Not yet implemented.
+        ic_transform (callable): function that transforms individual system initial conditions
         param_transform (callable): function that transforms individual system parameters
         subset (list): A list of system names. Defaults to all continuous systems.
             Can also pass in `sys_class` as a kwarg to specify other system classes.
@@ -140,11 +141,6 @@ def make_trajectory_ensemble(
         sys_class = kwargs.pop("sys_class", "continuous")
         subset = get_attractor_list(sys_class)
 
-    if len(init_conds) > 0:
-        assert all(
-            sys in init_conds.keys() for sys in subset
-        ), "given initial conditions must at least contain the subset"
-
     if use_tqdm and not use_multiprocessing:
         from tqdm import tqdm
 
@@ -153,12 +149,12 @@ def make_trajectory_ensemble(
     all_sols = dict()
     if use_multiprocessing:
         all_sols = _multiprocessed_compute_trajectory(
-            rng, n, subset, init_conds, param_transform, **kwargs
+            rng, n, subset, ic_transform, param_transform, **kwargs
         )
     else:
         for equation_name in subset:
             sol = _compute_trajectory(
-                equation_name, n, kwargs, init_conds.get(equation_name), param_transform
+                equation_name, n, kwargs, ic_transform, param_transform
             )
             all_sols[equation_name] = sol
 
@@ -169,7 +165,7 @@ def _multiprocessed_compute_trajectory(
     rng: np.random.Generator,
     n: int,
     subset: Sequence[str],
-    init_conds: Dict[str, Array] = {},
+    ic_transform: Optional[Callable] = None,
     param_transform: Optional[Callable] = None,
     **kwargs,
 ) -> Dict[str, Array]:
@@ -190,7 +186,7 @@ def _multiprocessed_compute_trajectory(
                     equation_name,
                     n,
                     kwargs,
-                    init_conds.get(equation_name),
+                    ic_transform,
                     param_transform,
                     rng,
                 )

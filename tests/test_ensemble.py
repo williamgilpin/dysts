@@ -1,23 +1,29 @@
+import matplotlib.pyplot as plt
+
+from dysts.sampling import GaussianInitialConditionSampler, GaussianParamSampler
 from dysts.systems import (
-    GaussianParamSampler,
-    gaussian_init_cond_sampler,
     make_trajectory_ensemble,
 )
 
 
 def main():
-    sampler = gaussian_init_cond_sampler()
+    sampler = GaussianInitialConditionSampler(random_seed=9999, scale=1e-4)
     pt = GaussianParamSampler(random_seed=9999, scale=1e-2)
     sols = make_trajectory_ensemble(
         100,
-        use_multiprocessing=True,
+        use_multiprocessing=False,
         use_tqdm=True,
-        init_conds=sampler(),
+        init_conds=sampler,
         param_transform=pt,
         sys_class="delay",
         rng=pt.rng,
     )
     print(sols)
+
+    plt.figure()
+    for sys, traj in sols.items():
+        plt.plot(*traj.T, label=sys)
+    plt.show()
 
 
 if __name__ == "__main__":

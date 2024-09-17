@@ -16,7 +16,7 @@ import os
 import warnings
 from dataclasses import dataclass, field
 from itertools import starmap
-from typing import Any, Callable, Dict, Optional
+from typing import Callable, Optional
 
 import pkg_resources
 from numpy.typing import ArrayLike
@@ -29,7 +29,6 @@ except ImportError:
     _has_data = False
 else:
     _has_data = True
-
 
 import numpy as np
 
@@ -99,12 +98,13 @@ class BaseDyn:
 
         self.params = self.data["parameters"]
         self.params.update(entries)
-        # Cast all parameter arrays to numpy
-        for key, value in self.params.items():
-            if not np.isscalar(value):
-                self.params[key] = np.array(value)
+        self.params = {
+            k: v if not np.isscalar(v) else np.array(v) for k, v in self.params.items()
+        }
         self.__dict__.update(self.params)
-        self.set_params()
+        self.param_list = [
+            getattr(self, param_name) for param_name in sorted(self.params.keys())
+        ]
 
         # Cast initial condition to numpy
         ic_val = self.data["initial_conditions"]
@@ -118,11 +118,11 @@ class BaseDyn:
         self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
         self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
 
-    def transform_ic(
-        self, transform_fn: Callable[[np.ndarray], np.ndarray]
-    ) -> None:
+    def transform_ic(self, transform_fn: Callable[[np.ndarray], np.ndarray]) -> None:
         """Updates the initial condition via a transform function"""
+        print(self.ic)
         self.ic = transform_fn(self.ic)
+        print(self.ic)
 
         warnings.warn(
             """Changing the initial condition makes other estimated parameters
