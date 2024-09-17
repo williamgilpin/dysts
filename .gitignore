@@ -23,6 +23,7 @@ pyrightconfig.json
 *.so
 
 # Ignore personal and development files
+.vscode/
 private*
 PRIVATE*
 ucr_univariate_ts/
