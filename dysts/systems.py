@@ -99,11 +99,11 @@ def _compute_trajectory(
 
     if ic_transform is not None:
         ic_transform.set_rng(rng)
-        eq.transform_ic(ic_transform)
+        eq.transform_ic(ic_transform, equation_name=equation_name)
 
     if param_transform is not None:
         param_transform.set_rng(rng)
-        eq.transform_params(param_transform)
+        eq.transform_params(param_transform, equation_name=equation_name)
 
     traj = eq.make_trajectory(n, **kwargs)
     return traj

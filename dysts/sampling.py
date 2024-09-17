@@ -1,10 +1,12 @@
 """Sampling functions for dysts"""
 
 from dataclasses import dataclass
-from typing import Callable, Iterable, Optional
+from typing import Optional
 
 import numpy as np
 from numpy.typing import NDArray
+
+import dysts.flows as flows
 
 Array = NDArray[np.float64]
 
@@ -29,36 +31,51 @@ class GaussianInitialConditionSampler(BaseSampler):
 
     scale: float = 1e-4
 
-    def __call__(self, ic: Array) -> Array:
-        """
-        Sample a new initial condition from a multivariate isotropic Gaussian.
-
-        Args:
-            ic (Array): The current initial condition.
-
-        Returns:
-            Array: A resampled version of the initial condition.
-        """
-        # Scale the covariance relative to each dimension
+    def __call__(self, ic: Array, equation_name: Optional[str] = None) -> Array:
         scaled_cov = np.diag(np.square(ic * self.scale))
         return self.rng.multivariate_normal(mean=ic, cov=scaled_cov)
 
 
-def attractor_init_cond_sampler(
-    random_seed: Optional[int] = 0,
-    subset: Optional[Iterable] = None,
-    sys_class: str = "continuous",
-) -> Callable:
-    """Sample points from the attractor of a system"""
-    pass
+@dataclass
+class OnAttractorInitCondSampler(BaseSampler):
+    """
+    Sample points from the attractor of a system
+
+    Subtleties:
+        - This is slow, it requires integrating each system with its default
+          parameters before sampling from the attractor.
+        - The sampled initial conditions from this sampler are necessarily
+          tied to the attractor defined by the default parameters.
+    """
+
+    reference_traj_length: int = 4096
+    reference_traj_transient: int = 500
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        self.trajectory_cache = {}
+
+    def __call__(self, ic: Array, equation_name: Optional[str] = None) -> Array:
+        if equation_name is not None and equation_name not in self.trajectory_cache:
+            # Integrate the system with default parameters
+            eq = getattr(flows, equation_name)()
+            self.trajectory_cache[equation_name] = eq.make_trajectory(
+                self.reference_traj_length
+            )[self.reference_traj_transient :]
+
+        trajectory = self.trajectory_cache[equation_name]
+
+        # Sample a new initial condition from the attractor
+        return self.rng.choice(trajectory)
 
 
 @dataclass
 class GaussianParamSampler(BaseSampler):
     """Sample gaussian perturbations for system parameters
 
-    NOTE: This is a MWE of a parameter transform. Other examples should follow
-    this dataclass template in order to be pickable e.g. for multiprocessing
+    NOTE:
+        - This is a MWE of a parameter transform
+        - Other parameter transforms should follow this dataclass template
 
     Args:
         random_seed: for random sampling
@@ -67,7 +84,9 @@ class GaussianParamSampler(BaseSampler):
 
     scale: float = 1e-2
 
-    def __call__(self, name: str, param: Array) -> Array:
+    def __call__(
+        self, name: str, param: Array, equation_name: Optional[str] = None
+    ) -> Array:
         size = None if np.isscalar(param) else param.shape
 
         # scale each parameter relatively
