@@ -114,11 +114,10 @@ These additional optional dependencies are needed to reproduce some portions of 
 TODO:
 
 + ultra-fast function to reestimate quantities of interest with functionality to write and update the json entries
-+ modernize to pyproject.toml file
-+ move init cond to instance level sampling (follow param transform)
 + attractor init cond sampler (needs to communicate with param sampler)
 + sp stuff
 
++ add multiple init cond support for delay systems
 + UPDATE WEB DOCUMENTATION: https://www.wgilpin.com/dysts/spbuild/html/index.html
 + align max lyapunov exponent with estimated spectrum better
 + Consider switching from numba to JAX for acceleration of integration.

@@ -3,11 +3,11 @@
 import inspect
 import json
 from multiprocessing import Pool
-from os import PathLike
-from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence
+from typing import Any, Callable, Dict, List, Optional, Sequence
 
 import numpy as np
 import numpy.typing as npt
+from tqdm import tqdm
 
 import dysts.flows as dfl
 import dysts.maps as dmp
@@ -137,13 +137,10 @@ def make_trajectory_ensemble(
 
     """
 
-    if subset is None:
-        sys_class = kwargs.pop("sys_class", "continuous")
-        subset = get_attractor_list(sys_class)
+    sys_class = kwargs.pop("sys_class", "continuous")
+    subset = subset or get_attractor_list(sys_class)
 
     if use_tqdm and not use_multiprocessing:
-        from tqdm import tqdm
-
         subset = tqdm(subset)
 
     all_sols = dict()
@@ -199,8 +196,7 @@ def _multiprocessed_compute_trajectory(
 
 def compute_trajectory_statistics(
     n: int,
-    subset: Optional[Iterable[str]] = None,
-    datapath: Optional[PathLike] = None,
+    subset: Optional[Sequence[str]] = None,
     **kwargs,
 ) -> Dict[str, Dict[str, Array]]:
     """Compute mean and std for given trajectory list"""
