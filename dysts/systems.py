@@ -97,13 +97,15 @@ def _compute_trajectory(
     """A helper function for multiprocessing"""
     eq = getattr(dfl, equation_name)()
 
-    if ic_transform is not None:
-        ic_transform.set_rng(rng)
-        eq.transform_ic(ic_transform, equation_name=equation_name)
-
     if param_transform is not None:
         param_transform.set_rng(rng)
         eq.transform_params(param_transform, equation_name=equation_name)
+
+    # the initial condition transform must come after the parameter transform
+    # because suitable initial conditions may depend on the parameters
+    if ic_transform is not None:
+        ic_transform.set_rng(rng)
+        eq.transform_ic(ic_transform, system=eq)
 
     traj = eq.make_trajectory(n, **kwargs)
     return traj

@@ -1,12 +1,12 @@
 """Sampling functions for dysts"""
 
-from dataclasses import dataclass
-from typing import Optional
+from dataclasses import dataclass, field
+from typing import Dict, Optional
 
 import numpy as np
 from numpy.typing import NDArray
 
-import dysts.flows as flows
+from dysts.base import BaseDyn
 
 Array = NDArray[np.float64]
 
@@ -31,7 +31,7 @@ class GaussianInitialConditionSampler(BaseSampler):
 
     scale: float = 1e-4
 
-    def __call__(self, ic: Array, equation_name: Optional[str] = None) -> Array:
+    def __call__(self, ic: Array, system: Optional[BaseDyn] = None) -> Array:
         scaled_cov = np.diag(np.square(ic * self.scale))
         return self.rng.multivariate_normal(mean=ic, cov=scaled_cov)
 
@@ -50,20 +50,18 @@ class OnAttractorInitCondSampler(BaseSampler):
 
     reference_traj_length: int = 4096
     reference_traj_transient: int = 500
+    trajectory_cache: Dict[str, Array] = field(default_factory=dict)
 
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        self.trajectory_cache = {}
-
-    def __call__(self, ic: Array, equation_name: Optional[str] = None) -> Array:
-        if equation_name is not None and equation_name not in self.trajectory_cache:
+    def __call__(self, ic: Array, system: BaseDyn) -> Array:
+        if system.name is None:
+            raise ValueError("System must have a name")
+        if system.name not in self.trajectory_cache:
             # Integrate the system with default parameters
-            eq = getattr(flows, equation_name)()
-            self.trajectory_cache[equation_name] = eq.make_trajectory(
+            self.trajectory_cache[system.name] = system.make_trajectory(
                 self.reference_traj_length
             )[self.reference_traj_transient :]
 
-        trajectory = self.trajectory_cache[equation_name]
+        trajectory = self.trajectory_cache[system.name]
 
         # Sample a new initial condition from the attractor
         return self.rng.choice(trajectory)
@@ -85,10 +83,15 @@ class GaussianParamSampler(BaseSampler):
     scale: float = 1e-2
 
     def __call__(
-        self, name: str, param: Array, equation_name: Optional[str] = None
+        self, name: str, param: Array, system: Optional[BaseDyn] = None
     ) -> Array:
-        size = None if np.isscalar(param) else param.shape
-
         # scale each parameter relatively
-        scale = np.linalg.norm(param) * self.scale
-        return self.rng.normal(loc=param, scale=scale, size=size)
+        shape = 1 if np.isscalar(param) else param.shape
+
+        # avoid shape errors
+        param = np.array(param).flatten()
+        scale = np.abs(param) * self.scale
+        cov = np.diag(np.square(scale))
+        return (
+            self.rng.multivariate_normal(mean=param, cov=cov).reshape(shape).squeeze()
+        )

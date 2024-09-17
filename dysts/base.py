@@ -154,7 +154,6 @@ class BaseDyn:
             return data[self.name]
         except KeyError:
             print(f"No metadata available for {self.name}")
-            # return {"parameters": None}
             return data_default
 
     @staticmethod
