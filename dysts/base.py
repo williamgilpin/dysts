@@ -118,10 +118,9 @@ class BaseDyn:
     def transform_ic(
         self,
         transform_fn: Callable[[np.ndarray], np.ndarray],
-        equation_name: Optional[str] = None,
     ) -> None:
         """Updates the initial condition via a transform function"""
-        self.ic = transform_fn(self.ic, equation_name=equation_name)
+        self.ic = transform_fn(self.ic, system=self)
 
         warnings.warn(
             """Changing the initial condition makes other estimated parameters
@@ -131,12 +130,11 @@ class BaseDyn:
     def transform_params(
         self,
         transform_fn: Callable[[str, np.ndarray], np.ndarray],
-        equation_name: Optional[str] = None,
     ) -> None:
         """Updates the current parameter list via a transform function"""
         self.param_list = list(
             starmap(
-                partial(transform_fn, equation_name=equation_name),
+                partial(transform_fn, system=self),
                 zip(sorted(self.params.keys()), self.param_list),
             )
         )

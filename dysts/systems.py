@@ -99,13 +99,13 @@ def _compute_trajectory(
 
     if param_transform is not None:
         param_transform.set_rng(rng)
-        eq.transform_params(param_transform, system=eq)
+        eq.transform_params(param_transform)
 
     # the initial condition transform must come after the parameter transform
     # because suitable initial conditions may depend on the parameters
     if ic_transform is not None:
         ic_transform.set_rng(rng)
-        eq.transform_ic(ic_transform, system=eq)
+        eq.transform_ic(ic_transform)
 
     traj = eq.make_trajectory(n, **kwargs)
     return traj
