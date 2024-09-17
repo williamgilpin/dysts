@@ -99,7 +99,7 @@ def _compute_trajectory(
 
     if param_transform is not None:
         param_transform.set_rng(rng)
-        eq.transform_params(param_transform, equation_name=equation_name)
+        eq.transform_params(param_transform, system=eq)
 
     # the initial condition transform must come after the parameter transform
     # because suitable initial conditions may depend on the parameters
