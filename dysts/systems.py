@@ -2,10 +2,9 @@
 
 import inspect
 import json
-from dataclasses import dataclass
 from multiprocessing import Pool
 from os import PathLike
-from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Union
+from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence
 
 import numpy as np
 import numpy.typing as npt
@@ -88,18 +87,19 @@ def get_system_data(sys_class: str = "continuous") -> Dict[str, Any]:
 
 
 def _compute_trajectory(
-    equation_name,
-    n,
-    kwargs,
-    init_cond=None,
-    param_transform=None,
+    equation_name: str,
+    n: int,
+    kwargs: Dict[str, Any],
+    ic_transform: Optional[Callable] = None,
+    param_transform: Optional[Callable] = None,
     rng: np.random.Generator = DEFAULT_RNG,
-):
+) -> Array:
     """A helper function for multiprocessing"""
     eq = getattr(dfl, equation_name)()
 
-    if init_cond is not None:
-        eq.ic = init_cond
+    if ic_transform is not None:
+        ic_transform.set_rng(rng)
+        eq.transform_ic(ic_transform)
 
     if param_transform is not None:
         param_transform.set_rng(rng)
@@ -111,9 +111,9 @@ def _compute_trajectory(
 
 def make_trajectory_ensemble(
     n: int,
-    init_conds: Dict[str, Array] = {},
-    use_tqdm: bool = False,
+    use_tqdm: bool = True,
     use_multiprocessing: bool = False,
+    ic_transform: Optional[Callable] = None,
     param_transform: Optional[Callable] = None,
     subset: Optional[Sequence[str]] = None,
     rng: np.random.Generator = DEFAULT_RNG,
@@ -124,9 +124,9 @@ def make_trajectory_ensemble(
 
     Args:
         n (int): The number of timepoints to integrate
-        init_conds (dict): Optional user input initial conditions mapping string system name to array
         use_tqdm (bool): Whether to use a progress bar
         use_multiprocessing (bool): Not yet implemented.
+        ic_transform (callable): function that transforms individual system initial conditions
         param_transform (callable): function that transforms individual system parameters
         subset (list): A list of system names. Defaults to all continuous systems.
             Can also pass in `sys_class` as a kwarg to specify other system classes.
@@ -141,11 +141,6 @@ def make_trajectory_ensemble(
         sys_class = kwargs.pop("sys_class", "continuous")
         subset = get_attractor_list(sys_class)
 
-    if len(init_conds) > 0:
-        assert all(
-            sys in init_conds.keys() for sys in subset
-        ), "given initial conditions must at least contain the subset"
-
     if use_tqdm and not use_multiprocessing:
         from tqdm import tqdm
 
@@ -154,12 +149,12 @@ def make_trajectory_ensemble(
     all_sols = dict()
     if use_multiprocessing:
         all_sols = _multiprocessed_compute_trajectory(
-            rng, n, subset, init_conds, param_transform, **kwargs
+            rng, n, subset, ic_transform, param_transform, **kwargs
         )
     else:
         for equation_name in subset:
             sol = _compute_trajectory(
-                equation_name, n, kwargs, init_conds.get(equation_name), param_transform
+                equation_name, n, kwargs, ic_transform, param_transform
             )
             all_sols[equation_name] = sol
 
@@ -170,7 +165,7 @@ def _multiprocessed_compute_trajectory(
     rng: np.random.Generator,
     n: int,
     subset: Sequence[str],
-    init_conds: Dict[str, Array] = {},
+    ic_transform: Optional[Callable] = None,
     param_transform: Optional[Callable] = None,
     **kwargs,
 ) -> Dict[str, Array]:
@@ -191,7 +186,7 @@ def _multiprocessed_compute_trajectory(
                     equation_name,
                     n,
                     kwargs,
-                    init_conds.get(equation_name),
+                    ic_transform,
                     param_transform,
                     rng,
                 )
@@ -200,95 +195,6 @@ def _multiprocessed_compute_trajectory(
         )
 
     return dict(zip(subset, results))
-
-
-def gaussian_init_cond_sampler(
-    random_seed: Optional[int] = 0,
-    subset: Optional[Iterable] = None,
-    covariances: Optional[Dict[str, Array]] = None,
-    sys_class: str = "continuous",
-) -> Callable:
-    """Sample gaussian perturbations for each initial condition in a given system list
-
-    Args:
-        random_seed: for random sampling
-        subset: A list of system names. Defaults to all systems
-        covariances: A dict of covariance matrices for each system for sampling
-        sys_class: only used when subset is None
-
-    Returns:
-        a function which samples a random perturbation of the init conditions
-    """
-    if subset is None:
-        subset = get_attractor_list(sys_class)
-
-    rng = np.random.default_rng(random_seed)
-    ic_dict = {sys: np.array(getattr(dfl, sys)().ic) for sys in subset}
-
-    if covariances is not None:
-        assert all(
-            cm.ndim == 2 and cm.shape[0] == cm.shape[1] for cm in covariances.values()
-        )
-        assert all(k in subset for k in covariances.keys())
-
-    def _sampler(scale: Union[float, Array] = 1e-4) -> Dict[str, Array]:
-        if covariances is not None:
-            return {
-                sys: rng.multivariate_normal(ic, covariances[sys])
-                for sys, ic in ic_dict.items()
-            }
-        else:
-            return {
-                sys: rng.normal(ic, scale=scale, size=ic.shape)
-                for sys, ic in ic_dict.items()
-            }
-
-    return _sampler
-
-
-def attractor_init_cond_sampler(
-    random_seed: Optional[int] = 0,
-    subset: Optional[Iterable] = None,
-    sys_class: str = "continuous",
-) -> Callable:
-    """Sample points from the attractor of a system"""
-    pass
-
-
-@dataclass
-class BaseParamSampler:
-    """Base class for any sampling-based parameter transformations"""
-
-    random_seed: int = 0
-
-    def __post_init__(self) -> None:
-        self.rng = np.random.default_rng(self.random_seed)
-
-    def set_rng(self, rng: np.random.Generator) -> None:
-        """Required for multiprocessing"""
-        self.rng = rng
-
-
-@dataclass
-class GaussianParamSampler(BaseParamSampler):
-    """Sample gaussian perturbations for system parameters
-
-    NOTE: This is a MWE of a parameter transform. Other examples should follow
-    this dataclass template in order to be pickable e.g. for multiprocessing
-
-    Args:
-        random_seed: for random sampling
-        scale: std (isotropic) of gaussian used for sampling
-    """
-
-    scale: float = 1e-2
-
-    def __call__(self, name: str, param: Array) -> Array:
-        size = None if np.isscalar(param) else param.shape
-
-        # scale each parameter relatively
-        scale = np.linalg.norm(param) * self.scale
-        return self.rng.normal(loc=param, scale=scale, size=size)
 
 
 def compute_trajectory_statistics(

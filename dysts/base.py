@@ -16,7 +16,7 @@ import os
 import warnings
 from dataclasses import dataclass, field
 from itertools import starmap
-from typing import Any, Callable, Dict, Optional
+from typing import Callable, Optional
 
 import pkg_resources
 from numpy.typing import ArrayLike
@@ -29,7 +29,6 @@ except ImportError:
     _has_data = False
 else:
     _has_data = True
-
 
 import numpy as np
 
@@ -99,14 +98,13 @@ class BaseDyn:
 
         self.params = self.data["parameters"]
         self.params.update(entries)
-        # Cast all parameter arrays to numpy
-        for key, value in self.params.items():
-            if not np.isscalar(value):
-                self.params[key] = np.array(value)
+        self.params = {
+            k: v if np.isscalar(v) else np.array(v) for k, v in self.params.items()
+        }
         self.__dict__.update(self.params)
-        self.set_params()
-
-        # Cast initial condition to numpy
+        self.param_list = [
+            getattr(self, param_name) for param_name in sorted(self.params.keys())
+        ]
         ic_val = self.data["initial_conditions"]
         ic_val = np.array(ic_val) if not np.isscalar(ic_val) else np.array([ic_val])
         self.ic = ic_val
@@ -118,21 +116,14 @@ class BaseDyn:
         self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
         self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
 
-    def set_params(self, params: Optional[Dict[str, Any]] = None) -> None:
-        """Updates current parameter list with given parameters"""
-        if params is not None:
-            assert all(
-                key in self.params.keys() for key in params
-            ), "Can only modify existing system parameters, cannot add new ones"
-            self.__dict__.update(params)
-            warnings.warn(
-                """Changing the systems parameters makes all other estimated parameters
-                such as `period`, `maximum_lyapunov_estimated`, `mean`, etc invalid!"""
-            )
+    def transform_ic(self, transform_fn: Callable[[np.ndarray], np.ndarray]) -> None:
+        """Updates the initial condition via a transform function"""
+        self.ic = transform_fn(self.ic)
 
-        self.param_list = [
-            getattr(self, param_name) for param_name in sorted(self.params.keys())
-        ]
+        warnings.warn(
+            """Changing the initial condition makes other estimated parameters
+            such as `period`, `mean`, etc invalid!"""
+        )
 
     def transform_params(
         self, transform_fn: Callable[[str, np.ndarray], np.ndarray]

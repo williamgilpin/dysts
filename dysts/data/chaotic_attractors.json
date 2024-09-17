@@ -3365,10 +3365,7 @@
     "maximum_lyapunov_estimated": 0.0794701998101797,
     "nonautonomous": false,
     "parameters": {
-      "c": 0.0,
-      "mu": 1.0,
-      "tau": 5.1,
-      "x0": 0.0
+      "tau": 5.1
     },
     "period": 14.15628,
     "pesin_entropy": 0.2056760250875861,
@@ -4110,7 +4107,7 @@
       "alpha": 3.24,
       "tau": 13.28
     },
-    "period": 26.57243055290214,
+    "period": 3.57243055290214,
     "pesin_entropy": 0.040600955873224424,
     "unbounded_indices": [],
     "mean": [
