@@ -105,11 +105,6 @@ class BaseDyn:
         self.param_list = [
             getattr(self, param_name) for param_name in sorted(self.params.keys())
         ]
-        self.param_list = [
-            getattr(self, param_name) for param_name in sorted(self.params.keys())
-        ]
-
-        # Cast initial condition to numpy
         ic_val = self.data["initial_conditions"]
         ic_val = np.array(ic_val) if not np.isscalar(ic_val) else np.array([ic_val])
         self.ic = ic_val
