@@ -1,20 +1,19 @@
 import matplotlib.pyplot as plt
 
-from dysts.flows import IkedaDelay, MackeyGlass
+from dysts.flows import *
 
 
 def main():
-    sys = MackeyGlass()
-    sys = IkedaDelay()
+    sys = SprottDelay()
     sol = sys.make_trajectory(
         4096,
-        pts_per_period=32,
+        pts_per_period=64,
         resample=True,
         standardize=True,
         embedding_dim=2,
         kind="cubic",
     )
-    print(sol.shape)
+    print(sol)
 
     plt.plot(*sol.T[:2])
     plt.show()

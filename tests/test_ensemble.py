@@ -7,22 +7,26 @@ from dysts.systems import (
 
 
 def main():
-    sampler = GaussianInitialConditionSampler(random_seed=9999, scale=1e-4)
-    pt = GaussianParamSampler(random_seed=9999, scale=1e-2)
+    sampler = GaussianInitialConditionSampler(random_seed=9999, scale=1e-1)
+    pt = GaussianParamSampler(random_seed=9999, scale=1e-4)
     sols = make_trajectory_ensemble(
-        100,
-        use_multiprocessing=False,
+        4096,
+        resample=True,
+        pts_per_period=64,
+        use_multiprocessing=True,
         use_tqdm=True,
-        init_conds=sampler,
+        ic_transform=sampler,
         param_transform=pt,
         sys_class="delay",
         rng=pt.rng,
+        standardize=True,
+        embedding_dim=2,
     )
-    print(sols)
 
     plt.figure()
     for sys, traj in sols.items():
-        plt.plot(*traj.T, label=sys)
+        plt.plot(traj[:, 0], traj[:, 1], label=sys)
+    plt.legend()
     plt.show()
 
 

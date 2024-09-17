@@ -99,9 +99,12 @@ class BaseDyn:
         self.params = self.data["parameters"]
         self.params.update(entries)
         self.params = {
-            k: v if not np.isscalar(v) else np.array(v) for k, v in self.params.items()
+            k: v if np.isscalar(v) else np.array(v) for k, v in self.params.items()
         }
         self.__dict__.update(self.params)
+        self.param_list = [
+            getattr(self, param_name) for param_name in sorted(self.params.keys())
+        ]
         self.param_list = [
             getattr(self, param_name) for param_name in sorted(self.params.keys())
         ]
@@ -120,9 +123,7 @@ class BaseDyn:
 
     def transform_ic(self, transform_fn: Callable[[np.ndarray], np.ndarray]) -> None:
         """Updates the initial condition via a transform function"""
-        print(self.ic)
         self.ic = transform_fn(self.ic)
-        print(self.ic)
 
         warnings.warn(
             """Changing the initial condition makes other estimated parameters

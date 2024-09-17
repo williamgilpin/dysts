@@ -99,7 +99,7 @@ def _compute_trajectory(
 
     if ic_transform is not None:
         ic_transform.set_rng(rng)
-        eq.ic = ic_transform(eq.ic)
+        eq.transform_ic(ic_transform)
 
     if param_transform is not None:
         param_transform.set_rng(rng)
@@ -111,7 +111,7 @@ def _compute_trajectory(
 
 def make_trajectory_ensemble(
     n: int,
-    use_tqdm: bool = False,
+    use_tqdm: bool = True,
     use_multiprocessing: bool = False,
     ic_transform: Optional[Callable] = None,
     param_transform: Optional[Callable] = None,
