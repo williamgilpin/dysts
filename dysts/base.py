@@ -15,6 +15,7 @@ import json
 import os
 import warnings
 from dataclasses import dataclass, field
+from functools import partial
 from itertools import starmap
 from typing import Callable, Optional
 
@@ -102,9 +103,7 @@ class BaseDyn:
             k: v if np.isscalar(v) else np.array(v) for k, v in self.params.items()
         }
         self.__dict__.update(self.params)
-        self.param_list = [
-            getattr(self, param_name) for param_name in sorted(self.params.keys())
-        ]
+        self.param_list = [getattr(self, param) for param in sorted(self.params.keys())]
         ic_val = self.data["initial_conditions"]
         ic_val = np.array(ic_val) if not np.isscalar(ic_val) else np.array([ic_val])
         self.ic = ic_val
@@ -116,9 +115,12 @@ class BaseDyn:
         self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
         self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
 
-    def transform_ic(self, transform_fn: Callable[[np.ndarray], np.ndarray]) -> None:
+    def transform_ic(
+        self,
+        transform_fn: Callable[[np.ndarray], np.ndarray],
+    ) -> None:
         """Updates the initial condition via a transform function"""
-        self.ic = transform_fn(self.ic)
+        self.ic = transform_fn(self.ic, system=self)
 
         warnings.warn(
             """Changing the initial condition makes other estimated parameters
@@ -126,11 +128,15 @@ class BaseDyn:
         )
 
     def transform_params(
-        self, transform_fn: Callable[[str, np.ndarray], np.ndarray]
+        self,
+        transform_fn: Callable[[str, np.ndarray], np.ndarray],
     ) -> None:
         """Updates the current parameter list via a transform function"""
         self.param_list = list(
-            starmap(transform_fn, zip(sorted(self.params.keys()), self.param_list))
+            starmap(
+                partial(transform_fn, system=self),
+                zip(sorted(self.params.keys()), self.param_list),
+            )
         )
 
         warnings.warn(
@@ -146,7 +152,6 @@ class BaseDyn:
             return data[self.name]
         except KeyError:
             print(f"No metadata available for {self.name}")
-            # return {"parameters": None}
             return data_default
 
     @staticmethod
