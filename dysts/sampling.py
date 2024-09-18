@@ -1,7 +1,7 @@
 """Sampling functions for dysts"""
 
 from dataclasses import dataclass, field
-from typing import Dict, Optional, Callable, List
+from typing import Callable, Dict, List, Optional
 
 import numpy as np
 from numpy.typing import NDArray
@@ -32,7 +32,7 @@ class GaussianInitialConditionSampler(BaseSampler):
     """
 
     scale: float = 1e-4
-    verbose: bool = False # for testing purposes
+    verbose: bool = False  # for testing purposes
 
     def __call__(self, ic: Array, system: Optional[BaseDyn] = None) -> Array:
         # Scale the covariance relative to each dimension
@@ -58,7 +58,7 @@ class OnAttractorInitCondSampler(BaseSampler):
           parameters before sampling from the attractor.
         - The sampled initial conditions from this sampler are necessarily
           tied to the attractor defined by the default parameters.
-    
+
     Args:
         reference_traj_length: Length of the reference trajectory to use for sampling ic on attractor.
         reference_traj_transient: Transient length to ignore for the reference trajectory
@@ -69,15 +69,17 @@ class OnAttractorInitCondSampler(BaseSampler):
     reference_traj_length: int = 4096
     reference_traj_transient: int = 500
     trajectory_cache: Dict[str, Array] = field(default_factory=dict)
-    verbose: bool = False # for testing purposes
-    events: Optional[List[Callable]] = None # solve_ivp events
+    verbose: bool = False  # for testing purposes
+    events: Optional[List[Callable]] = None  # solve_ivp events
 
     def __call__(self, ic: Array, system: BaseDyn) -> Array:
         if system.name is None:
             raise ValueError("System must have a name")
-        
+
         # make reference trajectory if not already cached
         if system.name not in self.trajectory_cache:
+            if self.verbose:
+                print(f"Adding {system.name} to trajectory cache...")
             # Integrate the system with default parameters
             reference_traj = system.make_trajectory(
                 self.reference_traj_length,
@@ -85,8 +87,12 @@ class OnAttractorInitCondSampler(BaseSampler):
                 verbose=self.verbose,
             )[self.reference_traj_transient :]
 
-            if reference_traj is None: # if integrate fails, resulting in an incomplete trajectory
-                raise ValueError(f"Failed to integrate the system {system.name} with ic {system.ic} and params {system.params}")
+            if (
+                reference_traj is None
+            ):  # if integrate fails, resulting in an incomplete trajectory
+                raise ValueError(
+                    f"Failed to integrate the system {system.name} with ic {system.ic} and params {system.params}"
+                )
 
             self.trajectory_cache[system.name] = reference_traj
 
@@ -117,7 +123,7 @@ class GaussianParamSampler(BaseSampler):
     """
 
     scale: float = 1e-2
-    verbose: bool = False # for testing purposes 
+    verbose: bool = False  # for testing purposes
 
     def __call__(
         self, name: str, param: Array, system: Optional[BaseDyn] = None
@@ -136,7 +142,7 @@ class GaussianParamSampler(BaseSampler):
         )
         if isinstance(param, (float, int)):
             perturbed_param = float(perturbed_param)
-    
+
         if self.verbose:
             print(f"System: {system.name}")
             print(f"Parameter name: {name}")
