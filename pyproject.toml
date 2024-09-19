@@ -24,7 +24,7 @@ extra = ["sdeint", "scikit-learn"]
 
 # Package data
 [tool.setuptools]
-packages = ["dysts"]
+packages = ["dysts", "dysts.utils"]
 
 [tool.setuptools.package-data]
 "dysts" = ["data/*"]
