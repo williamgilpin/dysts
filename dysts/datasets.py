@@ -21,7 +21,7 @@ else:
     _has_tsfresh = True
     _has_data = True
 
-from .utils import *
+from .utils import pad_axis
 
 
 class TimeSeriesDataset:
@@ -153,7 +153,6 @@ class TimeSeriesDataset:
         Return the values of a time series as a matrix of shape (B, T, D) or (B, T)
         """
         data = self.dataset
-        # all_values = np.vstack([data[item]["values"].T for item in data])
         all_values = np.squeeze(
             np.dstack(
                 [pad_axis(np.array(data[key]["values"]), 10, axis=-1).T for key in data]
@@ -276,4 +275,3 @@ def load_dataset(
         return dataset.to_array(**kwargs)
     else:
         raise ValueError("Return format not recognized.")
-        return None
