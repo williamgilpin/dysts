@@ -8,7 +8,12 @@ libraries.
 
 import numpy as np
 from scipy.spatial.distance import cdist
-from scipy.stats import kendalltau, pearsonr, spearmanr
+from scipy.stats import kendalltau, multivariate_normal, pearsonr, spearmanr
+
+from .utils import has_module
+
+if has_module("sklearn"):
+    from sklearn.feature_selection import mutual_info_regression
 
 
 def dtw(y_true, y_pred):
@@ -98,6 +103,20 @@ def mse(y_true, y_pred):
         float: The MSE
     """
     return np.mean(np.square(y_true - y_pred))
+
+
+def rmse(x, y):
+    """
+    Root Mean Squared Error
+
+    Args:
+        x (np.ndarray): The true values
+        y (np.ndarray): The predicted values
+
+    Returns:
+        float: The RMSE
+    """
+    return np.sqrt(mse(x, y))
 
 
 def mae(y_true, y_pred):
@@ -204,16 +223,6 @@ def mape(y_true, y_pred):
     return 100 * np.mean(np.abs(y_true - y_pred) / y_true)
 
 
-# def mase(y_true, y_pred, y_train=None):
-#     """
-#     Mean Absolute Scaled Error. If the time series are multivariate, the first axis is
-#     assumed to be the time dimension.
-#     """
-#     if y_train is None:
-#         y_train = y_true
-#     return np.mean(np.abs(y_true - y_pred)) / np.mean(np.abs(y_true[1:] - y_train[:-1]))
-
-
 def smape(x, y):
     """Symmetric mean absolute percentage error"""
     assert len(y) == len(x)
@@ -243,7 +252,7 @@ def mase(y, yhat, y_train=None, m=1):
     n, h = len(y_train), len(y)
     assert 0 < m < len(y_train)
     numer = np.sum(np.abs(y - yhat))
-    denom = np.sum(np.abs(y_y_train[m:] - y_train[:-m])) / (n - m)
+    denom = np.sum(np.abs(y_train[m:] - y_train[:-m])) / (n - m)
     mase_val = (1 / h) * (numer / denom)
     return mase_val
 
@@ -337,15 +346,14 @@ def kendall(y_true, y_pred):
         return np.mean(all_vals)
 
 
-from sklearn.feature_selection import mutual_info_regression
-
-
 def mutual_information(y_true, y_pred):
     """
     Mutual Information. Returns dimensionwise mean for multivariate time series of
     shape (T, D). Computes the mutual information separately for each dimension and
     returns the mean.
     """
+    if not has_module("sklearn"):
+        raise ImportError("Sklearn is required for mutual information")
     mi = np.zeros(y_true.shape[1])
     for i in range(y_true.shape[1]):
         mi[i] = mutual_info_regression(
@@ -376,13 +384,6 @@ def nrmse(y_true, y_pred, eps=1e-8, scale=None):
     return np.sqrt(np.mean(vals))  # Flatten along both dimensions
 
 
-def mae(y_true, y_pred):
-    return np.mean(np.abs(y_true - y_pred))
-
-
-rmse = lambda x, y: np.sqrt(mse(x, y))
-
-
 def horizoned_metric(y_true, y_pred, metric, *args, horizon=None, **kwargs):
     """
     Compute a metric over a range of horizons
@@ -405,30 +406,6 @@ def horizoned_metric(y_true, y_pred, metric, *args, horizon=None, **kwargs):
         metric(y_true[: i + 1], y_pred[: i + 1], *args, **kwargs)
         for i in range(horizon)
     ]
-
-
-# def create_gmm(orbit_points, sigma_squared=1.0):
-#     """
-#     Create a Gaussian Mixture Model from orbit points.
-
-#     Args:
-#         orbit_points (np.ndarray): An array containing a time series of orbit points,
-#             with shape (T, N) where T is the number of time steps and N is the
-#             dimensionality.
-#         sigma_squared (float): Variance parameter for the GMM.
-
-#     Returns:
-#         function: Gaussian Mixture Model (GMM) function.
-#     """
-#     T, N = orbit_points.shape
-#     cov_matrix = sigma_squared * np.eye(N)
-
-#     def gmm(x):
-#         return np.mean([multivariate_normal.pdf(x, mean=x_t, cov=cov_matrix) for x_t in orbit_points])
-
-#     return gmm
-
-from scipy.stats import multivariate_normal
 
 
 class GaussianMixture:
@@ -502,18 +479,18 @@ class GaussianMixture:
 
 def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_scale=1.0):
     """
-    Estimate KL divergence between observed and generated orbits using Gaussian Mixture 
+    Estimate KL divergence between observed and generated orbits using Gaussian Mixture
     Models (GMMs).
 
-    References: 
-        Hess, Florian, et al. "Generalized teacher forcing for learning chaotic 
+    References:
+        Hess, Florian, et al. "Generalized teacher forcing for learning chaotic
         dynamics." Proceedings of the 40th International Conference on Machine Learning.
         2023.
 
-        Hershey, John R., and Peder A. Olsen. "Approximating the Kullback Leibler 
-        divergence between Gaussian mixture models." 2007 IEEE International Conference 
+        Hershey, John R., and Peder A. Olsen. "Approximating the Kullback Leibler
+        divergence between Gaussian mixture models." 2007 IEEE International Conference
         on Acoustics, Speech and Signal Processing-ICASSP'07. Vol. 4. IEEE, 2007.
-    
+
     Args:
         observed_orbit (np.ndarray): Observed orbit points, with shape (T, N) where T is
             the number of time steps and N is the dimensionality.
@@ -523,7 +500,7 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_sca
         sigma_squared (float): Variance parameter for the GMMs.
 
     Returns:
-        float: Estimated KL divergence 
+        float: Estimated KL divergence
     """
     if sigma_scale is None:
         sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1) + 1e-8
@@ -539,21 +516,21 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_sca
     # sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1)
     # sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
     # sigma_scale = np.ones_like(sigma_scale)
-    
+
     # Generate Monte Carlo samples from p_hat
     T, N = true_orbit.shape
     # cov_matrix = sigma_squared * np.eye(N)
     # samples = np.array(
-    #     [multivariate_normal.rvs(mean=x_t, cov=s_t * cov_matrix) for x_t, 
+    #     [multivariate_normal.rvs(mean=x_t, cov=s_t * cov_matrix) for x_t,
     # s_t in zip(true_orbit, sigma_scale)]
     # )
     samples = p_hat.sample(n_samples=T)
-    
+
     # Randomly select n_samples from the generated samples
     selected_samples = samples[np.random.choice(T, n_samples, replace=True)]
     log_ratios = np.log(p_hat(selected_samples) / q_hat(selected_samples))
     kl_estimate = np.mean(log_ratios)
-    
+
     return kl_estimate
 
 
@@ -573,15 +550,15 @@ def compute_metrics(y_true, y_pred, standardize=False, verbose=False):
     """
     if standardize:
         scale_true, scale_pred = (
-            np.std(y_true, axis=0, keepdims=1),
-            np.std(y_pred, axis=0, keepdims=1),
+            np.std(y_true, axis=0, keepdims=True),
+            np.std(y_pred, axis=0, keepdims=True),
         )
-        if scale_true == 0:
+        if np.all(scale_true == 0):
             scale_true = 1
-        if scale_pred == 0:
+        if np.all(scale_pred == 0):
             scale_pred = 1
-        y_true = (y_true - np.mean(y_true, axis=0, keepdims=1)) / scale_true
-        y_pred = (y_pred - np.mean(y_pred, axis=0, keepdims=1)) / scale_pred
+        y_true = (y_true - np.mean(y_true, axis=0, keepdims=True)) / scale_true
+        y_pred = (y_pred - np.mean(y_pred, axis=0, keepdims=True)) / scale_pred
 
     metrics = dict()
     metrics["mse"] = mse(y_true, y_pred)

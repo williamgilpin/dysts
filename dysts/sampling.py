@@ -143,7 +143,7 @@ class GaussianParamSampler(BaseSampler):
         if isinstance(param, (float, int)):
             perturbed_param = float(perturbed_param)
 
-        if self.verbose:
+        if self.verbose and system is not None:
             print(f"System: {system.name}")
             print(f"Parameter name: {name}")
             print(f"--> Original parameter: {param}")

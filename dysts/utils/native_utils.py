@@ -41,7 +41,9 @@ def convert_json_to_gzip(fpath, encoding="utf-8", delete_original=False):
         data = json.load(file)
 
     with gzip.open(fpath + ".gz", "wt", encoding=encoding) as file:
-        json.dump(data, file, indent=4)
+        # Wrap the GzipFile in a TextIOWrapper
+        with open(file.name, "wt", encoding=encoding) as text_file:
+            json.dump(data, text_file, indent=4)
 
     if delete_original:
         os.remove(fpath)
@@ -94,15 +96,15 @@ class ComputationHolder:
 
     """
 
-    def __init__(self, func=None, *args, timeout=10, **kwargs):
-        self.sol = None
+    def __init__(self, func, *args, timeout: float = 10, **kwargs):
         self.func = func
         self.args = args
         self.kwargs = kwargs
         self.timeout = timeout
 
         def func_wrapped():
-            self.sol = self.func(*self.args, **self.kwargs)
+            sol = self.func(*self.args, **self.kwargs)
+            setattr(self, "sol", sol)
 
         self.func_wrapped = func_wrapped
 
@@ -111,7 +113,4 @@ class ComputationHolder:
         my_thread.start()
         my_thread.join(self.timeout)  # kill the thread after `timeout` seconds
 
-        if self.sol is None:
-            return None
-        else:
-            return self.sol
+        return getattr(self, "sol", None)

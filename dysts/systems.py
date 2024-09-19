@@ -146,21 +146,21 @@ def make_trajectory_ensemble(
         all_sols (dict): A dictionary containing trajectories for each system
 
     """
-
-    sys_class = kwargs.pop("sys_class", "continuous")
-    exclude = kwargs.pop("exclude", [])
-    subset = subset or get_attractor_list(sys_class, exclude)
+    if subset is None:
+        sys_class = kwargs.pop("sys_class", "continuous")
+        exclude = kwargs.pop("exclude", [])
+        attractors = get_attractor_list(sys_class, exclude)
 
     if use_tqdm and not use_multiprocessing:
-        subset = tqdm(subset)
+        subset = tqdm(attractors or subset, desc="Integrating systems")  # type: ignore
 
     all_sols = dict()
     if use_multiprocessing:
         all_sols = _multiprocessed_compute_trajectory(
-            rng, n, subset, ic_transform, param_transform, **kwargs
+            rng, n, subset or attractors, ic_transform, param_transform, **kwargs
         )
     else:
-        for equation_name in subset:
+        for equation_name in subset or attractors:
             sol = _compute_trajectory(
                 equation_name, n, kwargs, ic_transform, param_transform
             )

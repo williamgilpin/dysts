@@ -7,16 +7,14 @@ Functions that act on DynSys or DynMap objects
 import warnings
 
 import numpy as np
+from scipy.spatial.distance import cdist
+from scipy.stats import linregress
 
-try:
-    import neurokit2  # Used for computing multiscale entropy
+from .flows import DynSys
+from .utils import ComputationHolder, find_significant_frequencies, has_module, jac_fd
 
-    has_neurokit = True
-except:
-    warnings.warn("Neurokit2 must be installed before computing multiscale entropy")
-    has_neurokit = False
-
-from .utils import *
+if has_module("sklearn"):
+    from sklearn.linear_model import RidgeCV
 
 
 def sample_initial_conditions(
@@ -51,7 +49,6 @@ def compute_timestep(
     transient_fraction=0.2,
     num_iters=20,
     pts_per_period=1000,
-    visualize=False,
     return_period=True,
 ):
     """Given a dynamical system object, find the integration timestep based on the largest
@@ -81,12 +78,8 @@ def compute_timestep(
         sol = model.make_trajectory(total_length, standardize=True)[cutoff:]
         all_freqs = list()
         for comp in sol.T:
-            try:
-                all_freqs = find_significant_frequencies(comp, surrogate_method="rs")
-                all_freqs.append(np.percentile(all_freqs, 98))
-                # all_freqs.append(np.max(all_freqs))
-            except:
-                pass
+            freqs, amps = find_significant_frequencies(comp, surrogate_method="rs")
+            all_freqs.append(freqs[np.argmax(np.abs(amps))])
         freq = np.median(all_freqs)
         period = base_freq / freq
         model.dt = model.dt * period
@@ -96,28 +89,19 @@ def compute_timestep(
             print(f"Completed step {i} of {num_iters}")
     dt = model.dt
 
-    if visualize:
-        plt.plot(step_history)
-
     if return_period:
         sol = model.make_trajectory(total_length, standardize=True)[cutoff:]
         all_freqs = list()
         for comp in sol.T:
-            try:
-                freqs, amps = find_significant_frequencies(
-                    comp, surrogate_method="rs", return_amplitudes=True
-                )
-                all_freqs.append(freqs[np.argmax(np.abs(amps))])
-            except:
-                pass
+            freqs, amps = find_significant_frequencies(
+                comp, surrogate_method="rs", return_amplitudes=True
+            )
+            all_freqs.append(freqs[np.argmax(np.abs(amps))])
         freq = np.median(all_freqs)
         period = model.dt * (1 / freq)
         return dt, period
     else:
         return dt
-
-
-from scipy.spatial.distance import cdist
 
 
 def estimate_powerlaw(data0):
@@ -159,7 +143,6 @@ def gp_dim(data, y_data=None, rvals=None, nmax=100):
     """
 
     data = np.asarray(data)
-    # data = embed(data)
 
     ## For self-correlation
     if y_data is None:
@@ -168,19 +151,6 @@ def gp_dim(data, y_data=None, rvals=None, nmax=100):
     if rvals is None:
         std = np.std(data)
         rvals = np.logspace(np.log10(0.1 * std), np.log10(0.5 * std), nmax)
-
-    n = len(data)
-
-    # dists = cdist(data, y_data)
-    # corr_sum = []
-    # for r in rvals:
-    #     corr_sum.append(np.sum(dists < r))
-    # corr_sum = np.array(corr_sum) / (n * (n - 1))
-
-    # dists = cdist(data, y_data)
-    # hist, _ = np.histogram(dists, bins=np.hstack([0, rvals])) # can we skip this and direct fit?
-    # corr_sum = np.cumsum(hist).astype(float)
-    # corr_sum /= n * (n - 1)
 
     dists = cdist(data, y_data)
     rvals = dists.ravel()
@@ -192,30 +162,6 @@ def gp_dim(data, y_data=None, rvals=None, nmax=100):
     rvals = rvals[rvals < np.percentile(rvals, 50)]
 
     return estimate_powerlaw(rvals)
-
-    # dists = cdist(data, y_data)
-    # rvals = np.sort(dists.ravel())
-    # corr_sum = np.arange(len(rvals)).astype(float)
-    # corr_sum /= n * (n - 1)
-    # std = np.std(data)
-    # sel_inds = rvals > 0.1 * std
-    # rvals = rvals[sel_inds]
-    # corr_sum = corr_sum[sel_inds]
-    # sel_inds = rvals < 0.5 * std
-    # rvals = rvals[sel_inds]
-    # corr_sum = corr_sum[sel_inds]
-
-    # ## Drop zeros before regression
-    # sel_inds = corr_sum > 0
-    # rvals = rvals[sel_inds]
-    # corr_sum = corr_sum[sel_inds]
-
-    # # poly = np.polyfit(np.log(rvals), np.log(corr_sum), 1)
-    # # return poly[0]
-
-    # power_law = lambda x, a, b: a * (x ** b)
-    # fit_vals = curve_fit(power_law, rvals, corr_sum)
-    # return fit_vals[0][1]
 
 
 def corr_gpdim(traj1, traj2, register=False, standardize=False, **kwargs):
@@ -241,6 +187,8 @@ def corr_gpdim(traj1, traj2, register=False, standardize=False, **kwargs):
         float: The cross-correlation between the two time series
     """
     if register:
+        if not has_module("sklearn"):
+            raise ImportError("Sklearn is required for registration")
         model = RidgeCV()
         model.fit(traj1, traj2)
         traj1 = model.predict(traj1)
@@ -252,9 +200,6 @@ def corr_gpdim(traj1, traj2, register=False, standardize=False, **kwargs):
     return gp_dim(traj1, traj2, **kwargs) / np.sqrt(
         gp_dim(traj1, **kwargs) * gp_dim(traj2, **kwargs)
     )
-
-
-from sklearn.linear_model import RidgeCV
 
 
 def gpdistance(traj1, traj2, standardize=True, register=False, **kwargs):
@@ -373,9 +318,6 @@ def find_lyapunov_exponents(
     return np.sort(final_lyap)[::-1]
 
 
-from scipy.stats import linregress
-
-
 def calculate_lyapunov_exponent(traj1, traj2, dt=1.0):
     """
     Calculate the lyapunov exponent of two multidimensional trajectories using
@@ -393,18 +335,18 @@ def calculate_lyapunov_exponent(traj1, traj2, dt=1.0):
     separation = np.linalg.norm(traj1 - traj2, axis=1)
     log_separation = np.log(separation)
     time_vals = np.arange(log_separation.shape[0])
-    slope, intercept, r_value, p_value, std_err = linregress(time_vals, log_separation)
-    lyap = slope / dt
+    result = linregress(time_vals, log_separation)
+    lyap = result.slope / dt  # type: ignore
     return lyap
 
 
 def lyapunov_exponent_naive(
-    eq,
-    rtol=1e-3,
-    atol=1e-10,
-    n_samples=1000,
-    traj_length=5000,
-    max_walltime=None,
+    eq: DynSys,
+    max_walltime: float,
+    rtol: float = 1e-3,
+    atol: float = 1e-10,
+    n_samples: int = 1000,
+    traj_length: int = 5000,
     **kwargs,
 ):
     """
@@ -456,12 +398,14 @@ def lyapunov_exponent_naive(
             return_times=True,
             **kwargs,
         ).run()
-        if out is None:
-            continue
-        if np.sum(np.isnan(out[1])) > 0:
+        if out is None or np.sum(np.isnan(out[1])) > 0:
             continue
         else:
-            tvals, traj1 = out
+            # Ensure out is a tuple with at least two elements
+            if isinstance(out, tuple) and len(out) >= 2:
+                tvals, traj1, *_ = out  # Unpack only the first two elements
+            else:
+                continue  # Skip if out is not valid
 
         np.random.seed(ind)
         eq.random_state = ind
@@ -487,7 +431,9 @@ def lyapunov_exponent_naive(
         all_cutoffs.append(cutoff_index)
         traj1 = traj1[:cutoff_index]
         traj2 = traj2[:cutoff_index]
-        lyap = calculate_lyapunov_exponent(traj1, traj2, dt=np.median(np.diff(tvals)))
+        lyap = calculate_lyapunov_exponent(
+            traj1, traj2, dt=float(np.median(np.diff(tvals)))
+        )  # Convert to float
         all_lyap.append(lyap)
 
     ## Return None if no trajectories were successful
@@ -526,42 +472,6 @@ def kaplan_yorke_dimension(spectrum0):
     dky = 1 + j + cspec[j] / np.abs(spectrum[j + 1])
 
     return dky
-
-
-def mse_mv(traj):
-    """
-    Generate an estimate of the multivariate multiscale entropy. The current version
-    computes the entropy separately for each channel and then averages. It therefore
-    represents an upper-bound on the true multivariate multiscale entropy
-
-    Args:
-        traj (ndarray): a trajectory of shape (n_timesteps, n_channels)
-
-    Returns:
-        mmse (float): the multivariate multiscale entropy
-
-    TODO:
-        Implement algorithm from Ahmed and Mandic PRE 2011
-    """
-
-    if not has_neurokit:
-        raise Exception(
-            "NeuroKit not installed; multiscale entropy cannot be computed."
-        )
-
-    # mmse_opts = {"composite": True, "refined": False, "fuzzy": True}
-    mmse_opts = {"composite": True, "fuzzy": True}
-    if len(traj.shape) == 1:
-        mmse = neurokit2.entropy_multiscale(sol, dimension=2, **mmse_opts)[0]
-        return mmse
-
-    traj = standardize_ts(traj)
-    all_mse = list()
-    for sol_coord in traj.T:
-        all_mse.append(
-            neurokit2.entropy_multiscale(sol_coord, dimension=2, **mmse_opts)[0]
-        )
-    return np.median(all_mse)
 
 
 def get_train_test(eq, n_train=1000, n_test=200, standardize=True, **kwargs):

@@ -114,8 +114,7 @@ class BaseDyn:
         )
 
     def transform_params(
-        self,
-        transform_fn: Callable[[str, np.ndarray], np.ndarray],
+        self, transform_fn: Callable[[str, np.ndarray], np.ndarray]
     ) -> None:
         """Updates the current parameter list via a transform function"""
         self.param_list = list(
