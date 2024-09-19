@@ -1,10 +1,20 @@
 """Native python utilities"""
 
 import gzip
+import importlib
 import json
 import os
 import threading
 import warnings
+
+
+def has_module(module_name: str) -> bool:
+    """Check if a module is installed"""
+    try:
+        importlib.import_module(module_name)
+        return True
+    except ImportError:
+        return False
 
 
 def convert_json_to_gzip(fpath, encoding="utf-8", delete_original=False):

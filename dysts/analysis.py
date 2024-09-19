@@ -467,7 +467,6 @@ def lyapunov_exponent_naive(
         eq.random_state = ind
         eq.ic = ic
         eq.ic *= 1 + eps * (np.random.random(eq.ic.shape) - 0.5)
-        # traj2 = eq.sample(traj_length, resample=True, **kwargs)
         traj2 = ComputationHolder(
             eq.make_trajectory,
             traj_length,

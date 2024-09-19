@@ -12,38 +12,24 @@ Requirements:
 
 import gzip
 import json
-import os
 import warnings
 from dataclasses import dataclass, field
 from functools import partial
 from itertools import starmap
 from typing import Callable, Optional
 
+import numpy as np
 import pkg_resources
 from numpy.typing import ArrayLike
 from scipy.interpolate import interp1d
 
-## Check for optional datasets
-try:
-    from dysts_data.dataloader import get_datapath
-except ImportError:
-    _has_data = False
-else:
-    _has_data = True
+from dysts.utils import ddeint, has_module, integrate_dyn, standardize_ts
 
-import numpy as np
-
-from dysts.utils import ddeint, integrate_dyn, standardize_ts
-
-try:
+if has_module("numba"):
     from numba import njit
-except ModuleNotFoundError:
+else:
     warnings.warn("Numba not installed. Falling back to no JIT compilation.")
-    import numpy as np
-
-    def njit(func):
-        return func
-
+    njit = lambda func: func
 
 data_default = {
     "bifurcation_parameter": None,
@@ -169,14 +155,7 @@ class BaseDyn:
         """Bound a trajectory within a periodic domain"""
         return np.mod(traj, 2 * np.pi)
 
-    def load_trajectory(
-        self,
-        subsets="train",
-        granularity="fine",
-        return_times=False,
-        standardize=False,
-        noise=False,
-    ):
+    def load_trajectory(self, data_path: str, return_times=False, standardize=False):
         """
         Load a precomputed trajectory for the dynamical system
 
@@ -193,23 +172,6 @@ class BaseDyn:
             tpts, sol (ndarray): T x 1 timepoint array, and T x D trajectory
 
         """
-        period = 12
-        granval = {"coarse": 15, "fine": 100}[granularity]
-        dataset_name = subsets.split("_")[0]
-        data_path = f"{dataset_name}_multivariate__pts_per_period_{granval}__periods_{period}.json.gz"
-        if noise:
-            name_parts = list(os.path.splitext(data_path))
-            data_path = "".join(name_parts[:-1] + ["_noise"] + [name_parts[-1]])
-
-        if not _has_data:
-            warnings.warn(
-                "Data module not found. To use precomputed datasets, "
-                + "please install the external data repository "
-                + "\npip install git+https://github.com/williamgilpin/dysts_data"
-            )
-
-        base_path = get_datapath()
-        data_path = os.path.join(base_path, data_path)
 
         with gzip.open(data_path, "rt", encoding="utf-8") as file:
             dataset = json.load(file)
@@ -234,10 +196,6 @@ class BaseDyn:
     def make_trajectory(self, *args, **kwargs):
         """Make a trajectory for the dynamical system"""
         raise NotImplementedError
-
-    def sample(self, *args, **kwargs):
-        """Sample a trajectory for the dynamical system via numerical integration"""
-        return self.make_trajectory(*args, **kwargs)
 
 
 class DynSys(BaseDyn):

@@ -1,5 +1,5 @@
 """
-Metrics for comparing two time series. These metrics are included to faciliate 
+Metrics for comparing two time series. These metrics are included to faciliate
 benchmarking of the algorithms in this package while reducing dependencies.
 
 For more exhaustive sets of metrics, use the external `tslearn`, `darts`, or `sktime`
@@ -7,12 +7,8 @@ libraries.
 """
 
 import numpy as np
-
-from scipy.stats import spearmanr, pearsonr, kendalltau
-
 from scipy.spatial.distance import cdist
-from scipy.sparse import csr_matrix
-from scipy.sparse.csgraph import shortest_path
+from scipy.stats import kendalltau, pearsonr, spearmanr
 
 
 def dtw(y_true, y_pred):
@@ -51,7 +47,7 @@ def dtw(y_true, y_pred):
     # compute cost matrix
     for i in range(1, n + 1):
         for j in range(1, m + 1):
-            D[i, j] = cdist([y_true[i - 1]], [y_pred[j - 1]], metric='euclidean')
+            D[i, j] = cdist([y_true[i - 1]], [y_pred[j - 1]], metric="euclidean")
             D[i, j] += min(D[i - 1, j], D[i, j - 1], D[i - 1, j - 1])
 
     # compute DTW
@@ -75,6 +71,7 @@ def dtw(y_true, y_pred):
 
     return cost, D, p, q
 
+
 def wape(y_true, y_pred):
     """
     Weighted Absolute Percentage Error
@@ -87,6 +84,7 @@ def wape(y_true, y_pred):
         float: The WAPE
     """
     return 100 * np.sum(np.abs(y_true - y_pred)) / np.sum(np.abs(y_true))
+
 
 def mse(y_true, y_pred):
     """
@@ -101,6 +99,7 @@ def mse(y_true, y_pred):
     """
     return np.mean(np.square(y_true - y_pred))
 
+
 def mae(y_true, y_pred):
     """
     Mean Absolute Error
@@ -114,9 +113,10 @@ def mae(y_true, y_pred):
     """
     return np.mean(np.abs(y_true - y_pred))
 
+
 def coefficient_of_variation(y_true, y_pred):
     """
-    Coefficient of Variation of the root mean squared error relative to the mean 
+    Coefficient of Variation of the root mean squared error relative to the mean
     of the true values
 
     Args:
@@ -127,6 +127,7 @@ def coefficient_of_variation(y_true, y_pred):
         float: The Coefficient of Variation
     """
     return 100 * np.std(y_true - y_pred) / np.mean(y_true)
+
 
 def marre(y_true, y_pred):
     """
@@ -141,6 +142,7 @@ def marre(y_true, y_pred):
     """
     return 100 * np.mean(np.abs(y_true - y_pred) / (np.max(y_true) - np.min(y_true)))
 
+
 def ope(y_true, y_pred):
     """
     Optimality Percentage Error
@@ -153,6 +155,7 @@ def ope(y_true, y_pred):
         float: The OPE
     """
     return np.sum(np.abs(y_true - y_pred)) / np.sum(np.abs(y_true - np.mean(y_true)))
+
 
 def rmsle(y_true, y_pred):
     """
@@ -170,6 +173,7 @@ def rmsle(y_true, y_pred):
     y_pred = y_pred - np.min(y_pred, axis=0, keepdims=True) + 1e-8
     return np.sqrt(np.mean(np.square(np.log(y_pred + 1) - np.log(y_true + 1))))
 
+
 def r2_score(y_true, y_pred):
     """
     The R2 Score
@@ -181,7 +185,10 @@ def r2_score(y_true, y_pred):
     Returns:
         float: The R2 Score
     """
-    return 1 - np.sum(np.square(y_true - y_pred)) / np.sum(np.square(y_true - np.mean(y_true)))
+    return 1 - np.sum(np.square(y_true - y_pred)) / np.sum(
+        np.square(y_true - np.mean(y_true))
+    )
+
 
 def mape(y_true, y_pred):
     """
@@ -201,10 +208,11 @@ def mape(y_true, y_pred):
 #     """
 #     Mean Absolute Scaled Error. If the time series are multivariate, the first axis is
 #     assumed to be the time dimension.
-#     """    
+#     """
 #     if y_train is None:
 #         y_train = y_true
 #     return np.mean(np.abs(y_true - y_pred)) / np.mean(np.abs(y_true[1:] - y_train[:-1]))
+
 
 def smape(x, y):
     """Symmetric mean absolute percentage error"""
@@ -212,12 +220,11 @@ def smape(x, y):
     return 100 * np.mean(np.abs(x - y) / (np.abs(x) + np.abs(y))) * 2
 
 
-    
 def mase(y, yhat, y_train=None, m=1):
     """
     The mean absolute scaled error.
 
-    Adapted from tensorflow-probability and 
+    Adapted from tensorflow-probability and
     https://en.wikipedia.org/wiki/Mean_absolute_scaled_error
 
     Args:
@@ -240,35 +247,38 @@ def mase(y, yhat, y_train=None, m=1):
     mase_val = (1 / h) * (numer / denom)
     return mase_val
 
+
 def msis(y, yhat_lower, yhat_upper, y_obs, m, a=0.05):
-  """The mean scaled interval score.
+    """The mean scaled interval score.
 
-  Adapted from tensorflow-probability and
-  https://www.uber.com/blog/m4-forecasting-competition/
+    Adapted from tensorflow-probability and
+    https://www.uber.com/blog/m4-forecasting-competition/
 
-  Args:
-    y (np.ndarray): An array containing the true values.
-    yhat_lower: An array containing the a% quantile of the predicted
-      distribution.
-    yhat_upper: An array containing the (1-a)% quantile of the
-      predicted distribution.
-    y_obs: An array containing the training values.
-    m: The season length.
-    a: A scalar in [0, 1] specifying the quantile window to evaluate.
+    Args:
+      y (np.ndarray): An array containing the true values.
+      yhat_lower: An array containing the a% quantile of the predicted
+        distribution.
+      yhat_upper: An array containing the (1-a)% quantile of the
+        predicted distribution.
+      y_obs: An array containing the training values.
+      m: The season length.
+      a: A scalar in [0, 1] specifying the quantile window to evaluate.
 
-  Returns:
-    The scalar MSIS.
-  """
-  assert len(y) == len(yhat_lower) == len(yhat_upper)
-  n = len(y_obs)
-  h = len(y)
-  numer = np.sum(
-      (yhat_upper - yhat_lower)
-      + (2 / a) * (yhat_lower - y) * (y < yhat_lower)
-      + (2 / a) * (y - yhat_upper) * (yhat_upper < y))
-  denom = np.sum(np.abs(y_obs[m:] - y_obs[:-m])) / (n - m)
-  msis_val =  (1 / h) * (numer / denom)
-  return msis_val
+    Returns:
+      The scalar MSIS.
+    """
+    assert len(y) == len(yhat_lower) == len(yhat_upper)
+    n = len(y_obs)
+    h = len(y)
+    numer = np.sum(
+        (yhat_upper - yhat_lower)
+        + (2 / a) * (yhat_lower - y) * (y < yhat_lower)
+        + (2 / a) * (y - yhat_upper) * (yhat_upper < y)
+    )
+    denom = np.sum(np.abs(y_obs[m:] - y_obs[:-m])) / (n - m)
+    msis_val = (1 / h) * (numer / denom)
+    return msis_val
+
 
 def spearman(y_true, y_pred):
     """
@@ -278,7 +288,7 @@ def spearman(y_true, y_pred):
     y_true, y_pred = np.array(y_true).squeeze(), np.array(y_pred).squeeze()
     if y_true.ndim != y_pred.ndim:
         raise ValueError("y_true and y_pred must have the same number of dimensions")
-    
+
     if y_true.ndim == 1:
         return spearmanr(y_true, y_pred)[0]
 
@@ -288,17 +298,16 @@ def spearman(y_true, y_pred):
             all_vals.append(spearmanr(y_true[:, i], y_pred[:, i])[0])
         return np.mean(all_vals)
 
-    
 
 def pearson(y_true, y_pred):
     """
-    Pearson Correlation. Returns dimensionwise mean for multivariate time series of 
+    Pearson Correlation. Returns dimensionwise mean for multivariate time series of
     shape (T, D)
     """
     y_true, y_pred = np.array(y_true).squeeze(), np.array(y_pred).squeeze()
     if y_true.ndim != y_pred.ndim:
         raise ValueError("y_true and y_pred must have the same number of dimensions")
-    
+
     if y_true.ndim == 1:
         return spearmanr(y_true, y_pred)[0]
 
@@ -308,6 +317,7 @@ def pearson(y_true, y_pred):
             all_vals.append(pearsonr(y_true[:, i], y_pred[:, i])[0])
         return np.mean(all_vals)
 
+
 def kendall(y_true, y_pred):
     """
     Kendall-Tau Correlation. Returns dimensionwise mean for multivariate time series of
@@ -316,7 +326,7 @@ def kendall(y_true, y_pred):
     y_true, y_pred = np.array(y_true).squeeze(), np.array(y_pred).squeeze()
     if y_true.ndim != y_pred.ndim:
         raise ValueError("y_true and y_pred must have the same number of dimensions")
-    
+
     if y_true.ndim == 1:
         return kendalltau(y_true, y_pred)[0]
 
@@ -326,7 +336,10 @@ def kendall(y_true, y_pred):
             all_vals.append(kendalltau(y_true[:, i], y_pred[:, i])[0])
         return np.mean(all_vals)
 
+
 from sklearn.feature_selection import mutual_info_regression
+
+
 def mutual_information(y_true, y_pred):
     """
     Mutual Information. Returns dimensionwise mean for multivariate time series of
@@ -336,10 +349,10 @@ def mutual_information(y_true, y_pred):
     mi = np.zeros(y_true.shape[1])
     for i in range(y_true.shape[1]):
         mi[i] = mutual_info_regression(
-            y_true[:, i].reshape(-1, 1), 
-            y_pred[:, i].ravel()
+            y_true[:, i].reshape(-1, 1), y_pred[:, i].ravel()
         )
     return np.mean(mi)
+
 
 def nrmse(y_true, y_pred, eps=1e-8, scale=None):
     """
@@ -356,16 +369,19 @@ def nrmse(y_true, y_pred, eps=1e-8, scale=None):
         float: NRMSE
     """
     if scale is None:
-        sigma = np.std(y_true, axis=0) # D
+        sigma = np.std(y_true, axis=0)  # D
     else:
         sigma = scale
-    vals = (y_true - y_pred)**2 / (sigma**2 + eps) # T x D
-    return np.sqrt(np.mean(vals)) # Flatten along both dimensions
+    vals = (y_true - y_pred) ** 2 / (sigma**2 + eps)  # T x D
+    return np.sqrt(np.mean(vals))  # Flatten along both dimensions
+
 
 def mae(y_true, y_pred):
     return np.mean(np.abs(y_true - y_pred))
 
+
 rmse = lambda x, y: np.sqrt(mse(x, y))
+
 
 def horizoned_metric(y_true, y_pred, metric, *args, horizon=None, **kwargs):
     """
@@ -376,7 +392,7 @@ def horizoned_metric(y_true, y_pred, metric, *args, horizon=None, **kwargs):
         y_pred (np.ndarray): The predicted values
         metric (callable): The metric function
         *args: Additional arguments to pass to the metric function
-        horizon (int): The maximum horizon to compute the metric over. If None, the 
+        horizon (int): The maximum horizon to compute the metric over. If None, the
             horizon is set to the length of the time series
         **kwargs: Additional keyword arguments to pass to the metric function
 
@@ -385,17 +401,19 @@ def horizoned_metric(y_true, y_pred, metric, *args, horizon=None, **kwargs):
     """
     if horizon is None:
         horizon = len(y_true)
-    return [metric(y_true[:i+1], y_pred[:i+1], *args, **kwargs) for i in range(horizon)]
-
+    return [
+        metric(y_true[: i + 1], y_pred[: i + 1], *args, **kwargs)
+        for i in range(horizon)
+    ]
 
 
 # def create_gmm(orbit_points, sigma_squared=1.0):
 #     """
 #     Create a Gaussian Mixture Model from orbit points.
-    
+
 #     Args:
 #         orbit_points (np.ndarray): An array containing a time series of orbit points,
-#             with shape (T, N) where T is the number of time steps and N is the 
+#             with shape (T, N) where T is the number of time steps and N is the
 #             dimensionality.
 #         sigma_squared (float): Variance parameter for the GMM.
 
@@ -404,13 +422,15 @@ def horizoned_metric(y_true, y_pred, metric, *args, horizon=None, **kwargs):
 #     """
 #     T, N = orbit_points.shape
 #     cov_matrix = sigma_squared * np.eye(N)
-    
+
 #     def gmm(x):
 #         return np.mean([multivariate_normal.pdf(x, mean=x_t, cov=cov_matrix) for x_t in orbit_points])
-    
+
 #     return gmm
 
 from scipy.stats import multivariate_normal
+
+
 class GaussianMixture:
     """
     A Gaussian Mixture Model class.
@@ -427,7 +447,7 @@ class GaussianMixture:
         n_components (int): The number of components in the GMM.
         gaussians (list): A list of multivariate_normal objects, one for each component
     """
-    
+
     def __init__(self, means, covariances, weights=None):
         self.means = np.array(means)
         self.covariances = np.array(covariances)
@@ -436,23 +456,27 @@ class GaussianMixture:
         ## If covariances is a single scaler, assume isotropic covariance constant
         ## Otherwise if covariances is a list of scalars, assume isotropic covariance
         if isinstance(covariances, (int, float)):
-            self.covariances = np.ones(self.n_components)[:, None, None] * np.eye(self.ndim)[None, ...]
+            self.covariances = (
+                np.ones(self.n_components)[:, None, None] * np.eye(self.ndim)[None, ...]
+            )
         elif isinstance(covariances[0], (int, float)):
-            self.covariances = self.covariances[:, None, None] * np.eye(self.ndim)[None, ...]
+            self.covariances = (
+                self.covariances[:, None, None] * np.eye(self.ndim)[None, ...]
+            )
         else:
             self.covariances = np.array(covariances)
-        
+
         # If no weights are provided, assume uniform weights
         if weights is None:
             self.weights = np.ones(self.n_components) / self.n_components
         else:
             self.weights = np.array(weights)
-        
+
         self.gaussians = [
             multivariate_normal(mean=mean, cov=cov)
             for mean, cov in zip(self.means, self.covariances)
         ]
-    
+
     def __call__(self, x):
         # Vectorized computation of the Gaussian mixture probability density
         x = np.array(x)
@@ -469,27 +493,29 @@ class GaussianMixture:
         Returns:
             samples (np.ndarray): An array of shape (n_samples, ndim) containing the drawn samples.
         """
-        component_indices = np.random.choice(self.n_components, size=n_samples, p=self.weights)
-        samples = np.array([
-            self.gaussians[i].rvs() for i in component_indices
-        ])
+        component_indices = np.random.choice(
+            self.n_components, size=n_samples, p=self.weights
+        )
+        samples = np.array([self.gaussians[i].rvs() for i in component_indices])
         return samples
 
 
-def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_squared=1.0):
+def estimate_kl_divergence(
+    true_orbit, generated_orbit, n_samples=300, sigma_squared=1.0
+):
     """
-    Estimate KL divergence between observed and generated orbits using Gaussian Mixture 
+    Estimate KL divergence between observed and generated orbits using Gaussian Mixture
     Models (GMMs).
 
-    References: 
-        Hess, Florian, et al. "Generalized teacher forcing for learning chaotic 
+    References:
+        Hess, Florian, et al. "Generalized teacher forcing for learning chaotic
         dynamics." Proceedings of the 40th International Conference on Machine Learning.
         2023.
 
-        Hershey, John R., and Peder A. Olsen. "Approximating the Kullback Leibler 
-        divergence between Gaussian mixture models." 2007 IEEE International Conference 
+        Hershey, John R., and Peder A. Olsen. "Approximating the Kullback Leibler
+        divergence between Gaussian mixture models." 2007 IEEE International Conference
         on Acoustics, Speech and Signal Processing-ICASSP'07. Vol. 4. IEEE, 2007.
-    
+
     Args:
         observed_orbit (np.ndarray): Observed orbit points, with shape (T, N) where T is
             the number of time steps and N is the dimensionality.
@@ -499,7 +525,7 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_squ
         sigma_squared (float): Variance parameter for the GMMs.
 
     Returns:
-        float: Estimated KL divergence 
+        float: Estimated KL divergence
     """
     sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1)
     sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
@@ -512,20 +538,16 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_squ
     # sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1)
     # sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
     # sigma_scale = np.ones_like(sigma_scale)
-    
+
     # Generate Monte Carlo samples from p_hat
     T, N = true_orbit.shape
-    # cov_matrix = sigma_squared * np.eye(N)
-    # samples = np.array(
-    #     [multivariate_normal.rvs(mean=x_t, cov=s_t * cov_matrix) for x_t, s_t in zip(true_orbit, sigma_scale)]
-    # )
     samples = p_hat.sample(n_samples=T)
-    
+
     # Randomly select n_samples from the generated samples
     selected_samples = samples[np.random.choice(T, n_samples, replace=True)]
     log_ratios = np.log(p_hat(selected_samples) / q_hat(selected_samples))
     kl_estimate = np.mean(log_ratios)
-    
+
     return kl_estimate
 
 
@@ -536,7 +558,7 @@ def compute_metrics(y_true, y_pred, standardize=False, verbose=False):
     Args:
         y_true (np.ndarray): The true values
         y_pred (np.ndarray): The predicted values
-        standardize (bool): Whether to standardize the time series before computing the 
+        standardize (bool): Whether to standardize the time series before computing the
             metrics. Default is False.
         verbose (bool): Whether to print the computed metrics. Default is False.
 
@@ -544,7 +566,10 @@ def compute_metrics(y_true, y_pred, standardize=False, verbose=False):
         dict: A dictionary containing the computed metrics
     """
     if standardize:
-        scale_true, scale_pred = np.std(y_true, axis=0, keepdims=1), np.std(y_pred, axis=0, keepdims=1)
+        scale_true, scale_pred = (
+            np.std(y_true, axis=0, keepdims=1),
+            np.std(y_pred, axis=0, keepdims=1),
+        )
         if scale_true == 0:
             scale_true = 1
         if scale_pred == 0:
