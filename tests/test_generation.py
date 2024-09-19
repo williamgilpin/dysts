@@ -2,28 +2,30 @@
 Test the models and regularizer
 > python test_generation.py
 """
+
 #!/usr/bin/env python
 import os
+import sys
 import unittest
 
 import numpy as np
 
-WORKING_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_PATH = os.path.join(WORKING_DIR, 'tests', 'test_data')
-print(WORKING_DIR)
-
-import sys
-
-sys.path.insert(1, os.path.join(WORKING_DIR, "dysts"))
 import dysts.flows as dfl
 from dysts.flows import Lorenz
 from dysts.systems import get_attractor_list, make_trajectory_ensemble
+
+WORKING_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_PATH = os.path.join(WORKING_DIR, "tests", "test_data")
+print(WORKING_DIR)
+
+sys.path.insert(1, os.path.join(WORKING_DIR, "dysts"))
 
 
 class TestModels(unittest.TestCase):
     """
     Tests integration and models
     """
+
     def test_trajectory(self):
         """
         Test generating a trajectory
@@ -54,7 +56,6 @@ class TestModels(unittest.TestCase):
     #     diff_names = np.array(list(all_trajectories.keys()))[np.sum(np.abs(xvals - xvals_reference), axis=1) > 0]
     #     assert np.allclose(xvals, xvals_reference), "Generated trajectories do not match reference values for system {}".format(diff_names)
 
-
     def test_precomputed(self):
         """
         Test loading a precomputed time series for a single system
@@ -65,10 +66,11 @@ class TestModels(unittest.TestCase):
             noise=False,
             granularity="fine",
             standardize=True,
-            return_times=True
+            return_times=True,
         )
         assert sol.shape == (1200, 3), "Generated time series has the wrong shape"
         assert tpts.shape == (1200,), "Time indices have the wrong shape"
+
 
 class TestMakeTrajectoryEnsemble(unittest.TestCase):
     def test_ensemble(self):
@@ -77,10 +79,11 @@ class TestMakeTrajectoryEnsemble(unittest.TestCase):
         subset = ["Lorenz", "Rossler"]
         random_state = 42
         kwargs = {"method": "Radau"}
-        ensemble = make_trajectory_ensemble(n, subset=subset, random_state=random_state, **kwargs)
+        ensemble = make_trajectory_ensemble(
+            n, subset=subset, random_state=random_state, **kwargs
+        )
         self.assertIsInstance(ensemble, dict)
         self.assertEqual(set(ensemble.keys()), set(subset))
-
 
         # Test that the function returns the correct number of timepoints
         for key in ensemble:
@@ -101,13 +104,19 @@ class TestMakeTrajectoryEnsemble(unittest.TestCase):
         random_state = 42
         kwargs = {"method": "Radau"}
         with self.assertWarns(UserWarning):
-            make_trajectory_ensemble(n, subset=subset, use_multiprocessing=True, random_state=random_state, **kwargs)
+            make_trajectory_ensemble(
+                n,
+                subset=subset,
+                use_multiprocessing=True,
+                random_state=random_state,
+                **kwargs,
+            )
 
 
 class TestJacobian(unittest.TestCase):
     """Perform a grad check to ensure that the Jacobian is implemented correctly"""
-    def test_all_jacobians(self):
 
+    def test_all_jacobians(self):
         eps = 1e-8
 
         equation_names = get_attractor_list()
@@ -123,10 +132,15 @@ class TestJacobian(unittest.TestCase):
             for i in range(d):
                 ei = np.zeros(d)
                 ei[i] = 1
-                jac_fd[:, i] = (np.array(eq.rhs(eq.ic + eps*ei, 0)) - np.array(eq.rhs(eq.ic - eps*ei, 0)))/(2 * eps)
+                jac_fd[:, i] = (
+                    np.array(eq.rhs(eq.ic + eps * ei, 0))
+                    - np.array(eq.rhs(eq.ic - eps * ei, 0))
+                ) / (2 * eps)
 
-            self.assertTrue(np.allclose(jac_analytic, jac_fd, atol=1e-5), f"Jacobian for {name} is incorrect")
-
+            self.assertTrue(
+                np.allclose(jac_analytic, jac_fd, atol=1e-5),
+                f"Jacobian for {name} is incorrect",
+            )
 
 
 if __name__ == "__main__":

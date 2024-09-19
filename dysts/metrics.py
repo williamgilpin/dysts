@@ -507,6 +507,12 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_sca
     Returns:
         float: Estimated KL divergence
     """
+    # if the orbits are 1D, add a dimension to make them 2D
+    if true_orbit.ndim == 1:
+        true_orbit = true_orbit.reshape(-1, 1)
+    if generated_orbit.ndim == 1:
+        generated_orbit = generated_orbit.reshape(-1, 1)
+
     if sigma_scale is None:
         sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1) + 1e-8
         sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
@@ -524,6 +530,7 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_sca
 
     # Generate Monte Carlo samples from p_hat
     T, N = true_orbit.shape
+
     # cov_matrix = sigma_squared * np.eye(N)
     # samples = np.array(
     #     [multivariate_normal.rvs(mean=x_t, cov=s_t * cov_matrix) for x_t,

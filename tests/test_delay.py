@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 
-from dysts.flows import *
+import dysts.flows as dfl
 
 
 def main():
-    sys = SprottDelay()
-    sol = sys.make_trajectory(
+    dyst_name = "SprottDelay"
+    system = getattr(dfl, dyst_name)()
+    sol = system.make_trajectory(
         4096,
         pts_per_period=64,
         resample=True,

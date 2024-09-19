@@ -84,7 +84,6 @@ class OnAttractorInitCondSampler(BaseSampler):
             reference_traj = system.make_trajectory(
                 self.reference_traj_length,
                 events=self.events,
-                verbose=self.verbose,
             )[self.reference_traj_transient :]
 
             if (
@@ -143,8 +142,9 @@ class GaussianParamSampler(BaseSampler):
         if isinstance(param, (float, int)):
             perturbed_param = float(perturbed_param)
 
-        if self.verbose and system is not None:
-            print(f"System: {system.name}")
+        if self.verbose:
+            if system is not None:
+                print(f"System: {system.name}")
             print(f"Parameter name: {name}")
             print(f"--> Original parameter: {param}")
             print(f"--> Perturbed parameter: {perturbed_param}")

@@ -21,10 +21,12 @@ def test_trajectory():
 def main():
     sys = dfl.Lorenz()
     sol = sys.make_trajectory(1024, pts_per_period=1024 // 10, standardize=True)
+    if sol is None:
+        raise Exception("Failed to generate trajectory")
 
     fig = plt.figure()
     ax = fig.add_subplot(111, projection="3d")
-    ax.plot(*sol.T[:3])
+    ax.plot(*sol.T[:3])  # type: ignore
     plt.show()
 
 
