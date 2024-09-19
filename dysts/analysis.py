@@ -11,7 +11,14 @@ from scipy.spatial.distance import cdist
 from scipy.stats import linregress
 
 from .flows import DynSys
-from .utils import ComputationHolder, find_significant_frequencies, has_module, jac_fd
+from .utils import (
+    ComputationHolder,
+    find_significant_frequencies,
+    has_module,
+    jac_fd,
+    logarithmic_n,
+    rowwise_euclidean,
+)
 
 if has_module("sklearn"):
     from sklearn.linear_model import RidgeCV
@@ -274,7 +281,6 @@ def find_lyapunov_exponents(
 
     u = np.identity(d)
     all_lyap = list()
-    # for i in range(traj_length):
     for i, (t, X) in enumerate(zip(tpts, traj)):
         X = traj[i]
 
@@ -292,11 +298,7 @@ def find_lyapunov_exponents(
             dhdy = jac_fd(y2h, X0)
             dydh = np.linalg.inv(dhdy)  # dy/dh
             ## Alternate version if good second-order fd is ever available
-            # dydh = jac_fd(y2h, X0, m=2, eps=1e-2) @ rhsy(X0) + jac_fd(y2h, y0) @ jac_fd(rhsy, X0))
             jacval = dhdy @ jacval @ dydh
-
-        ## Forward Euler update
-        # u_n = np.matmul(np.eye(d) + jacval * dt, u)
 
         ## Backward Euler update
         if i < 1:
@@ -340,7 +342,7 @@ def calculate_lyapunov_exponent(traj1, traj2, dt=1.0):
     return lyap
 
 
-def lyapunov_exponent_naive(
+def max_lyapunov_exponent(
     eq: DynSys,
     max_walltime: float,
     rtol: float = 1e-3,
@@ -474,42 +476,300 @@ def kaplan_yorke_dimension(spectrum0):
     return dky
 
 
-def get_train_test(eq, n_train=1000, n_test=200, standardize=True, **kwargs):
+def max_lyapunov_exponent_rosenstein(
+    data,
+    lag=None,
+    min_tsep=None,
+    tau=1,
+    trajectory_len=20,
+    fit="RANSAC",
+    fit_offset=0,
+):
     """
-    Generate train and test trajectories for a given dynamical system
+    Adapted from the nolds Python library:
+    https://github.com/CSchoel/nolds/blob/master/nolds/measures.py
+
+
+    Estimates the largest Lyapunov exponent using the algorithm of Rosenstein
+    et al. [lr_1]_.
+    Explanation of Lyapunov exponents:
+        See lyap_e.
+    Explanation of the algorithm:
+        The algorithm of Rosenstein et al. is only able to recover the largest
+        Lyapunov exponent, but behaves rather robust to parameter choices.
+        The idea for the algorithm relates closely to the definition of Lyapunov
+        exponents. First, the dynamics of the data are reconstructed using a delay
+        embedding method with a lag, such that each value x_i of the data is mapped
+        to the vector
+        X_i = [x_i, x_(i+lag), x_(i+2*lag), ..., x_(i+(emb_dim-1) * lag)]
+        For each such vector X_i, we find the closest neighbor X_j using the
+        euclidean distance. We know that as we follow the trajectories from X_i and
+        X_j in time in a chaotic system the distances between X_(i+k) and X_(j+k)
+        denoted as d_i(k) will increase according to a power law
+        d_i(k) = c * e^(lambda * k) where lambda is a good approximation of the
+        highest Lyapunov exponent, because the exponential expansion along the axis
+        associated with this exponent will quickly dominate the expansion or
+        contraction along other axes.
+        To calculate lambda, we look at the logarithm of the distance trajectory,
+        because log(d_i(k)) = log(c) + lambda * k. This gives a set of lines
+        (one for each index i) whose slope is an approximation of lambda. We
+        therefore extract the mean log trajectory d'(k) by taking the mean of
+        log(d_i(k)) over all orbit vectors X_i. We then fit a straight line to
+        the plot of d'(k) versus k. The slope of the line gives the desired
+        parameter lambda.
+
+    Method for choosing min_tsep:
+        Usually we want to find neighbors between points that are close in phase
+        space but not too close in time, because we want to avoid spurious
+        correlations between the obtained trajectories that originate from temporal
+        dependencies rather than the dynamic properties of the system. Therefore it
+        is critical to find a good value for min_tsep. One rather plausible
+        estimate for this value is to set min_tsep to the mean period of the
+        signal, which can be obtained by calculating the mean frequency using the
+        fast fourier transform. This procedure is used by default if the user sets
+        min_tsep = None.
+
+    Method for choosing lag:
+        Another parameter that can be hard to choose by instinct alone is the lag
+        between individual values in a vector of the embedded orbit. Here,
+        Rosenstein et al. suggest to set the lag to the distance where the
+        autocorrelation function drops below 1 - 1/e times its original (maximal)
+        value. This procedure is used by default if the user sets lag = None.
+
+    References:
+        .. [lr_1] M. T. Rosenstein, J. J. Collins, and C. J. De Luca,
+             "A practical method for calculating largest Lyapunov exponents from
+             small data sets," Physica D: Nonlinear Phenomena, vol. 65, no. 1,
+             pp. 117–134, 1993.
+    Reference Code:
+        .. [lr_a] mirwais, "Largest Lyapunov Exponent with Rosenstein's Algorithm",
+             url: http://www.mathworks.com/matlabcentral/fileexchange/38424-largest-lyapunov-exponent-with-rosenstein-s-algorithm
+        .. [lr_b] Shapour Mohammadi, "LYAPROSEN: MATLAB function to calculate
+             Lyapunov exponent",
+             url: https://ideas.repec.org/c/boc/bocode/t741502.html
 
     Args:
-        eq (dysts.DynSys): a dynamical system object
-        n_train (int): number of points in the training trajectory
-        n_test (int): number of points in the test trajectory
-        standardize (bool): whether to standardize the trajectories
-        **kwargs: additional keyword arguments to pass to make_trajectory
+        data (iterable of float):
+            (one-dimensional) time series
+    Kwargs:
+        emb_dim (int):
+            embedding dimension for delay embedding
+        lag (float):
+            lag for delay embedding
+        min_tsep (float):
+            minimal temporal separation between two "neighbors" (default:
+            find a suitable value by calculating the mean period of the data)
+        tau (float):
+            step size between data points in the time series in seconds
+            (normalization scaling factor for exponents)
+        min_neighbors (int):
+            if lag=None, the search for a suitable lag will be stopped when the
+            number of potential neighbors for a vector drops below min_neighbors
+        trajectory_len (int):
+            the time (in number of data points) to follow the distance
+            trajectories between two neighboring points
+        fit (str):
+            the fitting method to use for the line fit, either 'poly' for normal
+            least squares polynomial fitting or 'RANSAC' for RANSAC-fitting which
+            is more robust to outliers
+       fit_offset (int):
+            neglect the first fit_offset steps when fitting
 
     Returns:
-        (tuple): a tuple containing:
-            (tuple): a tuple containing:
-                (ndarray): the timepoints of the training trajectory
-                (ndarray): the training trajectory
-            (tuple): a tuple containing:
-                (ndarray): the timepoints of the test trajectory
-                (ndarray): the test trajectory
-
+        float:
+            an estimate of the largest Lyapunov exponent (a positive exponent is
+            a strong indicator for chaos)
     """
-    train_ic, test_ic = sample_initial_conditions(eq, 2)
+    data = np.asarray(data, dtype="float32")
+    n = len(data)
+    max_tsep_factor = 0.25
 
-    eq.ic = train_ic
-    tpts_train, sol_train = eq.make_trajectory(
-        n_train, resample=True, return_times=True, **kwargs
-    )
-    eq.ic = test_ic
-    tpts_test, sol_test = eq.make_trajectory(
-        n_test, resample=True, return_times=True, **kwargs
-    )
+    if lag is None or min_tsep is None:
+        f = np.fft.rfft(data, n * 2 - 1)
 
-    if standardize:
-        center = np.mean(sol_train, axis=0)
-        scale = np.std(sol_train, axis=0)
-        sol_train = (sol_train - center) / scale
-        sol_test = (sol_test - center) / scale
+    if min_tsep is None:
+        mf = np.fft.rfftfreq(n * 2 - 1) * np.abs(f)
+        mf = np.mean(mf[1:]) / np.sum(np.abs(f[1:]))
+        min_tsep = int(np.ceil(1.0 / mf))
+        if min_tsep > max_tsep_factor * n:
+            min_tsep = int(max_tsep_factor * n)
+            warnings.warn(
+                f"Signal has very low mean frequency, setting min_tsep = {min_tsep}",
+                RuntimeWarning,
+            )
 
-    return (tpts_train, sol_train), (tpts_test, sol_test)
+    orbit = data
+    m = len(orbit)
+    dists = np.array([rowwise_euclidean(orbit, orbit[i]) for i in range(m)])
+
+    for i in range(m):
+        dists[i, max(0, i - min_tsep) : i + min_tsep + 1] = float("inf")
+
+    ntraj = m - trajectory_len + 1
+    min_traj = min_tsep * 2 + 2
+
+    if ntraj <= 0:
+        raise ValueError(
+            f"Not enough data points. Need {-ntraj + 1} additional data points to follow a complete trajectory."
+        )
+    if ntraj < min_traj:
+        raise ValueError(
+            f"Not enough data points. At least {min_traj} trajectories are required to find a valid neighbor for each orbit vector with min_tsep={min_tsep} but only {ntraj} could be created."
+        )
+
+    nb_idx = np.argmin(dists[:ntraj, :ntraj], axis=1)
+
+    div_traj = np.zeros(trajectory_len, dtype=float)
+    for k in range(trajectory_len):
+        indices = (np.arange(ntraj) + k, nb_idx + k)
+        div_traj_k = dists[indices]
+        nonzero = np.where(div_traj_k != 0)
+        div_traj[k] = (
+            -np.inf if len(nonzero[0]) == 0 else np.mean(np.log(div_traj_k[nonzero]))
+        )
+
+    ks = np.arange(trajectory_len)
+    finite = np.where(np.isfinite(div_traj))
+    ks = ks[finite]
+    div_traj = div_traj[finite]
+
+    if len(ks) < 1:
+        return -np.inf
+
+    poly = np.polyfit(ks[fit_offset:], div_traj[fit_offset:], 1)
+
+    le = poly[0] / tau
+    return le
+
+
+def dfa(
+    data,
+    nvals=None,
+    overlap=True,
+    order=1,
+):
+    """
+    Adapted from the nolds Python library:
+    https://github.com/CSchoel/nolds/blob/master/nolds/measures.py
+
+    Performs a detrended fluctuation analysis (DFA) on the given data
+    Recommendations for parameter settings by Hardstone et al.:
+        * nvals should be equally spaced on a logarithmic scale so that each window
+            scale hase the same weight
+        * min(nvals) < 4 does not make much sense as fitting a polynomial (even if
+            it is only of order 1) to 3 or less data points is very prone.
+        * max(nvals) > len(data) / 10 does not make much sense as we will then have
+            less than 10 windows to calculate the average fluctuation
+        * use overlap=True to obtain more windows and therefore better statistics
+            (at an increased computational cost)
+
+    Explanation of DFA:
+        Detrended fluctuation analysis, much like the Hurst exponent, is used to
+        find long-term statistical dependencies in time series.
+        The idea behind DFA originates from the definition of self-affine
+        processes. A process X is said to be self-affine if the standard deviation
+        of the values within a window of length n changes with the window length
+        factor L in a power law:
+        std(X,L * n) = L^H * std(X, n)
+        where std(X, k) is the standard deviation of the process X calculated over
+        windows of size k. In this equation, H is called the Hurst parameter, which
+        behaves indeed very similar to the Hurst exponent.
+        Like the Hurst exponent, H can be obtained from a time series by
+        calculating std(X,n) for different n and fitting a straight line to the
+        plot of log(std(X,n)) versus log(n).
+        To calculate a single std(X,n), the time series is split into windows of
+        equal length n, so that the ith window of this size has the form
+        W_(n,i) = [x_i, x_(i+1), x_(i+2), ... x_(i+n-1)]
+        The value std(X,n) is then obtained by calculating std(W_(n,i)) for each i
+        and averaging the obtained values over i.
+        The aforementioned definition of self-affinity, however, assumes that the
+        process is    non-stationary (i.e. that the standard deviation changes over
+        time) and it is highly influenced by local and global trends of the time
+        series.
+        To overcome these problems, an estimate alpha of H is calculated by using a
+        "walk" or "signal profile" instead of the raw time series. This walk is
+        obtained by substracting the mean and then taking the cumulative sum of the
+        original time series. The local trends are removed for each window
+        separately by fitting a polynomial p_(n,i) to the window W_(n,i) and then
+        calculating W'_(n,i) = W_(n,i) - p_(n,i) (element-wise substraction).
+        We then calculate std(X,n) as before only using the "detrended" window
+        W'_(n,i) instead of W_(n,i). Instead of H we obtain the parameter alpha
+        from the line fitting.
+        For alpha < 1 the underlying process is stationary and can be modelled as
+        fractional Gaussian noise with H = alpha. This means for alpha = 0.5 we
+        have no correlation or "memory", for 0.5 < alpha < 1 we have a memory with
+        positive correlation and for alpha < 0.5 the correlation is negative.
+        For alpha > 1 the underlying process is non-stationary and can be modeled
+        as fractional Brownian motion with H = alpha - 1.
+
+    References:
+        .. [dfa_1] C.-K. Peng, S. V. Buldyrev, S. Havlin, M. Simons,
+                             H. E. Stanley, and A. L. Goldberger, "Mosaic organization of
+                             DNA nucleotides," Physical Review E, vol. 49, no. 2, 1994.
+        .. [dfa_2] R. Hardstone, S.-S. Poil, G. Schiavone, R. Jansen,
+                             V. V. Nikulin, H. D. Mansvelder, and K. Linkenkaer-Hansen,
+                             "Detrended fluctuation analysis: A scale-free view on neuronal
+                             oscillations," Frontiers in Physiology, vol. 30, 2012.
+
+    Reference code:
+        .. [dfa_a] Peter Jurica, "Introduction to MDFA in Python",
+             url: http://bsp.brain.riken.jp/~juricap/mdfa/mdfaintro.html
+        .. [dfa_b] JE Mietus, "dfa",
+             url: https://www.physionet.org/physiotools/dfa/dfa-1.htm
+        .. [dfa_c] "DFA" function in R package "fractal"
+
+    Args:
+        data (array-like of float):
+            time series
+    Kwargs:
+        nvals (iterable of int):
+            subseries sizes at which to calculate fluctuation
+            (default: logarithmic_n(4, 0.1*len(data), 1.2))
+        overlap (boolean):
+            if True, the windows W_(n,i) will have a 50% overlap,
+            otherwise non-overlapping windows will be used
+        order (int):
+            (polynomial) order of trend to remove
+
+    Returns:
+        float:
+            the estimate alpha for the Hurst parameter (alpha < 1: stationary
+            process similar to fractional Gaussian noise with H = alpha,
+            alpha > 1: non-stationary process similar to fractional Brownian
+            motion with H = alpha - 1)
+    """
+    data = np.asarray(data)
+    total_N = len(data)
+    if nvals is None:
+        nvals = logarithmic_n(4, 0.1 * total_N, 1.2)
+    if len(nvals) < 2:
+        raise ValueError("at least two nvals are needed")
+    if np.min(nvals) < 2:
+        raise ValueError("nvals must be at least two")
+    if np.max(nvals) >= total_N:
+        raise ValueError("nvals cannot be larger than the input size")
+
+    walk = np.cumsum(data - np.mean(data))
+    fluctuations = []
+    for n in nvals:
+        if overlap:
+            d = np.array([walk[i : i + n] for i in range(0, len(walk) - n, n // 2)])
+        else:
+            d = walk[: total_N - (total_N % n)]
+            d = d.reshape((total_N // n, n))
+        x = np.arange(n)
+        tpoly = [np.polyfit(x, d[i], order) for i in range(len(d))]
+        tpoly = np.array(tpoly)
+        trend = np.array([np.polyval(tpoly[i], x) for i in range(len(d))])
+        flucs = np.sqrt(np.sum((d - trend) ** 2, axis=1) / n)
+        f_n = np.sum(flucs) / len(flucs)
+        fluctuations.append(f_n)
+    fluctuations = np.array(fluctuations)
+    nonzero = np.where(fluctuations != 0)
+    nvals = np.array(nvals)[nonzero]
+    fluctuations = fluctuations[nonzero]
+    if len(fluctuations) == 0:
+        poly = [np.nan, np.nan]
+    else:
+        poly = np.polyfit(np.log(nvals), np.log(fluctuations), 1)
+    return poly[0]

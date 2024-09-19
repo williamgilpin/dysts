@@ -132,6 +132,8 @@ def make_trajectory_ensemble(
     """
     Integrate multiple dynamical systems with identical settings
 
+    TODO: make hidden kwargs unhidden
+
     Args:
         n (int): The number of timepoints to integrate
         use_tqdm (bool): Whether to use a progress bar
@@ -149,18 +151,19 @@ def make_trajectory_ensemble(
     if subset is None:
         sys_class = kwargs.pop("sys_class", "continuous")
         exclude = kwargs.pop("exclude", [])
-        attractors = get_attractor_list(sys_class, exclude)
+        subset = get_attractor_list(sys_class, exclude)
 
     if use_tqdm and not use_multiprocessing:
-        subset = tqdm(attractors or subset, desc="Integrating systems")  # type: ignore
+        subset = tqdm(subset, desc="Integrating systems")  # type: ignore
 
     all_sols = dict()
     if use_multiprocessing:
         all_sols = _multiprocessed_compute_trajectory(
-            rng, n, subset or attractors, ic_transform, param_transform, **kwargs
+            rng, n, subset or [], ic_transform, param_transform, **kwargs
         )
     else:
-        for equation_name in subset or attractors:
+        # stupid lint error fix for subset being possibly None
+        for equation_name in subset or []:
             sol = _compute_trajectory(
                 equation_name, n, kwargs, ic_transform, param_transform
             )

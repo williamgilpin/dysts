@@ -1,14 +1,8 @@
+# type: ignore
 """
 Various low-dimensional dynamical systems in Python.
 For flows that occur on unbounded intervals (eg non-autonomous systems),
 coordinates are transformed to a basis where the domain remains bounded
-
-Requirements:
-+ numpy
-+ scipy
-+ sdeint (for integration with noise)
-+ numba (optional, for faster integration)
-
 """
 
 import numpy as np
@@ -166,6 +160,7 @@ class DoublePendulum(DynSys):
         )
         return th1_dot, th2_dot, p1_dot, p2_dot
 
+    @staticmethod
     @staticjit
     def _postprocessing(th1, th2, p1, p2):
         return np.sin(th1), np.sin(th2), p1, p2

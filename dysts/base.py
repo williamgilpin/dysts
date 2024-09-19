@@ -16,7 +16,7 @@ import warnings
 from dataclasses import dataclass, field
 from functools import partial
 from itertools import starmap
-from typing import Callable, Optional
+from typing import Any, Callable, Optional, Sequence
 
 import numpy as np
 import pkg_resources
@@ -59,7 +59,14 @@ DATAPATH_DISCRETE = pkg_resources.resource_filename("dysts", "data/discrete_maps
 
 
 def staticjit(func: Callable) -> Callable:
-    return staticmethod(njit(func))
+    """Decorator to apply numba's njit decorator to a static method"""
+
+    @staticmethod
+    @njit
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    return wrapper
 
 
 @dataclass(init=False)
@@ -79,10 +86,16 @@ class BaseDyn:
     name: str = field(default_factory=str)
     params: dict = field(default_factory=dict)
     random_state: Optional[int] = None
-    dt: float
-    maximum_lyapunov_estimated: float
+    dt: float = 0.001
     period: float
+    maximum_lyapunov_estimated: float
+    lyapunov_spectrum_estimated: np.ndarray
+    mean: np.ndarray
+    std: np.ndarray
+    ic: np.ndarray
+    param_list: list[float]
     data_path: str
+    _postprocessing: Callable[[np.ndarray], Sequence[np.ndarray]]
 
     def __init__(self, **entries):
         self.name = self.__class__.__name__
@@ -112,10 +125,10 @@ class BaseDyn:
 
     def transform_ic(
         self,
-        transform_fn: Callable[[np.ndarray], np.ndarray],
+        transform_fn: Callable[[np.ndarray, Any], np.ndarray],
     ) -> None:
         """Updates the initial condition via a transform function"""
-        self.ic = transform_fn(self.ic, system=self)
+        self.ic = transform_fn(self.ic, system=self)  # type: ignore
 
         warnings.warn(
             """Changing the initial condition makes other estimated parameters
@@ -123,12 +136,12 @@ class BaseDyn:
         )
 
     def transform_params(
-        self, transform_fn: Callable[[str, np.ndarray], np.ndarray]
+        self, transform_fn: Callable[[str, np.ndarray, Any], np.ndarray]
     ) -> None:
         """Updates the current parameter list via a transform function"""
         self.param_list = list(
             starmap(
-                partial(transform_fn, system=self),
+                partial(transform_fn, system=self),  # type: ignore
                 zip(sorted(self.params.keys()), self.param_list),
             )
         )
@@ -222,7 +235,7 @@ class DynSys(BaseDyn):
 
     def rhs(self, X, t):
         """The right hand side of a dynamical equation"""
-        return self._rhs(*X.T, t, *self.param_list)
+        return self._rhs(*X.T, t, *self.param_list)  # type: ignore
 
     def jac(self, X, t):
         """The Jacobian of the dynamical system"""
@@ -365,6 +378,8 @@ class DynMap(BaseDyn):
         A function to look up additional metadata, if requested
     """
 
+    _rhs_inv: Callable[..., Sequence[np.ndarray]]
+
     def __init__(self, **kwargs):
         self.data_path = DATAPATH_DISCRETE
         super().__init__(**kwargs)
@@ -448,6 +463,8 @@ class DynSysDelay(BaseDyn):
         are supported
     """
 
+    tau: float
+
     def __init__(self, **kwargs):
         self.data_path = DATAPATH_CONTINUOUS
         super().__init__(**kwargs)
@@ -455,7 +472,7 @@ class DynSysDelay(BaseDyn):
     def rhs(self, X: Callable[[float], ArrayLike], t: float) -> ArrayLike:
         """The right hand side of a dynamical equation"""
         xt, xt_delayed = X(t), X(t - self.tau)
-        return self._rhs(xt, xt_delayed, t, *self.param_list)
+        return self._rhs(xt, xt_delayed, t, *self.param_list)  # type: ignore
 
     def make_trajectory(
         self,

@@ -454,3 +454,68 @@ def make_epsilon_ball(pt, n, eps=1e-5, random_state=None):
     coords = r * vecs / norm
     out = pt[:, None] + eps * coords
     return out
+
+
+def rowwise_euclidean(x, y):
+    """Computes the euclidean distance across rows"""
+    return np.sqrt(np.sum((x - y) ** 2, axis=1))
+
+
+def min_data_points_rosenstein(emb_dim, lag, trajectory_len, min_tsep):
+    """
+    Adapted from the nolds Python library:
+    https://github.com/CSchoel/nolds/blob/master/nolds/measures.py
+
+    Helper function that calculates the minimum number of data points required
+    to use lyap_r.
+    Note that none of the required parameters may be set to None.
+    Args:
+        emb_dim (int): Embedding dimension
+        lag (int): Lag between time series values
+        trajectory_len (int): Length of trajectory to follow
+        min_tsep (int): Minimum temporal separation
+    Returns:
+        int: minimum number of data points required to call lyap_r with the given
+        parameters
+    """
+    # minimum length required to find single orbit vector
+    min_len = (emb_dim - 1) * lag + 1
+    # we need trajectory_len orbit vectors to follow a complete trajectory
+    min_len += trajectory_len - 1
+    # we need min_tsep * 2 + 1 orbit vectors to find neighbors for each
+    min_len += min_tsep * 2 + 1
+    return min_len
+
+
+def logarithmic_n(min_n, max_n, factor):
+    """
+    Adapted from the nolds Python library:
+    https://github.com/CSchoel/nolds/blob/master/nolds/measures.py
+
+    Creates a list of values by successively multiplying a minimum value min_n by
+    a factor > 1 until a maximum value max_n is reached.
+    Non-integer results are rounded down.
+    Args:
+        min_n (float):
+            minimum value (must be < max_n)
+        max_n (float):
+            maximum value (must be > min_n)
+        factor (float):
+            factor used to increase min_n (must be > 1)
+    Returns:
+        list of integers:
+            min_n, min_n * factor, min_n * factor^2, ... min_n * factor^i < max_n
+            without duplicates
+    """
+    assert max_n > min_n
+    assert factor > 1
+    # stop condition: min * f^x = max
+    # => f^x = max/min
+    # => x = log(max/min) / log(f)
+    max_i = int(np.floor(np.log(1.0 * max_n / min_n) / np.log(factor)))
+    ns = [min_n]
+    for i in range(max_i + 1):
+        n = int(np.floor(min_n * (factor**i)))
+        if n > ns[-1]:
+            ns.append(n)
+    return ns
