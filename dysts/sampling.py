@@ -129,7 +129,7 @@ class GaussianParamSampler(BaseSampler):
         self, name: str, param: Array, system: Optional[BaseDyn] = None
     ) -> Array | float:
         # scale each parameter relatively
-        shape = 1 if np.isscalar(param) else param.shape
+        shape = (1,) if np.isscalar(param) else param.shape
 
         # avoid shape errors
         flat_param = np.array(param).flatten()

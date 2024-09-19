@@ -4,21 +4,24 @@ import inspect
 import json
 from multiprocessing import Pool
 from os import PathLike
-from typing import Any, Callable, Dict, List, Optional, Sequence
+from types import ModuleType
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 import numpy.typing as npt
-from tqdm import tqdm
+from tqdm import tqdm  # type: ignore
 
 from . import flows as dfl
 from . import maps as dmp
 from .base import (
     DATAPATH_CONTINUOUS,
     DATAPATH_DISCRETE,
+    BaseDyn,
     DynMap,
     DynSys,
     DynSysDelay,
 )
+from .sampling import BaseSampler
 
 Array = npt.NDArray[np.float64]
 
@@ -38,6 +41,7 @@ def get_attractor_list(
     Returns:
         Sorted list of systems belonging to sys_class
     """
+    module: ModuleType
     if sys_class in ["continuous", "continuous_no_delay", "delay"]:
         module = dfl
         parent_class = {
@@ -53,13 +57,14 @@ def get_attractor_list(
             "sys_class must be in ['continuous', 'continuous_no_delay', 'delay', 'discrete']"
         )
 
-    systems = inspect.getmembers(
+    systems: List[Tuple[str, BaseDyn]] = inspect.getmembers(
         module,
-        lambda obj: inspect.isclass(obj)
-        and issubclass(obj, parent_class)
+        lambda obj: inspect.isclass(obj)  # type: ignore
+        and issubclass(obj, parent_class)  # type: ignore
         and obj.__module__ == module.__name__,
     )
-    systems = filter(lambda x: x[0] not in exclude, systems)
+
+    systems = list(filter(lambda x: x[0] not in exclude, systems))
 
     return sorted([name for name, _ in systems])
 
@@ -98,8 +103,8 @@ def _compute_trajectory(
     equation_name: str,
     n: int,
     kwargs: Dict[str, Any],
-    ic_transform: Optional[Callable] = None,
-    param_transform: Optional[Callable] = None,
+    ic_transform: Optional[BaseSampler] = None,
+    param_transform: Optional[BaseSampler] = None,
     rng: np.random.Generator = DEFAULT_RNG,
 ) -> Array:
     """A helper function for multiprocessing"""
@@ -123,8 +128,8 @@ def make_trajectory_ensemble(
     n: int,
     use_tqdm: bool = True,
     use_multiprocessing: bool = False,
-    ic_transform: Optional[Callable] = None,
-    param_transform: Optional[Callable] = None,
+    ic_transform: Optional[BaseSampler] = None,
+    param_transform: Optional[BaseSampler] = None,
     subset: Optional[Sequence[str]] = None,
     rng: np.random.Generator = DEFAULT_RNG,
     **kwargs,
@@ -176,8 +181,8 @@ def _multiprocessed_compute_trajectory(
     rng: np.random.Generator,
     n: int,
     subset: Sequence[str],
-    ic_transform: Optional[Callable] = None,
-    param_transform: Optional[Callable] = None,
+    ic_transform: Optional[BaseSampler] = None,
+    param_transform: Optional[BaseSampler] = None,
     **kwargs,
 ) -> Dict[str, Array]:
     """
