@@ -7,10 +7,10 @@ Functions that act on DynSys or DynMap objects
 import warnings
 
 import numpy as np
-from scipy.spatial.distance import cdist
-from scipy.stats import linregress
+from scipy.spatial.distance import cdist  # type: ignore
+from scipy.stats import linregress  # type: ignore
 
-from .flows import DynSys
+from .base import DynSys
 from .utils import (
     ComputationHolder,
     find_significant_frequencies,
@@ -21,7 +21,11 @@ from .utils import (
 )
 
 if has_module("sklearn"):
-    from sklearn.linear_model import RidgeCV
+    from sklearn.linear_model import RidgeCV  # type: ignore
+else:
+    warnings.warn(
+        "Sklearn not installed. Will not be able to use ridge regression for gpdistance and corr_gpdim."
+    )
 
 
 def sample_initial_conditions(
@@ -226,6 +230,8 @@ def gpdistance(traj1, traj2, standardize=True, register=False, **kwargs):
     """
 
     if register:
+        if not has_module("sklearn"):
+            raise ImportError("Sklearn is required for registration")
         model = RidgeCV()
         model.fit(traj1, traj2)
         traj1 = model.predict(traj1)

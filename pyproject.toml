@@ -20,7 +20,7 @@ dependencies = ["numpy", "scipy", "tqdm"]
 benchmarks = ["darts", "torch", "scikit-learn", "pandas", "tsfresh", "nolds"]
 numba = ["numba"]
 tests = ["matplotlib"]
-extra = ["sdeint", "sklearn"]
+extra = ["sdeint", "scikit-learn"]
 
 # Package data
 [tool.setuptools]
