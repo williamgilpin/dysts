@@ -8,14 +8,11 @@ import scipy.interpolate
 from scipy.integrate import solve_ivp
 from scipy.signal import resample
 
+from .native_utils import has_module
 from .utils import freq_from_autocorr
 
-try:
+if has_module("sdeint"):
     from sdeint import itoint
-except ImportError:
-    _has_sdeint = False
-else:
-    _has_sdeint = True
 
 
 def resample_timepoints(model, ic, tpts, cutoff=10000, pts_per_period=100):
@@ -68,21 +65,9 @@ def integrate_dyn(
         sol (ndarray): The integrated trajectory
     """
     ic = np.array(ic)
-    noise = np.array(noise)
 
-    if np.isscalar(noise):
-        if noise > 0.0:
-            noise_flag = True
-        else:
-            noise_flag = False
-    else:
-        if np.sum(np.abs(noise)) > 0:
-            noise_flag = True
-        else:
-            noise_flag = False
-
-    if noise_flag:
-        if not _has_sdeint:
+    if np.abs(noise).sum() > 0:
+        if not has_module("sdeint"):
             raise ImportError(
                 "Please install the package sdeint in order to integrate with noise."
             )
@@ -151,14 +136,15 @@ def generate_ic_ensemble(
     dt = tpts0[1] - tpts0[0]
     t_range = tpts0[-1] - tpts0[0]
     tpts = np.arange(tpts0[0], tpts0[0] + t_range * (1 + frac_transient), dt)
-    all_samples = list()
     ic = model.ic
-    for i in range(n_samples):
-        ic_perturb = 1 + frac_perturb_param * (2 * np.random.random(len(ic)) - 1)
-        ic_prime = ic * ic_perturb
-        sol = integrate_dyn(model, ic_prime, tpts)
-        all_samples.append(sol[:, -ntpts:])
-    return np.array(all_samples)
+    ic_perturb = 1 + frac_perturb_param * (
+        2 * np.random.random((n_samples, len(ic))) - 1
+    )
+    ic_prime = ic * ic_perturb
+    sol = np.array(
+        [integrate_dyn(model, ic_prime[i], tpts)[:, -ntpts:] for i in range(n_samples)]
+    )
+    return sol
 
 
 # ----------------------- START OF ddeint IMPLEMENTATION -----------------------
@@ -219,7 +205,7 @@ class dde(scipy.integrate.ode):
         scipy.integrate.ode.__init__(self, f2, jac)
         self.set_f_params(None)
 
-    def integrate(self, t, step=0, relax=0):
+    def integrate(self, t, step=False, relax=False):
         scipy.integrate.ode.integrate(self, t, step, relax)
         self.Y.update(self.t, self.y)
         return self.y
