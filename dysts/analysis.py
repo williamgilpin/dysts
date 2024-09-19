@@ -9,10 +9,12 @@ import warnings
 import numpy as np
 from scipy.spatial.distance import cdist  # type: ignore
 from scipy.stats import linregress  # type: ignore
+from tqdm import tqdm  # type: ignore
 
 from .base import DynSys
 from .utils import (
     ComputationHolder,
+    find_characteristic_timescale,
     find_significant_frequencies,
     has_module,
     jac_fd,
@@ -55,14 +57,15 @@ def sample_initial_conditions(
 
 
 def compute_timestep(
-    model,
-    total_length=40000,
-    transient_fraction=0.2,
-    num_iters=20,
-    pts_per_period=1000,
-    return_period=True,
+    system: DynSys,
+    total_length: int = 40000,
+    transient_fraction: float = 0.2,
+    num_iters: int = 20,
+    pts_per_period: int = 1000,
+    timescale: str = "Fourier",
 ):
-    """Given a dynamical system object, find the integration timestep based on the largest
+    """
+    Given a dynamical system object, find the integration timestep based on the largest
     signficant frequency
 
     Args:
@@ -73,7 +76,6 @@ def compute_timestep(
         pts_per_period (int): The target integration timestep relative to the signal.
         visualize (bool): Whether to plot timestep versus time, in order to identify problems
             with the procedure
-        return_period (bool): Whether to calculate and retunr the dominant timescale in the signal
 
     Returns
         dt (float): The best integration timestep
@@ -81,38 +83,48 @@ def compute_timestep(
 
     """
 
-    base_freq = 1 / pts_per_period
+    print(f"Starting timestep: {system.dt}\nStarting period: {system.period}\n")
     cutoff = int(transient_fraction * total_length)
 
-    step_history = [np.copy(model.dt)]
-    for i in range(num_iters):
-        sol = model.make_trajectory(total_length, standardize=True)[cutoff:]
-        all_freqs = list()
-        for comp in sol.T:
-            freqs, amps = find_significant_frequencies(comp, surrogate_method="rs")
-            all_freqs.append(freqs[np.argmax(np.abs(amps))])
-        freq = np.median(all_freqs)
-        period = base_freq / freq
-        model.dt = model.dt * period
+    all_dt = list()
+    all_periods = list()
+    for _ in tqdm(range(num_iters)):
+        tpts0, sol0 = system.make_trajectory(  # type: ignore
+            n=total_length,
+            resample=True,
+            standardize=True,
+            return_times=True,
+            postprocess=True,
+            pts_per_period=pts_per_period,
+            timescale=timescale,
+        )
+        if sol0 is None:
+            raise Exception("Failed to generate trajectory")
+        tpts0, sol0 = tpts0[cutoff:], sol0[cutoff:]
+        dtval0 = np.median(np.diff(tpts0))
 
-        step_history.append(model.dt)
-        if i % 5 == 0:
-            print(f"Completed step {i} of {num_iters}")
-    dt = model.dt
+        all_max_freqs = list()
+        for row in sol0.T:
+            freqs_sig = find_significant_frequencies(row)
+            if len(freqs_sig) > 0:
+                all_max_freqs.append(np.max(freqs_sig))
+        max_freq = max(all_max_freqs)
+        dt0 = dtval0 * (1 / max_freq) / 100
 
-    if return_period:
-        sol = model.make_trajectory(total_length, standardize=True)[cutoff:]
-        all_freqs = list()
-        for comp in sol.T:
-            freqs, amps = find_significant_frequencies(
-                comp, surrogate_method="rs", return_amplitudes=True
-            )
-            all_freqs.append(freqs[np.argmax(np.abs(amps))])
-        freq = np.median(all_freqs)
-        period = model.dt * (1 / freq)
-        return dt, period
-    else:
-        return dt
+        all_characteristic_timescales = list()
+        for row in sol0.T:
+            all_characteristic_timescales.append(find_characteristic_timescale(row))
+        char_time0 = np.median(all_characteristic_timescales)
+
+        period0 = char_time0 * dtval0  # this needs to be a scalar float
+
+        system.dt, system.period = dt0, period0  # type: ignore
+        print(system.dt, system.period)
+        all_dt.append(system.dt)
+        all_periods.append(system.period)
+    print("all dt: ", all_dt)
+    print("all periods: ", all_periods)
+    return system.dt, system.period
 
 
 def estimate_powerlaw(data0):

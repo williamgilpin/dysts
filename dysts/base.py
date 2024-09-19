@@ -243,17 +243,17 @@ class DynSys(BaseDyn):
 
     def make_trajectory(
         self,
-        n,
-        resample=True,
-        pts_per_period=100,
-        return_times=False,
-        standardize=False,
-        postprocess=True,
-        noise=0.0,
-        timescale="Fourier",
-        method="Radau",
-        rtol=1e-12,
-        atol=1e-12,
+        n: int,
+        resample: bool = True,
+        pts_per_period: int = 100,
+        return_times: bool = False,
+        standardize: bool = False,
+        postprocess: bool = True,
+        noise: float = 0.0,
+        timescale: str = "Fourier",
+        method: str = "Radau",
+        rtol: float = 1e-12,
+        atol: float = 1e-12,
         **kwargs,
     ):
         """
@@ -346,16 +346,16 @@ class DynSys(BaseDyn):
         if len(sol) == 0:  # if no complete trajectories, return None
             return (tpts, None) if return_times else None
 
-        sol = np.transpose(np.array(sol), (0, 2, 1))
+        sol = np.transpose(np.array(sol), (0, 2, 1))  # type: ignore
 
         # postprocess the trajectory, if necessary
         if hasattr(self, "_postprocessing") and postprocess:
             warnings.warn(
                 "This system has at least one unbounded variable, which has been mapped to a bounded domain. Pass argument postprocess=False in order to generate trajectories from the raw system."
             )
-            sol2 = np.moveaxis(sol, (-1, 0), (0, -1))
-            sol = np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0))
-        sol = np.squeeze(sol)
+            sol2 = np.moveaxis(sol, (-1, 0), (0, -1))  # type: ignore
+            sol = np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0))  # type: ignore
+        sol = np.squeeze(sol)  # type: ignore
 
         return (tpts, sol) if return_times else sol
 

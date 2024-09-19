@@ -10,10 +10,6 @@ import unittest
 
 import numpy as np
 
-WORKING_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(WORKING_DIR)
-sys.path.insert(1, os.path.join(WORKING_DIR, "dysts"))
-
 from dysts.utils import (
     cartesian_to_polar,
     make_surrogate,
@@ -21,6 +17,10 @@ from dysts.utils import (
     signif,
     standardize_ts,
 )
+
+WORKING_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(WORKING_DIR)
+sys.path.insert(1, os.path.join(WORKING_DIR, "dysts"))
 
 
 class TestUtils(unittest.TestCase):
