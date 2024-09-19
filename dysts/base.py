@@ -23,7 +23,7 @@ import pkg_resources
 from numpy.typing import ArrayLike
 from scipy.interpolate import interp1d
 
-from dysts.utils import ddeint, has_module, integrate_dyn, standardize_ts
+from .utils import ddeint, has_module, integrate_dyn, standardize_ts
 
 if has_module("numba"):
     from numba import njit

@@ -16,7 +16,7 @@ except:
     warnings.warn("Neurokit2 must be installed before computing multiscale entropy")
     has_neurokit = False
 
-from dysts.utils import *
+from .utils import *
 
 
 def sample_initial_conditions(

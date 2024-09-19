@@ -21,7 +21,7 @@ else:
     _has_tsfresh = True
     _has_data = True
 
-from dysts.utils import *
+from .utils import *
 
 
 class TimeSeriesDataset:
