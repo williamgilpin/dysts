@@ -60,13 +60,7 @@ DATAPATH_DISCRETE = pkg_resources.resource_filename("dysts", "data/discrete_maps
 
 def staticjit(func: Callable) -> Callable:
     """Decorator to apply numba's njit decorator to a static method"""
-
-    @staticmethod
-    @njit
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
-
-    return wrapper
+    return staticmethod(njit(func))
 
 
 @dataclass(init=False)
