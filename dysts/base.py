@@ -75,12 +75,18 @@ class BaseDyn:
         Add a function to look up additional metadata, if requested
     """
 
-    name: Optional[str] = None
+    # name: Optional[str] = None
+    name: str = field(default_factory=str)
     params: dict = field(default_factory=dict)
     random_state: Optional[int] = None
+    dt: float
+    maximum_lyapunov_estimated: float
+    period: float
+    data_path: str
 
     def __init__(self, **entries):
         self.name = self.__class__.__name__
+        # load system attributes and computed quantities from a JSON file
         self.data = self._load_data()
 
         self.params = self.data["parameters"]
@@ -90,14 +96,17 @@ class BaseDyn:
         }
         self.__dict__.update(self.params)
         self.param_list = [getattr(self, param) for param in sorted(self.params.keys())]
+
         ic_val = self.data["initial_conditions"]
         ic_val = np.array(ic_val) if not np.isscalar(ic_val) else np.array([ic_val])
         self.ic = ic_val
         np.random.seed(self.random_state)
 
+        # set all attributes in the data dictionary
         for key in self.data:
             setattr(self, key, self.data[key])
 
+        # computed statistics
         self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
         self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
 
@@ -367,7 +376,16 @@ class DynMap(BaseDyn):
 
     def rhs_inv(self, Xp):
         """The inverse of the right hand side of a dynamical map"""
-        out = self._rhs_inv(*Xp.T, *self.param_list)
+        rhs_inv_op = getattr(self, "_rhs_inv")
+        # if hasattr(self, "_rhs_inv"):
+        if callable(rhs_inv_op):
+            out = rhs_inv_op(*Xp.T, *self.param_list)
+        else:
+            warnings.warn(
+                f"The function _rhs_inv has not been implemented for {self.name}"
+            )
+            # fail loudly
+            raise NotImplementedError
         return np.vstack(out).T
 
     def __call__(self, X):
