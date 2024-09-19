@@ -2,25 +2,24 @@
 This file is directly adapted from the nolds Python library:
 https://github.com/CSchoel/nolds/
 
-The modifications allow certain quantities, like the correlation dimension, to be calculated 
-for multivariate time series. 
+The modifications allow certain quantities, like the correlation dimension, to be calculated
+for multivariate time series.
 
-We are not connected to the creators of nolds, and we have included this file here only to ensure 
-reproducibility of our benchmark experiments. Please do not use or adapt this code without citing 
+We are not connected to the creators of nolds, and we have included this file here only to ensure
+reproducibility of our benchmark experiments. Please do not use or adapt this code without citing
 the creators of nolds, and please heed their license.
 
 """
 
-import numpy as np
 import warnings
+
+import numpy as np
+
 
 def rowwise_euclidean(x, y):
     """Computes the euclidean distance across rows"""
-    return np.sqrt(np.sum((x - y)**2, axis=1))
+    return np.sqrt(np.sum((x - y) ** 2, axis=1))
 
-def corr_dim(*args, **kwargs):
-    raise NotImplementedError("corr_dim has been removed from the library." + \
-                              "Please use dysts.analysis.gp_dim instead.")
 
 def lyap_r_len(**kwargs):
     """
@@ -39,16 +38,27 @@ def lyap_r_len(**kwargs):
         parameters
     """
     # minimum length required to find single orbit vector
-    min_len = (kwargs['emb_dim'] - 1) * kwargs['lag'] + 1
+    min_len = (kwargs["emb_dim"] - 1) * kwargs["lag"] + 1
     # we need trajectory_len orbit vectors to follow a complete trajectory
-    min_len += kwargs['trajectory_len'] - 1
+    min_len += kwargs["trajectory_len"] - 1
     # we need min_tsep * 2 + 1 orbit vectors to find neighbors for each
-    min_len += kwargs['min_tsep'] * 2 + 1
+    min_len += kwargs["min_tsep"] * 2 + 1
     return min_len
 
-def lyap_r(data, lag=None, min_tsep=None, tau=1, min_neighbors=20,
-                     trajectory_len=20, fit="RANSAC", debug_plot=False, debug_data=False,
-                     plot_file=None, fit_offset=0):
+
+def lyap_r(
+    data,
+    lag=None,
+    min_tsep=None,
+    tau=1,
+    min_neighbors=20,
+    trajectory_len=20,
+    fit="RANSAC",
+    debug_plot=False,
+    debug_data=False,
+    plot_file=None,
+    fit_offset=0,
+):
     """
     Adapted from the nolds Python library:
     https://github.com/CSchoel/nolds/blob/master/nolds/measures.py
@@ -149,7 +159,7 @@ def lyap_r(data, lag=None, min_tsep=None, tau=1, min_neighbors=20,
             a strong indicator for chaos)
         (1d-vector, 1d-vector, list):
             only present if debug_data is True: debug data of the form
-            ``(ks, div_traj, poly)`` where ``ks`` are the x-values of the line fit, 
+            ``(ks, div_traj, poly)`` where ``ks`` are the x-values of the line fit,
             ``div_traj`` are the y-values and ``poly`` are the line coefficients
             (``[slope, intercept]``).
     """
@@ -210,7 +220,7 @@ def lyap_r(data, lag=None, min_tsep=None, tau=1, min_neighbors=20,
     #         RuntimeWarning
     #     )
     # delay embedding
-    #orbit = delay_embedding(data, emb_dim, lag)
+    # orbit = delay_embedding(data, emb_dim, lag)
     orbit = data
     m = len(orbit)
     # construct matrix with pairwise distances between vectors in orbit
@@ -220,26 +230,30 @@ def lyap_r(data, lag=None, min_tsep=None, tau=1, min_neighbors=20,
     # each index by setting them to infinity (will never be considered as nearest
     # neighbors)
     for i in range(m):
-        dists[i, max(0, i - min_tsep):i + min_tsep + 1] = float("inf")
+        dists[i, max(0, i - min_tsep) : i + min_tsep + 1] = float("inf")
     # check that we have enough data points to continue
     ntraj = m - trajectory_len + 1
-    min_traj = min_tsep * 2 + 2 # in each row min_tsep + 1 disances are inf
+    min_traj = min_tsep * 2 + 2  # in each row min_tsep + 1 disances are inf
     if ntraj <= 0:
-        msg = "Not enough data points. Need {} additional data points to follow " \
-                + "a complete trajectory."
-        raise ValueError(msg.format(-ntraj+1))
+        msg = (
+            "Not enough data points. Need {} additional data points to follow "
+            + "a complete trajectory."
+        )
+        raise ValueError(msg.format(-ntraj + 1))
     if ntraj < min_traj:
         # not enough data points => there are rows where all values are inf
         assert np.any(np.all(np.isinf(dists[:ntraj, :ntraj]), axis=1))
-        msg = "Not enough data points. At least {} trajectories are required " \
-                + "to find a valid neighbor for each orbit vector with min_tsep={} " \
-                + "but only {} could be created."
+        msg = (
+            "Not enough data points. At least {} trajectories are required "
+            + "to find a valid neighbor for each orbit vector with min_tsep={} "
+            + "but only {} could be created."
+        )
         raise ValueError(msg.format(min_traj, min_tsep, ntraj))
     assert np.all(np.any(np.isfinite(dists[:ntraj, :ntraj]), axis=1))
     # find nearest neighbors (exclude last columns, because these vectors cannot
     # be followed in time for trajectory_len steps)
     nb_idx = np.argmin(dists[:ntraj, :ntraj], axis=1)
-    
+
     # build divergence trajectory by averaging distances along the trajectory
     # over all neighbor pairs
     div_traj = np.zeros(trajectory_len, dtype=float)
@@ -267,12 +281,20 @@ def lyap_r(data, lag=None, min_tsep=None, tau=1, min_neighbors=20,
         # normal line fitting
         poly = poly_fit(ks[fit_offset:], div_traj[fit_offset:], 1, fit=fit)
     if debug_plot:
-        plot_reg(ks[fit_offset:], div_traj[fit_offset:], poly, "k", "log(d(k))", fname=plot_file)
+        plot_reg(
+            ks[fit_offset:],
+            div_traj[fit_offset:],
+            poly,
+            "k",
+            "log(d(k))",
+            fname=plot_file,
+        )
     le = poly[0] / tau
     if debug_data:
         return (le, (ks, div_traj, poly))
     else:
         return le
+
 
 def logarithmic_n(min_n, max_n, factor):
     """
@@ -302,14 +324,23 @@ def logarithmic_n(min_n, max_n, factor):
     max_i = int(np.floor(np.log(1.0 * max_n / min_n) / np.log(factor)))
     ns = [min_n]
     for i in range(max_i + 1):
-        n = int(np.floor(min_n * (factor ** i)))
+        n = int(np.floor(min_n * (factor**i)))
         if n > ns[-1]:
             ns.append(n)
     return ns
 
 
-def dfa(data, nvals=None, overlap=True, order=1, fit_trend="poly",
-                fit_exp="RANSAC", debug_plot=False, debug_data=False, plot_file=None):
+def dfa(
+    data,
+    nvals=None,
+    overlap=True,
+    order=1,
+    fit_trend="poly",
+    fit_exp="RANSAC",
+    debug_plot=False,
+    debug_data=False,
+    plot_file=None,
+):
     """
     Adapted from the nolds Python library:
     https://github.com/CSchoel/nolds/blob/master/nolds/measures.py
@@ -425,10 +456,12 @@ def dfa(data, nvals=None, overlap=True, order=1, fit_trend="poly",
         elif total_N > 10:
             nvals = [4, 5, 6, 7, 8, 9]
         else:
-            nvals = [total_N-2, total_N-1]
-            msg = "choosing nvals = {} , DFA with less than ten data points is " \
-                    + "extremely unreliable"
-            warnings.warn(msg.format(nvals),RuntimeWarning)
+            nvals = [total_N - 2, total_N - 1]
+            msg = (
+                "choosing nvals = {} , DFA with less than ten data points is "
+                + "extremely unreliable"
+            )
+            warnings.warn(msg.format(nvals), RuntimeWarning)
     if len(nvals) < 2:
         raise ValueError("at least two nvals are needed")
     if np.min(nvals) < 2:
@@ -444,15 +477,14 @@ def dfa(data, nvals=None, overlap=True, order=1, fit_trend="poly",
         # subdivide data into chunks of size n
         if overlap:
             # step size n/2 instead of n
-            d = np.array([walk[i:i + n] for i in range(0, len(walk) - n, n // 2)])
+            d = np.array([walk[i : i + n] for i in range(0, len(walk) - n, n // 2)])
         else:
             # non-overlapping windows => we can simply do a reshape
-            d = walk[:total_N - (total_N % n)]
+            d = walk[: total_N - (total_N % n)]
             d = d.reshape((total_N // n, n))
         # calculate local trends as polynomes
         x = np.arange(n)
-        tpoly = [poly_fit(x, d[i], order, fit=fit_trend)
-                         for i in range(len(d))]
+        tpoly = [poly_fit(x, d[i], order, fit=fit_trend) for i in range(len(d))]
         tpoly = np.array(tpoly)
         trend = np.array([np.polyval(tpoly[i], x) for i in range(len(d))])
         # calculate standard deviation ("fluctuation") of walks in d around trend
@@ -469,11 +501,16 @@ def dfa(data, nvals=None, overlap=True, order=1, fit_trend="poly",
         # all fluctuations are zero => we cannot fit a line
         poly = [np.nan, np.nan]
     else:
-        poly = poly_fit(np.log(nvals), np.log(fluctuations), 1,
-                                        fit=fit_exp)
+        poly = poly_fit(np.log(nvals), np.log(fluctuations), 1, fit=fit_exp)
     if debug_plot:
-        plot_reg(np.log(nvals), np.log(fluctuations), poly, "log(n)", "std(X,n)",
-                         fname=plot_file)
+        plot_reg(
+            np.log(nvals),
+            np.log(fluctuations),
+            poly,
+            "log(n)",
+            "std(X,n)",
+            fname=plot_file,
+        )
     if debug_data:
         return (poly[0], (np.log(nvals), np.log(fluctuations), poly))
     else:
@@ -481,5 +518,7 @@ def dfa(data, nvals=None, overlap=True, order=1, fit_trend="poly",
 
 
 def lyap_e(*args, **kwargs):
-    raise NotImplementedError("lyap_e has been removed from the library." + \
-                              "Please use dysts.analysis.find_lyapunov_exponents instead.")
+    raise NotImplementedError(
+        "lyap_e has been removed from the library."
+        + "Please use dysts.analysis.find_lyapunov_exponents instead."
+    )
