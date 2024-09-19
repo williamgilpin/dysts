@@ -7,7 +7,7 @@ name = "dysts"
 version = "0.93"
 description = "More than 100 strange attractors"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

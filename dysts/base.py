@@ -15,23 +15,26 @@ import json
 import warnings
 from dataclasses import dataclass, field
 from functools import partial
+from importlib import resources
 from itertools import starmap
-from typing import Any, Callable, Optional, Sequence
+from typing import Any, Callable, Dict, Optional, Sequence
 
 import numpy as np
-import pkg_resources
 from numpy.typing import ArrayLike
-from scipy.interpolate import interp1d
+from scipy.interpolate import interp1d  # type: ignore
 
 from .utils import ddeint, has_module, integrate_dyn, standardize_ts
 
 if has_module("numba"):
-    from numba import njit
+    from numba import njit  # type: ignore
 else:
     warnings.warn("Numba not installed. Falling back to no JIT compilation.")
-    njit = lambda func: func
 
-data_default = {
+    def njit(func):
+        return func
+
+
+data_default: Dict[str, Any] = {
     "bifurcation_parameter": None,
     "citation": None,
     "correlation_dimension": None,
@@ -52,16 +55,15 @@ data_default = {
     "unbounded_indices": [],
 }
 
-DATAPATH_CONTINUOUS = pkg_resources.resource_filename(
-    "dysts", "data/chaotic_attractors.json"
+DATAPATH_CONTINUOUS = str(
+    resources.files("dysts").joinpath("data/chaotic_attractors.json")
 )
-DATAPATH_DISCRETE = pkg_resources.resource_filename("dysts", "data/discrete_maps.json")
+DATAPATH_DISCRETE = str(resources.files("dysts").joinpath("data/discrete_maps.json"))
 
 
 def staticjit(func: Callable) -> Callable:
     """Decorator to apply numba's njit decorator to a static method"""
 
-    @staticmethod
     @njit
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
@@ -82,20 +84,20 @@ class BaseDyn:
         Add a function to look up additional metadata, if requested
     """
 
-    # name: Optional[str] = None
-    name: str = field(default_factory=str)
-    params: dict = field(default_factory=dict)
-    random_state: Optional[int] = None
-    dt: float = 0.001
-    period: float
-    maximum_lyapunov_estimated: float
-    lyapunov_spectrum_estimated: np.ndarray
-    mean: np.ndarray
-    std: np.ndarray
-    ic: np.ndarray
-    param_list: list[float]
     data_path: str
     _postprocessing: Callable[[np.ndarray], Sequence[np.ndarray]]
+
+    name: str = field(default_factory=str)
+    params: dict = field(default_factory=dict)
+    ic: np.ndarray = field(default_factory=lambda: np.array([]))
+    random_state: Optional[int] = None
+
+    # quantities to recompute on the fly under parameter perturbation
+    dt: float = 0.001
+    period: float = field(default=0.0)
+    mean: np.ndarray = field(default_factory=lambda: np.array([]))
+    std: np.ndarray = field(default_factory=lambda: np.array([]))
+    maximum_lyapunov_estimated: float = field(default=0.0)
 
     def __init__(self, **entries):
         self.name = self.__class__.__name__
@@ -209,8 +211,7 @@ class BaseDyn:
             except Exception as err:
                 print(f"Error {err=}, {type(err)=}")
                 warnings.warn("Standardization failed")
-                sol = None
-                raise
+                raise err
 
         return (tpts, sol) if return_times else sol
 
