@@ -23,7 +23,7 @@ extra = ["sdeint", "sklearn"]
 
 # Package data
 [tool.setuptools]
-packages = ["dysts", "dysts.utils"]
+packages = ["dysts"]
 
 [tool.setuptools.package-data]
 "dysts" = ["data/*"]
