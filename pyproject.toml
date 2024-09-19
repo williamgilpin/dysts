@@ -19,6 +19,7 @@ dependencies = ["numpy", "scipy", "tqdm"]
 [project.optional-dependencies]
 benchmarks = ["darts", "torch", "scikit-learn", "pandas", "tsfresh", "nolds"]
 numba = ["numba"]
+tests = ["matplotlib"]
 extra = ["sdeint", "sklearn"]
 
 # Package data
