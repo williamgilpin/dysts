@@ -500,22 +500,20 @@ class GaussianMixture:
         return samples
 
 
-def estimate_kl_divergence(
-    true_orbit, generated_orbit, n_samples=300, sigma_squared=1.0
-):
+def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_scale=1.0):
     """
-    Estimate KL divergence between observed and generated orbits using Gaussian Mixture
+    Estimate KL divergence between observed and generated orbits using Gaussian Mixture 
     Models (GMMs).
 
-    References:
-        Hess, Florian, et al. "Generalized teacher forcing for learning chaotic
+    References: 
+        Hess, Florian, et al. "Generalized teacher forcing for learning chaotic 
         dynamics." Proceedings of the 40th International Conference on Machine Learning.
         2023.
 
-        Hershey, John R., and Peder A. Olsen. "Approximating the Kullback Leibler
-        divergence between Gaussian mixture models." 2007 IEEE International Conference
+        Hershey, John R., and Peder A. Olsen. "Approximating the Kullback Leibler 
+        divergence between Gaussian mixture models." 2007 IEEE International Conference 
         on Acoustics, Speech and Signal Processing-ICASSP'07. Vol. 4. IEEE, 2007.
-
+    
     Args:
         observed_orbit (np.ndarray): Observed orbit points, with shape (T, N) where T is
             the number of time steps and N is the dimensionality.
@@ -525,29 +523,37 @@ def estimate_kl_divergence(
         sigma_squared (float): Variance parameter for the GMMs.
 
     Returns:
-        float: Estimated KL divergence
+        float: Estimated KL divergence 
     """
-    sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1)
-    sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
-    p_hat = GaussianMixture(true_orbit, sigma_scale)
-
-    sigma_scale = np.linalg.norm(np.diff(generated_orbit, axis=0), axis=1)
-    sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
-    q_hat = GaussianMixture(generated_orbit, sigma_scale)
+    if sigma_scale is None:
+        sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1) + 1e-8
+        sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
+        p_hat = GaussianMixture(true_orbit, sigma_scale)
+        sigma_scale = np.linalg.norm(np.diff(generated_orbit, axis=0), axis=1) + 1e-8
+        sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
+        q_hat = GaussianMixture(generated_orbit, sigma_scale)
+    else:
+        p_hat = GaussianMixture(true_orbit, sigma_scale)
+        q_hat = GaussianMixture(generated_orbit, sigma_scale)
 
     # sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1)
     # sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
     # sigma_scale = np.ones_like(sigma_scale)
-
+    
     # Generate Monte Carlo samples from p_hat
     T, N = true_orbit.shape
+    # cov_matrix = sigma_squared * np.eye(N)
+    # samples = np.array(
+    #     [multivariate_normal.rvs(mean=x_t, cov=s_t * cov_matrix) for x_t, 
+    # s_t in zip(true_orbit, sigma_scale)]
+    # )
     samples = p_hat.sample(n_samples=T)
-
+    
     # Randomly select n_samples from the generated samples
     selected_samples = samples[np.random.choice(T, n_samples, replace=True)]
     log_ratios = np.log(p_hat(selected_samples) / q_hat(selected_samples))
     kl_estimate = np.mean(log_ratios)
-
+    
     return kl_estimate
 
 

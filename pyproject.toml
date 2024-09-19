@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dysts"
-version = "0.90"
+version = "0.91"
 description = "More than 100 strange attractors"
 readme = "README.md"
 requires-python = ">=3.8"
