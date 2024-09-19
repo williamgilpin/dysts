@@ -61,11 +61,11 @@ See the [additional installation guide](#additional-installation-guide) for more
 
 ## Benchmarks
 
-The benchmarks reported in our preprint can be found in [`benchmarks`](benchmarks/). An overview of the contents of the directory can be found in [`BENCHMARKS.md`](benchmarks/BENCHMARKS.md), while individual task areas are summarized in corresponding Jupyter Notebooks within the top level of the directory.
+The benchmarks reported in our publications are stored in a separate [benchmarks repository](https://github.com/williamgilpin/dysts_data/tree/main/dysts_data/benchmarks). An overview of the contents of the directory can be found in [`BENCHMARKS.md`](https://github.com/williamgilpin/dysts_data/tree/main/dysts_data/benchmarks/BENCHMARKS.md) within that repository, while individual task areas are summarized in corresponding Jupyter Notebooks within the top level of that directory.
 
 ## Contents
 
-+ Code to generate benchmark forecasting and training experiments are included in [`benchmarks`](benchmarks/)
++ Code to generate benchmark forecasting and training experiments are included in  a separate [benchmarks repository](https://github.com/williamgilpin/dysts_data/tree/main/dysts_data/benchmarks)
 + Pre-computed time series with training and test partitions are included in [`data`](dysts/data/)
 + The raw definitions metadata for all chaotic systems are included in the database file [`chaotic_attractors`](dysts/data/chaotic_attractors.json). The Python implementations of differential equations can be found in [`the flows module`](dysts/flows.py)
 
@@ -80,7 +80,7 @@ Test that everything is working
 
     python -m unittest
 
-To install the optional precomputed trajectories (a large, static dataset), install directly from GitHub
+To install the optional precomputed trajectories and benchmark results (a large, static dataset), install directly from GitHub
 
     pip install git+https://github.com/williamgilpin/dysts_data
 
@@ -92,15 +92,7 @@ The key dependencies are
 + pandas
 + sdeint (optional, but required for stochastic dynamics)
 + numba (optional, but speeds up generation of trajectories)
-
-These additional optional dependencies are needed to reproduce some portions of this repository, such as benchmarking experiments and estimation of invariant properties of each dynamical system:
-
 + nolds (used for calculating the correlation dimension)
-+ darts (used for forecasting benchmarks)
-+ sktime (used for classification benchmarks)
-+ tsfresh (used for statistical quantity extraction)
-+ pytorch (used for neural network benchmarks)
-+ sympy (used for equation analysis benchmarks)
 
 ## Implementation Notes
 
