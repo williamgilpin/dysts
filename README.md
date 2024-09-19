@@ -84,16 +84,6 @@ To install the optional precomputed trajectories and benchmark results (a large,
 
     pip install git+https://github.com/williamgilpin/dysts_data
 
-The key dependencies are
-
-+ Python 3+
-+ numpy
-+ scipy
-+ pandas
-+ sdeint (optional, but required for stochastic dynamics)
-+ numba (optional, but speeds up generation of trajectories)
-+ nolds (used for calculating the correlation dimension)
-
 ## Implementation Notes
 
 + Currently there are 135 continuous time models, including several delay differential equations. There is also a separate module with 10 discrete maps, which is currently being expanded.
@@ -104,10 +94,6 @@ The key dependencies are
 ## Development goals
 
 TODO:
-
-+ ultra-fast function to reestimate quantities of interest with functionality to write and update the json entries
-+ attractor init cond sampler (needs to communicate with param sampler)
-+ sp stuff
 
 + add multiple init cond support for delay systems
 + UPDATE WEB DOCUMENTATION: https://www.wgilpin.com/dysts/spbuild/html/index.html
