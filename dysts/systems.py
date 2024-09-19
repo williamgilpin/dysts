@@ -3,15 +3,16 @@
 import inspect
 import json
 from multiprocessing import Pool
+from os import PathLike
 from typing import Any, Callable, Dict, List, Optional, Sequence
 
 import numpy as np
 import numpy.typing as npt
 from tqdm import tqdm
 
-import dysts.flows as dfl
-import dysts.maps as dmp
-from dysts.base import (
+from . import flows as dfl
+from . import maps as dmp
+from .base import (
     DATAPATH_CONTINUOUS,
     DATAPATH_DISCRETE,
     DynMap,
@@ -85,7 +86,7 @@ def get_system_data(
             "sys_class must be in ['continuous', 'continuous_no_delay', 'delay', 'discrete']"
         )
 
-    systems = get_attractor_list(sys_class)
+    systems = get_attractor_list(sys_class, exclude)
     with open(datapath, "r") as file:
         data = json.load(file)
 
@@ -205,12 +206,25 @@ def _multiprocessed_compute_trajectory(
 
 def compute_trajectory_statistics(
     n: int,
-    subset: Optional[Sequence[str]] = None,
+    subset: Sequence[str],
+    datapath: Optional[PathLike] = None,
     **kwargs,
 ) -> Dict[str, Dict[str, Array]]:
     """Compute mean and std for given trajectory list"""
     sols = make_trajectory_ensemble(n, subset=subset, **kwargs)
-    return {
+    stats = {
         name: {"mean": sol.mean(axis=0), "std": sol.std(axis=0)}
         for name, sol in sols.items()
     }
+
+    if datapath is not None:
+        with open(datapath) as f:
+            data = json.load(f)
+
+        for system in subset:
+            data[system].update({k: v.tolist() for k, v in stats[system].items()})
+
+        with open(datapath, "w") as f:
+            json.dump(data, f, indent=2)
+
+    return stats

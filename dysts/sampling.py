@@ -6,7 +6,7 @@ from typing import Callable, Dict, List, Optional
 import numpy as np
 from numpy.typing import NDArray
 
-from dysts.base import BaseDyn
+from .base import BaseDyn
 
 Array = NDArray[np.float64]
 
