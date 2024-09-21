@@ -18,7 +18,7 @@ from .utils import (
     find_significant_frequencies,
     has_module,
     jac_fd,
-    logarithmic_n,
+    # logarithmic_n,
     rowwise_euclidean,
 )
 
