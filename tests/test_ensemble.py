@@ -46,13 +46,17 @@ def test_init_conds(ic_sampler, num_ic_trials=4):
         )
         trajs.append(sols["Lorenz"])
 
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection="3d")
+    # Assertions
+    assert len(trajs) == num_ic_trials  # Check number of trajectories
+    
     for traj in trajs:
-        ax.plot(*traj.T[:3], alpha=0.1)
-        ax.scatter(traj[0, 0], traj[0, 1], traj[0, 2], marker="*", s=100)  # type: ignore
-    plt.show()
-
+        assert isinstance(traj, np.ndarray)  # Ensure trajectories are numpy arrays
+        assert traj.shape[0] == 1024  # Ensure each trajectory has 1024 points
+        
+        # Optional: check if the trajectories meet expected statistical properties
+        assert ~np.any(np.isnan(traj)), "Trajectory contains NaN values"
+        assert np.all(traj >= -1) and np.all(traj <= 1), "Values not in expected range after standardization"
+    
 
 def test_param_perturbs(pt_sampler, num_ic_trials=4):
     print("Testing parameter perturbations")
