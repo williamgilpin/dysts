@@ -25,6 +25,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install .
+	pip install matplotlib
 
     - name: Run unit tests with unittest
       run: |
