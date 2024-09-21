@@ -458,7 +458,7 @@ def make_epsilon_ball(pt, n, eps=1e-5, random_state=None):
 
 def rowwise_euclidean(x, y):
     """Computes the euclidean distance across rows"""
-    return np.sqrt(np.sum((x - y) ** 2, axis=1))
+    return np.sqrt(np.sum((x - y)**2, axis=1))
 
 
 def min_data_points_rosenstein(emb_dim, lag, trajectory_len, min_tsep):
@@ -489,12 +489,11 @@ def min_data_points_rosenstein(emb_dim, lag, trajectory_len, min_tsep):
 
 def logarithmic_n(min_n, max_n, factor):
     """
-    Adapted from the nolds Python library:
-    https://github.com/CSchoel/nolds/blob/master/nolds/measures.py
+    Return a list of values by successively multiplying a minimum value min_n by
+    a factor > 1 until a maximum value max_n is reached. Non-integer results are rounded
+    down.
+    Based on a similar function in the nolds Python library.
 
-    Creates a list of values by successively multiplying a minimum value min_n by
-    a factor > 1 until a maximum value max_n is reached.
-    Non-integer results are rounded down.
     Args:
         min_n (float):
             minimum value (must be < max_n)
@@ -502,20 +501,15 @@ def logarithmic_n(min_n, max_n, factor):
             maximum value (must be > min_n)
         factor (float):
             factor used to increase min_n (must be > 1)
+
     Returns:
         list of integers:
             min_n, min_n * factor, min_n * factor^2, ... min_n * factor^i < max_n
             without duplicates
     """
-    assert max_n > min_n
-    assert factor > 1
-    # stop condition: min * f^x = max
-    # => f^x = max/min
-    # => x = log(max/min) / log(f)
-    max_i = int(np.floor(np.log(1.0 * max_n / min_n) / np.log(factor)))
-    ns = [min_n]
-    for i in range(max_i + 1):
-        n = int(np.floor(min_n * (factor**i)))
-        if n > ns[-1]:
-            ns.append(n)
-    return ns
+    assert max_n > min_n > 0 and factor > 1
+    max_i = int(np.floor(np.log(max_n / min_n) / np.log(factor)))
+    ns = np.unique(np.floor(min_n * factor**np.arange(max_i + 1)).astype(int))
+    return ns[ns <= max_n]
+
+
