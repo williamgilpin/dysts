@@ -19,8 +19,8 @@ from .utils import (
     find_significant_frequencies,
     has_module,
     jac_fd,
-    logarithmic_n,
-    rowwise_euclidean,
+    # logarithmic_n,
+    # rowwise_euclidean,
 )
 
 if has_module("sklearn"):
@@ -30,6 +30,34 @@ else:
         "Sklearn not installed. Will not be able to use ridge regression for gpdistance and corr_gpdim."
     )
 
+def logarithmic_n(min_n, max_n, factor):
+    """
+    Return a list of values by successively multiplying a minimum value min_n by
+    a factor > 1 until a maximum value max_n is reached. Non-integer results are rounded
+    down.
+    Based on a similar function in the nolds Python library.
+
+    Args:
+        min_n (float):
+            minimum value (must be < max_n)
+        max_n (float):
+            maximum value (must be > min_n)
+        factor (float):
+            factor used to increase min_n (must be > 1)
+
+    Returns:
+        list of integers:
+            min_n, min_n * factor, min_n * factor^2, ... min_n * factor^i < max_n
+            without duplicates
+    """
+    assert max_n > min_n > 0 and factor > 1
+    max_i = int(np.floor(np.log(max_n / min_n) / np.log(factor)))
+    ns = np.unique(np.floor(min_n * factor**np.arange(max_i + 1)).astype(int))
+    return ns[ns <= max_n]
+
+def rowwise_euclidean(x, y):
+    """Computes the euclidean distance across rows"""
+    return np.sqrt(np.sum((x - y)**2, axis=1))
 
 def sample_initial_conditions(
     model, points_to_sample, traj_length=1000, pts_per_period=30
@@ -493,7 +521,6 @@ def kaplan_yorke_dimension(spectrum0):
     dky = 1 + j + cspec[j] / np.abs(spectrum[j + 1])
 
     return dky
-
 
 def max_lyapunov_exponent_rosenstein(
     data,

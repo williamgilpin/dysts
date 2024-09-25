@@ -1,7 +1,4 @@
-import matplotlib.pyplot as plt
-
 import dysts.flows as dfl
-
 
 def main():
     dyst_name = "SprottDelay"
@@ -15,9 +12,6 @@ def main():
         kind="cubic",
     )
     print(sol)
-
-    plt.plot(*sol.T[:2])
-    plt.show()
 
     print(sol.shape)
 
