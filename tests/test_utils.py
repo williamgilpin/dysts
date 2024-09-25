@@ -10,6 +10,7 @@ import unittest
 
 import numpy as np
 
+from dysts.systems import get_attractor_list
 from dysts.utils import (
     cartesian_to_polar,
     make_surrogate,
@@ -82,6 +83,12 @@ class TestUtils(unittest.TestCase):
         data = np.sin(2 * np.pi * 5 * np.linspace(0, 1, 100))
         surr_data = make_surrogate(data, "rp")
         self.assertAlmostEqual(len(surr_data), len(data))
+
+    def test_attractor_list(self):
+        """
+        Test fetching list of attractors
+        """
+        assert len(get_attractor_list()) > 130
 
 
 if __name__ == "__main__":

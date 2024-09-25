@@ -1,3 +1,7 @@
+# test data and test figures
+tests/figs/
+tests/*.png
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

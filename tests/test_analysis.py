@@ -2,12 +2,12 @@ import dysts.flows as dfl
 from dysts.analysis import compute_timestep
 
 if __name__ == "__main__":
-    num_points_per_period = 512
-    num_periods = 30
-    num_points = num_periods * num_points_per_period
-
     dyst_name = "Lorenz"
     system = getattr(dfl, dyst_name)()
+
+    num_periods = 40
+    num_points_per_period = 1024
+    num_points = num_points_per_period * num_periods
 
     dt, period = compute_timestep(
         system,
@@ -17,8 +17,8 @@ if __name__ == "__main__":
         pts_per_period=num_points_per_period,
         timescale="Fourier",
     )
-    print("dt: ", dt)
-    print("period: ", period)
+    print("all dt: ", dt)
+    print("all periods: ", period)
 
 # TODO: Use scipy optimize for black box optimization of dt from initial guess
 # until it meets characteristic timescale criteria

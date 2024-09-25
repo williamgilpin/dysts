@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 import numpy.typing as npt
-from tqdm import tqdm  # type: ignore
+from tqdm import tqdm
 
 from . import flows as dfl
 from . import maps as dmp
@@ -218,13 +218,22 @@ def compute_trajectory_statistics(
     datapath: Optional[PathLike] = None,
     **kwargs,
 ) -> Dict[str, Dict[str, Array]]:
-    """Compute mean and std for given trajectory list"""
+    """
+    Compute mean and std for given trajectory list
+    Args:
+        n (int): The number of timepoints to integrate
+        subset (list): A list of system names. Defaults to all continuous systems.
+            Can also pass in `sys_class` as a kwarg to specify other system classes.
+        datapath (str): Path to save the computed statistics to a JSON file
+        kwargs: Additional keyword arguments passed to the integration routine
+    """
     sols = make_trajectory_ensemble(n, subset=subset, **kwargs)
     stats = {
         name: {"mean": sol.mean(axis=0), "std": sol.std(axis=0)}
         for name, sol in sols.items()
     }
 
+    # Save the computed statistics to a JSON file
     if datapath is not None:
         with open(datapath) as f:
             data = json.load(f)

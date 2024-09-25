@@ -5,11 +5,12 @@ Functions that act on DynSys or DynMap objects
 """
 
 import warnings
+from typing import Tuple
 
 import numpy as np
-from scipy.spatial.distance import cdist  # type: ignore
-from scipy.stats import linregress  # type: ignore
-from tqdm import tqdm  # type: ignore
+from scipy.spatial.distance import cdist
+from scipy.stats import linregress
+from tqdm import tqdm
 
 from .base import DynSys
 from .utils import (
@@ -23,7 +24,7 @@ from .utils import (
 )
 
 if has_module("sklearn"):
-    from sklearn.linear_model import RidgeCV  # type: ignore
+    from sklearn.linear_model import RidgeCV
 else:
     warnings.warn(
         "Sklearn not installed. Will not be able to use ridge regression for gpdistance and corr_gpdim."
@@ -63,7 +64,7 @@ def compute_timestep(
     num_iters: int = 20,
     pts_per_period: int = 1000,
     timescale: str = "Fourier",
-):
+) -> Tuple[np.ndarray, np.ndarray]:
     """
     Given a dynamical system object, find the integration timestep based on the largest
     signficant frequency
@@ -124,7 +125,7 @@ def compute_timestep(
         all_periods.append(system.period)
     print("all dt: ", all_dt)
     print("all periods: ", all_periods)
-    return system.dt, system.period
+    return np.array(all_dt), np.array(all_periods)
 
 
 def estimate_powerlaw(data0):

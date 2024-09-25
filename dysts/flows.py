@@ -1,4 +1,3 @@
-# type: ignore
 """
 Various low-dimensional dynamical systems in Python.
 For flows that occur on unbounded intervals (eg non-autonomous systems),

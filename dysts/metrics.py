@@ -7,8 +7,8 @@ libraries.
 """
 
 import numpy as np
-from scipy.spatial.distance import cdist  # type: ignore
-from scipy.stats import (  # type: ignore
+from scipy.spatial.distance import cdist
+from scipy.stats import (
     kendalltau,
     multivariate_normal,
     pearsonr,
@@ -18,7 +18,7 @@ from scipy.stats import (  # type: ignore
 from .utils import has_module
 
 if has_module("sklearn"):
-    from sklearn.feature_selection import mutual_info_regression  # type: ignore
+    from sklearn.feature_selection import mutual_info_regression
 
 
 def dtw(y_true, y_pred):

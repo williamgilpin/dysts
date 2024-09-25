@@ -21,12 +21,12 @@ from typing import Any, Callable, Dict, Optional, Sequence
 
 import numpy as np
 from numpy.typing import ArrayLike
-from scipy.interpolate import interp1d  # type: ignore
+from scipy.interpolate import interp1d
 
 from .utils import ddeint, has_module, integrate_dyn, standardize_ts
 
 if has_module("numba"):
-    from numba import njit  # type: ignore
+    from numba import njit
 else:
     warnings.warn("Numba not installed. Falling back to no JIT compilation.")
 
@@ -148,6 +148,11 @@ class BaseDyn:
             such as `period`, `maximum_lyapunov_estimated`, `mean`, etc invalid!"""
         )
 
+    def set_statistics(self, mean: np.ndarray, std: np.ndarray) -> None:
+        """Set the mean and standard deviation of the system"""
+        self.mean = mean
+        self.std = std
+
     def _load_data(self):
         """Load data from a JSON file"""
         with open(self.data_path, "r") as read_file:
@@ -178,9 +183,7 @@ class BaseDyn:
         Load a precomputed trajectory for the dynamical system
 
         Args:
-            subsets ("train" |  "test"): Which dataset (initial conditions) to load
-            granularity ("course" | "fine"): Whether to load fine or coarsely-spaced samples
-            noise (bool): Whether to include stochastic forcing
+            data_path (str): Path to the data file, of format {name}.json.gz
             standardize (bool): Standardize the output time series.
             return_times (bool): Whether to return the timepoints at which the solution
                 was computed
@@ -346,7 +349,18 @@ class DynSys(BaseDyn):
         if len(sol) == 0:  # if no complete trajectories, return None
             return (tpts, None) if return_times else None
 
+        # transpose the trajectory to shape (B, T, D)
         sol = np.transpose(np.array(sol), (0, 2, 1))  # type: ignore
+
+        # # Old standardization strategy (too unreliable, since we need a longer horizon)
+        # if standardize:
+        #     print(f"Standardizing {self.name} trajectories with shape {sol.shape}... ")  # type: ignore
+        #     try:
+        #         sol = standardize_ts(sol)
+        #     except Exception as err:
+        #         print(f"Error {err=}, {type(err)=}")
+        #         warnings.warn("Standardization failed")
+        #         raise err
 
         # postprocess the trajectory, if necessary
         if hasattr(self, "_postprocessing") and postprocess:
