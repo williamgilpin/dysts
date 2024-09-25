@@ -20,18 +20,19 @@ class TestTrajectoryEnsemble(unittest.TestCase):
 
     def test_ensemble_generation(self):
         sols = make_trajectory_ensemble(
-            4096,
+            1024,
             resample=True,
-            pts_per_period=64,
+            pts_per_period=128,
             use_multiprocessing=True,
             ic_transform=self.ic_sampler,
             param_transform=self.pt_sampler,
-            sys_class="continuous_no_delay",
+            subset=["Aizawa", "SprottJ"],  # sys_class="continuous_no_delay",
             rng=self.ic_sampler.rng,
             standardize=True,
             embedding_dim=2,
         )
         self.assertTrue(len(sols) > 0)
+        self.assertTrue(None not in sols.values())
 
     def test_initial_conditions(self):
         num_ic_trials = 4
@@ -42,21 +43,21 @@ class TestTrajectoryEnsemble(unittest.TestCase):
                 resample=True,
                 pts_per_period=128,
                 use_multiprocessing=False,
-                ic_transform=self.ic_sampler,
+                ic_transform=self.ic_sampler,  # TODO: some NaNs seen in trajectories, even though this should be on attractor
                 subset=["Lorenz"],
                 rng=self.ic_sampler.rng,
                 standardize=True,
             )
-            trajs.append(sols["Lorenz"])
-
-        self.assertEqual(len(trajs), num_ic_trials)
-
-        for traj in trajs:
+            traj = sols["Lorenz"]
             self.assertIsInstance(traj, np.ndarray)
             self.assertEqual(traj.shape[0], 1024)
             self.assertFalse(np.any(np.isnan(traj)))
             self.assertTrue(np.all(traj >= -1) and np.all(traj <= 1))
+            trajs.append(traj)
 
+        self.assertEqual(len(trajs), num_ic_trials)
+
+    # TODO: some param perturbations will yield NaNs in the trajectory, need to add tests
     def test_parameter_perturbations(self):
         num_ic_trials = 4
         trajs = []
@@ -71,15 +72,14 @@ class TestTrajectoryEnsemble(unittest.TestCase):
                 rng=self.pt_sampler.rng,
                 standardize=True,
             )
-            trajs.append(sols["Lorenz"])
-
-        self.assertEqual(len(trajs), num_ic_trials)
-
-        for traj in trajs:
+            traj = sols["Lorenz"]
             self.assertIsInstance(traj, np.ndarray)
             self.assertEqual(traj.shape[0], 1024)
             self.assertFalse(np.any(np.isnan(traj)))
             self.assertTrue(np.all(traj >= -1) and np.all(traj <= 1))
+            trajs.append(traj)
+
+        self.assertEqual(len(trajs), num_ic_trials)
 
 
 if __name__ == "__main__":

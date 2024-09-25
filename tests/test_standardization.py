@@ -112,7 +112,7 @@ def main(
             ax.plot(*sol.T[:3], alpha=0.5, linewidth=0.5, color=colors[param_idx])
             ax.scatter(
                 *sol.T[:3, 0], marker="*", s=50, alpha=0.8, color=colors[param_idx]
-            )
+            )  # type: ignore
     # plt.show()
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
