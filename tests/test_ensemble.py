@@ -25,7 +25,6 @@ class TestTrajectoryEnsemble(unittest.TestCase):
             pts_per_period=128,
             use_multiprocessing=True,
             ic_transform=self.ic_sampler,
-            param_transform=self.pt_sampler,
             subset=["Aizawa", "SprottJ"],  # sys_class="continuous_no_delay",
             rng=self.ic_sampler.rng,
             standardize=True,

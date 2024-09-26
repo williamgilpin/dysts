@@ -20,8 +20,9 @@ large_multivariate__pts_per_period_100__periods_100.json
 *__periods_100*
 all_outputs.json*
 
-# linting
+# linting / type checking
 pyrightconfig.json
+.mypy.ini
 
 # C extensions
 *.so
