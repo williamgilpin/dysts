@@ -128,8 +128,7 @@ class BaseDyn:
         self.ic = transform_fn(self.ic, system=self)  # type: ignore
 
         warnings.warn(
-            """Changing the initial condition makes other estimated parameters
-            such as `period`, `mean`, etc invalid!"""
+            "Changing the initial condition makes other estimated parameters such as `period`, `mean`, etc invalid!"
         )
 
     def transform_params(
@@ -144,8 +143,7 @@ class BaseDyn:
         )
 
         warnings.warn(
-            """Changing the systems parameters makes all other estimated parameters
-            such as `period`, `maximum_lyapunov_estimated`, `mean`, etc invalid!"""
+            "Changing the systems parameters makes all other estimated parameters such as `period`, `maximum_lyapunov_estimated`, `mean`, etc invalid!"
         )
 
     def set_statistics(self, mean: np.ndarray, std: np.ndarray) -> None:
