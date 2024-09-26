@@ -105,19 +105,22 @@ def _compute_trajectory(
     kwargs: Dict[str, Any],
     ic_transform: Optional[BaseSampler] = None,
     param_transform: Optional[BaseSampler] = None,
-    rng: np.random.Generator = DEFAULT_RNG,
+    ic_rng: Optional[np.random.Generator] = None,
+    param_rng: Optional[np.random.Generator] = None,
 ) -> Array:
     """A helper function for multiprocessing"""
     eq = getattr(dfl, equation_name)()
 
     if param_transform is not None:
-        param_transform.set_rng(rng)
+        if param_rng is not None:
+            param_transform.set_rng(param_rng)
         eq.transform_params(param_transform)
 
     # the initial condition transform must come after the parameter transform
     # because suitable initial conditions may depend on the parameters
     if ic_transform is not None:
-        ic_transform.set_rng(rng)
+        if ic_rng is not None:
+            ic_transform.set_rng(ic_rng)
         eq.transform_ic(ic_transform)
 
     traj = eq.make_trajectory(n, **kwargs)
@@ -131,7 +134,8 @@ def make_trajectory_ensemble(
     ic_transform: Optional[BaseSampler] = None,
     param_transform: Optional[BaseSampler] = None,
     subset: Optional[Sequence[str]] = None,
-    rng: np.random.Generator = DEFAULT_RNG,
+    ic_rng: Optional[np.random.Generator] = None,
+    param_rng: Optional[np.random.Generator] = None,
     **kwargs,
 ) -> Dict[str, Array]:
     """
@@ -164,7 +168,7 @@ def make_trajectory_ensemble(
     all_sols = dict()
     if use_multiprocessing:
         all_sols = _multiprocessed_compute_trajectory(
-            rng, n, subset or [], ic_transform, param_transform, **kwargs
+            n, subset or [], ic_transform, param_transform, ic_rng, param_rng, **kwargs
         )
     else:
         # stupid lint error fix for subset being possibly None
@@ -178,21 +182,33 @@ def make_trajectory_ensemble(
 
 
 def _multiprocessed_compute_trajectory(
-    rng: np.random.Generator,
     n: int,
     subset: Sequence[str],
     ic_transform: Optional[BaseSampler] = None,
     param_transform: Optional[BaseSampler] = None,
+    ic_rng: Optional[np.random.Generator] = None,
+    param_rng: Optional[np.random.Generator] = None,
     **kwargs,
 ) -> Dict[str, Array]:
     """
     Helper for handling multiprocessed integration
     with _compute_trajectory with proper RNG seeding
 
-    NOTE: By default, every child process will receive a new rng, this is
+    NOTE: If rngs are provided, every child process will receive a new rng, this is
     necessary for proper sampling as per: https://numpy.org/doc/stable/reference/random/parallel.html
+
+    otherwise, the default rng will be used for each process and the results will be deterministic
     """
-    rng_stream = rng.spawn(len(subset))
+    if ic_rng is not None:
+        ic_rng_stream = ic_rng.spawn(len(subset))
+    else:
+        ic_rng_stream = [None for _ in subset]
+
+    if param_rng is not None:
+        param_rng_stream = param_rng.spawn(len(subset))
+    else:
+        param_rng_stream = [None for _ in subset]
+
     with Pool() as pool:
         results = pool.starmap(
             _compute_trajectory,
@@ -203,9 +219,12 @@ def _multiprocessed_compute_trajectory(
                     kwargs,
                     ic_transform,
                     param_transform,
-                    rng,
+                    ic_rng,
+                    param_rng,
                 )
-                for equation_name, rng in zip(subset, rng_stream)
+                for equation_name, param_rng, ic_rng in zip(
+                    subset, param_rng_stream, ic_rng_stream
+                )
             ],
         )
 
