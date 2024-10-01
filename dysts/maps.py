@@ -1,3 +1,4 @@
+# type: ignore
 """
 Low-dimensional chaotic maps in Python
 
