@@ -73,27 +73,26 @@ class OnAttractorInitCondSampler(BaseSampler):
     events: Optional[List[Callable]] = None  # solve_ivp events
 
     def __call__(self, ic: Array, system: BaseDyn) -> Array:
-        if system.name is None:
-            raise ValueError("System must have a name")
-
         # make reference trajectory if not already cached
         if system.name not in self.trajectory_cache:
             if self.verbose:
                 print(f"Adding {system.name} to trajectory cache...")
+
             # Integrate the system with default parameters
             reference_traj = system.make_trajectory(
                 self.reference_traj_length,
                 events=self.events,
-            )[self.reference_traj_transient :]
+            )
 
-            if (
-                reference_traj is None
-            ):  # if integrate fails, resulting in an incomplete trajectory
+            # if integrate fails, resulting in an incomplete trajectory
+            if reference_traj is None:
                 raise ValueError(
                     f"Failed to integrate the system {system.name} with ic {system.ic} and params {system.params}"
                 )
-
-            self.trajectory_cache[system.name] = reference_traj
+            else:
+                self.trajectory_cache[system.name] = reference_traj[
+                    self.reference_traj_transient :
+                ]
 
         trajectory = self.trajectory_cache[system.name]
 
