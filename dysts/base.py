@@ -341,7 +341,7 @@ class DynSys(BaseDyn):
                 sol.append(traj)
             else:
                 warnings.warn(
-                    f"{self.name}: Integration did not complete for initial condition {ic}, only got {traj.shape[-1]} points. Skipping this point"
+                    f"{self.name}: Integration did not complete for initial condition {ic}, only got {traj.shape[-1]} points. Skipping this initial condition."
                 )
 
         if len(sol) == 0:  # if no complete trajectories, return None
@@ -349,16 +349,6 @@ class DynSys(BaseDyn):
 
         # transpose the trajectory to shape (B, T, D)
         sol = np.transpose(np.array(sol), (0, 2, 1))  # type: ignore
-
-        # # Old standardization strategy (too unreliable, since we need a longer horizon)
-        # if standardize:
-        #     print(f"Standardizing {self.name} trajectories with shape {sol.shape}... ")  # type: ignore
-        #     try:
-        #         sol = standardize_ts(sol)
-        #     except Exception as err:
-        #         print(f"Error {err=}, {type(err)=}")
-        #         warnings.warn("Standardization failed")
-        #         raise err
 
         # postprocess the trajectory, if necessary
         if hasattr(self, "_postprocessing") and postprocess:
