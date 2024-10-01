@@ -1,5 +1,6 @@
-"""Sampling functions for dysts"""
+"""Example sampling functions for dysts"""
 
+import warnings
 from dataclasses import dataclass, field
 from typing import Callable, Dict, List, Optional
 
@@ -86,9 +87,10 @@ class OnAttractorInitCondSampler(BaseSampler):
 
             # if integrate fails, resulting in an incomplete trajectory
             if reference_traj is None:
-                raise ValueError(
+                warnings.warn(
                     f"Failed to integrate the system {system.name} with ic {system.ic} and params {system.params}"
                 )
+                return ic
             else:
                 self.trajectory_cache[system.name] = reference_traj[
                     self.reference_traj_transient :
