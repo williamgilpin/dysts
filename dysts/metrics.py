@@ -482,19 +482,12 @@ class GaussianMixture:
         return samples
 
 
-def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_scale=1.0):
+def estimate_kl_divergence(
+        true_orbit, generated_orbit, n_samples=300, sigma_scale=1.0
+    ):
     """
     Estimate KL divergence between observed and generated orbits using Gaussian Mixture
     Models (GMMs).
-
-    References:
-        Hess, Florian, et al. "Generalized teacher forcing for learning chaotic
-        dynamics." Proceedings of the 40th International Conference on Machine Learning.
-        2023.
-
-        Hershey, John R., and Peder A. Olsen. "Approximating the Kullback Leibler
-        divergence between Gaussian mixture models." 2007 IEEE International Conference
-        on Acoustics, Speech and Signal Processing-ICASSP'07. Vol. 4. IEEE, 2007.
 
     Args:
         observed_orbit (np.ndarray): Observed orbit points, with shape (T, N) where T is
@@ -506,6 +499,19 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_sca
 
     Returns:
         float: Estimated KL divergence
+
+    References:
+        Hess, Florian, et al. "Generalized teacher forcing for learning chaotic
+        dynamics." Proceedings of the 40th International Conference on Machine Learning.
+        2023.
+
+        Hershey, John R., and Peder A. Olsen. "Approximating the Kullback Leibler
+        divergence between Gaussian mixture models." 2007 IEEE International Conference
+        on Acoustics, Speech and Signal Processing-ICASSP'07. Vol. 4. IEEE, 2007.
+
+    Development:
+        Rank-order (copula) transform each orbit coordinate, in order to reduce 
+        sensitivity to spacing among time seres.
     """
     # if the orbits are 1D, add a dimension to make them 2D
     if true_orbit.ndim == 1:
@@ -545,6 +551,43 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_sca
 
     return kl_estimate
 
+from scipy.fft import fft
+
+def hellinger_distance(p, q, axis=0):
+    """Compute the Hellinger distance between two distributions."""
+    return np.sqrt(1 - np.sum(np.sqrt(p * q), axis=axis))
+
+def average_hellinger_distance(ts_true, ts_gen, num_freq_bins=100):
+    """
+    Compute the average Hellinger distance between power spectra of two multivariate 
+    time series.
+
+    Args:
+        ts_true (np.ndarray): True time series, shape (n_samples, n_dimensions).
+        ts_gen (np.ndarray): Generated time series, shape (n_samples, n_dimensions).
+        num_freq_bins (int): Number of frequency bins to use in FFT for power spectrum.
+
+    Returns:
+        avg_dh (np.ndarray): Average Hellinger distance across all dimensions.
+
+    References:
+        Mikhaeil et al. Advances in Neural Information Processing Systems, 35: 
+            11297–11312, December 2022.
+    """
+    d = ts_true.shape[1]
+    all_dh = list()
+
+    for i in range(d):
+        f_true = np.abs(fft(ts_true[:, i]))**2
+        f_gen = np.abs(fft(ts_gen[:, i]))**2
+        f_true /= np.sum(f_true)
+        f_gen /= np.sum(f_gen)
+        all_dh.append(hellinger_distance(f_true[:num_freq_bins], f_gen[:num_freq_bins]))
+    all_dh = np.array(all_dh)
+
+    avg_dh = np.mean(all_dh, axis=0)
+
+    return avg_dh 
 
 def compute_metrics(y_true, y_pred, standardize=False, verbose=False):
     """
@@ -589,6 +632,7 @@ def compute_metrics(y_true, y_pred, standardize=False, verbose=False):
     metrics["coefficient_of_variation"] = coefficient_of_variation(y_true, y_pred)
     metrics["mutual_information"] = mutual_information(y_true, y_pred)
     metrics["kl divergence"] = estimate_kl_divergence(y_true, y_pred)
+    metrics["hellinger distance"] = average_hellinger_distance(y_true, y_pred)
 
     if verbose:
         for key, value in metrics.items():
