@@ -21,6 +21,32 @@ if has_module("sklearn"):
     from sklearn.feature_selection import mutual_info_regression
 
 
+def are_broadcastable(shape1, shape2):
+    """
+    Check if two numpy arrays are broadcastable.
+    """
+    # Reverse the shapes to align dimensions from the end
+    shape1, shape2 = shape1[::-1], shape2[::-1]
+    # Iterate over the dimensions
+    for dim1, dim2 in zip(shape1, shape2):
+        if dim1 != dim2 and dim1 != 1 and dim2 != 1:
+            return False
+    return True
+
+
+def calculate_season_error(y_past, m, time_dim=-1):
+    """
+    Calculate the mean absolute error between the forward and backward slices of the
+    past data.
+    """
+    assert (
+        0 < m < y_past.shape[time_dim]
+    ), "Season length must be less than the length of the training data"
+    yt_forward = np.take(y_past, range(m, y_past.shape[time_dim]), axis=time_dim)
+    yt_backward = np.take(y_past, range(y_past.shape[time_dim] - m), axis=time_dim)
+    return np.mean(np.abs(yt_forward - yt_backward))
+
+
 def dtw(y_true, y_pred):
     """
     Compute the Dynamic Time Warping (DTW) distance between two time series.
@@ -230,11 +256,10 @@ def mape(y_true, y_pred):
 
 def smape(x, y):
     """Symmetric mean absolute percentage error"""
-    assert len(y) == len(x)
     return 100 * np.mean(np.abs(x - y) / (np.abs(x) + np.abs(y))) * 2
 
 
-def mase(y, yhat, y_train=None, m=1):
+def mase(y, yhat, y_train=None, m=1, time_dim=-1):
     """
     The mean absolute scaled error.
 
@@ -247,22 +272,22 @@ def mase(y, yhat, y_train=None, m=1):
         y_train (ndarray): The training values.
         m (int): The season length, which is the number of time steps that are
             skipped when computing the denominator. Default is 1.
+        time_dim (int): The dimension of the time series. Default is -1.
 
     Returns:
         mase_val (float): The MASE error
     """
     if y_train is None:
         y_train = y.copy()
-    assert len(yhat) == len(y)
-    n, h = len(y_train), len(y)
-    assert 0 < m < len(y_train)
-    numer = np.sum(np.abs(y - yhat))
-    denom = np.sum(np.abs(y_train[m:] - y_train[:-m])) / (n - m)
-    mase_val = (1 / h) * (numer / denom)
-    return mase_val
+
+    assert are_broadcastable(yhat.shape, y_train.shape)
+    assert are_broadcastable(y.shape, y_train.shape)
+
+    season_error = calculate_season_error(y_train, m, time_dim)
+    return np.mean(np.abs(y - yhat)) / season_error
 
 
-def msis(y, yhat_lower, yhat_upper, y_obs, m, a=0.05):
+def msis(y, yhat_lower, yhat_upper, y_obs, m, time_dim=-1, a=0.05):
     """The mean scaled interval score.
 
     Adapted from tensorflow-probability and
@@ -281,17 +306,16 @@ def msis(y, yhat_lower, yhat_upper, y_obs, m, a=0.05):
     Returns:
       The scalar MSIS.
     """
-    assert len(y) == len(yhat_lower) == len(yhat_upper)
-    n = len(y_obs)
-    h = len(y)
-    numer = np.sum(
+    assert are_broadcastable(yhat_lower.shape, y.shape)
+    assert are_broadcastable(yhat_upper.shape, y.shape)
+
+    numer = np.mean(
         (yhat_upper - yhat_lower)
         + (2 / a) * (yhat_lower - y) * (y < yhat_lower)
         + (2 / a) * (y - yhat_upper) * (yhat_upper < y)
     )
-    denom = np.sum(np.abs(y_obs[m:] - y_obs[:-m])) / (n - m)
-    msis_val = (1 / h) * (numer / denom)
-    return msis_val
+    season_error = calculate_season_error(y_obs, m, time_dim)
+    return numer / season_error
 
 
 def spearman(y_true, y_pred):
@@ -589,13 +613,14 @@ def average_hellinger_distance(ts_true, ts_gen, num_freq_bins=100):
 
     return avg_dh 
 
-def compute_metrics(y_true, y_pred, standardize=False, verbose=False):
+def compute_metrics(y_true, y_pred, time_dim=0, standardize=False, verbose=False):
     """
     Compute multiple time series metrics
 
     Args:
         y_true (np.ndarray): The true values
         y_pred (np.ndarray): The predicted values
+        time_dim (int): The dimension of the time axis. Default is 0.
         standardize (bool): Whether to standardize the time series before computing the
             metrics. Default is False.
         verbose (bool): Whether to print the computed metrics. Default is False.
@@ -605,15 +630,19 @@ def compute_metrics(y_true, y_pred, standardize=False, verbose=False):
     """
     if standardize:
         scale_true, scale_pred = (
-            np.std(y_true, axis=0, keepdims=True),
-            np.std(y_pred, axis=0, keepdims=True),
+            np.std(y_true, axis=time_dim, keepdims=True),
+            np.std(y_pred, axis=time_dim, keepdims=True),
         )
         if np.all(scale_true == 0):
             scale_true = 1
         if np.all(scale_pred == 0):
             scale_pred = 1
-        y_true = (y_true - np.mean(y_true, axis=0, keepdims=True)) / scale_true
-        y_pred = (y_pred - np.mean(y_pred, axis=0, keepdims=True)) / scale_pred
+        y_true = (y_true - np.mean(y_true, axis=time_dim, keepdims=True)) / scale_true
+        y_pred = (y_pred - np.mean(y_pred, axis=time_dim, keepdims=True)) / scale_pred
+
+    assert are_broadcastable(
+        y_true.shape, y_pred.shape
+    ), "y_true and y_pred must have broadcastable shapes"
 
     metrics = dict()
     metrics["mse"] = mse(y_true, y_pred)

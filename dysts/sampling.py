@@ -104,7 +104,6 @@ class OnAttractorInitCondSampler(BaseSampler):
         if self.verbose:
             print(f"System: {system.name}")
             print(f"--> Original initial condition: {ic}")
-            print(f"--> New initial condition: {new_ic}")
 
         return new_ic
 
