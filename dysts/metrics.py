@@ -7,6 +7,7 @@ libraries.
 """
 
 import numpy as np
+from scipy.fft import fft
 from scipy.spatial.distance import cdist
 from scipy.stats import (
     kendalltau,
@@ -506,9 +507,7 @@ class GaussianMixture:
         return samples
 
 
-def estimate_kl_divergence(
-        true_orbit, generated_orbit, n_samples=300, sigma_scale=1.0
-    ):
+def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_scale=1.0):
     """
     Estimate KL divergence between observed and generated orbits using Gaussian Mixture
     Models (GMMs).
@@ -534,7 +533,7 @@ def estimate_kl_divergence(
         on Acoustics, Speech and Signal Processing-ICASSP'07. Vol. 4. IEEE, 2007.
 
     Development:
-        Rank-order (copula) transform each orbit coordinate, in order to reduce 
+        Rank-order (copula) transform each orbit coordinate, in order to reduce
         sensitivity to spacing among time seres.
     """
     # if the orbits are 1D, add a dimension to make them 2D
@@ -575,15 +574,17 @@ def estimate_kl_divergence(
 
     return kl_estimate
 
-from scipy.fft import fft
 
 def hellinger_distance(p, q, axis=0):
     """Compute the Hellinger distance between two distributions."""
     return np.sqrt(1 - np.sum(np.sqrt(p * q), axis=axis))
 
-def average_hellinger_distance(ts_true, ts_gen, num_freq_bins=100):
+
+def average_hellinger_distance(
+    ts_true: np.ndarray, ts_gen: np.ndarray, num_freq_bins: int = 100
+):
     """
-    Compute the average Hellinger distance between power spectra of two multivariate 
+    Compute the average Hellinger distance between power spectra of two multivariate
     time series.
 
     Args:
@@ -595,15 +596,15 @@ def average_hellinger_distance(ts_true, ts_gen, num_freq_bins=100):
         avg_dh (np.ndarray): Average Hellinger distance across all dimensions.
 
     References:
-        Mikhaeil et al. Advances in Neural Information Processing Systems, 35: 
+        Mikhaeil et al. Advances in Neural Information Processing Systems, 35:
             11297–11312, December 2022.
     """
     d = ts_true.shape[1]
     all_dh = list()
 
     for i in range(d):
-        f_true = np.abs(fft(ts_true[:, i]))**2
-        f_gen = np.abs(fft(ts_gen[:, i]))**2
+        f_true = np.abs(fft(ts_true[:, i])) ** 2
+        f_gen = np.abs(fft(ts_gen[:, i])) ** 2
         f_true /= np.sum(f_true)
         f_gen /= np.sum(f_gen)
         all_dh.append(hellinger_distance(f_true[:num_freq_bins], f_gen[:num_freq_bins]))
@@ -611,9 +612,12 @@ def average_hellinger_distance(ts_true, ts_gen, num_freq_bins=100):
 
     avg_dh = np.mean(all_dh, axis=0)
 
-    return avg_dh 
+    return avg_dh
 
-def compute_metrics(y_true, y_pred, time_dim=0, standardize=False, verbose=False):
+
+def compute_metrics(
+    y_true, y_pred, time_dim=0, standardize=False, verbose=False, exclude=[]
+):
     """
     Compute multiple time series metrics
 
@@ -644,26 +648,33 @@ def compute_metrics(y_true, y_pred, time_dim=0, standardize=False, verbose=False
         y_true.shape, y_pred.shape
     ), "y_true and y_pred must have broadcastable shapes"
 
-    metrics = dict()
-    metrics["mse"] = mse(y_true, y_pred)
-    metrics["mae"] = mae(y_true, y_pred)
-    metrics["rmse"] = rmse(y_true, y_pred)
-    metrics["nrmse"] = nrmse(y_true, y_pred)
-    metrics["marre"] = marre(y_true, y_pred)
-    metrics["r2_score"] = r2_score(y_true, y_pred)
-    metrics["rmsle"] = rmsle(y_true, y_pred)
-    metrics["smape"] = smape(y_true, y_pred)
-    metrics["mape"] = mape(y_true, y_pred)
-    metrics["wape"] = wape(y_true, y_pred)
-    metrics["spearman"] = spearman(y_true, y_pred)
-    metrics["pearson"] = pearson(y_true, y_pred)
-    metrics["kendall"] = kendall(y_true, y_pred)
-    metrics["coefficient_of_variation"] = coefficient_of_variation(y_true, y_pred)
-    metrics["mutual_information"] = mutual_information(y_true, y_pred)
-    metrics["kl divergence"] = estimate_kl_divergence(y_true, y_pred)
-    metrics["hellinger distance"] = average_hellinger_distance(y_true, y_pred)
+    metric_functions = {
+        "mse": mse,
+        "mae": mae,
+        "rmse": rmse,
+        "nrmse": nrmse,
+        "marre": marre,
+        "r2_score": r2_score,
+        "rmsle": rmsle,
+        "smape": smape,
+        "mape": mape,
+        "wape": wape,
+        "spearman": spearman,
+        "pearson": pearson,
+        "kendall": kendall,
+        "coefficient_of_variation": coefficient_of_variation,
+        "mutual_information": mutual_information,
+        "kl_divergence": estimate_kl_divergence,
+        "hellinger_distance": hellinger_distance,
+    }
+    metrics = {
+        metric: func(y_true, y_pred)
+        for metric, func in metric_functions.items()
+        if metric not in exclude
+    }
 
     if verbose:
         for key, value in metrics.items():
             print(f"{key}: {value:.4f}")
+
     return metrics
