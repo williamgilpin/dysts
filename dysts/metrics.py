@@ -616,7 +616,7 @@ def average_hellinger_distance(
 
 
 def compute_metrics(
-    y_true, y_pred, time_dim=0, standardize=False, verbose=False, exclude=[]
+    y_true, y_pred, time_dim=0, standardize=False, verbose=False, include=None
 ):
     """
     Compute multiple time series metrics
@@ -628,6 +628,8 @@ def compute_metrics(
         standardize (bool): Whether to standardize the time series before computing the
             metrics. Default is False.
         verbose (bool): Whether to print the computed metrics. Default is False.
+        include (optional, list): The metrics to include. Default is None, which
+            computes all metrics. Otherwise, specify a list of metrics to compute.
 
     Returns:
         dict: A dictionary containing the computed metrics
@@ -667,10 +669,18 @@ def compute_metrics(
         "kl_divergence": estimate_kl_divergence,
         "hellinger_distance": hellinger_distance,
     }
+
+    if include is None:
+        include = list(metric_functions.keys())
+
+    assert all(
+        metric in metric_functions for metric in include
+    ), f"Invalid metrics specified. Must be one of {list(metric_functions.keys())}"
+
     metrics = {
         metric: func(y_true, y_pred)
         for metric, func in metric_functions.items()
-        if metric not in exclude
+        if metric in include
     }
 
     if verbose:
