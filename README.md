@@ -93,6 +93,7 @@ To install the optional precomputed trajectories and benchmark results (a large,
 
 ## Development goals
 
++ make it easier to add new systems, slowly relax dependency on json data files
 + add multiple init cond support for delay systems
 + UPDATE WEB DOCUMENTATION: https://www.wgilpin.com/dysts/spbuild/html/index.html
 + align max lyapunov exponent with estimated spectrum better
