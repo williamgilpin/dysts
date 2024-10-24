@@ -3,7 +3,6 @@
 import gzip
 import json
 import warnings
-from dataclasses import dataclass, field
 from functools import partial
 from importlib import resources
 from itertools import starmap
@@ -37,23 +36,37 @@ def staticjit(func: Callable) -> Callable:
     return staticmethod(njit(func))
 
 
-@dataclass
 class BaseDyn:
     """A base class for dynamical systems"""
 
-    metadata_path: Optional[str] = None
-
-    # must be specified if metadata_path is not None
-    metadata: Dict[str, Any] = field(default_factory=dict)
-
-    random_state: int = 0
-
-    def _set_metadata(
+    def __init__(
         self,
+        metadata_path: Optional[str] = None,
+        metadata: Dict[str, Any] = {},
         required_fields: Tuple[str, ...] = BASE_REQUIRED_METADATA,
         **extra_metadata,
     ) -> None:
+        """
+        Initialize the dynamical system with metadata.
+
+        Args:
+            metadata_path (Optional[str]): Path to the JSON file containing metadata.
+            metadata (Optional[Dict[str, Any]]): Dictionary containing metadata.
+            required_fields (Tuple[str, ...]): Required metadata fields.
+            **extra_metadata: Additional metadata as keyword arguments.
+
+        Raises:
+            AssertionError: If no metadata is provided or if required fields are missing.
+
+        Note:
+            This method sets various attributes of the class instance based on the
+            metadata, including system name, parameters, initial conditions, and
+            computed statistics like mean and standard deviation.
+        """
         self.name = self.__class__.__name__
+        self.metadata_path = metadata_path
+        self.metadata = metadata
+        self.required_fields = required_fields
 
         # optionally load system attributes and computed quantities from a JSON file
         if self.metadata_path is not None:
@@ -178,26 +191,26 @@ class BaseDyn:
         raise NotImplementedError
 
 
-@dataclass
 class DynSys(BaseDyn):
     """A continuous dynamical system base class"""
 
-    metadata_path: str = DATAPATH_CONTINUOUS
-
-    # these can be provided by the user as metadata
-    # dt can also be provided as input to make_trajectory
-    dt: Optional[float] = None
-    period: Optional[float] = None
-    maximum_lyapunov_estimated: Optional[float] = None
-    parameters: Optional[Dict[str, Union[float, int, ArrayLike]]] = None
-
-    def __post_init__(self):
-        self._set_metadata(
-            parameters=self.parameters,
-            dt=self.dt,
-            period=self.period,
-            maximum_lyapunov_estimated=self.maximum_lyapunov_estimated,
+    def __init__(
+        self,
+        metadata_path: str = DATAPATH_CONTINUOUS,
+        parameters: Optional[Dict[str, ArrayLike]] = None,
+        dt: Optional[float] = None,
+        period: Optional[float] = None,
+        maximum_lyapunov_estimated: Optional[float] = None,
+        **kwargs: Any,
+    ):
+        super().__init__(
+            metadata_path=metadata_path,
+            parameters=parameters,
+            **kwargs,
         )
+        self.dt = dt
+        self.period = period
+        self.maximum_lyapunov_estimated = maximum_lyapunov_estimated
 
     def rhs(self, X, t):
         """The right hand side of a dynamical equation"""
@@ -306,7 +319,7 @@ class DynSys(BaseDyn):
                 standard_rhs,
                 (ic - mu) / std,
                 tpts,
-                dtval=self.dt,
+                dtval=dt,
                 method=method,
                 noise=noise,
                 jac=standard_jac if self.has_jacobian() else None,
@@ -340,31 +353,17 @@ class DynSys(BaseDyn):
         return (tpts, sol) if return_times else sol
 
 
-@dataclass
 class DynMap(BaseDyn):
-    """
-    A dynamical system base class, which loads and assigns parameter
-    values from a file
+    """A discrete map dynamical system class"""
 
-    Args:
-        params (list): parameter values for the differential equations
-        kwargs (dict): A dictionary of keyword arguments passed to the base dynamical
-            model class
-
-    Todo:
-        A function to look up additional metadata, if requested
-    """
-
-    _rhs_inv: Optional[Callable[..., Sequence[np.ndarray]]] = None
-
-    metadata_path: str = DATAPATH_DISCRETE
-
-    # these can be provided by the user as metadata
-    parameters: Optional[Dict[str, Union[float, int, ArrayLike]]] = None
-
-    def __init__(self, **kwargs):
-        self.data_path = DATAPATH_DISCRETE
-        super().__init__(**kwargs)
+    def __init__(
+        self,
+        metadata_path: str = DATAPATH_DISCRETE,
+        parameters: Optional[Dict[str, ArrayLike]] = None,
+        **kwargs,
+    ):
+        super().__init__(metadata_path=metadata_path, parameters=parameters, **kwargs)
+        self._rhs_inv: Optional[Callable[..., Sequence[np.ndarray]]] = None
 
     def rhs(self, X):
         """The right hand side of a dynamical map"""
@@ -437,7 +436,6 @@ class DynMap(BaseDyn):
             return sol
 
 
-@dataclass
 class DynSysDelay(BaseDyn):
     """
     A delayed differential equation object. Uses a exposed fork of ddeint
@@ -445,24 +443,25 @@ class DynSysDelay(BaseDyn):
     default value, but delay equations are infinite dimensional.
     """
 
-    metadata_path: str = DATAPATH_CONTINUOUS
-
-    # these can be provided by the user as metadata
-    # dt can also be provided as input to make_trajectory
-    dt: Optional[float] = None
-    period: Optional[float] = None
-    maximum_lyapunov_estimated: Optional[float] = None
-    tau: Optional[float] = None
-    parameters: Optional[Dict[str, Union[float, int, ArrayLike]]] = None
-
-    def __post_init__(self):
-        self._set_metadata(
-            parameters=self.parameters,
-            dt=self.dt,
-            period=self.period,
-            maximum_lyapunov_estimated=self.maximum_lyapunov_estimated,
-            tau=self.tau,
+    def __init__(
+        self,
+        metadata_path: str = DATAPATH_CONTINUOUS,
+        dt: Optional[float] = None,
+        period: Optional[float] = None,
+        maximum_lyapunov_estimated: Optional[float] = None,
+        tau: Optional[float] = None,
+        parameters: Optional[Dict[str, Union[float, int, ArrayLike]]] = None,
+        **kwargs,
+    ):
+        super().__init__(
+            metadata_path=metadata_path,
+            parameters=parameters,
+            **kwargs,
         )
+        self.dt = dt
+        self.period = period
+        self.maximum_lyapunov_estimated = maximum_lyapunov_estimated
+        self.tau = tau
 
     def delayed_rhs(
         self, X: Callable[[float], ArrayLike], t: float, tau: float

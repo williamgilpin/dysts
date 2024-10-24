@@ -7,7 +7,6 @@ libraries.
 """
 
 import numpy as np
-from scipy.fft import fft
 from scipy.spatial.distance import cdist
 from scipy.stats import (
     kendalltau,
@@ -603,8 +602,8 @@ def average_hellinger_distance(
     all_dh = list()
 
     for i in range(d):
-        f_true = np.abs(fft(ts_true[:, i])) ** 2
-        f_gen = np.abs(fft(ts_gen[:, i])) ** 2
+        f_true = np.abs(np.fft.fft(ts_true[:, i])) ** 2
+        f_gen = np.abs(np.fft.fft(ts_gen[:, i])) ** 2
         f_true /= np.sum(f_true)
         f_gen /= np.sum(f_gen)
         all_dh.append(hellinger_distance(f_true[:num_freq_bins], f_gen[:num_freq_bins]))
