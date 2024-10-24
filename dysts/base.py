@@ -1,14 +1,4 @@
-"""Dynamical systems in Python
-
-(M, T, D) or (T, D) convention for outputs
-
-Requirements:
-+ numpy
-+ scipy
-+ sdeint (for integration with noise)
-+ numba (optional, for faster integration)
-
-"""
+"""Dynamical systems in Python"""
 
 import gzip
 import json
@@ -17,13 +7,13 @@ from dataclasses import dataclass, field
 from functools import partial
 from importlib import resources
 from itertools import starmap
-from typing import Any, Callable, Dict, Optional, Sequence
+from typing import Any, Callable, Dict, Optional, Sequence, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike
 from scipy.interpolate import interp1d
 
-from .utils import ddeint, has_module, integrate_dyn, standardize_ts
+from .utils import cast_to_numpy, ddeint, has_module, integrate_dyn, standardize_ts
 
 if has_module("numba"):
     from numba import njit
@@ -34,26 +24,7 @@ else:
         return func
 
 
-data_default: Dict[str, Any] = {
-    "bifurcation_parameter": None,
-    "citation": None,
-    "correlation_dimension": None,
-    "delay": False,
-    "description": None,
-    "dt": 0.001,
-    "embedding_dimension": 3,
-    "hamiltonian": False,
-    "initial_conditions": [0.1, 0.1, 0.1],
-    "kaplan_yorke_dimension": None,
-    "lyapunov_spectrum_estimated": None,
-    "maximum_lyapunov_estimated": None,
-    "multiscale_entropy": None,
-    "nonautonomous": False,
-    "parameters": {},
-    "period": 10,
-    "pesin_entropy": None,
-    "unbounded_indices": [],
-}
+BASE_REQUIRED_METADATA = ("parameters", "initial_conditions")
 
 DATAPATH_CONTINUOUS = str(
     resources.files("dysts").joinpath("data/chaotic_attractors.json")
@@ -66,59 +37,115 @@ def staticjit(func: Callable) -> Callable:
     return staticmethod(njit(func))
 
 
-@dataclass(init=False)
+@dataclass
 class BaseDyn:
-    """A base class for dynamical systems
+    """A base class for dynamical systems"""
 
-    Attributes:
-        name (str): The name of the system
-        params (dict): The parameters of the system.
-        random_state (int): The seed for the random number generator. Defaults to None
+    metadata_path: Optional[str] = None
 
-    Development:
-        Add a function to look up additional metadata, if requested
-    """
+    # must be specified if metadata_path is not None
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
-    data_path: str
-    _postprocessing: Callable[[np.ndarray], Sequence[np.ndarray]]
+    random_state: int = 0
 
-    name: str = field(default_factory=str)
-    params: dict = field(default_factory=dict)
-    ic: np.ndarray = field(default_factory=lambda: np.array([]))
-    random_state: Optional[int] = None
-
-    # quantities to recompute on the fly under parameter perturbation
-    dt: float = 0.001
-    period: float = field(default=0.0)
-    mean: np.ndarray = field(default_factory=lambda: np.array([]))
-    std: np.ndarray = field(default_factory=lambda: np.array([]))
-    maximum_lyapunov_estimated: float = field(default=0.0)
-
-    def __init__(self, **entries):
+    def _set_metadata(
+        self,
+        required_fields: Tuple[str, ...] = BASE_REQUIRED_METADATA,
+        **extra_metadata,
+    ) -> None:
         self.name = self.__class__.__name__
-        # load system attributes and computed quantities from a JSON file
-        self.data = self._load_data()
 
-        self.params = self.data["parameters"]
-        self.params.update(entries)
-        self.params = {
-            k: v if np.isscalar(v) else np.array(v) for k, v in self.params.items()
-        }
+        # optionally load system attributes and computed quantities from a JSON file
+        if self.metadata_path is not None:
+            self.metadata.update(
+                self.load_system_metadata(self.name, self.metadata_path)
+            )
+
+        # update the metadata with any extra metadata provided that is not None
+        self.metadata.update({k: v for k, v in extra_metadata.items() if v is not None})
+
+        assert len(self.metadata) > 0, "No metadata provided"
+        assert all(
+            key in self.metadata for key in required_fields
+        ), "The provided metadata is missing some required fields"
+
+        # set all attributes in the metadata dictionary
+        for key in self.metadata:
+            setattr(self, key, self.metadata[key])
+
+        self.params = self.metadata["parameters"]
+        self.params = {k: cast_to_numpy(v) for k, v in self.params.items()}
         self.__dict__.update(self.params)
-        self.param_list = [getattr(self, param) for param in sorted(self.params.keys())]
+        self.param_list = [self.params[key] for key in sorted(self.params.keys())]
 
-        ic_val = self.data["initial_conditions"]
-        ic_val = np.array(ic_val) if not np.isscalar(ic_val) else np.array([ic_val])
-        self.ic = ic_val
-        np.random.seed(self.random_state)
-
-        # set all attributes in the data dictionary
-        for key in self.data:
-            setattr(self, key, self.data[key])
+        self.ic = cast_to_numpy(
+            self.metadata["initial_conditions"], singleton_scalar=True
+        )
 
         # computed statistics
         self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
         self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
+
+    @staticmethod
+    def load_system_metadata(system_name: str, data_path: str) -> Dict[str, Any]:
+        """
+        Load data from a JSON file
+
+        Returns None if the system name is not found
+        """
+        with open(data_path, "r") as file:
+            data = json.load(file)
+
+        if system_name in data:
+            return data[system_name]
+        else:
+            warnings.warn(f"No metadata available for {system_name}")
+            return {}
+
+    @staticmethod
+    def load_trajectory(
+        data_path: str, system_name: str, return_times=False, standardize=False
+    ):
+        """
+        Load a precomputed trajectory for the dynamical system
+
+        Args:
+            data_path (str): Path to the data file, of format {name}.json.gz
+            standardize (bool): Standardize the output time series.
+            return_times (bool): Whether to return the timepoints at which the solution
+                was computed
+
+        Returns:
+            sol (ndarray): A T x D trajectory
+            tpts, sol (ndarray): T x 1 timepoint array, and T x D trajectory
+
+        """
+        with gzip.open(data_path, "rt", encoding="utf-8") as file:
+            dataset = json.load(file)
+
+        tpts, sol = (
+            np.array(dataset[system_name]["time"]),
+            np.array(dataset[system_name]["values"]),
+        )
+
+        if standardize:
+            sol = standardize_ts(sol)
+
+        return (tpts, sol) if return_times else sol
+
+    @staticmethod
+    def _rhs(X, t):
+        """The right-hand side of the dynamical system. Overwritten by the subclass"""
+        raise NotImplementedError
+
+    @staticmethod
+    def _jac(X, t, *args):
+        """The Jacobian of the dynamical system. Overwritten by the subclass"""
+        raise NotImplementedError
+
+    def has_jacobian(self) -> bool:
+        """Check if the subclass has implemented the _jac method."""
+        return self._jac is not BaseDyn._jac
 
     def transform_ic(
         self,
@@ -146,89 +173,31 @@ class BaseDyn:
             "Changing the systems parameters makes all other estimated parameters such as `period`, `maximum_lyapunov_estimated`, `mean`, etc invalid!"
         )
 
-    def set_statistics(self, mean: np.ndarray, std: np.ndarray) -> None:
-        """Set the mean and standard deviation of the system"""
-        self.mean = mean
-        self.std = std
-
-    def _load_data(self):
-        """Load data from a JSON file"""
-        with open(self.data_path, "r") as read_file:
-            data = json.load(read_file)
-        try:
-            return data[self.name]
-        except KeyError:
-            print(f"No metadata available for {self.name}")
-            return data_default
-
-    @staticmethod
-    def _rhs(X, t):
-        """The right-hand side of the dynamical system. Overwritten by the subclass"""
-        raise NotImplementedError
-
-    @staticmethod
-    def _jac(X, t, *args):
-        """The Jacobian of the dynamical system. Overwritten by the subclass"""
-        return None
-
-    @staticmethod
-    def bound_trajectory(traj):
-        """Bound a trajectory within a periodic domain"""
-        return np.mod(traj, 2 * np.pi)
-
-    def load_trajectory(self, data_path: str, return_times=False, standardize=False):
-        """
-        Load a precomputed trajectory for the dynamical system
-
-        Args:
-            data_path (str): Path to the data file, of format {name}.json.gz
-            standardize (bool): Standardize the output time series.
-            return_times (bool): Whether to return the timepoints at which the solution
-                was computed
-
-        Returns:
-            sol (ndarray): A T x D trajectory
-            tpts, sol (ndarray): T x 1 timepoint array, and T x D trajectory
-
-        """
-
-        with gzip.open(data_path, "rt", encoding="utf-8") as file:
-            dataset = json.load(file)
-
-        tpts, sol = (
-            np.array(dataset[self.name]["time"]),
-            np.array(dataset[self.name]["values"]),
-        )
-
-        if standardize:
-            print(f"Standardizing {self.name}... ", sol.shape)
-            try:
-                sol = standardize_ts(sol)
-            except Exception as err:
-                print(f"Error {err=}, {type(err)=}")
-                warnings.warn("Standardization failed")
-                raise err
-
-        return (tpts, sol) if return_times else sol
-
     def make_trajectory(self, *args, **kwargs):
         """Make a trajectory for the dynamical system"""
         raise NotImplementedError
 
 
+@dataclass
 class DynSys(BaseDyn):
-    """
-    A continuous dynamical system base class, which loads and assigns parameter
-    values from a file
+    """A continuous dynamical system base class"""
 
-    Attributes:
-        kwargs (dict): A dictionary of keyword arguments passed to the base dynamical
-            model class
-    """
+    metadata_path: str = DATAPATH_CONTINUOUS
 
-    def __init__(self, **kwargs):
-        self.data_path = DATAPATH_CONTINUOUS
-        super().__init__(**kwargs)
+    # these can be provided by the user as metadata
+    # dt can also be provided as input to make_trajectory
+    dt: Optional[float] = None
+    period: Optional[float] = None
+    maximum_lyapunov_estimated: Optional[float] = None
+    parameters: Optional[Dict[str, Union[float, int, ArrayLike]]] = None
+
+    def __post_init__(self):
+        self._set_metadata(
+            parameters=self.parameters,
+            dt=self.dt,
+            period=self.period,
+            maximum_lyapunov_estimated=self.maximum_lyapunov_estimated,
+        )
 
     def rhs(self, X, t):
         """The right hand side of a dynamical equation"""
@@ -245,6 +214,8 @@ class DynSys(BaseDyn):
     def make_trajectory(
         self,
         n: int,
+        dt: float = 1e-3,
+        init_cond: Optional[np.ndarray] = None,
         resample: bool = True,
         pts_per_period: int = 100,
         return_times: bool = False,
@@ -253,72 +224,79 @@ class DynSys(BaseDyn):
         noise: float = 0.0,
         timescale: str = "Fourier",
         method: str = "Radau",
+        random_seed: int = 0,
         rtol: float = 1e-12,
         atol: float = 1e-12,
         **kwargs,
-    ):
+    ) -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]] | None:
         """
-        Generate a fixed-length trajectory with default timestep, parameters, and initial conditions
+        Generate a fixed-length trajectory for the dynamical system.
 
         Args:
-            n (int): the total number of trajectory points
-            resample (bool): whether to resample trajectories to have matching dominant
-                Fourier components
-            pts_per_period (int): if resampling, the number of points per period
-            standardize (bool): Standardize the output time series.
-            return_times (bool): Whether to return the timepoints at which the solution
-                was computed
-            postprocess (bool): Whether to apply coordinate conversions and other domain-specific
-                rescalings to the integration coordinates
-            noise (float): The amount of stochasticity in the integrated dynamics. This would correspond
-                to Brownian motion in the absence of any forcing.
-            timescale (str): The timescale to use for resampling. "Fourier" (default) uses
-                the dominant significant Fourier timescale, estimated using the periodogram
-                of the system and surrogates. "Lyapunov" uses the Lypunov timescale of
-                the system.
-            method (str): the integration method
-            rtol (float): relative tolerance for the integration routine
-            atol (float): absolute tolerance for the integration routine
-            **kwargs: Additional keyword arguments passed to the integration routine
+            n: Total number of trajectory points.
+            dt: Time step for integration. Defaults to 1e-3 or system's default if set.
+            init_cond: Initial conditions. If None, uses system's default.
+            resample: Whether to resample trajectory to match dominant Fourier components.
+            pts_per_period: Number of points per period if resampling.
+            return_times: If True, return time points along with trajectory.
+            standardize: If True, standardize the output time series.
+            postprocess: If True, apply coordinate conversions and rescalings.
+            noise: Stochasticity level in integrated dynamics (corresponds to Brownian motion).
+            timescale: Timescale for resampling. "Fourier" (default) or "Lyapunov".
+            method: Integration method.
+            random_seed: Seed for random number generation.
+            rtol: Relative tolerance for integration.
+            atol: Absolute tolerance for integration.
+            **kwargs: Additional arguments for integration routine.
 
         Returns:
-            sol (ndarray): A T x D trajectory
-            tpts, sol (ndarray): T x 1 timepoint array, and T x D trajectory
+            If return_times is False:
+                np.ndarray: T x D trajectory array.
+            If return_times is True:
+                Tuple[np.ndarray, np.ndarray]: T x 1 time point array and T x D trajectory array.
+            None: If no complete trajectories are found.
 
+        Raises:
+            ValueError: If an invalid timescale is provided.
         """
-        tpts = np.arange(n) * self.dt
-        np.random.seed(self.random_state)  # set random seed
+        np.random.seed(random_seed)
 
-        if resample:
-            if timescale == "Fourier":
-                tlim = (self.period) * (n / pts_per_period)
-            elif timescale == "Lyapunov":
-                tlim = (1 / self.maximum_lyapunov_estimated) * (n / pts_per_period)
-            else:
-                tlim = (self.period) * (n / pts_per_period)
+        # set timescales and interpolation points for the solution
+        dt = dt if self.dt is None else self.dt
 
-            upscale_factor = (tlim / self.dt) / n
+        if resample and (
+            self.period is not None and self.maximum_lyapunov_estimated is not None
+        ):
+            tlim = {
+                "Fourier": self.period * (n / pts_per_period),
+                "Lyapunov": (1 / self.maximum_lyapunov_estimated)
+                * (n / pts_per_period),
+            }.get(timescale)
+
+            if tlim is None:
+                raise ValueError(f"Invalid timescale: {timescale}")
+
+            upscale_factor = (tlim / dt) / n
             if upscale_factor > 1e3:
                 warnings.warn(
                     f"Expect slowdown due to excessive integration required; scale factor {upscale_factor}"
                 )
+
             tpts = np.linspace(0, tlim, n)
-
-        mu = self.mean if standardize else np.zeros_like(self.ic)
-        std = self.std if standardize else np.ones_like(self.ic)
-
-        # check for analytical Jacobian, with condition of ic being a ndim array
-        if (self.ic.ndim > 1 and self.jac(self.ic[0], 0)) or self.jac(
-            self.ic, 0
-        ) is not None:
-            jac = lambda t, x: self.jac(std * x + mu, t) / std
         else:
-            jac = None
+            tpts = np.arange(n) * dt
 
-        m = self.ic.ndim
-        ics = np.expand_dims(self.ic, axis=0) if m < 2 else self.ic
+        # standardization and initial condition preprocessing
+        ics = self.ic if init_cond is None else init_cond
+        ics = np.expand_dims(ics, axis=0) if ics.ndim < 2 else ics
 
-        def standard_rhs(X, t):
+        mu = self.mean if standardize else np.zeros_like(ics[0])
+        std = self.std if standardize else np.ones_like(ics[0])
+
+        def standard_jac(t, X):
+            return self.jac(X * std + mu, t) / std
+
+        def standard_rhs(t, X):
             return self(X * std + mu, t) / std
 
         # compute trajectories
@@ -331,7 +309,7 @@ class DynSys(BaseDyn):
                 dtval=self.dt,
                 method=method,
                 noise=noise,
-                jac=jac,
+                jac=standard_jac if self.has_jacobian() else None,
                 rtol=rtol,
                 atol=atol,
                 **kwargs,
@@ -345,7 +323,7 @@ class DynSys(BaseDyn):
                 )
 
         if len(sol) == 0:  # if no complete trajectories, return None
-            return (tpts, None) if return_times else None
+            return None
 
         # transpose the trajectory to shape (B, T, D)
         sol = np.transpose(np.array(sol), (0, 2, 1))  # type: ignore
@@ -362,6 +340,7 @@ class DynSys(BaseDyn):
         return (tpts, sol) if return_times else sol
 
 
+@dataclass
 class DynMap(BaseDyn):
     """
     A dynamical system base class, which loads and assigns parameter
@@ -376,7 +355,12 @@ class DynMap(BaseDyn):
         A function to look up additional metadata, if requested
     """
 
-    _rhs_inv: Callable[..., Sequence[np.ndarray]]
+    _rhs_inv: Optional[Callable[..., Sequence[np.ndarray]]] = None
+
+    metadata_path: str = DATAPATH_DISCRETE
+
+    # these can be provided by the user as metadata
+    parameters: Optional[Dict[str, Union[float, int, ArrayLike]]] = None
 
     def __init__(self, **kwargs):
         self.data_path = DATAPATH_DISCRETE
@@ -389,15 +373,12 @@ class DynMap(BaseDyn):
 
     def rhs_inv(self, Xp):
         """The inverse of the right hand side of a dynamical map"""
-        rhs_inv_op = getattr(self, "_rhs_inv")
-        # if hasattr(self, "_rhs_inv"):
-        if callable(rhs_inv_op):
-            out = rhs_inv_op(*Xp.T, *self.param_list)
+        if self._rhs_inv is not None:
+            out = self._rhs_inv(*Xp.T, *self.param_list)
         else:
             warnings.warn(
                 f"The function _rhs_inv has not been implemented for {self.name}"
             )
-            # fail loudly
             raise NotImplementedError
         return np.vstack(out).T
 
@@ -406,23 +387,33 @@ class DynMap(BaseDyn):
         return self.rhs(X)
 
     def make_trajectory(
-        self, n, inverse=False, return_times=False, standardize=False, **kwargs
-    ):
+        self,
+        n: int,
+        init_cond: Optional[np.ndarray] = None,
+        inverse: bool = False,
+        return_times: bool = False,
+        standardize: bool = False,
+        **kwargs,
+    ) -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]:
         """
-        Generate a fixed-length trajectory with default timestep,
-        parameters, and initial condition(s)
+        Generate a fixed-length trajectory with default parameters and initial condition(s).
 
         Args:
-            n (int): the length of each trajectory
-            inverse (bool): whether to reverse a trajectory
-            standardize (bool): Standardize the output time series.
-            return_times (bool): Whether to return the timepoints at which the solution
-                was computed
+            n (int): The length of each trajectory.
+            init_cond (Optional[np.ndarray]): Initial conditions. If None, use default.
+            inverse (bool): Whether to reverse the trajectory.
+            return_times (bool): Whether to return the timepoints of the solution.
+            standardize (bool): Whether to standardize the output time series.
+
+        Returns:
+            Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]:
+                If return_times is False, returns the trajectory.
+                If return_times is True, returns a tuple of (timepoints, trajectory).
+
         """
 
-        m = self.ic.ndim
-        # shape (M, D)
-        curr = np.expand_dims(self.ic, axis=0) if m < 2 else self.ic
+        ics = self.ic if init_cond is None else init_cond
+        curr = np.expand_dims(ics, axis=0) if ics.ndim < 2 else ics
 
         if inverse:
             propagator = self.rhs_inv
@@ -446,45 +437,54 @@ class DynMap(BaseDyn):
             return sol
 
 
+@dataclass
 class DynSysDelay(BaseDyn):
     """
     A delayed differential equation object. Uses a exposed fork of ddeint
     The delay timescale is assumed to be the "tau" field. The embedding dimensions are set to a
     default value, but delay equations are infinite dimensional.
-
-    Attributes:
-        kwargs (dict): A dictionary of keyword arguments passed to the dynamical
-            system parent class
-
-    Todo:
-        Currently, only univariate delay equations and single initial conditons
-        are supported
     """
 
-    tau: float
+    metadata_path: str = DATAPATH_CONTINUOUS
 
-    def __init__(self, **kwargs):
-        self.data_path = DATAPATH_CONTINUOUS
-        super().__init__(**kwargs)
+    # these can be provided by the user as metadata
+    # dt can also be provided as input to make_trajectory
+    dt: Optional[float] = None
+    period: Optional[float] = None
+    maximum_lyapunov_estimated: Optional[float] = None
+    tau: Optional[float] = None
+    parameters: Optional[Dict[str, Union[float, int, ArrayLike]]] = None
 
-    def rhs(self, X: Callable[[float], ArrayLike], t: float) -> ArrayLike:
+    def __post_init__(self):
+        self._set_metadata(
+            parameters=self.parameters,
+            dt=self.dt,
+            period=self.period,
+            maximum_lyapunov_estimated=self.maximum_lyapunov_estimated,
+            tau=self.tau,
+        )
+
+    def delayed_rhs(
+        self, X: Callable[[float], ArrayLike], t: float, tau: float
+    ) -> ArrayLike:
         """The right hand side of a dynamical equation"""
-        xt, xt_delayed = X(t), X(t - self.tau)
+        xt, xt_delayed = X(t), X(t - tau)
         return self._rhs(xt, xt_delayed, t, *self.param_list)  # type: ignore
 
     def make_trajectory(
         self,
         n: int,
-        method: str = "Euler",
-        noise: float = 0.0,
+        init_cond: Optional[np.ndarray] = None,
+        dt: float = 1e-3,
+        tau: float = 1,
         resample: bool = False,
         pts_per_period: int = 100,
         standardize: bool = False,
         timescale: str = "Fourier",
         return_times: bool = False,
-        postprocess: bool = True,
         embedding_dim: Optional[int] = None,
         history_function: Optional[Callable[[float], ArrayLike]] = None,
+        random_seed: int = 0,
         **kwargs,
     ):
         """
@@ -517,40 +517,50 @@ class DynSysDelay(BaseDyn):
         Todo:
             Support for multiple initial conditions
         """
+        np.random.seed(random_seed)
+
+        # timestep and time delay
         # add delay time increment for potential interpolation later on
-        interp_pad = self.tau
+        dt = dt if self.dt is None else self.dt
+        tau = tau if self.tau is None else self.tau
+        interp_pad = tau
 
-        # if not provided, fallback to default or 1 if a default doesnt exist
-        emb_dim = (
-            getattr(self, "embedding_dimension", 1)
-            if embedding_dim is None
-            else embedding_dim
-        )
+        if resample and (
+            self.period is not None and self.maximum_lyapunov_estimated is not None
+        ):
+            tlim = {
+                "Fourier": self.period * (n / pts_per_period),
+                "Lyapunov": (1 / self.maximum_lyapunov_estimated)
+                * (n / pts_per_period),
+            }.get(timescale)
 
-        tpts = np.linspace(0, n * self.dt + interp_pad, n)
-        np.random.seed(self.random_state)  # set random seed
+            if tlim is None:
+                raise ValueError(f"Invalid timescale: {timescale}")
 
-        if resample:
-            if timescale == "Fourier":
-                tlim = (self.period) * (n / pts_per_period)
-            elif timescale == "Lyapunov":
-                tlim = (1 / self.maximum_lyapunov_estimated) * (n / pts_per_period)
-            else:
-                tlim = (self.period) * (n / pts_per_period)
-
-            upscale_factor = (tlim / self.dt) / n
+            upscale_factor = (tlim / dt) / n
             if upscale_factor > 1e3:
                 warnings.warn(
                     f"Expect slowdown due to excessive integration required; scale factor {upscale_factor}"
                 )
 
             tpts = np.linspace(0, tlim + interp_pad, n)
+        else:
+            tpts = np.linspace(0, n * dt + interp_pad, n)
+
+        # embedding dimension:if not provided, fallback to default or 1 if a default doesnt exist
+        emb_dim = (
+            getattr(self, "embedding_dimension", 1)
+            if embedding_dim is None
+            else embedding_dim
+        )
+
+        ics = self.ic if init_cond is None else init_cond
 
         # assume constant past points, overridable behavior
         # need to change initial conditions to NOT be the same size as the default embedding
         # dimensions, since the delay embedding happens as a postprocessing step
-        history_fn = history_function or (lambda t: self.ic[0])
-        sol = ddeint(self.rhs, history_fn, tpts)
+        history_fn = history_function or (lambda t: ics[0])
+        sol = ddeint(partial(self.delayed_rhs, tau=tau), history_fn, tpts)
 
         # augment the trajectory with per-dimension delay embeddings
         interp_fns = [
@@ -563,12 +573,12 @@ class DynSysDelay(BaseDyn):
             for dim in range(sol.shape[-1])
         ]
 
-        sample_ts = np.linspace(self.tau, tpts[-1], n)
+        sample_ts = np.linspace(tau, tpts[-1], n)
         sol = (
             np.stack(
                 [
                     [fn(sample_ts - tau) for fn in interp_fns]
-                    for tau in np.linspace(0, self.tau, emb_dim)
+                    for tau in np.linspace(0, tau, emb_dim)
                 ],
                 axis=1,
             )

@@ -141,9 +141,7 @@ class TestJacobian(unittest.TestCase):
             eq = getattr(dfl, name)()
 
             # skip if no analytic Jacobian implemented
-            if not hasattr(eq, "jac"):
-                continue
-            if eq.jac(eq.ic, 0) is None:
+            if not eq.has_jacobian():
                 continue
 
             jac_analytic = eq.jac(eq.ic, 0)

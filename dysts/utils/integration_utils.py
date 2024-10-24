@@ -15,6 +15,14 @@ if has_module("sdeint"):
     from sdeint import itoint
 
 
+def cast_to_numpy(x, singleton_scalar=False):
+    if singleton_scalar:
+        scalar_cast = np.array([x])
+    else:
+        scalar_cast = x
+    return np.array(x) if not np.isscalar(x) else scalar_cast
+
+
 def resample_timepoints(model, ic, tpts, cutoff=10000, pts_per_period=100):
     """
     Given a differential equation, initial condition, and a set of
@@ -72,7 +80,7 @@ def integrate_dyn(
                 "Please install the package sdeint in order to integrate with noise."
             )
         gw = lambda y, t: noise * np.diag(ic)
-        fw = lambda y, t: np.array(f(y, t))
+        fw = lambda y, t: np.array(f(t, y))
         tvals_fine = np.linspace(
             np.min(tvals), np.max(tvals), int(np.ptp(tvals) / dtval)
         )
@@ -80,7 +88,7 @@ def integrate_dyn(
         sol = np.vstack([resample(item, len(tvals)) for item in sol_fine])
     else:
         sol0 = solve_ivp(
-            lambda t, y: f(y, t),
+            f,
             [tvals[0], tvals[-1]],
             ic,
             t_eval=tvals,
