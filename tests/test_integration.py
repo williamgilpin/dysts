@@ -8,7 +8,7 @@ import dysts.maps as dmp
 from dysts.base import DynMap, DynSys, DynSysDelay
 from dysts.systems import get_attractor_list
 
-NUM_TEST_SYSTEMS = 20
+NUM_TEST_SYSTEMS = 200
 
 
 class TestDynamicalSystems(unittest.TestCase):
@@ -69,13 +69,5 @@ class TestDynamicalSystems(unittest.TestCase):
                 self.assertEqual(sol.shape[0], 1000)
 
 
-def main():
-    sys_name = "Lorenz"
-    sys = getattr(dfl, sys_name)(foopa=5)
-    sol = sys.make_trajectory(1000, return_times=True)
-    print(sol)
-
-
 if __name__ == "__main__":
-    # unittest.main()
-    main()
+    unittest.main()

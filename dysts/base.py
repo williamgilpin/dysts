@@ -82,10 +82,6 @@ class BaseDyn:
             key in self.metadata for key in required_fields
         ), "The provided metadata is missing some required fields"
 
-        # set all attributes in the metadata dictionary
-        for key in self.metadata:
-            setattr(self, key, self.metadata[key])
-
         self.params = self.metadata["parameters"]
         self.params = {k: cast_to_numpy(v) for k, v in self.params.items()}
         self.__dict__.update(self.params)
@@ -94,10 +90,13 @@ class BaseDyn:
         self.ic = cast_to_numpy(
             self.metadata["initial_conditions"], singleton_scalar=True
         )
-
-        # computed statistics
         self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
         self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
+
+        # set all attributes in the metadata dictionary
+        # do this last so the user can override any of the above
+        for key in self.metadata:
+            setattr(self, key, self.metadata[key])
 
     @staticmethod
     def load_system_metadata(system_name: str, data_path: str) -> Dict[str, Any]:
