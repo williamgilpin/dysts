@@ -1,9 +1,10 @@
+import random
 import unittest
 
 import numpy as np
 
 from dysts.sampling import GaussianParamSampler, OnAttractorInitCondSampler
-from dysts.systems import make_trajectory_ensemble
+from dysts.systems import get_attractor_list, make_trajectory_ensemble
 
 
 class TestTrajectoryEnsemble(unittest.TestCase):
@@ -18,16 +19,35 @@ class TestTrajectoryEnsemble(unittest.TestCase):
             random_seed=9999, scale=1e-4, verbose=True
         )
 
-    def test_ensemble_generation(self):
+    def test_ensemble_generation_with_standardization(self):
         sols = make_trajectory_ensemble(
             1024,
             resample=True,
             pts_per_period=128,
             use_multiprocessing=True,
             ic_transform=self.ic_sampler,
-            subset=["Aizawa", "SprottJ"],  # sys_class="continuous_no_delay",
+            subset=random.sample(
+                get_attractor_list(sys_class="continuous_no_delay"), 4
+            ),
             rng=self.ic_sampler.rng,
             standardize=True,
+            embedding_dim=2,
+        )
+        self.assertTrue(len(sols) > 0)
+        self.assertTrue(all(arr is not None for arr in sols.values()))
+
+    def test_ensemble_generation_without_standardization(self):
+        sols = make_trajectory_ensemble(
+            1024,
+            resample=True,
+            pts_per_period=128,
+            use_multiprocessing=True,
+            ic_transform=self.ic_sampler,
+            subset=random.sample(
+                get_attractor_list(sys_class="continuous_no_delay"), 4
+            ),
+            rng=self.ic_sampler.rng,
+            standardize=False,
             embedding_dim=2,
         )
         self.assertTrue(len(sols) > 0)

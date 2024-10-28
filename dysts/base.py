@@ -90,13 +90,14 @@ class BaseDyn:
         self.ic = cast_to_numpy(
             self.metadata["initial_conditions"], singleton_scalar=True
         )
-        self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
-        self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
 
         # set all attributes in the metadata dictionary
         # do this last so the user can override any of the above
         for key in self.metadata:
             setattr(self, key, self.metadata[key])
+
+        self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
+        self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
 
     @staticmethod
     def load_system_metadata(system_name: str, data_path: str) -> Dict[str, Any]:
