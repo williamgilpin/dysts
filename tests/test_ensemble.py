@@ -16,7 +16,7 @@ class TestTrajectoryEnsemble(unittest.TestCase):
             verbose=True,
         )
         self.pt_sampler = GaussianParamSampler(
-            random_seed=9999, scale=1e-4, verbose=True
+            random_seed=9999, scale=1e-1, verbose=True
         )
 
     def test_ensemble_generation_with_standardization(self):
@@ -56,6 +56,7 @@ class TestTrajectoryEnsemble(unittest.TestCase):
     def test_initial_conditions(self):
         num_ic_trials = 4
         trajs = []
+        attractors = get_attractor_list("continuous_no_delay")
         for _ in range(num_ic_trials):
             sols = make_trajectory_ensemble(
                 1024,
@@ -63,15 +64,15 @@ class TestTrajectoryEnsemble(unittest.TestCase):
                 pts_per_period=128,
                 use_multiprocessing=False,
                 ic_transform=self.ic_sampler,  # TODO: some NaNs seen in trajectories, even though this should be on attractor
-                subset=["Lorenz"],
+                subset=attractors,
                 rng=self.ic_sampler.rng,
-                standardize=True,
+                standardize=False,
             )
-            traj = sols["Lorenz"]
-            self.assertIsInstance(traj, np.ndarray)
-            self.assertEqual(traj.shape[0], 1024)
-            self.assertFalse(np.any(np.isnan(traj)))
-            # self.assertTrue(np.all(traj >= -1) and np.all(traj <= 1))
+            for system_name in attractors:
+                traj = sols[system_name]
+                self.assertIsInstance(traj, np.ndarray)
+                self.assertEqual(traj.shape[0], 1024)
+                self.assertFalse(np.any(np.isnan(traj)))
             trajs.append(traj)
 
         self.assertEqual(len(trajs), num_ic_trials)
@@ -80,6 +81,7 @@ class TestTrajectoryEnsemble(unittest.TestCase):
     def test_parameter_perturbations(self):
         num_ic_trials = 4
         trajs = []
+        attractors = get_attractor_list("continuous_no_delay")
         for _ in range(num_ic_trials):
             sols = make_trajectory_ensemble(
                 1024,
@@ -87,15 +89,15 @@ class TestTrajectoryEnsemble(unittest.TestCase):
                 pts_per_period=128,
                 use_multiprocessing=False,
                 param_transform=self.pt_sampler,
-                subset=["Lorenz"],
+                subset=attractors,
                 rng=self.pt_sampler.rng,
-                standardize=True,
+                standardize=False,
             )
-            traj = sols["Lorenz"]
-            self.assertIsInstance(traj, np.ndarray)
-            self.assertEqual(traj.shape[0], 1024)
-            self.assertFalse(np.any(np.isnan(traj)))
-            # self.assertTrue(np.all(traj >= -1) and np.all(traj <= 1))
+            for system_name in attractors:
+                traj = sols[system_name]
+                self.assertIsInstance(traj, np.ndarray)
+                self.assertEqual(traj.shape[0], 1024)
+                self.assertFalse(np.any(np.isnan(traj)))
             trajs.append(traj)
 
         self.assertEqual(len(trajs), num_ic_trials)
