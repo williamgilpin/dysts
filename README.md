@@ -40,7 +40,7 @@ data = load_dataset(subsets="train", data_format="numpy", standardize=True)
 
 Additional functionality and examples can be found in [`the demonstrations notebook.`](demos.ipynb). The full API documentation [can be found here](http://www.wgilpin.com/dysts/spbuild/html/index.html).
 
-A database of precomputed time series from each system is hosted on [HuggingFace](https://huggingface.co/datasets/ETDataset/ett)https://huggingface.co/datasets/williamgilpin/dysts)
+A database of precomputed time series from each system is hosted on [HuggingFace](https://huggingface.co/datasets/williamgilpin/dysts)
 
 ## Reference
 
