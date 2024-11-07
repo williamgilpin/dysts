@@ -23,7 +23,7 @@ else:
         return func
 
 
-BASE_REQUIRED_METADATA = ("parameters", "initial_conditions")
+BASE_REQUIRED_METADATA = ("parameters", ("dimension", "embedding_dimension"))
 
 DATAPATH_CONTINUOUS = str(
     resources.files("dysts").joinpath("data/chaotic_attractors.json")
@@ -43,7 +43,9 @@ class BaseDyn:
         self,
         metadata_path: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
-        required_fields: Tuple[str, ...] = BASE_REQUIRED_METADATA,
+        required_fields: Tuple[
+            Union[str, Tuple[str, ...]], ...
+        ] = BASE_REQUIRED_METADATA,
         **extra_metadata,
     ) -> None:
         """
@@ -78,26 +80,35 @@ class BaseDyn:
         self.metadata.update({k: v for k, v in extra_metadata.items() if v is not None})
 
         assert len(self.metadata) > 0, "No metadata provided"
-        assert all(
-            key in self.metadata for key in required_fields
-        ), "The provided metadata is missing some required fields"
+        assert all(  # check that all required fields are present
+            any(k in key for k in self.metadata)
+            if isinstance(key, tuple)
+            else key in self.metadata
+            for key in required_fields
+        ), f"The provided metadata {self.metadata} is missing some required fields: {required_fields}"
 
         self.params = self.metadata["parameters"]
         self.params = {k: cast_to_numpy(v) for k, v in self.params.items()}
         self.__dict__.update(self.params)
         self.param_list = [self.params[key] for key in sorted(self.params.keys())]
 
-        self.ic = cast_to_numpy(
-            self.metadata["initial_conditions"], singleton_scalar=True
-        )
+        if "initial_conditions" in self.metadata:
+            self.ic = cast_to_numpy(
+                self.metadata["initial_conditions"], singleton_scalar=True
+            )
 
         # set all attributes in the metadata dictionary
         # do this last so the user can override any of the above
         for key in self.metadata:
             setattr(self, key, self.metadata[key])
 
-        self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
-        self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
+        if "dimension" in self.metadata:
+            self.dimension = self.metadata["dimension"]
+        elif "embedding_dimension" in self.metadata:
+            self.dimension = self.metadata["embedding_dimension"]
+
+        self.mean = np.asarray(getattr(self, "mean", np.zeros(self.dimension)))
+        self.std = np.asarray(getattr(self, "std", np.ones(self.dimension)))
 
     @staticmethod
     def load_system_metadata(system_name: str, data_path: str) -> Dict[str, Any]:
@@ -300,7 +311,11 @@ class DynSys(BaseDyn):
             tpts = np.arange(n) * dt
 
         # standardization and initial condition preprocessing
-        ics = self.ic if init_cond is None else init_cond
+        if not hasattr(self, "ic") and init_cond is None:
+            raise ValueError(
+                "No initial conditions provided and no default initial conditions available for this system."
+            )
+        ics = init_cond if init_cond is not None else self.ic
         ics = np.expand_dims(ics, axis=0) if ics.ndim < 2 else ics
 
         mu = self.mean if standardize else np.zeros_like(ics[0])
@@ -362,7 +377,12 @@ class DynMap(BaseDyn):
         parameters: Optional[Dict[str, ArrayLike]] = None,
         **kwargs,
     ):
-        super().__init__(metadata_path=metadata_path, parameters=parameters, **kwargs)
+        super().__init__(
+            metadata_path=metadata_path,
+            parameters=parameters,
+            required_fields=("parameters",),
+            **kwargs,
+        )
         self._rhs_inv: Optional[Callable[..., Sequence[np.ndarray]]] = None
 
     def rhs(self, X):
@@ -410,8 +430,11 @@ class DynMap(BaseDyn):
                 If return_times is True, returns a tuple of (timepoints, trajectory).
 
         """
-
-        ics = self.ic if init_cond is None else init_cond
+        if not hasattr(self, "ic") and init_cond is None:
+            raise ValueError(
+                "No initial conditions provided and no default initial conditions available for this system."
+            )
+        ics = init_cond if init_cond is not None else self.ic
         curr = np.expand_dims(ics, axis=0) if ics.ndim < 2 else ics
 
         if inverse:
@@ -553,7 +576,11 @@ class DynSysDelay(BaseDyn):
             else embedding_dim
         )
 
-        ics = self.ic if init_cond is None else init_cond
+        if not hasattr(self, "ic") and init_cond is None:
+            raise ValueError(
+                "No initial conditions provided and no default initial conditions available for this system."
+            )
+        ics = init_cond if init_cond is not None else self.ic
 
         # assume constant past points, overridable behavior
         # need to change initial conditions to NOT be the same size as the default embedding
