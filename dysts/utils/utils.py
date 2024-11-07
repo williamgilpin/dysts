@@ -304,9 +304,8 @@ def make_surrogate(data, method="rp"):
 
     """
     if method == "rp":
-        phases = np.angle(np.fft.fft(data))
         radii = np.abs(np.fft.fft(data))
-        random_phases = 2 * np.pi * (2 * (np.random.random(phases.shape) - 0.5))
+        random_phases = 2 * np.pi * np.random.random(radii.shape)
         surr_data = np.real(
             np.fft.ifft(
                 radii * np.cos(random_phases) + 1j * radii * np.sin(random_phases)
@@ -458,7 +457,7 @@ def make_epsilon_ball(pt, n, eps=1e-5, random_state=None):
 
 def rowwise_euclidean(x, y):
     """Computes the euclidean distance across rows"""
-    return np.sqrt(np.sum((x - y)**2, axis=1))
+    return np.sqrt(np.sum((x - y) ** 2, axis=1))
 
 
 def min_data_points_rosenstein(emb_dim, lag, trajectory_len, min_tsep):
@@ -509,7 +508,5 @@ def logarithmic_n(min_n, max_n, factor):
     """
     assert max_n > min_n > 0 and factor > 1
     max_i = int(np.floor(np.log(max_n / min_n) / np.log(factor)))
-    ns = np.unique(np.floor(min_n * factor**np.arange(max_i + 1)).astype(int))
+    ns = np.unique(np.floor(min_n * factor ** np.arange(max_i + 1)).astype(int))
     return ns[ns <= max_n]
-
-

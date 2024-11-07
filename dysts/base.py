@@ -42,7 +42,7 @@ class BaseDyn:
     def __init__(
         self,
         metadata_path: Optional[str] = None,
-        metadata: Dict[str, Any] = {},
+        metadata: Optional[Dict[str, Any]] = None,
         required_fields: Tuple[str, ...] = BASE_REQUIRED_METADATA,
         **extra_metadata,
     ) -> None:
@@ -65,7 +65,7 @@ class BaseDyn:
         """
         self.name = self.__class__.__name__
         self.metadata_path = metadata_path
-        self.metadata = metadata
+        self.metadata = metadata or {}
         self.required_fields = required_fields
 
         # optionally load system attributes and computed quantities from a JSON file

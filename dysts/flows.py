@@ -771,7 +771,7 @@ class RabinovichFabrikant(DynSys):
         xdot = y * z - y + y * x**2 + g * x
         ydot = 3 * x * z + x - x**3 + g * y
         zdot = -2 * a * z - 2 * x * y * z
-        return (xdot, ydot, zdot)
+        return xdot, ydot, zdot
 
 
 class NoseHoover(DynSys):
