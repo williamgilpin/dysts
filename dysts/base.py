@@ -94,21 +94,25 @@ class BaseDyn:
 
         if "initial_conditions" in self.metadata:
             self.ic = cast_to_numpy(
-                self.metadata["initial_conditions"], singleton_scalar=True
+                self.metadata.pop("initial_conditions"), singleton_scalar=True
             )
+
+        if "dimension" in self.metadata:
+            self.dimension = self.metadata.pop("dimension")
+        elif "embedding_dimension" in self.metadata:
+            self.dimension = self.metadata.pop("embedding_dimension")
 
         # set all attributes in the metadata dictionary
         # do this last so the user can override any of the above
         for key in self.metadata:
             setattr(self, key, self.metadata[key])
 
-        if "dimension" in self.metadata:
-            self.dimension = self.metadata["dimension"]
-        elif "embedding_dimension" in self.metadata:
-            self.dimension = self.metadata["embedding_dimension"]
-
-        self.mean = np.asarray(getattr(self, "mean", np.zeros(self.dimension)))
-        self.std = np.asarray(getattr(self, "std", np.ones(self.dimension)))
+        if hasattr(self, "dimension"):
+            self.mean = np.asarray(getattr(self, "mean", np.zeros(self.dimension)))
+            self.std = np.asarray(getattr(self, "std", np.ones(self.dimension)))
+        elif hasattr(self, "ic"):
+            self.mean = np.asarray(getattr(self, "mean", np.zeros_like(self.ic)))
+            self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
 
     @staticmethod
     def load_system_metadata(system_name: str, data_path: str) -> Dict[str, Any]:
