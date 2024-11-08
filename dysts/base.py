@@ -209,6 +209,10 @@ class BaseDyn:
 class DynSys(BaseDyn):
     """A continuous dynamical system base class"""
 
+    dt: float
+    period: float
+    maximum_lyapunov_estimated: float
+
     def __init__(
         self,
         metadata_path: str = DATAPATH_CONTINUOUS,
@@ -221,11 +225,11 @@ class DynSys(BaseDyn):
         super().__init__(
             metadata_path=metadata_path,
             parameters=parameters,
+            dt=dt,
+            period=period,
+            maximum_lyapunov_estimated=maximum_lyapunov_estimated,
             **kwargs,
         )
-        self.dt = dt
-        self.period = period
-        self.maximum_lyapunov_estimated = maximum_lyapunov_estimated
 
     def rhs(self, X, t):
         """The right hand side of a dynamical equation"""
@@ -292,27 +296,20 @@ class DynSys(BaseDyn):
         # set timescales and interpolation points for the solution
         dt = dt if self.dt is None else self.dt
 
-        if resample and (
-            self.period is not None and self.maximum_lyapunov_estimated is not None
+        if not resample:
+            tlim = (n - 1) * dt
+        elif resample and timescale == "Fourier" and self.period is not None:
+            tlim = self.period * (n / pts_per_period)
+        elif (
+            resample
+            and timescale == "Lyapunov"
+            and self.maximum_lyapunov_estimated is not None
         ):
-            tlim = {
-                "Fourier": self.period * (n / pts_per_period),
-                "Lyapunov": (1 / self.maximum_lyapunov_estimated)
-                * (n / pts_per_period),
-            }.get(timescale)
-
-            if tlim is None:
-                raise ValueError(f"Invalid timescale: {timescale}")
-
-            upscale_factor = (tlim / dt) / n
-            if upscale_factor > 1e3:
-                warnings.warn(
-                    f"Expect slowdown due to excessive integration required; scale factor {upscale_factor}"
-                )
-
-            tpts = np.linspace(0, tlim, n)
+            tlim = (1 / self.maximum_lyapunov_estimated) * (n / pts_per_period)
         else:
-            tpts = np.arange(n) * dt
+            raise ValueError(f"Invalid timescale resampling argument: {timescale}")
+
+        tpts = np.linspace(0, tlim, n)
 
         # standardization and initial condition preprocessing
         if not hasattr(self, "ic") and init_cond is None:
@@ -470,6 +467,11 @@ class DynSysDelay(BaseDyn):
     default value, but delay equations are infinite dimensional.
     """
 
+    dt: float
+    period: float
+    maximum_lyapunov_estimated: float
+    tau: float
+
     def __init__(
         self,
         metadata_path: str = DATAPATH_CONTINUOUS,
@@ -483,12 +485,12 @@ class DynSysDelay(BaseDyn):
         super().__init__(
             metadata_path=metadata_path,
             parameters=parameters,
+            dt=dt,
+            period=period,
+            maximum_lyapunov_estimated=maximum_lyapunov_estimated,
+            tau=tau,
             **kwargs,
         )
-        self.dt = dt
-        self.period = period
-        self.maximum_lyapunov_estimated = maximum_lyapunov_estimated
-        self.tau = tau
 
     def delayed_rhs(
         self, X: Callable[[float], ArrayLike], t: float, tau: float
@@ -551,27 +553,20 @@ class DynSysDelay(BaseDyn):
         tau = tau if self.tau is None else self.tau
         interp_pad = tau
 
-        if resample and (
-            self.period is not None and self.maximum_lyapunov_estimated is not None
+        if not resample:
+            tlim = (n - 1) * dt
+        elif resample and timescale == "Fourier" and self.period is not None:
+            tlim = self.period * (n / pts_per_period)
+        elif (
+            resample
+            and timescale == "Lyapunov"
+            and self.maximum_lyapunov_estimated is not None
         ):
-            tlim = {
-                "Fourier": self.period * (n / pts_per_period),
-                "Lyapunov": (1 / self.maximum_lyapunov_estimated)
-                * (n / pts_per_period),
-            }.get(timescale)
-
-            if tlim is None:
-                raise ValueError(f"Invalid timescale: {timescale}")
-
-            upscale_factor = (tlim / dt) / n
-            if upscale_factor > 1e3:
-                warnings.warn(
-                    f"Expect slowdown due to excessive integration required; scale factor {upscale_factor}"
-                )
-
-            tpts = np.linspace(0, tlim + interp_pad, n)
+            tlim = (1 / self.maximum_lyapunov_estimated) * (n / pts_per_period)
         else:
-            tpts = np.linspace(0, n * dt + interp_pad, n)
+            raise ValueError(f"Invalid timescale resampling argument: {timescale}")
+
+        tpts = np.linspace(0, tlim + interp_pad, n)
 
         # embedding dimension:if not provided, fallback to default or 1 if a default doesnt exist
         emb_dim = (
