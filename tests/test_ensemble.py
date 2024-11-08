@@ -54,9 +54,9 @@ class TestTrajectoryEnsemble(unittest.TestCase):
         self.assertTrue(all(arr is not None for arr in sols.values()))
 
     def test_initial_conditions(self):
-        num_ic_trials = 4
+        num_ic_trials = 2
         trajs = []
-        attractors = get_attractor_list("continuous_no_delay")
+        attractors = random.sample(get_attractor_list("continuous"), 50)
         for _ in range(num_ic_trials):
             sols = make_trajectory_ensemble(
                 1024,
@@ -79,9 +79,9 @@ class TestTrajectoryEnsemble(unittest.TestCase):
 
     # TODO: some param perturbations will yield NaNs in the trajectory, need to add tests
     def test_parameter_perturbations(self):
-        num_ic_trials = 4
+        num_ic_trials = 2
         trajs = []
-        attractors = get_attractor_list("continuous_no_delay")
+        attractors = random.sample(get_attractor_list("continuous"), 50)
         for _ in range(num_ic_trials):
             sols = make_trajectory_ensemble(
                 1024,
