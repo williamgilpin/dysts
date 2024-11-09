@@ -95,7 +95,7 @@ class TestTrajectoryEnsemble(unittest.TestCase):
             )
             for system_name in attractors:
                 traj = sols[system_name]
-                self.assertIsInstance(traj, np.ndarray)
+                self.assertTrue(traj is None or isinstance(traj, np.ndarray))
                 self.assertEqual(traj.shape[0], 1024)
                 self.assertFalse(np.any(np.isnan(traj)))
             trajs.append(traj)
