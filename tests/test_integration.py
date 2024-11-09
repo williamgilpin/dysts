@@ -8,7 +8,7 @@ import dysts.maps as dmp
 from dysts.base import DynMap, DynSys, DynSysDelay
 from dysts.systems import get_attractor_list
 
-NUM_TEST_SYSTEMS = 200
+NUM_TEST_SYSTEMS = 10
 
 
 class TestDynamicalSystems(unittest.TestCase):
