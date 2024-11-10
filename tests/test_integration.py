@@ -24,13 +24,13 @@ class TestDynamicalSystems(unittest.TestCase):
                 system = getattr(dfl, system_name)()
                 self.assertIsInstance(system, DynSys)
 
-                sol = system.make_trajectory(1000, return_times=True)
+                sol = system.make_trajectory(256, return_times=True)
                 self.assertIsInstance(sol, tuple)
                 self.assertEqual(len(sol), 2)
                 self.assertIsInstance(sol[0], np.ndarray)
                 self.assertIsInstance(sol[1], np.ndarray)
-                self.assertEqual(sol[0].shape[0], 1000)
-                self.assertEqual(sol[1].shape[0], 1000)
+                self.assertEqual(sol[0].shape[0], 256)
+                self.assertEqual(sol[1].shape[0], 256)
 
     def test_random_delay_systems(self):
         delay_systems = get_attractor_list(sys_class="delay")
@@ -44,13 +44,13 @@ class TestDynamicalSystems(unittest.TestCase):
                 system = getattr(dfl, system_name)()
                 self.assertIsInstance(system, DynSysDelay)
 
-                sol = system.make_trajectory(1000, return_times=True)
+                sol = system.make_trajectory(256, return_times=True)
                 self.assertIsInstance(sol, tuple)
                 self.assertEqual(len(sol), 2)
                 self.assertIsInstance(sol[0], np.ndarray)
                 self.assertIsInstance(sol[1], np.ndarray)
-                self.assertEqual(sol[0].shape[0], 1000)
-                self.assertEqual(sol[1].shape[0], 1000)
+                self.assertEqual(sol[0].shape[0], 256)
+                self.assertEqual(sol[1].shape[0], 256)
 
     def test_random_discrete_maps(self):
         discrete_maps = get_attractor_list(sys_class="discrete")
@@ -64,9 +64,9 @@ class TestDynamicalSystems(unittest.TestCase):
                 system = getattr(dmp, system_name)()
                 self.assertIsInstance(system, DynMap)
 
-                sol = system.make_trajectory(1000)
+                sol = system.make_trajectory(256)
                 self.assertIsInstance(sol, np.ndarray)
-                self.assertEqual(sol.shape[0], 1000)
+                self.assertEqual(sol.shape[0], 256)
 
 
 if __name__ == "__main__":

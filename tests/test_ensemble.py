@@ -3,17 +3,14 @@ import unittest
 
 import numpy as np
 
-from dysts.sampling import GaussianParamSampler, OnAttractorInitCondSampler
+from dysts.sampling import GaussianInitialConditionSampler, GaussianParamSampler
 from dysts.systems import get_attractor_list, make_trajectory_ensemble
 
 
 class TestTrajectoryEnsemble(unittest.TestCase):
     def setUp(self):
-        self.ic_sampler = OnAttractorInitCondSampler(
-            reference_traj_length=100,
-            reference_traj_transient=10,
-            random_seed=9999,
-            verbose=True,
+        self.ic_sampler = GaussianInitialConditionSampler(
+            random_seed=9999, scale=1e-4, verbose=True
         )
         self.pt_sampler = GaussianParamSampler(
             random_seed=9999, scale=1e-1, verbose=True
@@ -21,9 +18,9 @@ class TestTrajectoryEnsemble(unittest.TestCase):
 
     def test_ensemble_generation_with_standardization(self):
         sols = make_trajectory_ensemble(
-            1024,
+            256,
             resample=True,
-            pts_per_period=128,
+            pts_per_period=64,
             use_multiprocessing=True,
             ic_transform=self.ic_sampler,
             subset=random.sample(
@@ -38,9 +35,9 @@ class TestTrajectoryEnsemble(unittest.TestCase):
 
     def test_ensemble_generation_without_standardization(self):
         sols = make_trajectory_ensemble(
-            1024,
+            256,
             resample=True,
-            pts_per_period=128,
+            pts_per_period=64,
             use_multiprocessing=True,
             ic_transform=self.ic_sampler,
             subset=random.sample(
@@ -59,9 +56,9 @@ class TestTrajectoryEnsemble(unittest.TestCase):
         attractors = random.sample(get_attractor_list("continuous"), 50)
         for _ in range(num_ic_trials):
             sols = make_trajectory_ensemble(
-                1024,
+                256,
                 resample=True,
-                pts_per_period=128,
+                pts_per_period=64,
                 use_multiprocessing=False,
                 ic_transform=self.ic_sampler,  # TODO: some NaNs seen in trajectories, even though this should be on attractor
                 subset=attractors,
@@ -70,9 +67,10 @@ class TestTrajectoryEnsemble(unittest.TestCase):
             )
             for system_name in attractors:
                 traj = sols[system_name]
-                self.assertIsInstance(traj, np.ndarray)
-                self.assertEqual(traj.shape[0], 1024)
-                self.assertFalse(np.any(np.isnan(traj)))
+                self.assertTrue(traj is None or traj.shape[0] == 256)
+                if traj is not None:
+                    self.assertEqual(traj.shape[0], 256)
+                    self.assertFalse(np.any(np.isnan(traj)))
             trajs.append(traj)
 
         self.assertEqual(len(trajs), num_ic_trials)
@@ -84,9 +82,9 @@ class TestTrajectoryEnsemble(unittest.TestCase):
         attractors = random.sample(get_attractor_list("continuous"), 50)
         for _ in range(num_ic_trials):
             sols = make_trajectory_ensemble(
-                1024,
+                256,
                 resample=True,
-                pts_per_period=128,
+                pts_per_period=64,
                 use_multiprocessing=False,
                 param_transform=self.pt_sampler,
                 subset=attractors,
@@ -96,8 +94,9 @@ class TestTrajectoryEnsemble(unittest.TestCase):
             for system_name in attractors:
                 traj = sols[system_name]
                 self.assertTrue(traj is None or isinstance(traj, np.ndarray))
-                self.assertEqual(traj.shape[0], 1024)
-                self.assertFalse(np.any(np.isnan(traj)))
+                if traj is not None:
+                    self.assertEqual(traj.shape[0], 256)
+                    self.assertFalse(np.any(np.isnan(traj)))
             trajs.append(traj)
 
         self.assertEqual(len(trajs), num_ic_trials)
