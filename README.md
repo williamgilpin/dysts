@@ -107,7 +107,7 @@ To install the optional precomputed trajectories and benchmark results (a large,
 + Several of the analysis routines (such as calculation of the correlation dimension) use the library [nolds](https://github.com/CSchoel/nolds). If re-using the fractal dimension code that depends on `nolds`, please be sure to credit that library and heed its license. The Lyapunov exponent calculation is based on the QR factorization approach used by [Wolf et al 1985](https://www.sciencedirect.com/science/article/abs/pii/0167278985900119) and [Eckmann et al 1986](https://journals.aps.org/pra/abstract/10.1103/PhysRevA.34.4971), with implementation details adapted from conventions in the Julia library [DynamicalSystems.jl](https://github.com/JuliaDynamics/DynamicalSystems.jl/)
 
 
-<--
+<!--
 ## Ethics & Reporting
 
 Dataset datasheets and metadata are reported using the dataset documentation guidelines described in [Gebru et al 2018](https://arxiv.org/abs/1803.09010); please see our preprint for a full dataset datasheet and other information. We note that all datasets included here are mathematical in nature, and do not contain human or clinical observations. If any users become aware of unintended ethics or trademark issues that may arise due to the use of this data, we encourage reporting them by submitting an issue on this repository.
