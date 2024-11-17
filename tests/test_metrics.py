@@ -10,6 +10,8 @@ import unittest
 
 import numpy as np
 
+from dysts.metrics import estimate_kl_divergence
+
 from dysts.metrics import (
     coefficient_of_variation,
     mae,
@@ -130,6 +132,44 @@ class TestMetrics(unittest.TestCase):
     #     )
     #     self.assertLessEqual(result_rho1_rho2, result_rho1_0)
 
+
+class TestEstimateKLDivergence(unittest.TestCase):
+    def setUp(self):
+        # Set up some example orbits
+        self.true_orbit = np.random.randn(100, 2)
+        self.generated_orbit = np.random.randn(100, 2)
+
+    def test_kl_divergence_shape(self):
+        # Test if the function works with different shapes
+        true_orbit_1d = np.random.randn(100)
+        generated_orbit_1d = np.random.randn(100)
+        kl_div = estimate_kl_divergence(true_orbit_1d, generated_orbit_1d)
+        self.assertIsInstance(kl_div, float)
+
+    def test_kl_divergence_value(self):
+        # Test if the function returns a float value
+        kl_div = estimate_kl_divergence(self.true_orbit, self.generated_orbit)
+        self.assertIsInstance(kl_div, float)
+
+    def test_kl_divergence_same_orbit(self):
+        # Test if the KL divergence is close to zero for the same orbits
+        kl_div = estimate_kl_divergence(self.true_orbit, self.true_orbit)
+        self.assertAlmostEqual(kl_div, 0, places=1)
+
+    def test_kl_divergence_different_orbits(self):
+        # Test if the KL divergence is positive for different orbits
+        kl_div = estimate_kl_divergence(self.true_orbit, self.generated_orbit)
+        self.assertGreater(kl_div, 0)
+
+    def test_kl_divergence_with_sigma_scale(self):
+        # Test if the function works with a specified sigma_scale
+        kl_div = estimate_kl_divergence(self.true_orbit, self.generated_orbit, sigma_scale=0.5)
+        self.assertIsInstance(kl_div, float)
+
+    def test_kl_divergence_with_none_sigma_scale(self):
+        # Test if the function works with sigma_scale set to None
+        kl_div = estimate_kl_divergence(self.true_orbit, self.generated_orbit, sigma_scale=None)
+        self.assertIsInstance(kl_div, float)
 
 if __name__ == "__main__":
     unittest.main()
