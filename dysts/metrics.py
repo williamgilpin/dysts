@@ -464,10 +464,10 @@ class GaussianMixture:
         if isinstance(covariances, (int, float)):
             self.covariances = (
                 np.ones(self.n_components)[:, None, None] * np.eye(self.ndim)[None, ...]
-            )
+            ) * covariances
         elif isinstance(covariances[0], (int, float)):
             self.covariances = (
-                self.covariances[:, None, None] * np.eye(self.ndim)[None, ...]
+                covariances[:, None, None] * np.eye(self.ndim)[None, ...]
             )
         else:
             self.covariances = np.array(covariances)
@@ -533,7 +533,7 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_sca
 
     Development:
         Rank-order (copula) transform each orbit coordinate, in order to reduce
-        sensitivity to spacing among time seres.
+        sensitivity to spacing among time series.
     """
     # if the orbits are 1D, add a dimension to make them 2D
     if true_orbit.ndim == 1:
