@@ -107,26 +107,48 @@ def _compute_trajectory(
     param_transform: Optional[BaseSampler] = None,
     ic_rng: Optional[np.random.Generator] = None,
     param_rng: Optional[np.random.Generator] = None,
-) -> Array:
-    """A helper function for multiprocessing"""
+    _silent_errors: bool = False,
+) -> Optional[Array]:
+    """Helper function to compute a single trajectory for a dynamical system.
+
+    Args:
+        system (Union[str, BaseDyn]): Either a string name of a system or a system instance
+        n (int): Number of timepoints to integrate
+        kwargs (Dict[str, Any]): Additional arguments passed to make_trajectory
+        ic_transform (Optional[BaseSampler]): Transform to apply to initial conditions
+        param_transform (Optional[BaseSampler]): Transform to apply to parameters
+        ic_rng (Optional[np.random.Generator]): Random number generator for IC sampling
+        param_rng (Optional[np.random.Generator]): Random number generator for param sampling
+        _silent_errors (bool): Whether to silence errors and return None instead
+
+    Returns:
+        Optional[Array]: The computed trajectory, or None if error occurs and _silent_errors=True
+    """
     if isinstance(system, str):
-        eq = getattr(dfl, system)()
+        sys = getattr(dfl, system)()
     else:
-        eq = system
+        sys = system
 
     if param_transform is not None:
         if param_rng is not None:
             param_transform.set_rng(param_rng)
-        eq.transform_params(param_transform)  # type: ignore
+        sys.transform_params(param_transform)  # type: ignore
 
     # the initial condition transform must come after the parameter transform
     # because suitable initial conditions may depend on the parameters
     if ic_transform is not None:
         if ic_rng is not None:
             ic_transform.set_rng(ic_rng)
-        eq.transform_ic(ic_transform)  # type: ignore
+        sys.transform_ic(ic_transform)  # type: ignore
 
-    traj = eq.make_trajectory(n, **kwargs)
+    try:
+        traj = sys.make_trajectory(n, **kwargs)
+    except Exception as e:
+        print(f"Error in {sys.name}: {e}")
+        if _silent_errors:
+            return None
+        raise e
+
     return traj
 
 
@@ -140,7 +162,7 @@ def make_trajectory_ensemble(
     ic_rng: Optional[np.random.Generator] = None,
     param_rng: Optional[np.random.Generator] = None,
     **kwargs,
-) -> Dict[str, Array]:
+) -> Dict[str, Optional[Array]]:
     """
     Integrate multiple dynamical systems with identical settings
 
@@ -191,7 +213,7 @@ def _multiprocessed_compute_trajectory(
     ic_rng: Optional[np.random.Generator] = None,
     param_rng: Optional[np.random.Generator] = None,
     **kwargs,
-) -> Dict[str, Array]:
+) -> Dict[str, Optional[Array]]:
     """
     Helper for handling multiprocessed integration
     with _compute_trajectory with proper RNG seeding
@@ -253,6 +275,7 @@ def compute_trajectory_statistics(
     stats = {
         name: {"mean": sol.mean(axis=0), "std": sol.std(axis=0)}
         for name, sol in sols.items()
+        if sol is not None
     }
 
     # Save the computed statistics to a JSON file

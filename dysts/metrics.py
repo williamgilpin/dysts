@@ -466,9 +466,7 @@ class GaussianMixture:
                 np.ones(self.n_components)[:, None, None] * np.eye(self.ndim)[None, ...]
             ) * covariances
         elif isinstance(covariances[0], (int, float)):
-            self.covariances = (
-                covariances[:, None, None] * np.eye(self.ndim)[None, ...]
-            )
+            self.covariances = covariances[:, None, None] * np.eye(self.ndim)[None, ...]
         else:
             self.covariances = np.array(covariances)
 
@@ -552,18 +550,8 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_sca
         p_hat = GaussianMixture(true_orbit, sigma_scale)
         q_hat = GaussianMixture(generated_orbit, sigma_scale)
 
-    # sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1)
-    # sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
-    # sigma_scale = np.ones_like(sigma_scale)
-
     # Generate Monte Carlo samples from p_hat
     T, N = true_orbit.shape
-
-    # cov_matrix = sigma_squared * np.eye(N)
-    # samples = np.array(
-    #     [multivariate_normal.rvs(mean=x_t, cov=s_t * cov_matrix) for x_t,
-    # s_t in zip(true_orbit, sigma_scale)]
-    # )
     samples = p_hat.sample(n_samples=T)
 
     # Randomly select n_samples from the generated samples
@@ -571,7 +559,7 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_sca
     log_ratios = np.log(p_hat(selected_samples) / q_hat(selected_samples))
     kl_estimate = np.mean(log_ratios)
 
-    return kl_estimate
+    return -kl_estimate
 
 
 def hellinger_distance(p, q, axis=0):
