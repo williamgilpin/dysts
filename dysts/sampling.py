@@ -2,7 +2,7 @@
 
 import warnings
 from dataclasses import dataclass, field
-from typing import Callable, Dict, List, Optional
+from typing import Callable
 
 import numpy as np
 from numpy.typing import NDArray
@@ -35,7 +35,7 @@ class GaussianInitialConditionSampler(BaseSampler):
     scale: float = 1e-4
     verbose: bool = False  # for testing purposes
 
-    def __call__(self, ic: Array, system: Optional[BaseDyn] = None) -> Array:
+    def __call__(self, ic: Array, system: BaseDyn | None = None) -> Array:
         # Scale the covariance relative to each dimension
         scaled_cov = np.diag(np.square(ic * self.scale))
         perturbed_ic = self.rng.multivariate_normal(mean=ic, cov=scaled_cov)
@@ -69,9 +69,9 @@ class OnAttractorInitCondSampler(BaseSampler):
 
     reference_traj_length: int = 4096
     reference_traj_transient: int = 500
-    trajectory_cache: Dict[str, Array] = field(default_factory=dict)
+    trajectory_cache: dict[str, Array] = field(default_factory=dict)
     verbose: bool = False  # for testing purposes
-    events: Optional[List[Callable]] = None  # solve_ivp events
+    events: list[Callable] | None = None  # solve_ivp events
 
     def __call__(self, ic: Array, system: BaseDyn) -> Array:
         # make reference trajectory if not already cached
@@ -125,7 +125,7 @@ class GaussianParamSampler(BaseSampler):
     verbose: bool = False  # for testing purposes
 
     def __call__(
-        self, name: str, param: Array, system: Optional[BaseDyn] = None
+        self, name: str, param: Array, system: BaseDyn | None = None
     ) -> Array | float:
         # scale each parameter relatively
         shape = (1,) if np.isscalar(param) else param.shape

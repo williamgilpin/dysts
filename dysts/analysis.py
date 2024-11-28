@@ -5,7 +5,6 @@ Functions that act on DynSys or DynMap objects
 """
 
 import warnings
-from typing import Tuple
 
 import numpy as np
 from scipy.spatial.distance import cdist
@@ -95,7 +94,7 @@ def compute_timestep(
     num_iters: int = 20,
     pts_per_period: int = 1000,
     timescale: str = "Fourier",
-) -> Tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray]:
     """
     Given a dynamical system object, find the integration timestep based on the largest
     signficant frequency

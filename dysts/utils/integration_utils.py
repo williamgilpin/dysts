@@ -1,6 +1,6 @@
 """Utilities for integration"""
 
-from typing import Callable, Union
+from typing import Callable
 
 import numpy as np
 import scipy.integrate
@@ -51,7 +51,7 @@ def integrate_dyn(
     f: Callable,
     ic: np.ndarray,
     tvals: np.ndarray,
-    noise: Union[float, np.ndarray] = 0.0,
+    noise: float | np.ndarray = 0.0,
     dtval=None,
     **kwargs,
 ):

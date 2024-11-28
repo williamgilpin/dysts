@@ -6,7 +6,7 @@ import warnings
 from functools import partial
 from importlib import resources
 from itertools import starmap
-from typing import Any, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import Any, Callable, Sequence
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -41,11 +41,9 @@ class BaseDyn:
 
     def __init__(
         self,
-        metadata_path: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None,
-        required_fields: Tuple[
-            Union[str, Tuple[str, ...]], ...
-        ] = BASE_REQUIRED_METADATA,
+        metadata_path: str | None = None,
+        metadata: dict[str, Any] | None = None,
+        required_fields: tuple[str | tuple[str, ...], ...] = BASE_REQUIRED_METADATA,
         **extra_metadata,
     ) -> None:
         """
@@ -115,7 +113,7 @@ class BaseDyn:
             self.std = np.asarray(getattr(self, "std", np.ones_like(self.ic)))
 
     @staticmethod
-    def load_system_metadata(system_name: str, data_path: str) -> Dict[str, Any]:
+    def load_system_metadata(system_name: str, data_path: str) -> dict[str, Any]:
         """
         Load data from a JSON file
 
@@ -216,10 +214,10 @@ class DynSys(BaseDyn):
     def __init__(
         self,
         metadata_path: str = DATAPATH_CONTINUOUS,
-        parameters: Optional[Dict[str, ArrayLike]] = None,
-        dt: Optional[float] = None,
-        period: Optional[float] = None,
-        maximum_lyapunov_estimated: Optional[float] = None,
+        parameters: dict[str, ArrayLike] | None = None,
+        dt: float | None = None,
+        period: float | None = None,
+        maximum_lyapunov_estimated: float | None = None,
         **kwargs: Any,
     ):
         super().__init__(
@@ -247,7 +245,7 @@ class DynSys(BaseDyn):
         self,
         n: int,
         dt: float = 1e-3,
-        init_cond: Optional[np.ndarray] = None,
+        init_cond: np.ndarray | None = None,
         resample: bool = True,
         pts_per_period: int = 100,
         return_times: bool = False,
@@ -260,7 +258,7 @@ class DynSys(BaseDyn):
         rtol: float = 1e-12,
         atol: float = 1e-12,
         **kwargs,
-    ) -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]] | None:
+    ) -> np.ndarray | tuple[np.ndarray, np.ndarray] | None:
         """
         Generate a fixed-length trajectory for the dynamical system.
 
@@ -364,6 +362,7 @@ class DynSys(BaseDyn):
             )
             sol2 = np.moveaxis(sol, (-1, 0), (0, -1))  # type: ignore
             sol = np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0))  # type: ignore
+
         sol = np.squeeze(sol)  # type: ignore
 
         return (tpts, sol) if return_times else sol
@@ -375,7 +374,7 @@ class DynMap(BaseDyn):
     def __init__(
         self,
         metadata_path: str = DATAPATH_DISCRETE,
-        parameters: Optional[Dict[str, ArrayLike]] = None,
+        parameters: dict[str, ArrayLike] | None = None,
         **kwargs,
     ):
         super().__init__(
@@ -384,7 +383,7 @@ class DynMap(BaseDyn):
             required_fields=("parameters",),
             **kwargs,
         )
-        self._rhs_inv: Optional[Callable[..., Sequence[np.ndarray]]] = None
+        self._rhs_inv: Callable[..., Sequence[np.ndarray]] | None = None
 
     def rhs(self, X):
         """The right hand side of a dynamical map"""
@@ -409,12 +408,12 @@ class DynMap(BaseDyn):
     def make_trajectory(
         self,
         n: int,
-        init_cond: Optional[np.ndarray] = None,
+        init_cond: np.ndarray | None = None,
         inverse: bool = False,
         return_times: bool = False,
         standardize: bool = False,
         **kwargs,
-    ) -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]:
+    ) -> np.ndarray | tuple[np.ndarray, np.ndarray]:
         """
         Generate a fixed-length trajectory with default parameters and initial condition(s).
 
@@ -475,11 +474,11 @@ class DynSysDelay(BaseDyn):
     def __init__(
         self,
         metadata_path: str = DATAPATH_CONTINUOUS,
-        dt: Optional[float] = None,
-        period: Optional[float] = None,
-        maximum_lyapunov_estimated: Optional[float] = None,
-        tau: Optional[float] = None,
-        parameters: Optional[Dict[str, Union[float, int, ArrayLike]]] = None,
+        dt: float | None = None,
+        period: float | None = None,
+        maximum_lyapunov_estimated: float | None = None,
+        tau: float | None = None,
+        parameters: dict[str, float | int | ArrayLike] | None = None,
         **kwargs,
     ):
         super().__init__(
@@ -502,7 +501,7 @@ class DynSysDelay(BaseDyn):
     def make_trajectory(
         self,
         n: int,
-        init_cond: Optional[np.ndarray] = None,
+        init_cond: np.ndarray | None = None,
         dt: float = 1e-3,
         tau: float = 1,
         resample: bool = False,
@@ -510,8 +509,8 @@ class DynSysDelay(BaseDyn):
         standardize: bool = False,
         timescale: str = "Fourier",
         return_times: bool = False,
-        embedding_dim: Optional[int] = None,
-        history_function: Optional[Callable[[float], ArrayLike]] = None,
+        embedding_dim: int | None = None,
+        history_function: Callable[[float], ArrayLike] | None = None,
         random_seed: int = 0,
         **kwargs,
     ):

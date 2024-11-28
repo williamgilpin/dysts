@@ -5,7 +5,7 @@ import json
 from multiprocessing import Pool
 from os import PathLike
 from types import ModuleType
-from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
+from typing import Any, Sequence
 
 import numpy as np
 import numpy.typing as npt
@@ -29,8 +29,8 @@ DEFAULT_RNG = np.random.default_rng()
 
 
 def get_attractor_list(
-    sys_class: str = "continuous", exclude: List[str] = []
-) -> List[str]:
+    sys_class: str = "continuous", exclude: list[str] = []
+) -> list[str]:
     """Get names of implemented dynamical systems
 
     Args:
@@ -57,7 +57,7 @@ def get_attractor_list(
             "sys_class must be in ['continuous', 'continuous_no_delay', 'delay', 'discrete']"
         )
 
-    systems: List[Tuple[str, BaseDyn]] = inspect.getmembers(
+    systems: list[tuple[str, BaseDyn]] = inspect.getmembers(
         module,
         lambda obj: inspect.isclass(obj)  # type: ignore
         and issubclass(obj, parent_class)  # type: ignore
@@ -70,8 +70,8 @@ def get_attractor_list(
 
 
 def get_system_data(
-    sys_class: str = "continuous", exclude: List[str] = []
-) -> Dict[str, Any]:
+    sys_class: str = "continuous", exclude: list[str] = []
+) -> dict[str, Any]:
     """Get system data from the dedicated system class json files
 
     Arguments:
@@ -100,15 +100,15 @@ def get_system_data(
 
 
 def _compute_trajectory(
-    system: Union[str, BaseDyn],
+    system: str | BaseDyn,
     n: int,
-    kwargs: Dict[str, Any],
-    ic_transform: Optional[BaseSampler] = None,
-    param_transform: Optional[BaseSampler] = None,
-    ic_rng: Optional[np.random.Generator] = None,
-    param_rng: Optional[np.random.Generator] = None,
+    kwargs: dict[str, Any],
+    ic_transform: BaseSampler | None = None,
+    param_transform: BaseSampler | None = None,
+    ic_rng: np.random.Generator | None = None,
+    param_rng: np.random.Generator | None = None,
     _silent_errors: bool = False,
-) -> Optional[Array]:
+) -> Array | None:
     """Helper function to compute a single trajectory for a dynamical system.
 
     Args:
@@ -130,14 +130,14 @@ def _compute_trajectory(
         sys = system
 
     if param_transform is not None:
-        if param_rng is not None:
+        if param_rng is not None and hasattr(param_transform, "set_rng"):
             param_transform.set_rng(param_rng)
         sys.transform_params(param_transform)  # type: ignore
 
     # the initial condition transform must come after the parameter transform
     # because suitable initial conditions may depend on the parameters
     if ic_transform is not None:
-        if ic_rng is not None:
+        if ic_rng is not None and hasattr(ic_transform, "set_rng"):
             ic_transform.set_rng(ic_rng)
         sys.transform_ic(ic_transform)  # type: ignore
 
@@ -156,17 +156,15 @@ def make_trajectory_ensemble(
     n: int,
     use_tqdm: bool = True,
     use_multiprocessing: bool = False,
-    ic_transform: Optional[BaseSampler] = None,
-    param_transform: Optional[BaseSampler] = None,
-    subset: Optional[Union[Sequence[str], Sequence[BaseDyn]]] = None,
-    ic_rng: Optional[np.random.Generator] = None,
-    param_rng: Optional[np.random.Generator] = None,
+    ic_transform: BaseSampler | None = None,
+    param_transform: BaseSampler | None = None,
+    subset: Sequence[str] | Sequence[BaseDyn] | None = None,
+    ic_rng: np.random.Generator | None = None,
+    param_rng: np.random.Generator | None = None,
     **kwargs,
-) -> Dict[str, Optional[Array]]:
+) -> dict[str, Array | None]:
     """
     Integrate multiple dynamical systems with identical settings
-
-    TODO: make hidden kwargs unhidden
 
     Args:
         n (int): The number of timepoints to integrate
@@ -207,13 +205,13 @@ def make_trajectory_ensemble(
 
 def _multiprocessed_compute_trajectory(
     n: int,
-    subset: Union[Sequence[str], Sequence[BaseDyn]],
-    ic_transform: Optional[BaseSampler] = None,
-    param_transform: Optional[BaseSampler] = None,
-    ic_rng: Optional[np.random.Generator] = None,
-    param_rng: Optional[np.random.Generator] = None,
+    subset: Sequence[str] | Sequence[BaseDyn],
+    ic_transform: BaseSampler | None = None,
+    param_transform: BaseSampler | None = None,
+    ic_rng: np.random.Generator | None = None,
+    param_rng: np.random.Generator | None = None,
     **kwargs,
-) -> Dict[str, Optional[Array]]:
+) -> dict[str, Array | None]:
     """
     Helper for handling multiprocessed integration
     with _compute_trajectory with proper RNG seeding
@@ -259,9 +257,9 @@ def _multiprocessed_compute_trajectory(
 def compute_trajectory_statistics(
     n: int,
     subset: Sequence[str],
-    datapath: Optional[PathLike] = None,
+    datapath: PathLike | None = None,
     **kwargs,
-) -> Dict[str, Dict[str, Array]]:
+) -> dict[str, dict[str, Array]]:
     """
     Compute mean and std for given trajectory list
     Args:
