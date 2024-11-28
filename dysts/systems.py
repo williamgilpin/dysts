@@ -107,7 +107,6 @@ def _compute_trajectory(
     param_transform: BaseSampler | None = None,
     ic_rng: np.random.Generator | None = None,
     param_rng: np.random.Generator | None = None,
-    _silent_errors: bool = False,
 ) -> Array | None:
     """Helper function to compute a single trajectory for a dynamical system.
 
@@ -145,7 +144,7 @@ def _compute_trajectory(
         traj = sys.make_trajectory(n, **kwargs)
     except Exception as e:
         print(f"Error in {sys.name}: {e}")
-        if _silent_errors:
+        if kwargs.pop("_silent_errors", False):
             return None
         raise e
 
