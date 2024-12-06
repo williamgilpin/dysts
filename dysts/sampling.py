@@ -35,16 +35,10 @@ class GaussianInitialConditionSampler(BaseSampler):
     scale: float = 1e-4
     verbose: bool = False  # for testing purposes
 
-    def __call__(self, ic: Array, system: BaseDyn | None = None) -> Array:
+    def __call__(self, ic: Array, system: BaseDyn | None = None) -> Array | None:
         # Scale the covariance relative to each dimension
         scaled_cov = np.diag(np.square(ic * self.scale))
         perturbed_ic = self.rng.multivariate_normal(mean=ic, cov=scaled_cov)
-
-        if self.verbose:
-            if system is not None:
-                print(f"System: {system.name}")
-            print(f"--> Original initial condition: {ic}")
-            print(f"--> Perturbed initial condition: {perturbed_ic}")
 
         return perturbed_ic
 
@@ -73,7 +67,7 @@ class OnAttractorInitCondSampler(BaseSampler):
     verbose: bool = False  # for testing purposes
     events: list[Callable] | None = None  # solve_ivp events
 
-    def __call__(self, ic: Array, system: BaseDyn) -> Array:
+    def __call__(self, ic: Array, system: BaseDyn) -> Array | None:
         # make reference trajectory if not already cached
         if system.name not in self.trajectory_cache:
             if self.verbose:
@@ -90,20 +84,16 @@ class OnAttractorInitCondSampler(BaseSampler):
                 warnings.warn(
                     f"Failed to integrate the system {system.name} with ic {system.ic} and params {system.params}"
                 )
-                return ic
-            else:
-                self.trajectory_cache[system.name] = reference_traj[
-                    self.reference_traj_transient :
-                ]
+                return None
+
+            self.trajectory_cache[system.name] = reference_traj[
+                self.reference_traj_transient :
+            ]
 
         trajectory = self.trajectory_cache[system.name]
 
         # Sample a new initial condition from the attractor
         new_ic = self.rng.choice(trajectory)
-
-        if self.verbose:
-            print(f"System: {system.name}")
-            print(f"--> Original initial condition: {ic}")
 
         return new_ic
 
@@ -126,7 +116,7 @@ class GaussianParamSampler(BaseSampler):
 
     def __call__(
         self, name: str, param: Array, system: BaseDyn | None = None
-    ) -> Array | float:
+    ) -> Array | float | None:
         # scale each parameter relatively
         shape = (1,) if np.isscalar(param) else param.shape
 
@@ -141,12 +131,5 @@ class GaussianParamSampler(BaseSampler):
         )
         if isinstance(param, (float, int)):
             perturbed_param = float(perturbed_param)
-
-        if self.verbose:
-            if system is not None:
-                print(f"System: {system.name}")
-            print(f"Parameter name: {name}")
-            print(f"--> Original parameter: {param}")
-            print(f"--> Perturbed parameter: {perturbed_param}")
 
         return perturbed_param

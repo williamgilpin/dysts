@@ -175,29 +175,33 @@ class BaseDyn:
 
     def transform_ic(
         self,
-        transform_fn: Callable[[np.ndarray, Any], np.ndarray],
-    ) -> None:
+        transform_fn: Callable[[np.ndarray, Any], np.ndarray | None],
+    ) -> bool:
         """Updates the initial condition via a transform function"""
-        self.ic = transform_fn(self.ic, system=self)  # type: ignore
+        transformed_ic = transform_fn(self.ic, system=self)  # type: ignore
 
-        warnings.warn(
-            "Changing the initial condition makes other estimated parameters such as `period`, `mean`, etc invalid!"
-        )
+        if transformed_ic is None:
+            return False
+
+        self.ic = transformed_ic
+        return True
 
     def transform_params(
-        self, transform_fn: Callable[[str, np.ndarray, Any], np.ndarray]
-    ) -> None:
+        self, transform_fn: Callable[[str, np.ndarray, Any], np.ndarray | None]
+    ) -> bool:
         """Updates the current parameter list via a transform function"""
-        self.param_list = list(
+        transformed_params = list(
             starmap(
                 partial(transform_fn, system=self),  # type: ignore
                 zip(sorted(self.params.keys()), self.param_list),
             )
         )
 
-        warnings.warn(
-            "Changing the systems parameters makes all other estimated parameters such as `period`, `maximum_lyapunov_estimated`, `mean`, etc invalid!"
-        )
+        if any(p is None for p in transformed_params):
+            return False
+
+        self.param_list = transformed_params
+        return True
 
     def make_trajectory(self, *args, **kwargs):
         """Make a trajectory for the dynamical system"""
@@ -257,6 +261,7 @@ class DynSys(BaseDyn):
         random_seed: int = 0,
         rtol: float = 1e-12,
         atol: float = 1e-12,
+        verbose: bool = False,
         **kwargs,
     ) -> np.ndarray | tuple[np.ndarray, np.ndarray] | None:
         """
@@ -277,6 +282,7 @@ class DynSys(BaseDyn):
             random_seed: Seed for random number generation.
             rtol: Relative tolerance for integration.
             atol: Absolute tolerance for integration.
+            verbose: Whether to trigger warnings.
             **kwargs: Additional arguments for integration routine.
 
         Returns:
@@ -344,7 +350,7 @@ class DynSys(BaseDyn):
             # check completeness of trajectory to kill off incomplete trajectories
             if traj.shape[-1] == len(tpts):  # full trajectory should have n points
                 sol.append(traj)
-            else:
+            elif verbose:
                 warnings.warn(
                     f"{self.name}: Integration did not complete for initial condition {ic}, only got {traj.shape[-1]} points. Skipping this initial condition."
                 )
@@ -357,9 +363,10 @@ class DynSys(BaseDyn):
 
         # postprocess the trajectory, if necessary
         if hasattr(self, "_postprocessing") and postprocess:
-            warnings.warn(
-                "This system has at least one unbounded variable, which has been mapped to a bounded domain. Pass argument postprocess=False in order to generate trajectories from the raw system."
-            )
+            if verbose:
+                warnings.warn(
+                    "This system has at least one unbounded variable, which has been mapped to a bounded domain. Pass argument postprocess=False in order to generate trajectories from the raw system."
+                )
             sol2 = np.moveaxis(sol, (-1, 0), (0, -1))  # type: ignore
             sol = np.moveaxis(np.dstack(self._postprocessing(*sol2)), (0, 1), (1, 0))  # type: ignore
 
