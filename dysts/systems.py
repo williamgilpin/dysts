@@ -140,13 +140,14 @@ def _compute_trajectory(
             ic_transform.set_rng(ic_rng)
         sys.transform_ic(ic_transform)  # type: ignore
 
+    silent_errors = kwargs.pop("_silent_errors", False)
     try:
         traj = sys.make_trajectory(n, **kwargs)
-    except Exception as e:
-        print(f"Error in {sys.name}: {e}")
-        if kwargs.pop("_silent_errors", False):
+    except Exception as exception:
+        print(f"Error in {sys.name}: {exception}")
+        if silent_errors:
             return None
-        raise e
+        raise exception
 
     return traj
 
