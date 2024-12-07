@@ -21,7 +21,6 @@ from .base import (
     DynSys,
     DynSysDelay,
 )
-from .sampling import BaseSampler
 
 Array = npt.NDArray[np.float64]
 
@@ -103,10 +102,6 @@ def _compute_trajectory(
     system: str | BaseDyn,
     n: int,
     kwargs: dict[str, Any],
-    ic_transform: BaseSampler | None = None,
-    param_transform: BaseSampler | None = None,
-    ic_rng: np.random.Generator | None = None,
-    param_rng: np.random.Generator | None = None,
 ) -> Array | None:
     """Helper function to compute a single trajectory for a dynamical system.
 
@@ -114,11 +109,6 @@ def _compute_trajectory(
         system (Union[str, BaseDyn]): Either a string name of a system or a system instance
         n (int): Number of timepoints to integrate
         kwargs (Dict[str, Any]): Additional arguments passed to make_trajectory
-        ic_transform (Optional[BaseSampler]): Transform to apply to initial conditions
-        param_transform (Optional[BaseSampler]): Transform to apply to parameters
-        ic_rng (Optional[np.random.Generator]): Random number generator for IC sampling
-        param_rng (Optional[np.random.Generator]): Random number generator for param sampling
-        _silent_errors (bool): Whether to silence errors and return None instead
 
     Returns:
         Optional[Array]: The computed trajectory, or None if error occurs and _silent_errors=True
@@ -127,18 +117,6 @@ def _compute_trajectory(
         sys = getattr(dfl, system)()
     else:
         sys = system
-
-    if param_transform is not None:
-        if param_rng is not None and hasattr(param_transform, "set_rng"):
-            param_transform.set_rng(param_rng)
-        sys.transform_params(param_transform)  # type: ignore
-
-    # the initial condition transform must come after the parameter transform
-    # because suitable initial conditions may depend on the parameters
-    if ic_transform is not None:
-        if ic_rng is not None and hasattr(ic_transform, "set_rng"):
-            ic_transform.set_rng(ic_rng)
-        sys.transform_ic(ic_transform)  # type: ignore
 
     silent_errors = kwargs.pop("_silent_errors", False)
     try:
@@ -156,11 +134,7 @@ def make_trajectory_ensemble(
     n: int,
     use_tqdm: bool = True,
     use_multiprocessing: bool = False,
-    ic_transform: BaseSampler | None = None,
-    param_transform: BaseSampler | None = None,
     subset: Sequence[str] | Sequence[BaseDyn] | None = None,
-    ic_rng: np.random.Generator | None = None,
-    param_rng: np.random.Generator | None = None,
     **kwargs,
 ) -> dict[str, Array | None]:
     """
@@ -170,8 +144,6 @@ def make_trajectory_ensemble(
         n (int): The number of timepoints to integrate
         use_tqdm (bool): Whether to use a progress bar
         use_multiprocessing (bool): Not yet implemented.
-        ic_transform (callable): function that transforms individual system initial conditions
-        param_transform (callable): function that transforms individual system parameters
         subset (list): A list of system names or BaseDyn (e.g. custom dynamical systems). Defaults to all continuous systems.
             Can also pass in `sys_class` as a kwarg to specify other system classes.
         kwargs (dict): Integration options passed to each system's make_trajectory() method
@@ -190,13 +162,11 @@ def make_trajectory_ensemble(
 
     all_sols = dict()
     if use_multiprocessing:
-        all_sols = _multiprocessed_compute_trajectory(
-            n, subset or [], ic_transform, param_transform, ic_rng, param_rng, **kwargs
-        )
+        all_sols = _multiprocessed_compute_trajectory(n, subset or [], **kwargs)
     else:
         # stupid lint error fix for subset being possibly None
         for system in subset or []:
-            sol = _compute_trajectory(system, n, kwargs, ic_transform, param_transform)
+            sol = _compute_trajectory(system, n, kwargs)
             equation_name = system if isinstance(system, str) else type(system).__name__
             all_sols[equation_name] = sol
 
@@ -204,13 +174,7 @@ def make_trajectory_ensemble(
 
 
 def _multiprocessed_compute_trajectory(
-    n: int,
-    subset: Sequence[str] | Sequence[BaseDyn],
-    ic_transform: BaseSampler | None = None,
-    param_transform: BaseSampler | None = None,
-    ic_rng: np.random.Generator | None = None,
-    param_rng: np.random.Generator | None = None,
-    **kwargs,
+    n: int, subset: Sequence[str] | Sequence[BaseDyn], **kwargs
 ) -> dict[str, Array | None]:
     """
     Helper for handling multiprocessed integration
@@ -221,35 +185,10 @@ def _multiprocessed_compute_trajectory(
 
     otherwise, the default rng will be used for each process and the results will be deterministic
     """
-    if ic_rng is not None:
-        ic_rng_stream = ic_rng.spawn(len(subset))
-    else:
-        ic_rng_stream = [None for _ in subset]
-
-    if param_rng is not None:
-        param_rng_stream = param_rng.spawn(len(subset))
-    else:
-        param_rng_stream = [None for _ in subset]
-
     with Pool() as pool:
         results = pool.starmap(
-            _compute_trajectory,
-            [
-                (
-                    equation_name,
-                    n,
-                    kwargs,
-                    ic_transform,
-                    param_transform,
-                    ic_rng,
-                    param_rng,
-                )
-                for equation_name, param_rng, ic_rng in zip(
-                    subset, param_rng_stream, ic_rng_stream
-                )
-            ],
+            _compute_trajectory, [(n, name, kwargs) for name in subset]
         )
-
     names = [name if isinstance(name, str) else type(name).__name__ for name in subset]
     return dict(zip(names, results))
 
