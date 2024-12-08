@@ -99,9 +99,7 @@ def get_system_data(
 
 
 def _compute_trajectory(
-    system: str | BaseDyn,
-    n: int,
-    kwargs: dict[str, Any],
+    n: int, system: str | BaseDyn, kwargs: dict[str, Any]
 ) -> Array | None:
     """Helper function to compute a single trajectory for a dynamical system.
 
@@ -166,7 +164,7 @@ def make_trajectory_ensemble(
     else:
         # stupid lint error fix for subset being possibly None
         for system in subset or []:
-            sol = _compute_trajectory(system, n, kwargs)
+            sol = _compute_trajectory(n, system, kwargs)
             equation_name = system if isinstance(system, str) else type(system).__name__
             all_sols[equation_name] = sol
 
@@ -174,23 +172,28 @@ def make_trajectory_ensemble(
 
 
 def _multiprocessed_compute_trajectory(
-    n: int, subset: Sequence[str] | Sequence[BaseDyn], **kwargs
+    n: int, subset: Sequence[str] | Sequence[BaseDyn], ordered: bool = True, **kwargs
 ) -> dict[str, Array | None]:
-    """
-    Helper for handling multiprocessed integration
-    with _compute_trajectory with proper RNG seeding
+    """Helper for handling multiprocessed integration
 
-    NOTE: If rngs are provided, every child process will receive a new rng, this is
-    necessary for proper sampling as per: https://numpy.org/doc/stable/reference/random/parallel.html
-
-    otherwise, the default rng will be used for each process and the results will be deterministic
+    Args:
+        n: Number of timepoints to integrate
+        subset: Systems to compute trajectories for
+        ordered: If False, uses imap_unordered for potentially faster execution
+        **kwargs: Additional arguments passed to _compute_trajectory
     """
-    with Pool() as pool:
-        results = pool.starmap(
-            _compute_trajectory, [(n, name, kwargs) for name in subset]
+
+    def worker(system: str | BaseDyn) -> tuple[str, Array | None]:
+        return (
+            system if isinstance(system, str) else type(system).__name__,
+            _compute_trajectory(n, system, kwargs),
         )
-    names = [name if isinstance(name, str) else type(name).__name__ for name in subset]
-    return dict(zip(names, results))
+
+    with Pool() as pool:
+        map_func = pool.imap if ordered else pool.imap_unordered
+        sys_names_and_sols = map_func(worker, subset)
+
+    return dict(sys_names_and_sols)
 
 
 def compute_trajectory_statistics(
