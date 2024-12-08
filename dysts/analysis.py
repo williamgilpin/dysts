@@ -640,10 +640,6 @@ def max_lyapunov_exponent_rosenstein(
         min_tsep = int(np.ceil(1.0 / mf))
         if min_tsep > max_tsep_factor * n:
             min_tsep = int(max_tsep_factor * n)
-            warnings.warn(
-                f"Signal has very low mean frequency, setting min_tsep = {min_tsep}",
-                RuntimeWarning,
-            )
 
     orbit = data
     m = len(orbit)

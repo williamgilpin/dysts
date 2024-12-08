@@ -172,28 +172,22 @@ def make_trajectory_ensemble(
 
 
 def _multiprocessed_compute_trajectory(
-    n: int, subset: Sequence[str] | Sequence[BaseDyn], ordered: bool = True, **kwargs
+    n: int, subset: Sequence[str] | Sequence[BaseDyn], **kwargs
 ) -> dict[str, Array | None]:
     """Helper for handling multiprocessed integration
 
     Args:
         n: Number of timepoints to integrate
         subset: Systems to compute trajectories for
-        ordered: If False, uses imap_unordered for potentially faster execution
         **kwargs: Additional arguments passed to _compute_trajectory
     """
-
-    def worker(system: str | BaseDyn) -> tuple[str, Array | None]:
-        return (
-            system if isinstance(system, str) else type(system).__name__,
-            _compute_trajectory(n, system, kwargs),
+    with Pool() as pool:
+        solutions = pool.starmap(
+            _compute_trajectory, [(n, system, kwargs) for system in subset]
         )
 
-    with Pool() as pool:
-        map_func = pool.imap if ordered else pool.imap_unordered
-        sys_names_and_sols = map_func(worker, subset)
-
-    return dict(sys_names_and_sols)
+    names = [sys if isinstance(sys, str) else type(sys).__name__ for sys in subset]
+    return dict(zip(names, solutions))
 
 
 def compute_trajectory_statistics(

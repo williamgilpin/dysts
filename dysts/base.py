@@ -574,13 +574,7 @@ class DynSysDelay(BaseDyn):
 
         tpts = np.linspace(0, tlim + interp_pad, n)
 
-        # embedding dimension:if not provided, fallback to default or 1 if a default doesnt exist
-        emb_dim = (
-            getattr(self, "embedding_dimension", 1)
-            if embedding_dim is None
-            else embedding_dim
-        )
-
+        emb_dim = self.dimension if embedding_dim is None else embedding_dim
         if not hasattr(self, "ic") and init_cond is None:
             raise ValueError(
                 "No initial conditions provided and no default initial conditions available for this system."
