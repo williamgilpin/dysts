@@ -511,7 +511,7 @@ class DynSysDelay(BaseDyn):
         init_cond: np.ndarray | None = None,
         dt: float = 1e-3,
         tau: float = 1,
-        resample: bool = False,
+        resample: bool = True,
         pts_per_period: int = 100,
         standardize: bool = False,
         timescale: str = "Fourier",

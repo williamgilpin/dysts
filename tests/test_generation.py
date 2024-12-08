@@ -21,9 +21,6 @@ print(WORKING_DIR)
 sys.path.insert(1, os.path.join(WORKING_DIR, "dysts"))
 
 
-DEFAULT_RNG = np.random.default_rng(99)
-
-
 class TestModels(unittest.TestCase):
     """
     Tests integration and models
@@ -96,7 +93,6 @@ class TestMakeTrajectoryEnsemble(unittest.TestCase):
         ensemble = make_trajectory_ensemble(
             n,
             subset=subset,
-            rng=DEFAULT_RNG,
             **kwargs,  # type: ignore
         )
         self.assertIsInstance(ensemble, dict)
@@ -125,7 +121,6 @@ class TestMakeTrajectoryEnsemble(unittest.TestCase):
                     n,
                     subset=subset,
                     use_multiprocessing=True,
-                    rng=DEFAULT_RNG,
                     **kwargs,  # type: ignore
                 )
 
