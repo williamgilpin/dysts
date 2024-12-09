@@ -5,7 +5,6 @@ import json
 import warnings
 from functools import partial
 from importlib import resources
-from itertools import starmap
 from typing import Any, Callable, Sequence
 
 import numpy as np
@@ -190,17 +189,19 @@ class BaseDyn:
         self, transform_fn: Callable[[str, np.ndarray, Any], np.ndarray | None]
     ) -> bool:
         """Updates the current parameter list via a transform function"""
-        transformed_params = list(
-            starmap(
-                partial(transform_fn, system=self),  # type: ignore
-                zip(sorted(self.params.keys()), self.param_list),
+        transformed_params = {
+            param_name: transform_fn(param_name, param_value, system=self)  # type: ignore
+            for param_name, param_value in zip(
+                sorted(self.params.keys()), self.param_list
             )
-        )
+        }
 
-        if any(p is None for p in transformed_params):
+        if any(p is None for p in transformed_params.values()):
             return False
 
-        self.param_list = transformed_params
+        self.params = transformed_params
+        self.__dict__.update(self.params)
+        self.param_list = [self.params[key] for key in sorted(self.params.keys())]
         return True
 
     def make_trajectory(self, *args, **kwargs):

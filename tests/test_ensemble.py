@@ -3,6 +3,8 @@ import unittest
 
 import numpy as np
 
+import dysts.flows as dfl
+from dysts.sampling import GaussianInitialConditionSampler, GaussianParamSampler
 from dysts.systems import get_attractor_list, make_trajectory_ensemble
 
 
@@ -72,16 +74,66 @@ class TestTrajectoryEnsemble(unittest.TestCase):
         self.assertEqual(len(trajs), num_trials)
 
     def test_ensemble_generation_initial_condition_sampling(self):
-        """
-        TODO: add tests for initial condition sampling
-        """
-        pass
+        ic_sampler = GaussianInitialConditionSampler(
+            scale=1e-4, random_seed=random.randint(0, 1000000)
+        )
+        system_sample = random.sample(get_attractor_list(sys_class="continuous"), 4)
+        systems = [getattr(dfl, sys)() for sys in system_sample]
+        unperturbed_sols = make_trajectory_ensemble(
+            256,
+            pts_per_period=64,
+            use_multiprocessing=True,
+            subset=systems,
+        )
+
+        for sys in systems:
+            sys.transform_ic(ic_sampler)
+
+        perturbed_sols = make_trajectory_ensemble(
+            256,
+            pts_per_period=64,
+            use_multiprocessing=True,
+            subset=systems,
+        )
+
+        for system_name in system_sample:
+            unperturbed_traj = unperturbed_sols[system_name]
+            perturbed_traj = perturbed_sols[system_name]
+            self.assertTrue(unperturbed_traj is not None)
+            self.assertTrue(perturbed_traj is not None)
+            self.assertEqual(unperturbed_traj.shape, perturbed_traj.shape)
+            self.assertFalse(np.allclose(unperturbed_traj, perturbed_traj))
 
     def test_ensemble_generation_parameter_sampling(self):
-        """
-        TODO: add tests for parameter sampling
-        """
-        pass
+        param_sampler = GaussianParamSampler(
+            scale=1e-4, random_seed=random.randint(0, 1000000)
+        )
+        system_sample = random.sample(get_attractor_list(sys_class="continuous"), 4)
+        systems = [getattr(dfl, sys)() for sys in system_sample]
+        unperturbed_sols = make_trajectory_ensemble(
+            256,
+            pts_per_period=64,
+            use_multiprocessing=True,
+            subset=systems,
+        )
+
+        for sys in systems:
+            sys.transform_params(param_sampler)
+
+        perturbed_sols = make_trajectory_ensemble(
+            256,
+            pts_per_period=64,
+            use_multiprocessing=True,
+            subset=systems,
+        )
+
+        for system_name in system_sample:
+            unperturbed_traj = unperturbed_sols[system_name]
+            perturbed_traj = perturbed_sols[system_name]
+            self.assertTrue(unperturbed_traj is not None)
+            self.assertTrue(perturbed_traj is not None)
+            self.assertEqual(unperturbed_traj.shape, perturbed_traj.shape)
+            self.assertFalse(np.allclose(unperturbed_traj, perturbed_traj))
 
 
 if __name__ == "__main__":
