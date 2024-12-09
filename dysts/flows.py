@@ -499,7 +499,8 @@ class BlinkingVortex(BlinkingRotlet):
 
 class InteriorSquirmer(DynSys):
     @staticjit
-    def _rhs_static(r, th, t, a, g, n):
+    def _rhs_static(r, th, t, a, g):
+        n = a.shape[0]
         nvals = np.arange(1, n + 1)
         sinvals, cosvals = np.sin(th * nvals), np.cos(th * nvals)
         rnvals = r**nvals
@@ -514,7 +515,8 @@ class InteriorSquirmer(DynSys):
         return np.sum(vrn), np.sum(vth) / r
 
     @staticjit
-    def _jac_static(r, th, t, a, g, n):
+    def _jac_static(r, th, t, a, g):
+        n = a.shape[0]
         nvals = np.arange(1, n + 1)
         sinvals, cosvals = np.sin(th * nvals), np.cos(th * nvals)
         rnvals = r**nvals
@@ -566,9 +568,7 @@ class InteriorSquirmer(DynSys):
         r, th, tt = X
         phase = self._protocol(tt, self.tau)
         dtt = 1
-        dr, dth = self._rhs_static(
-            r, th, t, self.a * phase, self.g * (1 - phase), self.n
-        )
+        dr, dth = self._rhs_static(r, th, t, self.a * phase, self.g * (1 - phase))
         return dr, dth, dtt
 
 

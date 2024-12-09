@@ -109,6 +109,7 @@ class TestTrajectoryEnsemble(unittest.TestCase):
             scale=1e-4, random_seed=random.randint(0, 1000000)
         )
         system_sample = random.sample(get_attractor_list(sys_class="continuous"), 4)
+        system_sample += ["InteriorSquirmer"]
         systems = [getattr(dfl, sys)() for sys in system_sample]
         unperturbed_sols = make_trajectory_ensemble(
             256,
