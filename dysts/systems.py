@@ -165,7 +165,7 @@ def make_trajectory_ensemble(
         # stupid lint error fix for subset being possibly None
         for system in subset or []:
             sol = _compute_trajectory(n, system, kwargs)
-            equation_name = system if isinstance(system, str) else type(system).__name__
+            equation_name = system if isinstance(system, str) else system.name
             all_sols[equation_name] = sol
 
     return all_sols
@@ -186,7 +186,7 @@ def _multiprocessed_compute_trajectory(
             _compute_trajectory, [(n, system, kwargs) for system in subset]
         )
 
-    names = [sys if isinstance(sys, str) else type(sys).__name__ for sys in subset]
+    names = [sys if isinstance(sys, str) else sys.name for sys in subset]
     return dict(zip(names, solutions))
 
 
