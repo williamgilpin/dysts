@@ -1,0 +1,338 @@
+{
+    "Logistic": {
+        "initial_conditions": [
+            0.51
+        ],
+        "parameters": {
+            "r": 3.9
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "Robert May. Simple mathematical models with very complicated dynamics. Nature (1976)."
+    },
+    "Chebyshev": {
+        "initial_conditions": [
+            0.51
+        ],
+        "parameters": {
+            "a": 6.0
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "."
+    },
+    "Ricker": {
+        "initial_conditions": [
+            0.51
+        ],
+        "parameters": {
+            "a": 3.3
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "."
+    },
+    "Bogdanov": {
+        "initial_conditions": [
+            0.51,
+            0.2
+        ],
+        "parameters": {
+            "eps": 0.0,
+            "k": 1.2,
+            "mu": 0.0
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "Bogdanov, R (1981). Bifurcations of a Limit Cycle for a Family of Vector Fields on the Plane. Selecta Math. Soviet."
+    },
+    "KaplanYorke": {
+        "initial_conditions": [
+            0.2,
+            0.2
+        ],
+        "parameters": {
+            "alpha": 0.2
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "J.L. Kaplan, J.A. Yorke (1979).Functional Differential Equations and Approximations of Fixed Points"
+    },
+    "Tent": {
+        "initial_conditions": [
+            0.51
+        ],
+        "parameters": {
+            "mu": 0.95
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": ""
+    },
+    "Duffing": {
+        "initial_conditions": [
+            0.51,
+            0.1
+        ],
+        "parameters": {
+            "a": 2.75,
+            "b": 0.2
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": ""
+    },
+    "Gingerbreadman": {
+        "initial_conditions": [
+            0.51,
+            0.1
+        ],
+        "parameters": {
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": ""
+    },
+    "Zaslavskii": {
+        "initial_conditions": [
+            0.51,
+            0.1
+        ],
+        "parameters": {
+            "eps": 5.0,
+            "nu": 0.2,
+            "r": 2.0
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "G.M. Zaslavskii (1978). The Simplest case of a strange attractor. Phys. Lett. A. 69 (3)"
+    },
+    "Chirikov": {
+        "initial_conditions": [
+            0.1,
+            0.1
+        ],
+        "parameters": {
+            "k": 0.971635
+        },
+        "domain": "discrete",
+        "inverse": true,
+        "citation": "B. V. Chirikov, Research concerning the theory of nonlinear resonance and stochasticity. (1979)."
+    },
+    "Gauss": {
+        "initial_conditions": [
+            0.5
+        ],
+        "parameters": {
+            "a": 4.9,
+            "b": -0.5
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "."
+    },
+    "Henon": {
+        "initial_conditions": [
+            1.21674097, 
+            0.03536533
+        ],
+        "parameters": {
+            "a": 1.4,
+            "b": 0.3
+        },
+        "domain": "discrete",
+        "inverse": true,
+        "citation": "."
+    },
+    "Baker": {
+        "initial_conditions": [
+            0.04995935, 
+            0.363224
+        ],
+        "parameters": {
+            "a": 1.0
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "."
+    },
+    "Ikeda": {
+        "initial_conditions": [
+            0.9,  
+            0.55524451
+        ],
+        "parameters": {
+            "u": 0.9
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "."
+    },
+    "Tinkerbell": {
+        "initial_conditions": [
+            0.13738266, 
+            -0.0308518
+        ],
+        "parameters": {
+            "a": 0.9,
+            "b": -0.6013,
+            "c": 2.0,
+            "d": 0.5
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "."
+    },
+    "Circle": {
+        "initial_conditions": [
+            0.0
+        ],
+        "parameters": {
+            "omega": 0.333,
+            "k": 5.7
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "."
+    },
+    "MaynardSmith": {
+        "initial_conditions": [
+            0.0,
+            0.1
+        ],
+        "parameters": {
+            "a": 0.87,
+            "b": 0.75
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "."
+    },
+    "Pickover": {
+        "initial_conditions": [
+            -0.97631884, 
+            -1.2040783
+        ],
+        "parameters": {
+            "a": -1.4,
+            "b": 1.6,
+            "c": 1.0,
+            "d": 0.7
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "."
+    },
+    "BlinkingVortexMap": {
+        "initial_conditions": [
+            0.17, 
+            0.33
+        ],
+        "parameters": {
+            "a": 1.0,
+            "gamma": 1.0,
+            "b": 0.5,
+            "t": 1.5
+        },
+        "domain": "discrete",
+        "hamiltonian": true,
+        "inverse": true,
+        "citation": "."
+    },
+    "DeJong": {
+        "initial_conditions": [
+            1.78166133, 
+            -1.15791549
+        ],
+        "parameters": {
+            "a": 1.641,
+            "b": 1.902, 
+            "c": 0.316, 
+            "d": 1.525
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "."
+    },
+    "ZeraouliaSprott": {
+        "initial_conditions": [
+            1.78166133, 
+            -1.15791549
+        ],
+        "parameters": {
+            "a": 1.641,
+            "b": 1.902
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "."
+    },
+    "Bedhead": {
+        "initial_conditions": [
+            0.5, 
+            0.5
+        ],
+        "parameters": {
+            "a": -0.67,
+            "b":  0.83
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "Ivan Emrich."
+    },
+    "Svensson": {
+        "initial_conditions": [
+            0.5, 
+            0.5
+        ],
+        "parameters": {
+            "a": 1.5, 
+            "b": -1.8, 
+            "c": 1.6, 
+            "d": 0.9
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "Ivan Emrich."
+    },
+    "GumowskiMira": {
+        "initial_conditions": [
+            0.1, 
+            0.1
+        ],
+        "parameters": {
+            "a": -1.1,
+            "b": -0.2
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "Gumowski, Igor, and Christian Mira (2006). Recurrences and discrete dynamic systems. Vol. 809. Springer."
+    },
+    "Hopalong": {
+        "initial_conditions": [
+            0.1, 
+            0.1
+        ],
+        "parameters": {
+            "a": 3.1,
+            "b": 2.5,
+            "c": 4.2
+        },
+        "domain": "discrete",
+        "inverse": false,
+        "citation": "Barry Martin."
+    },
+    "EndCap": {
+        "initial_conditions": [
+            0.5,
+            0.3
+        ],
+        "parameters": {
+            "a": 1.4,
+            "b": 0.3
+        },
+        "domain": "discrete",
+        "inverse": true,
+        "citation": "."
+    }
+}
