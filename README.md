@@ -1,9 +1,9 @@
 
-![Plots of chaotic systems in the collection](dysts/data/logo.png)
-
 # dysts
 
-Analyze more than a hundred chaotic systems.
+Analyze hundreds of chaotic systems.
+
+![Plots of chaotic systems in the collection](dysts/data/logo.png)
 
 ## Basic Usage
 
