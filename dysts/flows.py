@@ -142,23 +142,23 @@ class ThomasLabyrinth(Thomas):
 
 class DoublePendulum(DynSys):
     @staticjit
-    def _rhs(th1, th2, p1, p2, t, d, m):
-        g = 9.82
-        pre = 6 / (m * d**2)
-        denom = 16 - 9 * np.cos(th1 - th2) ** 2
-        th1_dot = pre * (2 * p1 - 3 * np.cos(th1 - th2) * p2) / denom
-        th2_dot = pre * (8 * p2 - 3 * np.cos(th1 - th2) * p1) / denom
-        p1_dot = (
-            -0.5
-            * (m * d**2)
-            * (th1_dot * th2_dot * np.sin(th1 - th2) + 3 * (g / d) * np.sin(th1))
-        )
-        p2_dot = (
-            -0.5
-            * (m * d**2)
-            * (-th1_dot * th2_dot * np.sin(th1 - th2) + 3 * (g / d) * np.sin(th2))
-        )
-        return th1_dot, th2_dot, p1_dot, p2_dot
+    def _rhs(th1, th2, p1, p2, t, g, l1, l2, m1, m2):
+        cos_diff = np.cos(th1 - th2)
+        sin_diff = np.sin(th1 - th2)
+        denom = l1 * l2 * (m1 + m2 * sin_diff**2)
+
+        th1dot = (l2 * p1 - l1 * p2 * cos_diff) / (l1 * denom)
+        th2dot = ((m1 + m2) * l1 * p2 - m2 * l2 * p1 * cos_diff) / (m2 * l2 * denom)
+
+        h1 = p1 * p2 * sin_diff / denom
+        h2 = (m2 * l2 * p1**2) / (2 * l1 * denom**2)
+        h2 += 0.5 * m2 * p2 * l2 * l1 * th2dot / denom
+        h2 *= np.sin(2 * (th1 - th2))
+
+        p1dot = -(m1 + m2) * g * l1 * np.sin(th1) - h1 + h2
+        p2dot = -m2 * g * l2 * np.sin(th2) + h1 - h2
+
+        return th1dot, th2dot, p1dot, p2dot
 
     @staticmethod
     @staticjit
@@ -736,8 +736,7 @@ class BelousovZhabotinsky(DynSys):
         z0,
     ):
         ybar = (1 / y0) * yb1 * z * v / (yb2 * x + yb3 + kf)
-        if x < 0.0:
-            x = 0
+        x = max(0, x)
         rf = (ci - z0 * z) * np.sqrt(x)
         xdot = c1 * x * ybar + c2 * ybar + c3 * x**2 + c4 * rf + c5 * x * z - kf * x
         zdot = (c6 / z0) * rf + c7 * x * z + c8 * z * v + c9 * z - kf * z
@@ -1409,14 +1408,14 @@ class ChenLee(DynSys):
     def _rhs(x, y, z, t, a, b, c):
         xdot = a * x - y * z
         ydot = b * y + x * z
-        zdot = c * z + 0.3333333333333333333333333 * x * y
+        zdot = c * z + (1 / 3) * x * y
         return xdot, ydot, zdot
 
     @staticjit
     def _jac(x, y, z, t, a, b, c):
         row1 = [a, -z, -y]
         row2 = [z, b, x]
-        row3 = [0.3333333333333333333333333 * y, 0.3333333333333333333333333 * x, c]
+        row3 = [(1 / 3) * y, (1 / 3) * x, c]
         return row1, row2, row3
 
 
@@ -1698,18 +1697,18 @@ class ExcitableCell(DynSys):
     def rhs(self, X, t):
         v, n, c = X
 
-        alpham = 0.1 * (25 + v) / (1 - np.exp(-0.1 * v - 2.5))
-        betam = 4 * np.exp(-(v + 50) / 18)
+        alpham = self.ams * (self.amvb + v) / (1 - np.exp(-self.ar * v - self.amvo))
+        betam = self.bms * np.exp(-self.bmr * v - self.bmo)
         minf = alpham / (alpham + betam)
 
-        alphah = 0.07 * np.exp(-0.05 * v - 2.5)
-        betah = 1 / (1 + np.exp(-0.1 * v - 2))
+        alphah = self.ahs * np.exp(-self.ahr * v - self.aho)
+        betah = 1 / (1 + np.exp(-self.bhr * v - self.bho))
         hinf = alphah / (alphah + betah)
 
-        alphan = 0.01 * (20 + v) / (1 - np.exp(-0.1 * v - 2))
-        betan = 0.125 * np.exp(-(v + 30) / 80)
+        alphan = self.ans * (self.anvb + v) / (1 - np.exp(-self.ar * v - self.anvo))
+        betan = self.bns * np.exp(-self.bnr * v - self.bno)
         ninf = alphan / (alphan + betan)
-        tau = 1 / (230 * (alphan + betan))
+        tau = 1 / (self.tscl * (alphan + betan))
 
         ca = c / (1 + c)
 
@@ -1774,36 +1773,16 @@ class CellCycle(DynSys):
 
 
 class CircadianRhythm(DynSys):
-    @staticjit
-    def _rhs(
-        m,
-        fc,
-        fs,
-        fn,
-        th,
-        t,
-        Ki,
-        k,
-        k1,
-        k2,
-        kd,
-        kdn,
-        km,
-        ks,
-        n,
-        vd,
-        vdn,
-        vm,
-        vmax,
-        vmin,
-        v,
-    ):
-        vs = 2.5 * ((0.5 + 0.5 * np.cos(th)) + vmin) * (vmax - vmin)
-        mdot = vs * (Ki**n) / (Ki**n + fn**n) - vm * m / (km + m)
-        fcdot = ks * m - k1 * fc + k2 * fn - k * fc
-        fsdot = k * fc - vd * fs / (kd + fs)
-        fndot = k1 * fc - k2 * fn - vdn * fn / (kdn + fn)
-        thdot = 2 * np.pi / 24
+    def rhs(self, X, t):
+        m, fc, fs, fn, th = X
+        vs = self.vc * ((0.5 + 0.5 * np.cos(th)) + self.vmin) * (self.vmax - self.vmin)
+        mdot = vs * (self.Ki**self.n) / (self.Ki**self.n + fn**self.n) - self.vm * m / (
+            self.km + m
+        )
+        fcdot = self.ks * m - self.k1 * fc + self.k2 * fn - self.k * fc
+        fsdot = self.k * fc - self.vd * fs / (self.kd + fs)
+        fndot = self.k1 * fc - self.k2 * fn - self.vdn * fn / (self.kdn + fn)
+        thdot = 2 * np.pi / self.ps
         return mdot, fcdot, fsdot, fndot, thdot
 
     @staticjit
@@ -1817,7 +1796,7 @@ class FluidTrampoline(DynSys):
         xdot = y
         ydot = -1 - np.heaviside(-x, 0) * (x + psi * y * np.abs(y)) + gamma * np.cos(th)
         thdot = w
-        return (xdot, ydot, thdot)
+        return xdot, ydot, thdot
 
     @staticjit
     def _postprocessing(x, y, th):
@@ -1999,7 +1978,7 @@ class Blasius(DynSys):
 
 class TurchinHanski(DynSys):
     @staticjit
-    def _rhs(n, p, z, t, a, d, e, g, h, r, s):
+    def _rhs(n, p, z, t, a, d, e, g, h, lamb, r, s):
         ndot = (
             r * (1 - e * np.sin(z)) * n
             - r * (n**2)
@@ -2007,7 +1986,7 @@ class TurchinHanski(DynSys):
             - a * n * p / (n + d)
         )
         pdot = s * (1 - e * np.sin(z)) * p - s * (p**2) / n
-        zdot = 2 * np.pi
+        zdot = 2 * np.pi * lamb
         return ndot, pdot, zdot
 
     @staticjit
