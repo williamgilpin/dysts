@@ -18,6 +18,7 @@
 
 # Re-ignore common patterns within allowed directories
 __pycache__/
+.ipynb_checkpoints/
 *.py[cod]
 *$py.class
 .pytest_cache/
