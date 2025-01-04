@@ -151,6 +151,7 @@ def _compute_trajectory(
             _resolve_event_signature(sys, event_fn) for event_fn in event_fns
         ]
 
+    silent_errors = kwargs.pop("_silent_errors", False)
     try:
         traj = sys.make_trajectory(n, **kwargs)
     except Exception as exception:
@@ -158,7 +159,7 @@ def _compute_trajectory(
 
         # fail silently by returning None if silent_errors is True,
         # useful for large ensemble runs
-        if kwargs.pop("_silent_errors", False):
+        if silent_errors:
             return None
         raise exception
 
