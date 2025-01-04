@@ -5,7 +5,7 @@ import json
 from multiprocessing import Pool
 from os import PathLike
 from types import ModuleType
-from typing import Any, Sequence
+from typing import Any, Callable, Sequence
 
 import numpy as np
 import numpy.typing as npt
@@ -98,14 +98,44 @@ def get_system_data(
     return {k: v for k, v in data.items() if k in systems}
 
 
+def _resolve_event_signature(
+    system: BaseDyn,
+    event: Callable[[BaseDyn], Callable[[float, Array], float]]
+    | Callable[[float, Array], float],
+) -> Callable[[float, Array], float]:
+    """
+    Hacky check if a given event function is system dependent or not
+
+    If the event callable has a single argument, it is assumed to be system dependent
+        and the event returns a solve_ivp compatible event function.
+    If the event callable has more than one argument, it is assumed to be a solve_ivp
+        compatible event function.
+
+    Args:
+        system: The system to pass to the possibly system dependent event function
+        event: The event function to resolve
+
+    Returns:
+        The resolved event function (solve_ivp compatible)
+    """
+    if len(inspect.signature(event).parameters) == 1:
+        return event(system)  # type: ignore
+    return event  # type: ignore
+
+
 def _compute_trajectory(
-    n: int, system: str | BaseDyn, kwargs: dict[str, Any]
+    n: int,
+    system: str | BaseDyn,
+    event_fns: Sequence[Callable] | None,
+    kwargs: dict[str, Any],
 ) -> Array | None:
     """Helper function to compute a single trajectory for a dynamical system.
 
     Args:
         system (Union[str, BaseDyn]): Either a string name of a system or a system instance
         n (int): Number of timepoints to integrate
+        event_fns (Sequence[Callable]): A list of functions that take a dynamical system and returns a
+            solve_ivp compatible event function.
         kwargs (Dict[str, Any]): Additional arguments passed to make_trajectory
 
     Returns:
@@ -116,12 +146,20 @@ def _compute_trajectory(
     else:
         sys = system
 
-    silent_errors = kwargs.pop("_silent_errors", False)
+    # if event functions are provided, resolve them and pack them into the kwargs
+    if event_fns is not None:
+        kwargs["events"] = [
+            _resolve_event_signature(sys, event_fn) for event_fn in event_fns
+        ]
+
     try:
         traj = sys.make_trajectory(n, **kwargs)
     except Exception as exception:
         print(f"Error in {sys.name}: {exception}")
-        if silent_errors:
+
+        # fail silently by returning None if silent_errors is True,
+        # useful for large ensemble runs
+        if kwargs.pop("_silent_errors", False):
             return None
         raise exception
 
@@ -133,6 +171,7 @@ def make_trajectory_ensemble(
     use_tqdm: bool = True,
     use_multiprocessing: bool = False,
     subset: Sequence[str] | Sequence[BaseDyn] | None = None,
+    event_fns: Sequence[Callable] | None = None,
     **kwargs,
 ) -> dict[str, Array | None]:
     """
@@ -144,6 +183,10 @@ def make_trajectory_ensemble(
         use_multiprocessing (bool): Not yet implemented.
         subset (list): A list of system names or BaseDyn (e.g. custom dynamical systems). Defaults to all continuous systems.
             Can also pass in `sys_class` as a kwarg to specify other system classes.
+        event_fns (list): A list of functions that either take the signature:
+            (system: BaseDyn) -> (event_fn: Callable[[float, Array], float])
+            or the signature:
+            (event_fn: Callable[[float, Array], float])
         kwargs (dict): Integration options passed to each system's make_trajectory() method
 
     Returns:
@@ -160,11 +203,13 @@ def make_trajectory_ensemble(
 
     all_sols = dict()
     if use_multiprocessing:
-        all_sols = _multiprocessed_compute_trajectory(n, subset or [], **kwargs)
+        all_sols = _multiprocessed_compute_trajectory(
+            n, subset or [], event_fns, **kwargs
+        )
     else:
         # stupid lint error fix for subset being possibly None
         for system in subset or []:
-            sol = _compute_trajectory(n, system, kwargs)
+            sol = _compute_trajectory(n, system, event_fns, kwargs)
             equation_name = system if isinstance(system, str) else system.name
             all_sols[equation_name] = sol
 
@@ -172,18 +217,23 @@ def make_trajectory_ensemble(
 
 
 def _multiprocessed_compute_trajectory(
-    n: int, subset: Sequence[str] | Sequence[BaseDyn], **kwargs
+    n: int,
+    subset: Sequence[str] | Sequence[BaseDyn],
+    event_fns: Sequence[Callable] | None,
+    **kwargs,
 ) -> dict[str, Array | None]:
     """Helper for handling multiprocessed integration
 
     Args:
         n: Number of timepoints to integrate
         subset: Systems to compute trajectories for
+        event_fns: Event functions to pass to the systems
         **kwargs: Additional arguments passed to _compute_trajectory
     """
     with Pool() as pool:
         solutions = pool.starmap(
-            _compute_trajectory, [(n, system, kwargs) for system in subset]
+            _compute_trajectory,
+            [(n, system, event_fns, kwargs) for system in subset],
         )
 
     names = [sys if isinstance(sys, str) else sys.name for sys in subset]

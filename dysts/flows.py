@@ -589,8 +589,7 @@ class BickleyJet(DynSys):
     @staticjit
     def _rhs(y, x, z, t, ell, eps, k, omega, sigma, u):
         sechy = 1 / np.cosh(y / ell)
-        inds = np.arange(3)
-        un = k[inds] * (x - z * sigma[inds])
+        un = k * (x - z * sigma)
         dx = u * sechy**2 * (-1 - 2 * np.dot(np.cos(un), eps) * np.tanh(y / ell))
         dy = ell * u * sechy**2 * np.dot(eps * k, np.sin(un))
         dz = omega
