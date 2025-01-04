@@ -106,7 +106,7 @@ class TestTrajectoryEnsemble(unittest.TestCase):
 
     def test_ensemble_generation_parameter_sampling(self):
         param_sampler = GaussianParamSampler(
-            scale=1e-4, random_seed=random.randint(0, 1000000)
+            scale=1e-3, random_seed=random.randint(0, 1000000)
         )
         system_sample = random.sample(get_attractor_list(sys_class="continuous"), 4)
         systems = [getattr(dfl, sys)() for sys in system_sample]
