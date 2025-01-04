@@ -21,10 +21,9 @@ from .base import (
     DynSys,
     DynSysDelay,
 )
+from .utils import num_unspecified_params
 
 Array = npt.NDArray[np.float64]
-
-DEFAULT_RNG = np.random.default_rng()
 
 
 def get_attractor_list(
@@ -118,7 +117,7 @@ def _resolve_event_signature(
     Returns:
         The resolved event function (solve_ivp compatible)
     """
-    if len(inspect.signature(event).parameters) == 1:
+    if num_unspecified_params(event) == 1:
         return event(system)  # type: ignore
     return event  # type: ignore
 

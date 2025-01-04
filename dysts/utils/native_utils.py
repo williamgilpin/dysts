@@ -6,6 +6,37 @@ import json
 import os
 import threading
 import warnings
+from inspect import Parameter, signature
+
+
+def num_unspecified_params(func) -> int:
+    """Count required parameters that haven't been specified through partial or defaults.
+
+    Args:
+        func: Function or partial function to inspect
+
+    Returns:
+        Number of parameters that must be specified when calling the function
+    """
+    if hasattr(func, "func"):  # Check if partial
+        partial_func = func.func
+        partial_args = len(func.args)
+        partial_keywords = func.keywords or {}
+    else:
+        partial_func = func
+        partial_args = 0
+        partial_keywords = {}
+
+    sig = signature(partial_func)
+    required_count = 0
+
+    for i, (name, param) in enumerate(sig.parameters.items()):
+        if i < partial_args or name in partial_keywords:
+            continue
+        if param.default == Parameter.empty:
+            required_count += 1
+
+    return required_count
 
 
 def has_module(module_name: str) -> bool:
