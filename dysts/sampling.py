@@ -70,9 +70,6 @@ class OnAttractorInitCondSampler(BaseSampler):
     def __call__(self, ic: Array, system: BaseDyn) -> Array | None:
         # make reference trajectory if not already cached
         if system.name not in self.trajectory_cache:
-            if self.verbose:
-                print(f"Adding {system.name} to trajectory cache...")
-
             # Integrate the system with default parameters
             reference_traj = system.make_trajectory(
                 self.reference_traj_length,

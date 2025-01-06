@@ -155,7 +155,9 @@ def _compute_trajectory(
     try:
         traj = sys.make_trajectory(n, **kwargs)
     except Exception as exception:
-        print(f"Error in {sys.name}: {exception}")
+        logger = kwargs.pop("logger", None)
+        if logger is not None:
+            logger.error(f"Error in {sys.name}: {exception}")
 
         # fail silently by returning None if silent_errors is True,
         # useful for large ensemble runs
