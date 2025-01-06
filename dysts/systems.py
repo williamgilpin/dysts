@@ -152,10 +152,11 @@ def _compute_trajectory(
         ]
 
     silent_errors = kwargs.pop("_silent_errors", False)
+    logger = kwargs.pop("logger", None)
+
     try:
         traj = sys.make_trajectory(n, **kwargs)
     except Exception as exception:
-        logger = kwargs.pop("logger", None)
         if logger is not None:
             logger.error(f"Error in {sys.name}: {exception}")
 
