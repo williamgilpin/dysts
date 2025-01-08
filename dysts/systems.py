@@ -2,6 +2,8 @@
 
 import inspect
 import json
+from functools import partial
+from logging import Logger
 from multiprocessing import Pool
 from os import PathLike
 from types import ModuleType
@@ -103,12 +105,14 @@ def _resolve_event_signature(
     | Callable[[float, Array], float],
 ) -> Callable[[float, Array], float]:
     """
-    Hacky check if a given event function is system dependent or not
+    Hack check for handling event function signatures
 
-    If the event callable has a single argument, it is assumed to be system dependent
-        and the event returns a solve_ivp compatible event function.
-    If the event callable has more than one argument, it is assumed to be a solve_ivp
-        compatible event function.
+    Case 1: event function is system dependent (1 parameter factory function)
+        event(system) -> (event_fn: Callable[[float, Array], float])
+    Case 2: event function is not system dependent (solve_ivp compatible event function)
+        event(t, y) -> (float)
+    Case 3: event function is a parameterless factory function for a solve_ivp event
+        event() -> (event_fn: Callable[[float, Array], float])
 
     Args:
         system: The system to pass to the possibly system dependent event function
@@ -116,52 +120,65 @@ def _resolve_event_signature(
 
     Returns:
         The resolved event function (solve_ivp compatible)
+
+    Raises:
+        ValueError: If the event function takes an invalid number of arguments
     """
-    if num_unspecified_params(event) == 1:
+    num_params = num_unspecified_params(event)
+    # case 1: event function is system dependent
+    if num_params == 1:
         return event(system)  # type: ignore
-    return event  # type: ignore
+    # case 2: event function is not system dependent
+    elif num_params == 2:
+        return event  # type: ignore
+    # case 3: event function is a parameterless factory function for a solve_ivp event
+    elif num_params == 0:
+        return event()  # type: ignore
+    else:
+        raise ValueError("Event function can only take 0, 1, or 2 arguments")
 
 
 def _compute_trajectory(
     n: int,
     system: str | BaseDyn,
     event_fns: Sequence[Callable] | None,
-    kwargs: dict[str, Any],
+    silent_errors: bool = False,
+    logger: Logger | None = None,
+    **kwargs: Any,
 ) -> Array | None:
     """Helper function to compute a single trajectory for a dynamical system.
 
     Args:
-        system (Union[str, BaseDyn]): Either a string name of a system or a system instance
-        n (int): Number of timepoints to integrate
-        event_fns (Sequence[Callable]): A list of functions that take a dynamical system and returns a
-            solve_ivp compatible event function.
-        kwargs (Dict[str, Any]): Additional arguments passed to make_trajectory
+        n: Number of timepoints to integrate
+        system: Either a string name of a system or a system instance
+        event_fns: A list of functions that take a dynamical system and returns a
+            solve_ivp compatible event function
+        silent_errors: Whether to fail silently if an error occurs
+        logger: Logger instance to use for logging errors
+        **kwargs: Additional arguments passed to make_trajectory
 
     Returns:
-        Optional[Array]: The computed trajectory, or None if error occurs and _silent_errors=True
+        The computed trajectory, or None if error occurs and silent_errors=True
     """
     if isinstance(system, str):
         sys = getattr(dfl, system)()
     else:
         sys = system
 
-    # if event functions are provided, resolve them and pack them into the kwargs
-    if event_fns is not None:
-        kwargs["events"] = [
-            _resolve_event_signature(sys, event_fn) for event_fn in event_fns
-        ]
-
-    silent_errors = kwargs.pop("_silent_errors", False)
-    logger = kwargs.pop("logger", None)
+    # if event functions are provided, resolve them
+    # and pass into make_trajectory as a kwarg
+    events = (
+        None
+        if event_fns is None
+        else [_resolve_event_signature(sys, event_fn) for event_fn in event_fns]
+    )
 
     try:
-        traj = sys.make_trajectory(n, **kwargs)
+        traj = sys.make_trajectory(n, events=events, **kwargs)
     except Exception as exception:
         if logger is not None:
-            logger.error(f"Error in {sys.name}: {exception}")
-
-        # fail silently by returning None if silent_errors is True,
-        # useful for large ensemble runs
+            logger.name = "dysts.systems._compute_trajectory"  # WARNING: this may mutate logger state during multiprocessing
+            logger.error(f"Error integrating {sys.name}: {exception}")
         if silent_errors:
             return None
         raise exception
@@ -175,6 +192,8 @@ def make_trajectory_ensemble(
     use_multiprocessing: bool = False,
     subset: Sequence[str] | Sequence[BaseDyn] | None = None,
     event_fns: Sequence[Callable] | None = None,
+    silent_errors: bool = False,
+    logger: Logger | None = None,
     **kwargs,
 ) -> dict[str, Array | None]:
     """
@@ -186,10 +205,13 @@ def make_trajectory_ensemble(
         use_multiprocessing (bool): Not yet implemented.
         subset (list): A list of system names or BaseDyn (e.g. custom dynamical systems). Defaults to all continuous systems.
             Can also pass in `sys_class` as a kwarg to specify other system classes.
-        event_fns (list): A list of functions that either take the signature:
-            (system: BaseDyn) -> (event_fn: Callable[[float, Array], float])
-            or the signature:
-            (event_fn: Callable[[float, Array], float])
+        event_fns (list): A list of functions that can take the signatures:
+                1. (system: BaseDyn) -> (event_fn: Callable[[float, Array], float])
+                2. (event_fn: Callable[[float, Array], float])
+                3. () -> (event_fn: Callable[[float, Array], float])
+            If multiprocessing is used, the event functions must be of type 1 or 3 to avoid state persistence across processes.
+        silent_errors (bool): Whether to fail silently if an error occurs
+        logger (Logger): Logger instance to use for logging errors
         kwargs (dict): Integration options passed to each system's make_trajectory() method
 
     Returns:
@@ -207,12 +229,13 @@ def make_trajectory_ensemble(
     all_sols = dict()
     if use_multiprocessing:
         all_sols = _multiprocessed_compute_trajectory(
-            n, subset or [], event_fns, **kwargs
+            n, subset or [], event_fns, silent_errors, logger, **kwargs
         )
     else:
-        # stupid lint error fix for subset being possibly None
         for system in subset or []:
-            sol = _compute_trajectory(n, system, event_fns, kwargs)
+            sol = _compute_trajectory(
+                n, system, event_fns, silent_errors, logger, **kwargs
+            )
             equation_name = system if isinstance(system, str) else system.name
             all_sols[equation_name] = sol
 
@@ -223,20 +246,22 @@ def _multiprocessed_compute_trajectory(
     n: int,
     subset: Sequence[str] | Sequence[BaseDyn],
     event_fns: Sequence[Callable] | None,
-    **kwargs,
+    silent_errors: bool = False,
+    logger: Logger | None = None,
+    **kwargs: Any,
 ) -> dict[str, Array | None]:
-    """Helper for handling multiprocessed integration
+    """Helper for handling multiprocessed integration with _compute_trajectory"""
 
-    Args:
-        n: Number of timepoints to integrate
-        subset: Systems to compute trajectories for
-        event_fns: Event functions to pass to the systems
-        **kwargs: Additional arguments passed to _compute_trajectory
-    """
+    # loose check to just count the number of unspecified parameters in the event functions
+    # assert that in the multiprocessing case, all event functions are of type 1 or 3
+    # this is to prevent potential state persistence across processes
+    if event_fns is not None:
+        assert all(num_unspecified_params(event) in [0, 1] for event in event_fns)
+
     with Pool() as pool:
         solutions = pool.starmap(
-            _compute_trajectory,
-            [(n, system, event_fns, kwargs) for system in subset],
+            partial(_compute_trajectory, **kwargs),
+            [(n, system, event_fns, silent_errors, logger) for system in subset],
         )
 
     names = [sys if isinstance(sys, str) else sys.name for sys in subset]

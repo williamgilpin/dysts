@@ -264,7 +264,7 @@ class DynSys(BaseDyn):
         atol: float = 1e-12,
         verbose: bool = False,
         **kwargs,
-    ) -> np.ndarray | tuple[np.ndarray, np.ndarray] | None:
+    ) -> np.ndarray | tuple[np.ndarray, np.ndarray] | None | tuple[None, None]:
         """
         Generate a fixed-length trajectory for the dynamical system.
 
@@ -357,7 +357,7 @@ class DynSys(BaseDyn):
                 )
 
         if len(sol) == 0:  # if no complete trajectories, return None
-            return None
+            return (None, None) if return_times else None
 
         # transpose the trajectory to shape (B, T, D)
         sol = np.transpose(np.array(sol), (0, 2, 1))  # type: ignore

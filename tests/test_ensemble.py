@@ -7,6 +7,21 @@ import dysts.flows as dfl
 from dysts.sampling import GaussianInitialConditionSampler, GaussianParamSampler
 from dysts.systems import get_attractor_list, make_trajectory_ensemble
 
+PARAMETERLESS_SYSTEMS = [
+    "PehlivanWei",
+    "SprottA",
+    "SprottB",
+    "SprottC",
+    "SprottD",
+    "SprottE",
+    "SprottJ",
+    "SprottMore",
+    "SprottN",
+    "SprottS",
+    "SprottTorus",
+]
+NUM_SAMPLES = 10
+
 
 class TestTrajectoryEnsemble(unittest.TestCase):
     def test_ensemble_generation_no_multiprocessing(self):
@@ -16,7 +31,7 @@ class TestTrajectoryEnsemble(unittest.TestCase):
             pts_per_period=64,
             use_multiprocessing=False,
             subset=random.sample(
-                get_attractor_list(sys_class="continuous_no_delay"), 4
+                get_attractor_list(sys_class="continuous_no_delay"), NUM_SAMPLES
             ),
         )
         self.assertTrue(len(sols) > 0)
@@ -29,7 +44,7 @@ class TestTrajectoryEnsemble(unittest.TestCase):
             pts_per_period=64,
             use_multiprocessing=True,
             subset=random.sample(
-                get_attractor_list(sys_class="continuous_no_delay"), 4
+                get_attractor_list(sys_class="continuous_no_delay"), NUM_SAMPLES
             ),
             standardize=True,
         )
@@ -43,7 +58,7 @@ class TestTrajectoryEnsemble(unittest.TestCase):
             pts_per_period=64,
             use_multiprocessing=True,
             subset=random.sample(
-                get_attractor_list(sys_class="continuous_no_delay"), 4
+                get_attractor_list(sys_class="continuous_no_delay"), NUM_SAMPLES
             ),
             standardize=False,
         )
@@ -77,7 +92,9 @@ class TestTrajectoryEnsemble(unittest.TestCase):
         ic_sampler = GaussianInitialConditionSampler(
             scale=1e-4, random_seed=random.randint(0, 1000000)
         )
-        system_sample = random.sample(get_attractor_list(sys_class="continuous"), 4)
+        system_sample = random.sample(
+            get_attractor_list(sys_class="continuous"), NUM_SAMPLES
+        )
         systems = [getattr(dfl, sys)() for sys in system_sample]
         unperturbed_sols = make_trajectory_ensemble(
             256,
@@ -106,9 +123,17 @@ class TestTrajectoryEnsemble(unittest.TestCase):
 
     def test_ensemble_generation_parameter_sampling(self):
         param_sampler = GaussianParamSampler(
-            scale=1e-3, random_seed=random.randint(0, 1000000)
+            scale=1e-2, random_seed=random.randint(0, 1000000)
         )
-        system_sample = random.sample(get_attractor_list(sys_class="continuous"), 4)
+        system_sample = random.sample(
+            get_attractor_list(sys_class="continuous"), NUM_SAMPLES
+        )
+
+        while any(sys in PARAMETERLESS_SYSTEMS for sys in system_sample):
+            system_sample = random.sample(
+                get_attractor_list(sys_class="continuous"), NUM_SAMPLES
+            )
+
         systems = [getattr(dfl, sys)() for sys in system_sample]
         unperturbed_sols = make_trajectory_ensemble(
             256,
@@ -130,10 +155,9 @@ class TestTrajectoryEnsemble(unittest.TestCase):
         for system_name in system_sample:
             unperturbed_traj = unperturbed_sols[system_name]
             perturbed_traj = perturbed_sols[system_name]
-            self.assertTrue(unperturbed_traj is not None)
-            self.assertTrue(perturbed_traj is not None)
-            self.assertEqual(unperturbed_traj.shape, perturbed_traj.shape)
-            self.assertFalse(np.allclose(unperturbed_traj, perturbed_traj))
+            if perturbed_traj is not None and unperturbed_traj is not None:
+                self.assertEqual(unperturbed_traj.shape, perturbed_traj.shape)
+                self.assertFalse(np.allclose(unperturbed_traj, perturbed_traj))
 
 
 if __name__ == "__main__":

@@ -129,7 +129,7 @@ def compute_timestep(
             pts_per_period=pts_per_period,
             timescale=timescale,
         )
-        if sol0 is None:
+        if sol0 is None or tpts0 is None:
             raise Exception("Failed to generate trajectory")
         tpts0, sol0 = tpts0[cutoff:], sol0[cutoff:]
         dtval0 = np.median(np.diff(tpts0))
