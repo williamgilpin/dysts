@@ -3,7 +3,6 @@
 import inspect
 import json
 from functools import partial
-from logging import Logger
 from multiprocessing import Pool
 from os import PathLike
 from types import ModuleType
@@ -143,7 +142,6 @@ def _compute_trajectory(
     system: str | BaseDyn,
     event_fns: Sequence[Callable] | None,
     silent_errors: bool = False,
-    logger: Logger | None = None,
     **kwargs: Any,
 ) -> Array | None:
     """Helper function to compute a single trajectory for a dynamical system.
@@ -154,7 +152,6 @@ def _compute_trajectory(
         event_fns: A list of functions that take a dynamical system and returns a
             solve_ivp compatible event function
         silent_errors: Whether to fail silently if an error occurs
-        logger: Logger instance to use for logging errors
         **kwargs: Additional arguments passed to make_trajectory
 
     Returns:
@@ -176,9 +173,6 @@ def _compute_trajectory(
     try:
         traj = sys.make_trajectory(n, events=events, **kwargs)
     except Exception as exception:
-        if logger is not None:
-            logger.name = "dysts.systems._compute_trajectory"  # WARNING: this may mutate logger state during multiprocessing
-            logger.error(f"Error integrating {sys.name}: {exception}")
         if silent_errors:
             return None
         raise exception
@@ -193,7 +187,6 @@ def make_trajectory_ensemble(
     subset: Sequence[str] | Sequence[BaseDyn] | None = None,
     event_fns: Sequence[Callable] | None = None,
     silent_errors: bool = False,
-    logger: Logger | None = None,
     **kwargs,
 ) -> dict[str, Array | None]:
     """
@@ -211,7 +204,6 @@ def make_trajectory_ensemble(
                 3. () -> (event_fn: Callable[[float, Array], float])
             If multiprocessing is used, the event functions must be of type 1 or 3 to avoid state persistence across processes.
         silent_errors (bool): Whether to fail silently if an error occurs
-        logger (Logger): Logger instance to use for logging errors
         kwargs (dict): Integration options passed to each system's make_trajectory() method
 
     Returns:
@@ -229,13 +221,11 @@ def make_trajectory_ensemble(
     all_sols = dict()
     if use_multiprocessing:
         all_sols = _multiprocessed_compute_trajectory(
-            n, subset or [], event_fns, silent_errors, logger, **kwargs
+            n, subset or [], event_fns, silent_errors, **kwargs
         )
     else:
         for system in subset or []:
-            sol = _compute_trajectory(
-                n, system, event_fns, silent_errors, logger, **kwargs
-            )
+            sol = _compute_trajectory(n, system, event_fns, silent_errors, **kwargs)
             equation_name = system if isinstance(system, str) else system.name
             all_sols[equation_name] = sol
 
@@ -247,7 +237,6 @@ def _multiprocessed_compute_trajectory(
     subset: Sequence[str] | Sequence[BaseDyn],
     event_fns: Sequence[Callable] | None,
     silent_errors: bool = False,
-    logger: Logger | None = None,
     **kwargs: Any,
 ) -> dict[str, Array | None]:
     """Helper for handling multiprocessed integration with _compute_trajectory"""
@@ -261,7 +250,7 @@ def _multiprocessed_compute_trajectory(
     with Pool() as pool:
         solutions = pool.starmap(
             partial(_compute_trajectory, **kwargs),
-            [(n, system, event_fns, silent_errors, logger) for system in subset],
+            [(n, system, event_fns, silent_errors) for system in subset],
         )
 
     names = [sys if isinstance(sys, str) else sys.name for sys in subset]
