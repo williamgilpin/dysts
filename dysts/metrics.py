@@ -39,9 +39,9 @@ def calculate_season_error(y_past, m, time_dim=-1):
     Calculate the mean absolute error between the forward and backward slices of the
     past data.
     """
-    assert (
-        0 < m < y_past.shape[time_dim]
-    ), "Season length must be less than the length of the training data"
+    assert 0 < m < y_past.shape[time_dim], (
+        "Season length must be less than the length of the training data"
+    )
     yt_forward = np.take(y_past, range(m, y_past.shape[time_dim]), axis=time_dim)
     yt_backward = np.take(y_past, range(y_past.shape[time_dim] - m), axis=time_dim)
     return np.mean(np.abs(yt_forward - yt_backward))
@@ -251,7 +251,7 @@ def mape(y_true, y_pred):
     Returns:
         float: The MAPE
     """
-    return 100 * np.mean(np.abs(y_true - y_pred) / y_true)
+    return 100 * np.mean(np.abs((y_true - y_pred) / y_true))
 
 
 def smape(x, y):
@@ -633,9 +633,9 @@ def compute_metrics(
         y_true = (y_true - np.mean(y_true, axis=time_dim, keepdims=True)) / scale_true
         y_pred = (y_pred - np.mean(y_pred, axis=time_dim, keepdims=True)) / scale_pred
 
-    assert are_broadcastable(
-        y_true.shape, y_pred.shape
-    ), "y_true and y_pred must have broadcastable shapes"
+    assert are_broadcastable(y_true.shape, y_pred.shape), (
+        "y_true and y_pred must have broadcastable shapes"
+    )
 
     metric_functions = {
         "mse": mse,
@@ -660,9 +660,9 @@ def compute_metrics(
     if include is None:
         include = list(metric_functions.keys())
 
-    assert all(
-        metric in metric_functions for metric in include
-    ), f"Invalid metrics specified. Must be one of {list(metric_functions.keys())}"
+    assert all(metric in metric_functions for metric in include), (
+        f"Invalid metrics specified. Must be one of {list(metric_functions.keys())}"
+    )
 
     metrics = {
         metric: func(y_true, y_pred)

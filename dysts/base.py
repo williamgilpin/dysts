@@ -173,8 +173,7 @@ class BaseDyn:
         return self._jac is not BaseDyn._jac
 
     def transform_ic(
-        self,
-        transform_fn: Callable[[np.ndarray, Any], np.ndarray | None],
+        self, transform_fn: Callable[[np.ndarray, Any], np.ndarray | None]
     ) -> bool:
         """Updates the initial condition via a transform function"""
         transformed_ic = transform_fn(self.ic, system=self)  # type: ignore
