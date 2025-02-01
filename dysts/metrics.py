@@ -504,7 +504,9 @@ class GaussianMixture:
         return samples
 
 
-def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_scale=1.0):
+def estimate_kl_divergence(
+    true_orbit, generated_orbit, n_samples=300, sigma_scale: float | None = 1.0
+):
     """
     Estimate KL divergence between observed and generated orbits using Gaussian Mixture
     Models (GMMs).
@@ -540,12 +542,12 @@ def estimate_kl_divergence(true_orbit, generated_orbit, n_samples=300, sigma_sca
         generated_orbit = generated_orbit.reshape(-1, 1)
 
     if sigma_scale is None:
-        sigma_scale = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1) + 1e-8
-        sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
-        p_hat = GaussianMixture(true_orbit, sigma_scale)
-        sigma_scale = np.linalg.norm(np.diff(generated_orbit, axis=0), axis=1) + 1e-8
-        sigma_scale = np.hstack((sigma_scale, sigma_scale[-1]))
-        q_hat = GaussianMixture(generated_orbit, sigma_scale)
+        scales = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1) + 1e-8
+        stacked_scales = np.hstack((scales, scales[-1]))
+        p_hat = GaussianMixture(true_orbit, stacked_scales)
+        scales = np.linalg.norm(np.diff(generated_orbit, axis=0), axis=1) + 1e-8
+        stacked_scales = np.hstack((scales, scales[-1]))
+        q_hat = GaussianMixture(generated_orbit, stacked_scales)
     else:
         p_hat = GaussianMixture(true_orbit, sigma_scale)
         q_hat = GaussianMixture(generated_orbit, sigma_scale)
