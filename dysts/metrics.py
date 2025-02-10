@@ -21,13 +21,13 @@ if has_module("sklearn"):
     from sklearn.feature_selection import mutual_info_regression
 
 
-def are_broadcastable(shape1, shape2):
+def are_broadcastable(shape1: tuple[int, ...], shape2: tuple[int, ...]) -> bool:
     """
     Check if two numpy arrays are broadcastable.
     """
-    # Reverse the shapes to align dimensions from the end
+    # reverse the shapes to align dimensions from the end
     shape1, shape2 = shape1[::-1], shape2[::-1]
-    # Iterate over the dimensions
+    # iterate over the dimensions
     for dim1, dim2 in zip(shape1, shape2):
         if dim1 != dim2 and dim1 != 1 and dim2 != 1:
             return False
@@ -459,15 +459,13 @@ class GaussianMixture:
         self.covariances = np.array(covariances)
         self.n_components, self.ndim = self.means.shape
 
-        ## If covariances is a single scaler, assume isotropic covariance constant
-        ## Otherwise if covariances is a list of scalars, assume isotropic covariance
-        if isinstance(covariances, (int, float)):
+        if self.covariances.ndim == 0:  # isotropic covariance
             self.covariances = (
                 np.ones(self.n_components)[:, None, None] * np.eye(self.ndim)[None, ...]
             ) * covariances
-        elif isinstance(covariances[0], (int, float)):
+        elif self.covariances.ndim == 1:  # diagonal covariance
             self.covariances = covariances[:, None, None] * np.eye(self.ndim)[None, ...]
-        else:
+        else:  # full covariance
             self.covariances = np.array(covariances)
 
         # If no weights are provided, assume uniform weights
@@ -505,8 +503,8 @@ class GaussianMixture:
 
 
 def estimate_kl_divergence(
-    true_orbit, generated_orbit, n_samples=300, sigma_scale: float | None = 1.0
-):
+    true_orbit, generated_orbit, n_samples=1000, sigma_scale: float | None = 1.0
+) -> float:
     """
     Estimate KL divergence between observed and generated orbits using Gaussian Mixture
     Models (GMMs).
@@ -517,7 +515,7 @@ def estimate_kl_divergence(
         generated_orbit (np.ndarray): Generated orbit points, with shape (T, N) where T is
             the number of time steps and N is the dimensionality.
         n_samples (int): Number of Monte Carlo samples.
-        sigma_squared (float): Variance parameter for the GMMs.
+        sigma_scale (float): Variance parameter for the GMMs.
 
     Returns:
         float: Estimated KL divergence
@@ -526,10 +524,6 @@ def estimate_kl_divergence(
         Hess, Florian, et al. "Generalized teacher forcing for learning chaotic
         dynamics." Proceedings of the 40th International Conference on Machine Learning.
         2023.
-
-        Hershey, John R., and Peder A. Olsen. "Approximating the Kullback Leibler
-        divergence between Gaussian mixture models." 2007 IEEE International Conference
-        on Acoustics, Speech and Signal Processing-ICASSP'07. Vol. 4. IEEE, 2007.
 
     Development:
         Rank-order (copula) transform each orbit coordinate, in order to reduce
@@ -552,16 +546,12 @@ def estimate_kl_divergence(
         p_hat = GaussianMixture(true_orbit, sigma_scale)
         q_hat = GaussianMixture(generated_orbit, sigma_scale)
 
-    # Generate Monte Carlo samples from p_hat
-    T, N = true_orbit.shape
-    samples = p_hat.sample(n_samples=T)
-
-    # Randomly select n_samples from the generated samples
-    selected_samples = samples[np.random.choice(T, n_samples, replace=True)]
-    log_ratios = np.log(p_hat(selected_samples) / q_hat(selected_samples))
+    # Sample directly n_samples points from p_hat
+    samples = p_hat.sample(n_samples=n_samples)
+    log_ratios = np.log(p_hat(samples) / q_hat(samples))
     kl_estimate = np.mean(log_ratios)
 
-    return -kl_estimate
+    return kl_estimate
 
 
 def hellinger_distance(p, q, axis=0):
@@ -571,7 +561,7 @@ def hellinger_distance(p, q, axis=0):
 
 def average_hellinger_distance(
     ts_true: np.ndarray, ts_gen: np.ndarray, num_freq_bins: int = 100
-):
+) -> float:
     """
     Compute the average Hellinger distance between power spectra of two multivariate
     time series.
@@ -582,7 +572,7 @@ def average_hellinger_distance(
         num_freq_bins (int): Number of frequency bins to use in FFT for power spectrum.
 
     Returns:
-        avg_dh (np.ndarray): Average Hellinger distance across all dimensions.
+        avg_dh: Average Hellinger distance across all dimensions.
 
     References:
         Mikhaeil et al. Advances in Neural Information Processing Systems, 35:
@@ -599,42 +589,41 @@ def average_hellinger_distance(
         all_dh.append(hellinger_distance(f_true[:num_freq_bins], f_gen[:num_freq_bins]))
     all_dh = np.array(all_dh)
 
-    avg_dh = np.mean(all_dh, axis=0)
+    avg_dh = np.mean(all_dh)
 
-    return avg_dh
+    return float(avg_dh)
 
 
 def compute_metrics(
-    y_true, y_pred, time_dim=0, standardize=False, verbose=False, include=None
-):
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    verbose: bool = False,
+    include: list[str] | None = None,
+    batch_axis: int | None = None,
+) -> dict[str, float]:
     """
     Compute multiple time series metrics
-
     Args:
-        y_true (np.ndarray): The true values
-        y_pred (np.ndarray): The predicted values
-        time_dim (int): The dimension of the time axis. Default is 0.
-        standardize (bool): Whether to standardize the time series before computing the
-            metrics. Default is False.
+        y_true (np.ndarray): The true values of shape (..., T, ...)
+        y_pred (np.ndarray): The predicted values of shape (..., T, ...)
         verbose (bool): Whether to print the computed metrics. Default is False.
         include (optional, list): The metrics to include. Default is None, which
             computes all metrics. Otherwise, specify a list of metrics to compute.
+        batch_axis (optional, int): The axis to treat as the batch dimension. Default is
+            None, which adds a singleton batchdimension at axis 0
 
     Returns:
         dict: A dictionary containing the computed metrics
     """
-    if standardize:
-        scale_true, scale_pred = (
-            np.std(y_true, axis=time_dim, keepdims=True),
-            np.std(y_pred, axis=time_dim, keepdims=True),
-        )
-        if np.all(scale_true == 0):
-            scale_true = 1
-        if np.all(scale_pred == 0):
-            scale_pred = 1
-        y_true = (y_true - np.mean(y_true, axis=time_dim, keepdims=True)) / scale_true
-        y_pred = (y_pred - np.mean(y_pred, axis=time_dim, keepdims=True)) / scale_pred
+    # create a single batch dimension as dimension 0
+    if batch_axis is None:
+        batch_axis = 0
+        y_true = y_true[None, ...]
+        y_pred = y_pred[None, ...]
 
+    assert y_pred.shape[batch_axis] == y_true.shape[batch_axis], (
+        f"specified batch_dim {batch_axis} must be the same for y_true and y_pred"
+    )
     assert are_broadcastable(y_true.shape, y_pred.shape), (
         "y_true and y_pred must have broadcastable shapes"
     )
@@ -656,7 +645,7 @@ def compute_metrics(
         "coefficient_of_variation": coefficient_of_variation,
         "mutual_information": mutual_information,
         "kl_divergence": estimate_kl_divergence,
-        "hellinger_distance": hellinger_distance,
+        "hellinger_distance": average_hellinger_distance,
     }
 
     if include is None:
@@ -667,9 +656,16 @@ def compute_metrics(
     )
 
     metrics = {
-        metric: func(y_true, y_pred)
-        for metric, func in metric_functions.items()
-        if metric in include
+        metric: np.mean(
+            [
+                metric_functions[metric](
+                    np.take(y_true, i, axis=batch_axis),
+                    np.take(y_pred, i, axis=batch_axis),
+                )
+                for i in range(y_true.shape[batch_axis])
+            ]
+        ).astype(float)
+        for metric in include
     }
 
     if verbose:

@@ -1,6 +1,5 @@
 """
-Test the models and regularizer
-> python test_generation.py
+Test the metrics
 """
 
 #!/usr/bin/env python
@@ -12,6 +11,7 @@ import numpy as np
 
 from dysts.metrics import (
     coefficient_of_variation,
+    compute_metrics,
     estimate_kl_divergence,
     mae,
     mape,
@@ -127,6 +127,62 @@ class TestEstimateKLDivergence(unittest.TestCase):
             self.true_orbit, self.generated_orbit, sigma_scale=None
         )
         self.assertIsInstance(kl_div, float)
+
+    def test_compute_metrics_batched_kl_divergence(self):
+        # Test if the function works with a batched dimension
+        y_true = np.random.randn(10, 100, 2)
+        y_pred = np.random.randn(10, 100, 2)
+        metrics = compute_metrics(
+            y_true, y_pred, include=["kl_divergence"], batch_axis=0
+        )
+        self.assertEqual(set(metrics.keys()), set(["kl_divergence"]))
+
+
+class TestComputeMetrics(unittest.TestCase):
+    def setUp(self):
+        # Create sample data
+        self.y_true = np.array([[1, 2], [3, 4], [5, 6]])
+        self.y_pred = np.array([[1.1, 2.1], [3.1, 4.1], [5.1, 6.1]])
+
+    def test_compute_metrics_include(self):
+        # Test including only specific metrics
+        include = ["mse", "mae"]
+        metrics = compute_metrics(self.y_true, self.y_pred, include=include)
+        self.assertEqual(set(metrics.keys()), set(include))
+
+    def test_compute_metrics_invalid_include(self):
+        # Test with invalid metric name
+        with self.assertRaises(AssertionError):
+            compute_metrics(self.y_true, self.y_pred, include=["invalid_metric"])
+
+    def test_compute_metrics_shape_mismatch(self):
+        # Test with non-broadcastable shapes
+        y_pred_wrong = np.array([[1, 2], [3, 4]])
+        with self.assertRaises(AssertionError):
+            compute_metrics(self.y_true, y_pred_wrong)
+
+    def test_compute_metrics_batched(self):
+        # Test with a batched dimension
+        y_true = np.random.randn(10, 1000, 3)
+        y_pred = np.random.randn(10, 1000, 3)
+        include = [
+            "mse",
+            "mae",
+            "smape",
+            "r2_score",
+            "hellinger_distance",
+        ]
+        metrics = compute_metrics(y_true, y_pred, include=include, batch_axis=0)
+        avg_metrics = {key: 0.0 for key in metrics.keys()}
+        for i in range(y_true.shape[0]):
+            yt = y_true[i]
+            yp = y_pred[i]
+            submetrics = compute_metrics(yt, yp, include=include)
+            for metric_name, metric_value in submetrics.items():
+                avg_metrics[metric_name] += metric_value / y_true.shape[0]
+
+        for metric_name, metric_value in metrics.items():
+            self.assertAlmostEqual(metric_value, metrics[metric_name], places=2)
 
 
 if __name__ == "__main__":
