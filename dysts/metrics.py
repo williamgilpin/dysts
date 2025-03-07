@@ -20,6 +20,60 @@ from .utils import has_module
 if has_module("sklearn"):
     from sklearn.feature_selection import mutual_info_regression
 
+# from umap.umap_ import fuzzy_simplicial_set
+relu = lambda x: np.maximum(0, x)
+from scipy.optimize import fsolve
+from sklearn.neighbors import NearestNeighbors
+def simplex_neighbors(X, metric='euclidean', k=20, tol=1e-6):
+    """
+    Compute the distance between points in a dataset using the simplex distance metric.
+
+    Args:
+        X (np.ndarray): dataset of shape (n, d)
+        Y (np.ndarray): dataset of shape (m, d)
+        metric (str): distance metric to use
+        k (int): number of nearest neighbors to use in the distance calculation
+        tol (float): tolerance for the distance calculation
+
+    Returns:
+        wgts (np.ndarray): weights matrix of shape (n,)
+        idx (np.ndarray): index matrix of shape (n, k)
+        sigmas (np.ndarray): sigmas matrix of shape (n,)
+    """
+    tree = NearestNeighbors(n_neighbors=k+1, algorithm='auto', metric=metric)
+    tree.fit(X)
+    dists, idx  = tree.kneighbors(X)
+    dists, idx = dists[:, 1:].T, idx[:, 1:].T
+    rhos = dists[0]
+    sigmas = np.array([find_sigma(drow, tol=tol)[0] for drow in dists.T])
+    sigmas += tol # Add a small tolerance to avoid division by zero
+    wgts = np.exp(-relu(dists - rhos[None, :]) / sigmas[None, :])
+    return wgts, idx, sigmas
+
+def find_sigma(dists, tol=1e-6):
+    """
+    Given a list of distances to k nearest neighbors, find the sigma for each point
+
+    Args:
+        dists (np.ndarray): A matrix of shape (k,)
+        tol (float): The tolerance for the sigma
+
+    Returns:
+        float: The sigma
+        np.ndarray: The transformed distances
+    """
+    k = dists.shape[0]
+    rho = np.min(dists)
+    func = lambda sig: sum(np.exp(-relu(dists - rho) / (sig + tol))) - np.log2(k)
+    jac = lambda sig: sum(np.exp(-relu(dists - rho) / (sig + tol)) * relu(dists - rho)) / (sig + tol)**2
+    sigma = fsolve(func, rho, fprime=jac, xtol=tol)[0]
+    # func = lambda isig: sum(np.exp(-relu(dists - rho) * isig)) - np.log2(k)
+    # jac = lambda isig: -sum(np.exp(-relu(dists - rho) * isig) * relu(dists - rho))
+    # isigma = fsolve(func, 1/rho, fprime=jac, xtol=tol)[0]
+    # sigma = 1 / isigma
+    dists_transformed = np.exp(-relu(dists - rho) / (sigma + tol))
+    return sigma, dists_transformed
+
 
 def are_broadcastable(shape1: tuple[int, ...], shape2: tuple[int, ...]) -> bool:
     """
@@ -515,7 +569,8 @@ def estimate_kl_divergence(
         generated_orbit (np.ndarray): Generated orbit points, with shape (T, N) where T is
             the number of time steps and N is the dimensionality.
         n_samples (int): Number of Monte Carlo samples.
-        sigma_scale (float): Variance parameter for the GMMs.
+        sigma_scale (float): Variance parameter for the GMMs. If None, the variance is
+            estimated locally for each point.
 
     Returns:
         float: Estimated KL divergence
@@ -536,12 +591,16 @@ def estimate_kl_divergence(
         generated_orbit = generated_orbit.reshape(-1, 1)
 
     if sigma_scale is None:
-        scales = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1) + 1e-8
-        stacked_scales = np.hstack((scales, scales[-1]))
-        p_hat = GaussianMixture(true_orbit, stacked_scales)
-        scales = np.linalg.norm(np.diff(generated_orbit, axis=0), axis=1) + 1e-8
-        stacked_scales = np.hstack((scales, scales[-1]))
-        q_hat = GaussianMixture(generated_orbit, stacked_scales)
+    #     scales = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1) + 1e-8
+    #     stacked_scales = np.hstack((scales, scales[-1]))
+    #     p_hat = GaussianMixture(true_orbit, stacked_scales)
+    #     scales = np.linalg.norm(np.diff(generated_orbit, axis=0), axis=1) + 1e-8
+    #     stacked_scales = np.hstack((scales, scales[-1]))
+    #     q_hat = GaussianMixture(generated_orbit, stacked_scales)
+        _, _, sig_true = simplex_neighbors(true_orbit, metric='euclidean', k=10, tol=1e-6)
+        _, _, sig_gen = simplex_neighbors(  generated_orbit, metric='euclidean', k=10, tol=1e-6)
+        p_hat = GaussianMixture(true_orbit, sig_true)
+        q_hat = GaussianMixture(generated_orbit, sig_gen)
     else:
         p_hat = GaussianMixture(true_orbit, sigma_scale)
         q_hat = GaussianMixture(generated_orbit, sigma_scale)
