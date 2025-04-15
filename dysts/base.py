@@ -82,7 +82,9 @@ class BaseDyn:
             if isinstance(key, tuple)
             else key in self.metadata
             for key in required_fields
-        ), f"The provided metadata {self.metadata} is missing some required fields: {required_fields}"
+        ), (
+            f"The provided metadata {self.metadata} is missing some required fields: {required_fields}"
+        )
 
         self.params = self.metadata["parameters"]
         self.params = {k: cast_to_numpy(v) for k, v in self.params.items()}
@@ -217,7 +219,7 @@ class DynSys(BaseDyn):
 
     def __init__(
         self,
-        metadata_path: str = DATAPATH_CONTINUOUS,
+        metadata_path: str | None = DATAPATH_CONTINUOUS,
         parameters: dict[str, ArrayLike] | None = None,
         dt: float | None = None,
         period: float | None = None,

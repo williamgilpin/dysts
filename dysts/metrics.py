@@ -7,6 +7,7 @@ libraries.
 """
 
 import numpy as np
+from scipy.optimize import fsolve
 from scipy.spatial.distance import cdist
 from scipy.stats import (
     kendalltau,
@@ -14,17 +15,19 @@ from scipy.stats import (
     pearsonr,
     spearmanr,
 )
+from sklearn.neighbors import NearestNeighbors
 
 from .utils import has_module
 
 if has_module("sklearn"):
     from sklearn.feature_selection import mutual_info_regression
 
-# from umap.umap_ import fuzzy_simplicial_set
-relu = lambda x: np.maximum(0, x)
-from scipy.optimize import fsolve
-from sklearn.neighbors import NearestNeighbors
-def simplex_neighbors(X, metric='euclidean', k=20, tol=1e-6):
+
+def relu(x):
+    return np.maximum(0, x)
+
+
+def simplex_neighbors(X, metric="euclidean", k=20, tol=1e-6):
     """
     Compute the distance between points in a dataset using the simplex distance metric.
 
@@ -40,15 +43,16 @@ def simplex_neighbors(X, metric='euclidean', k=20, tol=1e-6):
         idx (np.ndarray): index matrix of shape (n, k)
         sigmas (np.ndarray): sigmas matrix of shape (n,)
     """
-    tree = NearestNeighbors(n_neighbors=k+1, algorithm='auto', metric=metric)
+    tree = NearestNeighbors(n_neighbors=k + 1, algorithm="auto", metric=metric)
     tree.fit(X)
-    dists, idx  = tree.kneighbors(X)
+    dists, idx = tree.kneighbors(X)
     dists, idx = dists[:, 1:].T, idx[:, 1:].T
     rhos = dists[0]
     sigmas = np.array([find_sigma(drow, tol=tol)[0] for drow in dists.T])
-    sigmas += tol # Add a small tolerance to avoid division by zero
+    sigmas += tol  # Add a small tolerance to avoid division by zero
     wgts = np.exp(-relu(dists - rhos[None, :]) / sigmas[None, :])
     return wgts, idx, sigmas
+
 
 def find_sigma(dists, tol=1e-6):
     """
@@ -65,7 +69,10 @@ def find_sigma(dists, tol=1e-6):
     k = dists.shape[0]
     rho = np.min(dists)
     func = lambda sig: sum(np.exp(-relu(dists - rho) / (sig + tol))) - np.log2(k)
-    jac = lambda sig: sum(np.exp(-relu(dists - rho) / (sig + tol)) * relu(dists - rho)) / (sig + tol)**2
+    jac = (
+        lambda sig: sum(np.exp(-relu(dists - rho) / (sig + tol)) * relu(dists - rho))
+        / (sig + tol) ** 2
+    )
     sigma = fsolve(func, rho, fprime=jac, xtol=tol)[0]
     # func = lambda isig: sum(np.exp(-relu(dists - rho) * isig)) - np.log2(k)
     # jac = lambda isig: -sum(np.exp(-relu(dists - rho) * isig) * relu(dists - rho))
@@ -162,7 +169,7 @@ def dtw(y_true, y_pred):
     return cost, D, p, q
 
 
-def wape(y_true, y_pred):
+def wape(y_true, y_pred, eps=1e-10):
     """
     Weighted Absolute Percentage Error
 
@@ -173,7 +180,7 @@ def wape(y_true, y_pred):
     Returns:
         float: The WAPE
     """
-    return 100 * np.sum(np.abs(y_true - y_pred)) / np.sum(np.abs(y_true))
+    return 100 * np.sum(np.abs(y_true - y_pred)) / (np.sum(np.abs(y_true)) + eps)
 
 
 def mse(y_true, y_pred):
@@ -218,7 +225,7 @@ def mae(y_true, y_pred):
     return np.mean(np.abs(y_true - y_pred))
 
 
-def coefficient_of_variation(y_true, y_pred):
+def coefficient_of_variation(y_true, y_pred, eps=1e-10):
     """
     Coefficient of Variation of the root mean squared error relative to the mean
     of the true values
@@ -230,10 +237,10 @@ def coefficient_of_variation(y_true, y_pred):
     Returns:
         float: The Coefficient of Variation
     """
-    return 100 * np.std(y_true - y_pred) / np.mean(y_true)
+    return 100 * np.std(y_true - y_pred) / (np.mean(y_true) + eps)
 
 
-def marre(y_true, y_pred):
+def marre(y_true, y_pred, eps=1e-10):
     """
     Mean Absolute Ranged Relative Error
 
@@ -244,7 +251,9 @@ def marre(y_true, y_pred):
     Returns:
         float: The MARRE
     """
-    return 100 * np.mean(np.abs(y_true - y_pred) / (np.max(y_true) - np.min(y_true)))
+    return 100 * np.mean(
+        np.abs(y_true - y_pred) / (np.max(y_true) - np.min(y_true) + eps)
+    )
 
 
 def ope(y_true, y_pred):
@@ -261,7 +270,7 @@ def ope(y_true, y_pred):
     return np.sum(np.abs(y_true - y_pred)) / np.sum(np.abs(y_true - np.mean(y_true)))
 
 
-def rmsle(y_true, y_pred):
+def rmsle(y_true, y_pred, eps=1e-10):
     """
     Root Mean Squared Log Error. In case of negative values, the series is shifted
     to the positive domain.
@@ -273,8 +282,8 @@ def rmsle(y_true, y_pred):
     Returns:
         float: The RMSLE
     """
-    y_true = y_true - np.min(y_true, axis=0, keepdims=True) + 1e-8
-    y_pred = y_pred - np.min(y_pred, axis=0, keepdims=True) + 1e-8
+    y_true = y_true - np.min(y_true, axis=0, keepdims=True) + eps
+    y_pred = y_pred - np.min(y_pred, axis=0, keepdims=True) + eps
     return np.sqrt(np.mean(np.square(np.log(y_pred + 1) - np.log(y_true + 1))))
 
 
@@ -294,7 +303,7 @@ def r2_score(y_true, y_pred):
     )
 
 
-def mape(y_true, y_pred):
+def mape(y_true, y_pred, eps=1e-10):
     """
     The Mean Absolute Percentage Error
 
@@ -305,15 +314,15 @@ def mape(y_true, y_pred):
     Returns:
         float: The MAPE
     """
-    return 100 * np.mean(np.abs((y_true - y_pred) / y_true))
+    return 100 * np.mean(np.abs((y_true - y_pred) / (y_true + eps)))
 
 
-def smape(x, y):
+def smape(x, y, eps=1e-10):
     """Symmetric mean absolute percentage error"""
-    return 100 * np.mean(np.abs(x - y) / (np.abs(x) + np.abs(y))) * 2
+    return 200 * np.mean(np.abs(x - y) / (np.abs(x) + np.abs(y) + eps))
 
 
-def mase(y, yhat, y_train=None, m=1, time_dim=-1):
+def mase(y, yhat, y_train=None, m=1, time_dim=-1, eps=1e-10):
     """
     The mean absolute scaled error.
 
@@ -338,10 +347,10 @@ def mase(y, yhat, y_train=None, m=1, time_dim=-1):
     assert are_broadcastable(y.shape, y_train.shape)
 
     season_error = calculate_season_error(y_train, m, time_dim)
-    return np.mean(np.abs(y - yhat)) / season_error
+    return np.mean(np.abs(y - yhat)) / (season_error + eps)
 
 
-def msis(y, yhat_lower, yhat_upper, y_obs, m, time_dim=-1, a=0.05):
+def msis(y, yhat_lower, yhat_upper, y_obs, m, time_dim=-1, a=0.05, eps=1e-10):
     """The mean scaled interval score.
 
     Adapted from tensorflow-probability and
@@ -369,7 +378,7 @@ def msis(y, yhat_lower, yhat_upper, y_obs, m, time_dim=-1, a=0.05):
         + (2 / a) * (y - yhat_upper) * (yhat_upper < y)
     )
     season_error = calculate_season_error(y_obs, m, time_dim)
-    return numer / season_error
+    return numer / (season_error + eps)
 
 
 def spearman(y_true, y_pred):
@@ -445,7 +454,7 @@ def mutual_information(y_true, y_pred):
     return np.mean(mi)
 
 
-def nrmse(y_true, y_pred, eps=1e-8, scale=None):
+def nrmse(y_true, y_pred, eps=1e-10, scale=None):
     """
     Normalized Root Mean Squared Error
 
@@ -591,14 +600,18 @@ def estimate_kl_divergence(
         generated_orbit = generated_orbit.reshape(-1, 1)
 
     if sigma_scale is None:
-    #     scales = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1) + 1e-8
-    #     stacked_scales = np.hstack((scales, scales[-1]))
-    #     p_hat = GaussianMixture(true_orbit, stacked_scales)
-    #     scales = np.linalg.norm(np.diff(generated_orbit, axis=0), axis=1) + 1e-8
-    #     stacked_scales = np.hstack((scales, scales[-1]))
-    #     q_hat = GaussianMixture(generated_orbit, stacked_scales)
-        _, _, sig_true = simplex_neighbors(true_orbit, metric='euclidean', k=10, tol=1e-6)
-        _, _, sig_gen = simplex_neighbors(  generated_orbit, metric='euclidean', k=10, tol=1e-6)
+        #     scales = np.linalg.norm(np.diff(true_orbit, axis=0), axis=1) + 1e-8
+        #     stacked_scales = np.hstack((scales, scales[-1]))
+        #     p_hat = GaussianMixture(true_orbit, stacked_scales)
+        #     scales = np.linalg.norm(np.diff(generated_orbit, axis=0), axis=1) + 1e-8
+        #     stacked_scales = np.hstack((scales, scales[-1]))
+        #     q_hat = GaussianMixture(generated_orbit, stacked_scales)
+        _, _, sig_true = simplex_neighbors(
+            true_orbit, metric="euclidean", k=10, tol=1e-6
+        )
+        _, _, sig_gen = simplex_neighbors(
+            generated_orbit, metric="euclidean", k=10, tol=1e-6
+        )
         p_hat = GaussianMixture(true_orbit, sig_true)
         q_hat = GaussianMixture(generated_orbit, sig_gen)
     else:
@@ -615,6 +628,7 @@ def estimate_kl_divergence(
 
 def hellinger_distance(p, q, axis=0):
     """Compute the Hellinger distance between two distributions."""
+    assert np.allclose(1.0, [p.sum(), q.sum()]), "p and q must be normalized"
     return np.sqrt(1 - np.sum(np.sqrt(p * q), axis=axis))
 
 
