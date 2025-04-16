@@ -13,14 +13,13 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dependencies = ["numpy", "scipy", "tqdm"]
+dependencies = ["numpy", "matplotlib", "scipy", "scikit-learn", "tqdm"]
 
 # Optional dependencies
 [project.optional-dependencies]
-benchmarks = ["darts", "torch", "scikit-learn", "pandas", "tsfresh", "nolds"]
+benchmarks = ["darts", "torch", "pandas"]
 numba = ["numba"]
-tests = ["matplotlib"]
-extra = ["sdeint", "scikit-learn"]
+extra = ["sdeint"]
 
 # Package data
 [tool.setuptools]

@@ -15,12 +15,12 @@ from scipy.stats import (
     pearsonr,
     spearmanr,
 )
-from sklearn.neighbors import NearestNeighbors
 
 from .utils import has_module
 
 if has_module("sklearn"):
     from sklearn.feature_selection import mutual_info_regression
+    from sklearn.neighbors import NearestNeighbors
 
 
 def relu(x):
@@ -43,6 +43,8 @@ def simplex_neighbors(X, metric="euclidean", k=20, tol=1e-6):
         idx (np.ndarray): index matrix of shape (n, k)
         sigmas (np.ndarray): sigmas matrix of shape (n,)
     """
+    if not has_module("sklearn"):
+        raise ImportError("Sklearn is required for simplex neighbors")
     tree = NearestNeighbors(n_neighbors=k + 1, algorithm="auto", metric=metric)
     tree.fit(X)
     dists, idx = tree.kneighbors(X)
@@ -657,8 +659,8 @@ def average_hellinger_distance(
     for i in range(d):
         f_true = np.abs(np.fft.fft(ts_true[:, i])) ** 2
         f_gen = np.abs(np.fft.fft(ts_gen[:, i])) ** 2
-        f_true /= np.sum(f_true)
-        f_gen /= np.sum(f_gen)
+        f_true[:num_freq_bins] /= np.sum(f_true[:num_freq_bins])
+        f_gen[:num_freq_bins] /= np.sum(f_gen[:num_freq_bins])
         all_dh.append(hellinger_distance(f_true[:num_freq_bins], f_gen[:num_freq_bins]))
     all_dh = np.array(all_dh)
 
