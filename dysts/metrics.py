@@ -319,9 +319,10 @@ def mape(y_true, y_pred, eps=1e-10):
     return 100 * np.mean(np.abs((y_true - y_pred) / (y_true + eps)))
 
 
-def smape(x, y, eps=1e-10):
+def smape(x, y, eps=1e-10, scaled=True):
     """Symmetric mean absolute percentage error"""
-    return 200 * np.mean(np.abs(x - y) / (np.abs(x) + np.abs(y) + eps))
+    scale = 0.5 if scaled else 1.0
+    return scale * 200 * np.mean(np.abs(x - y) / (np.abs(x) + np.abs(y) + eps))
 
 
 def mase(y, yhat, y_train=None, m=1, time_dim=-1, eps=1e-10):

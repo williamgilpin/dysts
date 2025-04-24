@@ -75,7 +75,7 @@ class TestMetrics(unittest.TestCase):
 
     def test_smape(self):
         result = smape(self.y_true, self.y_pred)
-        self.assertAlmostEqual(result, 5.110, places=2)
+        self.assertAlmostEqual(result, 5.110 / 2, places=2)
 
     def test_spearman(self):
         result = spearman(self.y_true, self.y_pred)
